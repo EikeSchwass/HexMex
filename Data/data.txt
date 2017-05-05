@@ -1,0 +1,1 @@
+villageRecipe=Water@3,Nutrition@2|Workforce@5|30

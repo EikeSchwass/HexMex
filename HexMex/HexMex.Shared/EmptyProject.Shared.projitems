@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>f0c9ce92-cb00-4ae3-80e1-7add8ab32b40</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>HexMex</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AppDelegate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Button.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Control.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HexButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Building.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Connection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Cunstruction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Hexagon.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\HexagonCornerPosition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\HexagonPosition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\MaterialIngredient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\MaterialProvision.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\MaterialProvision.MaterialProvisionChanger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\MaterialRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Resource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\MaterialRequest.MaterialRequestChanger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\MaterialRequestState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\NutritionMaterial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\PlatinumMaterial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Recipe.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\MaterialManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\RecipeDatabase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\RecipeDatabaseDefinitions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\RequestCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceHexagon.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Structure.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\VillageBuilding.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\WaterMaterial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\WorkforceMaterial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\World.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helper\DataLoader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helper\HexagonHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helper\TypeExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ICanSuspendApp.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\GameLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\GameScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\HexMexCamera.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\HexMexLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\HexMexScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\MainMenu\MainMenuLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\MainMenu\MainMenuScene.cs" />
+  </ItemGroup>
+</Project>
