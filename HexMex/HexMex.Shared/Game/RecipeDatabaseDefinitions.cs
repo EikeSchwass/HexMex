@@ -7,12 +7,12 @@
             // Village
             Recipes.Add(typeof(VillageBuilding), new Recipe(new[]
             {
-                new ResourceIngredient(3, typeof(WaterResource)),
-                new ResourceIngredient(2, typeof(NutritionResource)),
+                new ResourceIngredient(3, ResourceType.Water),
+                new ResourceIngredient(2, ResourceType.Nutrition),
 
             }, new[]
             {
-                new ResourceIngredient(5, typeof(WorkforceResource))
+                new ResourceIngredient(5, ResourceType.Workforce)
             }, 30));
         }
     }

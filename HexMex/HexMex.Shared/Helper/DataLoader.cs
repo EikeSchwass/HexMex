@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using HexMex.Game;
 
 namespace HexMex.Helper
 {
@@ -33,6 +31,7 @@ namespace HexMex.Helper
 
         public T GetValue<T>(int key) => GetValue<T>(key.ToString());
 
+        /*
         private Recipe LoadRecipe(string key)
         {
             var recipeData = this[key];
@@ -54,5 +53,6 @@ namespace HexMex.Helper
                                                         select new ResourceIngredient(amount, type)).ToList();
             return new Recipe(resourceIngredients, resourceOutputs, duration);
         }
+        */
     }
 }

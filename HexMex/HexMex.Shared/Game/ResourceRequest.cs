@@ -4,7 +4,7 @@ namespace HexMex.Game
 {
     public partial class ResourceRequest
     {
-        private ResourceRequest(Type type, Structure structure, int priority = 0)
+        private ResourceRequest(ResourceType type, Structure structure, int priority = 0)
         {
             Type = type;
             Priority = priority;
@@ -16,11 +16,11 @@ namespace HexMex.Game
         public Structure RequestingStructure { get; }
 
         public ResourceRequestState RequestState { get; private set; }
-        public Type Type { get; }
+        public ResourceType Type { get; }
 
         private static Func<ResourceRequest, ResourceRequestChanger> ResourceRequestChangerFactory { get; set; }
 
-        public static ResourceRequestChanger CreateResourceRequest(Type resourceType, Structure structure, int priority = 0)
+        public static ResourceRequestChanger CreateResourceRequest(ResourceType resourceType, Structure structure, int priority = 0)
         {
             var resourceRequest = new ResourceRequest(resourceType, structure, priority);
             var requestChanger = ResourceRequestChangerFactory(resourceRequest);

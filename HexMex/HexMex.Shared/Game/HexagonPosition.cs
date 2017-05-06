@@ -20,7 +20,7 @@ namespace HexMex.Game
             X = x;
             Y = y;
             Z = z;
-            WorldPositionRadiusOne = HexagonHelper.CalculateWorldPosition(x, y, z, 1);
+            WorldPositionRadiusOne = HexagonHelper.CalculateWorldPosition(x, y, z, 1, 0);
         }
 
         public bool Equals(HexagonPosition other)
@@ -86,9 +86,9 @@ namespace HexMex.Game
             return new HexagonPosition(x, y, z);
         }
 
-        public CCPoint GetWorldPosition(float hexRadius)
+        public CCPoint GetWorldPosition(float hexRadius, float hexMargin)
         {
-            return WorldPositionRadiusOne * hexRadius;
+            return WorldPositionRadiusOne * (hexRadius + hexMargin);
         }
     }
 }

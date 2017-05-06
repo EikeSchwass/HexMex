@@ -12,9 +12,9 @@ namespace HexMex.Helper
         public const float Rad30 = (float)(Math.PI / 6);
         public static readonly float RadiusToHeightFactor = (float)(Math.Sqrt(3) / 2);
         public static readonly float Sin30 = (float)Math.Sin(Rad30);
-        public static readonly float Cos30 = (float)Math.Sin(Rad30);
+        public static readonly float Cos30 = (float)Math.Cos(Rad30);
         public static readonly float Sin60 = (float)Math.Sin(Rad60);
-        public static readonly float Cos60 = (float)Math.Sin(Rad60);
+        public static readonly float Cos60 = (float)Math.Cos(Rad60);
 
         public static HexagonPosition[] AdjacentHexagonPositionOffsets { get; } =
         {
@@ -26,8 +26,9 @@ namespace HexMex.Helper
             new HexagonPosition(0, 1, -1)
         };
 
-        public static CCPoint CalculateWorldPosition(int x, int y, int z, float radius)
+        public static CCPoint CalculateWorldPosition(int x, int y, int z, float radius, float margin)
         {
+            radius += margin;
             float height = radius * RadiusToHeightFactor;
             float xPos = x * height * 2;
             float yPos = Cos30 * height * 2 * z;

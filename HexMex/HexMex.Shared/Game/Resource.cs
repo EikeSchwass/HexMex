@@ -1,22 +1,21 @@
-﻿using System;
-using CocosSharp;
+﻿using CocosSharp;
 
 namespace HexMex.Game
 {
-    public abstract class Resource
+    public class Resource
     {
         public CCPoint WorldPosition { get; protected set; }
         public HexagonCornerPosition Position { get; protected set; }
-        public virtual string ImageFilename { get; protected set; }
+        public ResourceType ResourceType { get; }
+
+        public Resource(ResourceType resourceType)
+        {
+            ResourceType = resourceType;
+        }
 
         public void MoveTo(Structure requestingStructure)
         {
 
-        }
-
-        public virtual bool CanBeUsedFor(Type type)
-        {
-            return type == GetType();
         }
     }
 }

@@ -1,16 +1,14 @@
-﻿using System;
-
-namespace HexMex.Game
+﻿namespace HexMex.Game
 {
     public class ResourceHexagon : Hexagon
     {
-        public ResourceHexagon(Type resourceType, int amount, HexagonPosition position) : base(position)
+        public ResourceHexagon(ResourceType resourceType, int amount, HexagonPosition position) : base(position)
         {
             RemainingResources = amount;
             ResourceType = resourceType;
         }
 
-        public Type ResourceType { get; }
+        public ResourceType ResourceType { get; }
         public int RemainingResources { get; protected set; }
     }
 }

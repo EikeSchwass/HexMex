@@ -47,15 +47,9 @@ namespace HexMex.Game
             return Requests.FirstOrDefault(mr => mr.ResourceRequest.RequestState == ResourceRequestState.Pending);
         }
 
-        public ResourceRequest.ResourceRequestChanger GetNextRequestThatWishes<T>() where T : Resource
+        public ResourceRequest.ResourceRequestChanger GetNextRequestThatWishes(ResourceType resourceType)
         {
-            return GetNextRequestThatWishes(typeof(T));
-        }
-
-        public ResourceRequest.ResourceRequestChanger GetNextRequestThatWishes(Type t)
-        {
-            var resourceOfType = t.GetResource();
-            return Requests.FirstOrDefault(mr => resourceOfType.CanBeUsedFor(mr.ResourceRequest.Type) && mr.ResourceRequest.RequestState == ResourceRequestState.Pending);
+            return Requests.FirstOrDefault(resourceRequest => resourceType.DoesResourceTypeSatisfyRequest(resourceRequest.ResourceRequest.Type) && resourceRequest.ResourceRequest.RequestState == ResourceRequestState.Pending);
         }
 
         public bool HasPendingRequests()
@@ -63,14 +57,9 @@ namespace HexMex.Game
             return GetNext() != null;
         }
 
-        public bool HasPendingRequests(Type t)
+        public bool HasPendingRequests(ResourceType t)
         {
             return GetNextRequestThatWishes(t) != null;
-        }
-
-        public bool HasPendingRequests<T>() where T : Resource
-        {
-            return HasPendingRequests(typeof(T));
         }
 
         public bool Remove(ResourceRequest.ResourceRequestChanger item) => Requests.Remove(item);

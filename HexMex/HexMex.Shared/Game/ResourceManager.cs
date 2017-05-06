@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CocosSharp;
 
@@ -32,7 +31,7 @@ namespace HexMex.Game
             return resourceProvisionChanger.ResourceProvision;
         }
 
-        public ResourceRequest RequestResource(Type resourceType, Structure structure, int priority)
+        public ResourceRequest RequestResource(ResourceType resourceType, Structure structure, int priority)
         {
             var request = ResourceRequest.CreateResourceRequest(resourceType, structure, priority);
             RequestCollection.Add(request);
@@ -53,7 +52,7 @@ namespace HexMex.Game
         {
             foreach (var providedResource in ProvidedResources.Where(m => m.ResourceProvision.RequestState == ResourceRequestState.Pending))
             {
-                var type = providedResource.ResourceProvision.Resource.GetType();
+                var type = providedResource.ResourceProvision.Resource.ResourceType;
                 var nextRequest = RequestCollection.GetNextRequestThatWishes(type);
                 if (nextRequest == null)
                     continue;

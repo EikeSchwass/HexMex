@@ -20,6 +20,7 @@ namespace HexMex.Scenes.MainMenu
             HelpButton.Touched += HelpButton_Clicked;
             OptionsButton.Touched += OptionsButton_Clicked;
 
+            TouchHandler = new TouchHandler(this) { PintchingEnabled = false, DraggingEnabled = false };
 
             Schedule();
         }
@@ -29,6 +30,7 @@ namespace HexMex.Scenes.MainMenu
         private HexButton HelpButton { get; } = new HexButton("Help", 150);
         private HexButton OptionsButton { get; } = new HexButton("Options", 150);
         private HexButton StartGameButton { get; } = new HexButton("Start", 150);
+        private TouchHandler TouchHandler { get; }
 
         public override void Update(float dt)
         {
@@ -37,7 +39,6 @@ namespace HexMex.Scenes.MainMenu
             StartGameButton.BorderThickness = (float)(Math.Sin(AnimationTime) * 2 + 4);
             HelpButton.BorderThickness = (float)(Math.Sin(AnimationTime) + 4);
             OptionsButton.BorderThickness = (float)(Math.Sin(AnimationTime) + 4);
-
         }
 
         protected override void AddedToScene()

@@ -1,13 +1,14 @@
 using System.Linq;
 using CocosSharp;
+using HexMex.Game;
 using HexMex.Helper;
 
 namespace HexMex.Controls
 {
     public class HexButton : Button
     {
-        private CCColor4B backgroundColor = new CCColor4B(20, 20, 25, 255);
-        private CCColor4B borderColor = new CCColor4B(5, 103, 242, 255);
+        private CCColor4B backgroundColor = ColorCollection.DefaultHexagonBacgroundColor;
+        private CCColor4B borderColor = ColorCollection.DefaultHexagonBorderColor;
         private float borderThickness = 1;
         private float radius;
 
