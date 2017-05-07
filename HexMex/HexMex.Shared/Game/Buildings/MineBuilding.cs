@@ -1,24 +1,27 @@
-﻿using System;
+﻿using HexMex.Helper;
 
 namespace HexMex.Game.Buildings
 {
-    public class MineBuilding : ProductionBuilding
+    public class MineBuilding : Structure
     {
-        public MineBuilding(HexagonNode position, ResourceManager resourceManager) : base(position, resourceManager)
+        public MineBuilding(HexagonNode position, ResourceManager resourceManager, HexagonManager hexagonManager) : base(position, resourceManager, hexagonManager, new[] { ResourceType.Any }, new[] { ResourceType.Any })
         {
-            //Recipe = new Recipe(Enumerable.Repeat(new ResourceIngredient(1, ResourceType.Any), 1), Enumerable.Repeat(new ResourceIngredient(1, ResourceType.Any), 1), 5);
+
         }
 
-        public override event Action<Structure> RequiresRedraw;
-
-        public override void OnRequiresRedraw()
+        protected override bool CanExtractResourceFromHexagon(ResourceType resourceType)
         {
-            RequiresRedraw?.Invoke(this);
+            if (resourceType.CanBeUsedFor(ResourceType.Minable))
+                return true;
+            return false;
         }
 
-        public override void Update(float dt)
+        protected override bool AllowsRequestingResource(ResourceType resourceType) => false;
+
+        protected override void StartProduction()
         {
-            
+            base.StartProduction();
+            OnProductionFinished();
         }
     }
 }

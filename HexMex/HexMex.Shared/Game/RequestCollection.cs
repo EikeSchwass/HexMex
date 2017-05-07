@@ -22,7 +22,7 @@ namespace HexMex.Game
             }
             var priority = item.ResourceRequest.Priority;
             int index = 0;
-            for (; Requests[index].ResourceRequest.Priority >= priority; index++)
+            for (; index < Requests.Count && Requests[index].ResourceRequest.Priority >= priority; index++)
             {
             }
             Requests.Insert(index, item);
@@ -49,7 +49,7 @@ namespace HexMex.Game
 
         public ResourceRequest.ResourceRequestChanger GetNextRequestThatWishes(ResourceType resourceType)
         {
-            return Requests.FirstOrDefault(resourceRequest => resourceType.DoesResourceTypeSatisfyRequest(resourceRequest.ResourceRequest.Type) && resourceRequest.ResourceRequest.RequestState == ResourceRequestState.Pending);
+            return Requests.FirstOrDefault(resourceRequest => resourceType.CanBeUsedFor(resourceRequest.ResourceRequest.Type) && resourceRequest.ResourceRequest.RequestState == ResourceRequestState.Pending);
         }
 
         public bool HasPendingRequests()

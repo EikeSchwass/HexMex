@@ -9,23 +9,36 @@ namespace HexMex.Scenes.Game
 {
     public class HexagonLayer : CCLayer
     {
-        public HexagonLayer(World world)
+        public HexagonLayer(HexagonManager hexagonManager, WorldSettings worldSettings)
         {
+            WorldSettings = worldSettings;
+            HexagonManager = hexagonManager;
             ZOrder = 0;
-            World = world;
-            HexagonCorners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, world.WorldSettings.HexagonRadius).ToArray();
-            TriangleCornersPointed = GetPointedTriangle(World.WorldSettings.ResourceTriangleHeight, World.WorldSettings.ResourceTriangleEdgeLength);
-            TriangleCornersFlat = GetFlatTriangle(World.WorldSettings.ResourceTriangleHeight, World.WorldSettings.ResourceTriangleEdgeLength);
+            HexagonCorners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, worldSettings.HexagonRadius).ToArray();
+            TriangleCornersPointed = GetPointedTriangle(worldSettings.ResourceTriangleHeight, worldSettings.ResourceTriangleEdgeLength);
+            TriangleCornersFlat = GetFlatTriangle(worldSettings.ResourceTriangleHeight, worldSettings.ResourceTriangleEdgeLength);
 
-            World.HexagonManager.HexagonRevealed += HexagonRevealed;
+            hexagonManager.HexagonRevealed += HexagonRevealed;
         }
+
+        public HexagonManager HexagonManager { get; }
+
+        public WorldSettings WorldSettings { get; }
 
         private Dictionary<HexagonPosition, CCDrawNode> DrawNodes { get; } = new Dictionary<HexagonPosition, CCDrawNode>();
         private CCPoint[] HexagonCorners { get; }
         private Dictionary<int, CCPoint[]> TriangleCornerCache { get; } = new Dictionary<int, CCPoint[]>();
         private CCPoint[] TriangleCornersFlat { get; }
         private CCPoint[] TriangleCornersPointed { get; }
-        private World World { get; }
+
+        protected override void AddedToScene()
+        {
+            base.AddedToScene();
+            foreach (var drawNode in DrawNodes)
+            {
+                drawNode.Value.Position = drawNode.Key.GetWorldPosition(WorldSettings.HexagonRadius, WorldSettings.HexagonMargin);
+            }
+        }
 
         private void DrawResourceHexagon(ResourceHexagon resourceHexagon)
         {
@@ -51,15 +64,6 @@ namespace HexMex.Scenes.Game
             else
                 drawNode = DrawNodes[position];
             return drawNode;
-        }
-
-        protected override void AddedToScene()
-        {
-            base.AddedToScene();
-            foreach (var drawNode in DrawNodes)
-            {
-                drawNode.Value.Position = drawNode.Key.GetWorldPosition(World.WorldSettings.HexagonRadius, World.WorldSettings.HexagonMargin);
-            }
         }
 
         private CCPoint[] GetFlatTriangle(float triangleHeight, float edgeLength)
@@ -102,7 +106,7 @@ namespace HexMex.Scenes.Game
             int layer = GetLayerOfTriangle(indexInArea);
             bool isPointed = IsPointed(indexInArea);
             float offsetX;
-            var offsetY = layer * World.WorldSettings.ResourceTriangleHeight;
+            var offsetY = layer * WorldSettings.ResourceTriangleHeight;
             CCPoint[] triangleCorners;
             if (isPointed)
             {
@@ -128,11 +132,10 @@ namespace HexMex.Scenes.Game
                 offsetX = (indexInLayer + 0.5f - layer / 2f) * 2;
                 triangleCorners = TriangleCornersFlat;
             }
-            offsetX *= World.WorldSettings.ResourceTriangleEdgeLength / 2;
+            offsetX *= WorldSettings.ResourceTriangleEdgeLength / 2;
             var offset = new CCPoint(offsetX, offsetY);
             triangleCorners = triangleCorners.Select(corner => (corner + offset).RotateAround(CCPoint.Zero, areaIndex * 60 + 30)).ToArray();
             TriangleCornerCache.Add(index, triangleCorners);
-            
 
             return triangleCorners;
         }
@@ -155,7 +158,7 @@ namespace HexMex.Scenes.Game
 
         private void RedrawAllHexagons()
         {
-            foreach (var hexagon in World.HexagonManager)
+            foreach (var hexagon in HexagonManager)
             {
                 RedrawHexagon(hexagon);
             }
@@ -167,7 +170,7 @@ namespace HexMex.Scenes.Game
             drawNode.Clear();
 
             drawNode.DrawPolygon(HexagonCorners, 6, ColorCollection.DefaultHexagonBackgroundColor, 2, ColorCollection.DefaultHexagonBorderColor);
-            drawNode.Position = hexagon.Position.GetWorldPosition(World.WorldSettings.HexagonRadius, World.WorldSettings.HexagonMargin);
+            drawNode.Position = hexagon.Position.GetWorldPosition(WorldSettings.HexagonRadius, WorldSettings.HexagonMargin);
 
             if (hexagon is ResourceHexagon resourceHexagon)
             {

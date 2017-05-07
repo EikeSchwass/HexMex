@@ -1,18 +1,9 @@
-﻿using System;
-
-namespace HexMex.Game.Buildings
+﻿namespace HexMex.Game.Buildings
 {
-    public class VillageBuilding : Building
+    public class VillageBuilding : Structure
     {
-        public VillageBuilding(HexagonNode position, ResourceManager resourceManager) : base(position, resourceManager)
+        public VillageBuilding(HexagonNode position, ResourceManager resourceManager, HexagonManager hexagonManager) : base(position, resourceManager, hexagonManager)
         {
-        }
-
-        public override event Action<Structure> RequiresRedraw;
-
-        public override void OnRequiresRedraw()
-        {
-            RequiresRedraw?.Invoke(this);
         }
     }
 }

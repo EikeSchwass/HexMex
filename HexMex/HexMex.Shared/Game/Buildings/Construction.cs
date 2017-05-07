@@ -1,60 +1,35 @@
-﻿using System;
-using CocosSharp;
+﻿using System.Linq;
 
 namespace HexMex.Game.Buildings
 {
-    public class Construction : Structure, ICCUpdatable, IHasResourceStorage, IHasProgress
+    public class Construction : Structure, IHasProgress
     {
-        public Construction(ConstructionCompletedDelegate onConstructionCompleted, HexagonNode position, ResourceManager resourceManager, float constructionTime, params ResourceIngredient[] ingredients) : base(position, resourceManager)
+        public Construction(HexagonNode position, float constructionTime, ResourceManager resourceManager, HexagonManager hexagonManager, ConstructionCompletedDelegate onConstructionCompleted, ResourceType ingredient, params ResourceType[] ingredients) : base(position, resourceManager, hexagonManager, ingredients.Concat(Enumerable.Repeat(ingredient, 1)), Enumerable.Empty<ResourceType>())
         {
             OnConstructionCompleted = onConstructionCompleted;
             ConstructionTime = constructionTime;
-            Ingredients = ingredients;
         }
-
-        public override event Action<Structure> RequiresRedraw;
 
         public bool IsConstructing { get; private set; }
 
         public float PassedConstructionTime { get; private set; }
         public float Progress { get; private set; }
 
-        public ResourceStorage ResourceStorage { get; } = new ResourceStorage();
-
         private ConstructionCompletedDelegate OnConstructionCompleted { get; }
         public float ConstructionTime { get; }
-        private ResourceIngredient[] Ingredients { get; }
 
-        public override void OnResourceArrived(ResourcePackage resource)
+        protected override void StartProduction()
         {
-            base.OnResourceArrived(resource);
-            ResourceStorage.StoreResource(resource);
-            if (ResourceStorage.HasEnoughStored(Ingredients))
-            {
-                ResourceStorage.RemoveResources(Ingredients);
-                IsConstructing = true;
-                RequiresRedraw?.Invoke(this);
-            }
+            base.StartProduction();
+            IsConstructing = true;
+            Progress = 0;
         }
 
-        public override void OnRequiresRedraw()
+        public override void Update(float dt)
         {
-            RequiresRedraw?.Invoke(this);
-        }
-
-        public void StartConstruction()
-        {
-            foreach (var ingredient in Ingredients)
-            {
-                for (int i = 0; i < ingredient.Amount; i++)
-                {
-                    RequestResource(ingredient.ResourceType);
-                }
-            }
-        }
-
-        public void Update(float dt)
-        {
+            base.Update(dt);
+            if (!IsConstructing)
+                return;
             PassedConstructionTime += dt;
             if (PassedConstructionTime >= ConstructionTime)
             {

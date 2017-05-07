@@ -6,14 +6,11 @@ namespace HexMex.Scenes.Game
 {
     public class ControlLayer : CCLayer
     {
-        public ControlLayer(World world)
+        public ControlLayer(ButtonManager buttonManager)
         {
-            World = world;
-            world.ButtonManager.ButtonAdded += ButtonAdded;
-            world.ButtonManager.ButtonRemoved += ButtonRemoved;
+            buttonManager.ButtonAdded += ButtonAdded;
+            buttonManager.ButtonRemoved += ButtonRemoved;
         }
-
-        public World World { get; }
 
         private void ButtonAdded(ButtonManager buttonmanager, Button button)
         {

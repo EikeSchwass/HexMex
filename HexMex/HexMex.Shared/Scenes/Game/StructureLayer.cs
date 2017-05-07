@@ -9,23 +9,22 @@ namespace HexMex.Scenes.Game
 {
     public class StructureLayer : CCLayer
     {
+        public WorldSettings WorldSettings { get; }
         private CCPoint[] HexagonCorners { get; }
 
-        public StructureLayer(World world)
+        public StructureLayer(StructureManager structureManager, WorldSettings worldSettings)
         {
-            World = world;
-            World.StructureManager.StructureAdded += StructureAdded;
-            World.StructureManager.StructureRemoved += StructureRemoved;
+            WorldSettings = worldSettings;
+            structureManager.StructureAdded += StructureAdded;
+            structureManager.StructureRemoved += StructureRemoved;
             HexagonCorners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, 1).Select(c => c.RotateAround(CCPoint.Zero, 30)).ToArray();
         }
-
-        public World World { get; }
         private Dictionary<Structure, CCDrawNode> Structures { get; } = new Dictionary<Structure, CCDrawNode>();
 
         private void StructureAdded(StructureManager structureManager, Structure structure)
         {
             var drawNode = new CCDrawNode();
-            var worldPosition = structure.Position.GetWorldPosition(World.WorldSettings.HexagonRadius, World.WorldSettings.HexagonMargin);
+            var worldPosition = structure.Position.GetWorldPosition(WorldSettings.HexagonRadius, WorldSettings.HexagonMargin);
             drawNode.Position = worldPosition;
             AddChild(drawNode);
             Structures.Add(structure, drawNode);
@@ -39,8 +38,11 @@ namespace HexMex.Scenes.Game
             drawNode.Clear();
             DrawStructureOutline(structure, drawNode);
 
-            
-            // TODO Better Render
+            if (structure is Construction)
+            {
+                drawNode.DrawDot(CCPoint.Zero, 10, CCColor4B.Red);
+            }
+
         }
 
         private void DrawStructureOutline(Structure structure, CCDrawNode drawNode)

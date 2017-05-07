@@ -20,10 +20,11 @@ namespace HexMex.Scenes.Game
             TouchHandler.Pintching += Pintching;
             World = world;
             HexMexCamera = camera;
-            AddChild(new HexagonLayer(World) { Camera = camera });
+            AddChild(new HexagonLayer(World.HexagonManager, World.WorldSettings) { Camera = camera });
             AddChild(new CCLayerColor(camera, new CCColor4B(0, 0, 0, 0.4f)));
-            AddChild(new StructureLayer(World) { Camera = camera });
-            AddChild(new ControlLayer(World) { Camera = camera });
+            AddChild(new ResourcePackageLayer(World.ResourcePackageManager, World.WorldSettings) { Camera = camera });
+            AddChild(new StructureLayer(World.StructureManager, World.WorldSettings) { Camera = camera });
+            AddChild(new ControlLayer(World.ButtonManager) { Camera = camera });
         }
 
         private void Pintching(CCTouch touch1, CCTouch touch2)

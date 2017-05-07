@@ -8,13 +8,20 @@ namespace HexMex.Game
     // TODO Cleanup
     public class ResourceManager : ICCUpdatable
     {
-        public ResourceManager(World world)
+        public ResourceManager(PathFinder pathFinder, EdgeManager edgeManager, ResourcePackageManager resourcePackageManager, float checkInderval)
         {
+            PathFinder = pathFinder;
             RequestCollection = new RequestCollection();
-            CheckInterval = world.WorldSettings.ResourceManagerUpdateInterval;
+            CheckInterval = checkInderval;
+            EdgeManager = edgeManager;
+            ResourcePackageManager = resourcePackageManager;
         }
 
         public float CheckInterval { get; set; }
+
+        public EdgeManager EdgeManager { get; }
+        public ResourcePackageManager ResourcePackageManager { get; }
+        public PathFinder PathFinder { get; }
         private List<ResourceProvision.ResourceProvisionChanger> ProvidedResources { get; } = new List<ResourceProvision.ResourceProvisionChanger>();
         private RequestCollection RequestCollection { get; }
         private float TimeSinceLastCheck { get; set; }
@@ -53,6 +60,9 @@ namespace HexMex.Game
                     continue;
                 nextRequest.SetRequestState(ResourceRequestState.OnItsWay);
                 providedResource.SetRequestState(ResourceRequestState.OnItsWay);
+                var resourcePackage = new ResourcePackage(providedResource.ResourceProvision.ResourceType, PathFinder, EdgeManager, providedResource.ResourceProvision.Structure, nextRequest.ResourceRequest.RequestingStructure, nextRequest.ResourceRequest);
+                ResourcePackageManager.Add(resourcePackage);
+
                 //providedResource.ResourceProvision.Resource.MoveTo(nextRequest.ResourceRequest.RequestingStructure);
             }
         }

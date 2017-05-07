@@ -63,5 +63,6 @@ namespace HexMex.Helper
             }
             return c;
         }
+
     }
 }

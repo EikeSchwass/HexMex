@@ -42,11 +42,12 @@ namespace HexMex.Helper
                 {
                     List<TNode> path = new List<TNode>();
                     var node = destination;
-                    while (!Equals(predecessor[node], start))
+                    do
                     {
                         path.Add(node);
                         node = predecessor[node];
                     }
+                    while (!Equals(node, start));
                     path.Add(start);
                     path.Reverse();
                     return path;

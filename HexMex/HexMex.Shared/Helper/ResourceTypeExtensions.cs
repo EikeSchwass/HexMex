@@ -6,7 +6,7 @@ namespace HexMex.Helper
 {
     public static class ResourceTypeExtensions
     {
-        public static bool DoesResourceTypeSatisfyRequest(this ResourceType actualType, ResourceType requestedType)
+        public static bool CanBeUsedFor(this ResourceType actualType, ResourceType requestedType)
         {
             return (actualType & requestedType) == requestedType;
         }
@@ -20,7 +20,7 @@ namespace HexMex.Helper
                 case ResourceType.Meat: return CCColor4B.Orange;
                 case ResourceType.Bread: return CCColor4B.Gray;
                 case ResourceType.Nutrition: return CCColor4B.White;
-                case ResourceType.Rainbow: return CCColor4B.Green;
+                case ResourceType.Any: return CCColor4B.Green;
                 case ResourceType.Nothing: return CCColor4B.Aquamarine;
                 default: throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }

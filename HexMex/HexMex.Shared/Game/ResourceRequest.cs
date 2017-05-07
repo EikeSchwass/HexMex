@@ -23,7 +23,10 @@ namespace HexMex.Game
 
         public static ResourceRequestChanger CreateResourceRequest(ResourceType resourceType, Structure structure, RequestPriority priority)
         {
+            if (ResourceRequestChangerFactory == null)
+                ResourceRequestChanger.SetFactory();
             var resourceRequest = new ResourceRequest(resourceType, structure, priority);
+            // ReSharper disable once PossibleNullReferenceException
             var requestChanger = ResourceRequestChangerFactory(resourceRequest);
             return requestChanger;
         }

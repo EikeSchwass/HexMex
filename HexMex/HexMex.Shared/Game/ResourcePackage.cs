@@ -1,31 +1,79 @@
 ﻿using System;
+using System.Linq;
 using CocosSharp;
 using HexMex.Game.Buildings;
+using HexMex.Helper;
 
 namespace HexMex.Game
 {
-    public class ResourcePackage : IRenderable<ResourcePackage>
+    public class ResourcePackage : ICCUpdatable, IRenderable<ResourcePackage>
     {
-        public ResourcePackage(ResourceType resourceType, Structure startStructure, Structure destinationStructure)
+        public ResourcePackage(ResourceType resourceType, PathFinder pathFinder, EdgeManager edgeManager, Structure startStructure, Structure destinationStructure, ResourceRequest resourceRequest)
         {
             ResourceType = resourceType;
+            PathFinder = pathFinder;
+            EdgeManager = edgeManager;
             StartStructure = startStructure;
             DestinationStructure = destinationStructure;
+            ResourceRequest = resourceRequest;
+            Path = PathFinder.FindPath(startStructure.Position, destinationStructure.Position);
+            CurrentNode = Path[0];
+            NextNode = Path[1];
+            PathFinder.NodeRemoved += PathsChanged;
         }
 
-        public event Action<ResourcePackage> RequiresRedraw;
+        private void PathsChanged(HexagonNode removedNode)
+        {
+            if (Path.Contains(removedNode))
+                Path = PathFinder.FindPath(CurrentNode, DestinationStructure.Position);
+        }
         public Structure DestinationStructure { get; }
         public ResourceType ResourceType { get; }
+        public PathFinder PathFinder { get; }
+        public EdgeManager EdgeManager { get; }
 
         public Structure StartStructure { get; }
+        public ResourceRequest ResourceRequest { get; set; }
 
-        public CCPoint GetWorldPosition(HexagonNode from, HexagonNode to, float progress, float hexRadius, float hexMargin)
+        public HexagonNode CurrentNode { get; private set; }
+        public HexagonNode NextNode { get; private set; }
+        public float Progress { get; private set; }
+
+        public HexagonNode[] Path { get; set; }
+
+
+
+        public CCPoint GetWorldPosition(float hexRadius, float hexMargin)
         {
-            var startPos = from.GetWorldPosition(hexRadius, hexMargin);
-            var nextPos = to.GetWorldPosition(hexRadius, hexMargin);
+            var startPos = CurrentNode.GetWorldPosition(hexRadius, hexMargin);
+            var nextPos = NextNode.GetWorldPosition(hexRadius, hexMargin);
             var deltaPos = nextPos - startPos;
-            var interpoled = deltaPos * progress;
+            var interpoled = deltaPos * Progress;
             return startPos + interpoled;
         }
+
+        public void Update(float dt)
+        {
+            Progress += dt / EdgeManager.GetTimeForEdge(CurrentNode, NextNode);
+            while (Progress >= 1)
+            {
+                CurrentNode = NextNode;
+                if (NextNode == Path.Last())
+                {
+                    DestinationStructure.OnResourceArrived(this);
+                    ArrivedAtDestination?.Invoke(this);
+                }
+                else
+                {
+                    NextNode = Path.GetElementAfter(NextNode);
+                }
+                Progress--;
+            }
+            RequiresRedraw?.Invoke(this);
+        }
+
+        public event Action<ResourcePackage> ArrivedAtDestination;
+
+        public event Action<ResourcePackage> RequiresRedraw;
     }
 }

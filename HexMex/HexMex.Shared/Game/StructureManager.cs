@@ -9,16 +9,11 @@ namespace HexMex.Game
 {
     public class StructureManager : IEnumerable<Structure>, ICCUpdatable
     {
-        public StructureManager(World world)
-        {
-            World = world;
-        }
 
         public event Action<StructureManager, Structure> StructureAdded;
         public event Action<StructureManager, Structure> StructureRemoved;
 
         public Structure this[HexagonNode hexagonNode] => GetStructureAtPosition(hexagonNode);
-        public World World { get; }
 
         private Dictionary<HexagonNode, Structure> Structures { get; } = new Dictionary<HexagonNode, Structure>();
 
@@ -48,7 +43,7 @@ namespace HexMex.Game
 
         public void Update(float dt)
         {
-            foreach (var structure in this.OfType<ICCUpdatable>())
+            foreach (var structure in this.ToArray())
             {
                 structure.Update(dt);
             }

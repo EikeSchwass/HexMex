@@ -5,6 +5,8 @@ namespace HexMex.Game
 {
     public partial class ResourceProvision
     {
+        private ResourceRequestState requestState;
+
         private ResourceProvision(ResourceType resourceType, Structure structure, RequestPriority priority)
         {
             ResourceType = resourceType;
@@ -14,7 +16,20 @@ namespace HexMex.Game
         }
 
         public RequestPriority Priority { get; }
-        public ResourceRequestState RequestState { get; private set; }
+
+        public ResourceRequestState RequestState
+        {
+            get => requestState;
+            private set
+            {
+                if (requestState == ResourceRequestState.Pending && value == ResourceRequestState.OnItsWay)
+                {
+                    requestState = value;
+                    ProvisionAccepted?.Invoke(this);
+                }
+                requestState = value;
+            }
+        }
 
         public ResourceType ResourceType { get; }
         public Structure Structure { get; }
@@ -23,9 +38,15 @@ namespace HexMex.Game
 
         public static ResourceProvisionChanger CreateResourceProvision(ResourceType resourceType, Structure structure, RequestPriority priority)
         {
+            if (ResourceProvisionChangerFactory == null)
+                ResourceProvisionChanger.SetFactory();
             var resourceProvision = new ResourceProvision(resourceType, structure, priority);
+            // ReSharper disable once PossibleNullReferenceException
             var provisionChanger = ResourceProvisionChangerFactory(resourceProvision);
             return provisionChanger;
         }
+
+        public event Action<ResourceProvision> ProvisionAccepted;
+
     }
 }

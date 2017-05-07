@@ -13,7 +13,7 @@ namespace HexMex.Game
         Nutrition = Meat | Bread,
         Gold = 16,
         Iron = 32,
-        Rainbow = 31,
-        Minable = Rainbow | Gold
+        Any = 63,
+        Minable = Gold | Iron
     }
 }

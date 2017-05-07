@@ -9,16 +9,14 @@ namespace HexMex.Game
 {
     public class HexagonManager : IEnumerable<Hexagon>, ICCUpdatable
     {
-        public HexagonManager(World world)
+        public HexagonManager(WorldSettings worldSettings)
         {
-            World = world;
-            HexagonRevealer = new HexagonRevealer(this);
+            HexagonRevealer = new HexagonRevealer(this, worldSettings);
         }
 
         public event Action<HexagonManager, Hexagon> HexagonRevealed;
 
         public Hexagon this[HexagonPosition hexagonPosition] => GetHexagonAtPosition(hexagonPosition);
-        public World World { get; }
         private HexagonRevealer HexagonRevealer { get; }
 
         private Dictionary<HexagonPosition, Hexagon> Hexagons { get; } = new Dictionary<HexagonPosition, Hexagon>();
@@ -70,6 +68,19 @@ namespace HexMex.Game
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public IEnumerable<Hexagon> GetAdjacentHexagons(HexagonNode position)
+        {
+            var hexagon1 = GetHexagonAtPosition(position.Position1);
+            var hexagon2 = GetHexagonAtPosition(position.Position2);
+            var hexagon3 = GetHexagonAtPosition(position.Position3);
+            if (hexagon1 != null)
+                yield return hexagon1;
+            if (hexagon2 != null)
+                yield return hexagon2;
+            if (hexagon3 != null)
+                yield return hexagon3;
         }
     }
 }

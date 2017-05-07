@@ -9,13 +9,13 @@
                 ResourceProvision = parent;
             }
 
-            static ResourceProvisionChanger()
+            public static void SetFactory()
             {
                 ResourceProvisionChangerFactory = mr => new ResourceProvisionChanger(mr);
             }
 
             public ResourceProvision ResourceProvision { get; }
-            
+
             public void SetRequestState(ResourceRequestState requestState)
             {
                 ResourceProvision.RequestState = requestState;
