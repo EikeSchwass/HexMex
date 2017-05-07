@@ -129,7 +129,7 @@ namespace HexMex.Scenes
         {
             if (node is Control control)
             {
-                if (!control.IsPointInBounds(touch.Location))
+                if (!control.IsPointInBounds(touch))
                 {
                     if (control.IsTouched)
                     {

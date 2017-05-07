@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using CocosSharp;
 using HexMex.Helper;
+using static System.Math;
 
 namespace HexMex.Game
 {
@@ -10,6 +11,7 @@ namespace HexMex.Game
         public int X { get; }
         public int Y { get; }
         public int Z { get; }
+        public int DistanceToOrigin { get; }
         private CCPoint WorldPositionRadiusOne { get; }
         public static HexagonPosition Zero { get; } = new HexagonPosition(0, 0, 0);
 
@@ -20,7 +22,15 @@ namespace HexMex.Game
             X = x;
             Y = y;
             Z = z;
+
+            DistanceToOrigin = Max(Abs(x), Max(Abs(y), Abs(z)));
+
             WorldPositionRadiusOne = HexagonHelper.CalculateWorldPosition(x, y, z, 1, 0);
+        }
+
+        public override string ToString()
+        {
+            return $"({X},{Y},{Z})";
         }
 
         public bool Equals(HexagonPosition other)

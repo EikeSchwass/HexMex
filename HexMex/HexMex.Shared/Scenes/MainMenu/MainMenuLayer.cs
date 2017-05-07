@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using CocosSharp;
 using HexMex.Controls;
+using HexMex.Game;
 using HexMex.Scenes.Game;
 
 namespace HexMex.Scenes.MainMenu
@@ -72,7 +73,11 @@ namespace HexMex.Scenes.MainMenu
 
         private void StartGameButton_Clicked(CCTouch obj)
         {
-            Window.DefaultDirector.PushScene(new GameScene(Window, HexMexScene.DataLoader));
+            World world = new World(new WorldSettings());
+            Window.DefaultDirector.PushScene(new GameScene(Window, HexMexScene.DataLoader, world));
+            world.Initialize();
+
+
         }
     }
 }

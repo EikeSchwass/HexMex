@@ -4,7 +4,7 @@
     {
         public class ResourceRequestChanger
         {
-            protected ResourceRequestChanger(ResourceRequest parent)
+            private ResourceRequestChanger(ResourceRequest parent)
             {
                 ResourceRequest = parent;
             }
@@ -15,12 +15,7 @@
             }
 
             public ResourceRequest ResourceRequest { get; }
-
-            public void SetResource(Resource resource)
-            {
-                ResourceRequest.Resource = resource;
-            }
-
+            
             public void SetRequestState(ResourceRequestState requestState)
             {
                 ResourceRequest.RequestState = requestState;

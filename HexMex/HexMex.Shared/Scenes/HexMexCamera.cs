@@ -14,7 +14,7 @@ namespace HexMex.Scenes
         }
 
         public CCPoint Position { get; private set; }
-        public CCSize StartVisibleArea { get; private set; }
+        public CCSize StartVisibleArea { get; }
         public float ZoomFactor { get; private set; } = 1;
 
         public void MoveToPosition(CCPoint value)

@@ -17,9 +17,7 @@ namespace HexMex.Scenes.Game
             TriangleCornersPointed = GetPointedTriangle(World.WorldSettings.ResourceTriangleHeight, World.WorldSettings.ResourceTriangleEdgeLength);
             TriangleCornersFlat = GetFlatTriangle(World.WorldSettings.ResourceTriangleHeight, World.WorldSettings.ResourceTriangleEdgeLength);
 
-
-            World.HexagonAdded += HexagonAdded;
-            RedrawAllHexagons();
+            World.HexagonManager.HexagonRevealed += HexagonRevealed;
         }
 
         private Dictionary<HexagonPosition, CCDrawNode> DrawNodes { get; } = new Dictionary<HexagonPosition, CCDrawNode>();
@@ -37,7 +35,7 @@ namespace HexMex.Scenes.Game
             {
                 var triangleCorners = GetTriangleCorners(i);
                 var color = resourceHexagon.ResourceType.GetColor();
-                drawNode.DrawPolygon(triangleCorners, 3, color, 1f, ColorCollection.DefaultResourceBorderColor);
+                drawNode.DrawPolygon(triangleCorners, 3, color, resourceHexagon.ResourceType.HasBorder() ? 0f : 0, ColorCollection.DefaultResourceBorderColor);
             }
         }
 
@@ -97,21 +95,14 @@ namespace HexMex.Scenes.Game
             if (TriangleCornerCache.ContainsKey(index))
                 return TriangleCornerCache[index];
 
-            Console.WriteLine(index + ":");
-
             int areaIndex = index % 6;
-            Console.WriteLine("areaIndex: " + areaIndex);
             int indexInArea = index - areaIndex;
             indexInArea /= 6;
-            Console.WriteLine("indexInArea: " + indexInArea);
             int typeIndex;
             int layer = GetLayerOfTriangle(indexInArea);
-            Console.WriteLine("layer: " + layer);
             bool isPointed = IsPointed(indexInArea);
-            Console.WriteLine("isPointed: " + isPointed);
             float offsetX;
             var offsetY = layer * World.WorldSettings.ResourceTriangleHeight;
-            Console.WriteLine("offsetY: " + offsetY);
             CCPoint[] triangleCorners;
             if (isPointed)
             {
@@ -137,18 +128,16 @@ namespace HexMex.Scenes.Game
                 offsetX = (indexInLayer + 0.5f - layer / 2f) * 2;
                 triangleCorners = TriangleCornersFlat;
             }
-            Console.WriteLine("offsetX: " + offsetX);
             offsetX *= World.WorldSettings.ResourceTriangleEdgeLength / 2;
             var offset = new CCPoint(offsetX, offsetY);
             triangleCorners = triangleCorners.Select(corner => (corner + offset).RotateAround(CCPoint.Zero, areaIndex * 60 + 30)).ToArray();
             TriangleCornerCache.Add(index, triangleCorners);
-
-            Console.WriteLine("-------------");
+            
 
             return triangleCorners;
         }
 
-        private void HexagonAdded(World sender, Hexagon addedHexagon)
+        private void HexagonRevealed(HexagonManager sender, Hexagon addedHexagon)
         {
             addedHexagon.RequiresRedraw += RedrawHexagon;
             var ccDrawNode = new CCDrawNode();
@@ -166,7 +155,7 @@ namespace HexMex.Scenes.Game
 
         private void RedrawAllHexagons()
         {
-            foreach (var hexagon in World.Hexagons)
+            foreach (var hexagon in World.HexagonManager)
             {
                 RedrawHexagon(hexagon);
             }
@@ -175,8 +164,10 @@ namespace HexMex.Scenes.Game
         private void RedrawHexagon(Hexagon hexagon)
         {
             var drawNode = GetDrawNode(hexagon.Position);
+            drawNode.Clear();
 
-            drawNode.DrawPolygon(HexagonCorners, 6, ColorCollection.DefaultHexagonBacgroundColor, 2, ColorCollection.DefaultHexagonBorderColor);
+            drawNode.DrawPolygon(HexagonCorners, 6, ColorCollection.DefaultHexagonBackgroundColor, 2, ColorCollection.DefaultHexagonBorderColor);
+            drawNode.Position = hexagon.Position.GetWorldPosition(World.WorldSettings.HexagonRadius, World.WorldSettings.HexagonMargin);
 
             if (hexagon is ResourceHexagon resourceHexagon)
             {

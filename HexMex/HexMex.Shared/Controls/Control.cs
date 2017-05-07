@@ -13,9 +13,9 @@ namespace HexMex.Controls
         public event Action<Control, CCTouch> TouchDown;
         public event Action<Control, CCTouch> TouchUp;
 
-        public virtual bool IsPointInBounds(CCPoint position)
+        public virtual bool IsPointInBounds(CCTouch position)
         {
-            return BoundingBoxTransformedToWorld.ContainsPoint(position);
+            return BoundingBoxTransformedToWorld.ContainsPoint(position.Location);
         }
 
         public virtual void OnTouchEnter(CCTouch touch)

@@ -1,4 +1,6 @@
-﻿namespace HexMex.Game
+﻿using HexMex.Game.Buildings;
+
+namespace HexMex.Game
 {
     public partial class RecipeDatabase
     {

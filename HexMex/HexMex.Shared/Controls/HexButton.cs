@@ -7,7 +7,7 @@ namespace HexMex.Controls
 {
     public class HexButton : Button
     {
-        private CCColor4B backgroundColor = ColorCollection.DefaultHexagonBacgroundColor;
+        private CCColor4B backgroundColor = ColorCollection.DefaultHexagonBackgroundColor;
         private CCColor4B borderColor = ColorCollection.DefaultHexagonBorderColor;
         private float borderThickness = 1;
         private float radius;
@@ -105,9 +105,9 @@ namespace HexMex.Controls
         private CCDrawNode HexagoneNode { get; }
         private CCLabel TextLabel { get; }
 
-        public override bool IsPointInBounds(CCPoint position)
+        public override bool IsPointInBounds(CCTouch position)
         {
-            var point = position - Position;
+            var point = position.Location - Position;
             return HexagonHelper.IsPointInsideHexagon(Corners, point);
         }
 

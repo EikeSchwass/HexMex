@@ -10,7 +10,7 @@ namespace HexMex.Game
     {
         public int Count => Requests.Count;
         public bool IsReadOnly => false;
-        private Dictionary<Type, Resource> Resources { get; } = new Dictionary<Type, Resource>();
+        private Dictionary<Type, ResourcePackage> Resources { get; } = new Dictionary<Type, ResourcePackage>();
         private List<ResourceRequest.ResourceRequestChanger> Requests { get; } = new List<ResourceRequest.ResourceRequestChanger>();
 
         public void Add(ResourceRequest.ResourceRequestChanger item)

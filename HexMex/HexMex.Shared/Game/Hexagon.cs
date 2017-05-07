@@ -9,7 +9,7 @@ namespace HexMex.Game
             Position = position;
         }
 
-        public event Action<Hexagon> RequiresRedraw;
+        public abstract event Action<Hexagon> RequiresRedraw;
 
         public HexagonPosition Position { get; }
     }

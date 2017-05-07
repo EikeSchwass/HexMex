@@ -1,63 +1,89 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CocosSharp;
+﻿using CocosSharp;
+using HexMex.Controls;
+using HexMex.Game.Buildings;
 
 namespace HexMex.Game
 {
     public class World : ICCUpdatable
     {
-        public World()
+        public World(WorldSettings worldSettings)
         {
-            int size = 3;
-            Random r = new Random();
-            for (int x = -size; x < size + 1; x++)
-            {
-                for (int y = -size; y < size + 1; y++)
-                {
-                    for (int z = -size; z < size + 1; z++)
-                    {
-                        if (x + y + z != 0)
-                            continue;
-                        HexagonList.Add(new ResourceHexagon(ResourceType.Platinum, r.Next(0, WorldSettings.MaxNumberOfResourcesInHexagon), new HexagonPosition(x, y, z)));
-                    }
-                }
-            }
-            StructureList.Add(new VillageBuilding(new HexagonCornerPosition(HexagonList[0].Position, HexagonList[1].Position, HexagonList[2].Position), ResourceManager, RecipeDatabase));
+            WorldSettings = worldSettings;
+            ResourceManager = new ResourceManager(this);
+            HexagonManager = new HexagonManager(this);
+            StructureManager = new StructureManager(this);
+            ButtonManager = new ButtonManager(this);
+            StructureManager.StructureAdded += StructureAdded;
         }
 
-        public event Action<World, Hexagon> HexagonAdded;
-        public IReadOnlyCollection<Connection> Connections => ConnectionList.AsReadOnly();
+        public ButtonManager ButtonManager { get; }
+        public HexagonManager HexagonManager { get; }
+        public bool IsInitialized { get; private set; }
+        public ResourceManager ResourceManager { get; }
+        public StructureManager StructureManager { get; }
 
-        public IReadOnlyCollection<Hexagon> Hexagons => HexagonList.AsReadOnly();
+        public WorldSettings WorldSettings { get; }
 
-        public RecipeDatabase RecipeDatabase { get; } = new RecipeDatabase();
-        public IReadOnlyCollection<Structure> Structures => StructureList.AsReadOnly();
-        public WorldSettings WorldSettings { get; } = new WorldSettings();
-        private List<Connection> ConnectionList { get; } = new List<Connection>();
-        private List<Hexagon> HexagonList { get; } = new List<Hexagon>();
-        private ResourceManager ResourceManager { get; } = new ResourceManager(1);
-        private List<Structure> StructureList { get; } = new List<Structure>();
-        private HexagonLoader HexagonLoader { get; } = new HexagonLoader();
+        public void Initialize()
+        {
+            var p1 = HexagonPosition.Zero;
+            var p2 = new HexagonPosition(0, 1, -1);
+            var p3 = new HexagonPosition(1, 0, -1);
+            //var p4 = new HexagonPosition(1, -1, 0);
+            //var p5 = new HexagonPosition(-1, 1, 0);
+            //var p6 = new HexagonPosition(1, 1, -2);
+
+            HexagonManager.RevealHexagonAt(p1);
+            HexagonManager.RevealHexagonAt(p2);
+            HexagonManager.RevealHexagonAt(p3);
+            //HexagonManager.RevealHexagonAt(p4);
+            //HexagonManager.RevealHexagonAt(p5);
+            //HexagonManager.RevealHexagonAt(p6);
+
+            StructureManager.CreateStrucuture(new MineBuilding(new HexagonNode(p1, p2, p3), ResourceManager));
+
+            IsInitialized = true;
+        }
 
         public void Update(float dt)
         {
+            if (!IsInitialized)
+                return;
             ResourceManager.Update(dt);
-            var updateableStructures = StructureList.OfType<ICCUpdatable>();
-            var updateableHexagons = StructureList.OfType<ICCUpdatable>();
-            var updateableConnections = StructureList.OfType<ICCUpdatable>();
-
-            foreach (var updatable in updateableStructures.Concat(updateableHexagons).Concat(updateableConnections))
-            {
-                updatable.Update(dt);
-            }
+            HexagonManager.Update(dt);
+            StructureManager.Update(dt);
         }
 
-        public void RevealHexagon(HexagonPosition position)
+        private void BuildingBlockTouched(Button button, HexagonNode hexagonNode)
         {
-            var revealHexagon = HexagonLoader.RevealHexagon(position);
-            HexagonList.Add(revealHexagon);
-            HexagonAdded?.Invoke(this, revealHexagon);
+            StructureManager.CreateStrucuture(new MineBuilding(hexagonNode, ResourceManager));
+            ButtonManager.RemoveButton(button);
+        }
+
+        private void StructureAdded(StructureManager manager, Structure structure)
+        {
+            if (structure is Building)
+            {
+                foreach (var adjacentHexagonNode in structure.Position.GetAccessibleAdjacentHexagonNodes(HexagonManager))
+                {
+                    var p1 = adjacentHexagonNode.Position1;
+                    var p2 = adjacentHexagonNode.Position2;
+                    var p3 = adjacentHexagonNode.Position3;
+                    if (HexagonManager.GetHexagonAtPosition(p1) == null)
+                        HexagonManager.RevealHexagonAt(p1);
+                    if (HexagonManager.GetHexagonAtPosition(p2) == null)
+                        HexagonManager.RevealHexagonAt(p2);
+                    if (HexagonManager.GetHexagonAtPosition(p3) == null)
+                        HexagonManager.RevealHexagonAt(p3);
+
+                    if (StructureManager[adjacentHexagonNode] == null && ButtonManager[adjacentHexagonNode] == null)
+                    {
+                        var button = new TextButton("Test", 100);
+                        button.Touched += touch => BuildingBlockTouched(button, adjacentHexagonNode);
+                        ButtonManager.AddButton(button, adjacentHexagonNode);
+                    }
+                }
+            }
         }
     }
 }

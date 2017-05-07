@@ -3,13 +3,38 @@ using CocosSharp;
 
 namespace HexMex.Controls
 {
-    public class Button : Control
+    public abstract class Button : Control
     {
-        private bool TouchStartedOnThis { get; set; }
+
+        public event Action<CCTouch> TouchCancelled;
 
         public event Action<CCTouch> Touched;
         public event Action<CCTouch> Touching;
-        public event Action<CCTouch> TouchCancelled;
+
+        private bool TouchStartedOnThis { get; set; }
+
+        public virtual void OnRender() { }
+
+        public override bool OnTouchDown(CCTouch touch)
+        {
+            base.OnTouchDown(touch);
+            TouchStartedOnThis = true;
+            Touching?.Invoke(touch);
+            return true;
+        }
+
+        public override void OnTouchEnter(CCTouch touch)
+        {
+            base.OnTouchEnter(touch);
+            TouchStartedOnThis = false;
+        }
+
+        public override void OnTouchLeave(CCTouch touch)
+        {
+            base.OnTouchLeave(touch);
+            TouchStartedOnThis = false;
+            TouchCancelled?.Invoke(touch);
+        }
 
         public override bool OnTouchUp(CCTouch touch)
         {
@@ -23,26 +48,36 @@ namespace HexMex.Controls
             }
             return false;
         }
+    }
 
-        public override bool OnTouchDown(CCTouch touch)
+    public class TextButton : Button
+    {
+        public string Text { get; }
+        public float FontSize { get; }
+
+        public TextButton(string text, float fontSize)
         {
-            base.OnTouchDown(touch);
-            TouchStartedOnThis = true;
-            Touching?.Invoke(touch);
-            return true;
+            Text = text;
+            FontSize = fontSize;
+            AddChild(new CCLabel(Text, "fonts/MarkerFelt-22.xnb", fontSize, CCLabelFormat.SystemFont));
         }
 
-        public override void OnTouchLeave(CCTouch touch)
+        public override bool IsPointInBounds(CCTouch touch)
         {
-            base.OnTouchLeave(touch);
-            TouchStartedOnThis = false;
-            TouchCancelled?.Invoke(touch);
-        }
+            var t1 = ScreenToWorldspace(touch.LocationOnScreen);
+            var t2 = ConvertToWorldspace(touch.LocationOnScreen);
 
-        public override void OnTouchEnter(CCTouch touch)
-        {
-            base.OnTouchEnter(touch);
-            TouchStartedOnThis = false;
+            var p1 = Position;
+            var p2 = ConvertToWorldspace(Position);
+            var p3 = ScreenToWorldspace(Position);
+
+            var delta = t1 - p1;
+            delta = t1 - p2;
+            delta = t1 - p3;
+            delta = t2 - p1;
+            delta = t2 - p2;
+            delta = t1 - p1;
+            return delta.Length < FontSize;
         }
     }
 }

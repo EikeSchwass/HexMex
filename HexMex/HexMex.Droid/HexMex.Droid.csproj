@@ -58,6 +58,9 @@
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="OpenTK" />
+    <Reference Include="Priority Queue, Version=4.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OptimizedPriorityQueue.4.0.4\lib\netstandard1.0\Priority Queue.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
