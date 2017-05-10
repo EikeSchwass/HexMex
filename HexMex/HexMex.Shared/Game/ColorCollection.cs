@@ -9,5 +9,7 @@ namespace HexMex.Game
         public static CCColor4B DefaultResourceBorderColor { get; } = CCColor4B.White;
         public static CCColor4B DefaultStructureBackgroundColor { get; } = CCColor4B.Gray;
         public static CCColor4B DefaultStructureBorderColor { get; } = CCColor4B.White;
+        public static CCColor4B DefaultBuildButtonBackgroundColor { get; } = CCColor4B.Gray;
+        public static CCColor4B DefaultBuildButtonBorderColor { get; } = CCColor4B.White;
     }
 }

@@ -6,10 +6,10 @@ namespace HexMex.Controls
     public abstract class Button : Control
     {
 
-        public event Action<CCTouch> TouchCancelled;
+        public event Action<Button, CCTouch> TouchCancelled;
 
-        public event Action<CCTouch> Touched;
-        public event Action<CCTouch> Touching;
+        public event Action<Button,CCTouch> Touched;
+        public event Action<Button, CCTouch> Touching;
 
         private bool TouchStartedOnThis { get; set; }
 
@@ -19,7 +19,7 @@ namespace HexMex.Controls
         {
             base.OnTouchDown(touch);
             TouchStartedOnThis = true;
-            Touching?.Invoke(touch);
+            Touching?.Invoke(this,touch);
             return true;
         }
 
@@ -33,7 +33,7 @@ namespace HexMex.Controls
         {
             base.OnTouchLeave(touch);
             TouchStartedOnThis = false;
-            TouchCancelled?.Invoke(touch);
+            TouchCancelled?.Invoke(this,touch);
         }
 
         public override bool OnTouchUp(CCTouch touch)
@@ -43,41 +43,10 @@ namespace HexMex.Controls
             TouchStartedOnThis = false;
             if (startedHere)
             {
-                Touched?.Invoke(touch);
+                Touched?.Invoke(this,touch);
                 return true;
             }
             return false;
-        }
-    }
-
-    public class TextButton : Button
-    {
-        public string Text { get; }
-        public float FontSize { get; }
-
-        public TextButton(string text, float fontSize)
-        {
-            Text = text;
-            FontSize = fontSize;
-            AddChild(new CCLabel(Text, "fonts/MarkerFelt-22.xnb", fontSize, CCLabelFormat.SystemFont));
-        }
-
-        public override bool IsPointInBounds(CCTouch touch)
-        {
-            var t1 = ScreenToWorldspace(touch.LocationOnScreen);
-            var t2 = ConvertToWorldspace(touch.LocationOnScreen);
-
-            var p1 = Position;
-            var p2 = ConvertToWorldspace(Position);
-            var p3 = ScreenToWorldspace(Position);
-
-            var delta = t1 - p1;
-            delta = t1 - p2;
-            delta = t1 - p3;
-            delta = t2 - p1;
-            delta = t2 - p2;
-            delta = t1 - p1;
-            return delta.Length < FontSize;
         }
     }
 }

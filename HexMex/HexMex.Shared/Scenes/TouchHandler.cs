@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CocosSharp;
 using HexMex.Controls;
+using HexMex.Scenes.Game;
 
 namespace HexMex.Scenes
 {
@@ -82,7 +83,7 @@ namespace HexMex.Scenes
             }
             AddTouch(touch);
             if (TouchMode == TouchMode.Pressing)
-                VisitControlTree(RootNode, touch, VisitTouchDown);
+                VisitControlTree(RootNode, touch, VisitTouchDown, false);
             return true;
         }
 
@@ -90,28 +91,29 @@ namespace HexMex.Scenes
         {
             RemoveTouch(touch);
 
-            VisitControlTree(RootNode, touch, VisitTouchCancelled);
+            VisitControlTree(RootNode, touch, VisitTouchCancelled, false);
         }
 
         private void TouchEnded(CCTouch touch, CCEvent arg2)
         {
+            bool closeMenu = !(TouchMode == TouchMode.Dragging || TouchMode == TouchMode.Pintching);
             RemoveTouch(touch);
             if (TouchMode == TouchMode.Idle)
-                VisitControlTree(RootNode, touch, VisitTouchUp);
+                VisitControlTree(RootNode, touch, VisitTouchUp, closeMenu);
             else
-                VisitControlTree(RootNode, touch, VisitTouchCancelled);
+                VisitControlTree(RootNode, touch, VisitTouchCancelled, false);
         }
 
         private void TouchMoved(CCTouch touch, CCEvent arg2)
         {
             if ((touch.StartLocation - touch.Location).Length < DRAGTHRESHOLD && TouchMode == TouchMode.Pressing)
             {
-                VisitControlTree(RootNode, touch, VisitTouchMoved);
+                VisitControlTree(RootNode, touch, VisitTouchMoved, false);
             }
             else
             {
                 if (DraggingEnabled)
-                    VisitControlTree(RootNode, touch, VisitTouchCancelled);
+                    VisitControlTree(RootNode, touch, VisitTouchCancelled, false);
                 if (TouchMode == TouchMode.Pintching)
                     OnUpdatePintch();
                 else if (TouchMode != TouchMode.Dragging && DraggingEnabled)
@@ -122,19 +124,24 @@ namespace HexMex.Scenes
                 else
                     OnUpdateDrag(touch);
             }
-            VisitControlTree(RootNode, touch, VisitTouchMoved);
+            VisitControlTree(RootNode, touch, VisitTouchMoved, false);
         }
 
-        private void VisitControlTree(CCNode node, CCTouch touch, Func<Control, CCTouch, bool> touchedControlAction)
+        private void VisitControlTree(CCNode node, CCTouch touch, Func<Control, CCTouch, bool> touchedControlAction, bool closeMenu)
         {
             if (node is Control control)
             {
-                if (!control.IsPointInBounds(touch))
+                if (!control.Visible || !control.IsPointInBounds(touch))
                 {
                     if (control.IsTouched)
                     {
                         control.OnTouchLeave(touch);
                         control.IsTouched = false;
+                    }
+                    if (control is Menu menu && closeMenu)
+                    {
+                        if (menu.IsOpen)
+                            menu.Close();
                     }
                     return;
                 }
@@ -146,7 +153,7 @@ namespace HexMex.Scenes
                 return;
             foreach (var nodeChild in node.Children)
             {
-                VisitControlTree(nodeChild, touch, touchedControlAction);
+                VisitControlTree(nodeChild, touch, touchedControlAction, closeMenu);
             }
         }
 

@@ -4,7 +4,7 @@ namespace HexMex.Scenes
 {
     public class HexMexCamera : CCCamera
     {
-        public const float MinZoomFactor = 0.25f;
+        public const float MinZoomFactor = 0.125f;
         public const float MaxZoomFactor = 1.5f;
 
         public HexMexCamera(CCSize targetVisibleDimensionsWorldspace) : base(CCCameraProjection.Projection2D, targetVisibleDimensionsWorldspace, new CCPoint3(0, 0, -1))

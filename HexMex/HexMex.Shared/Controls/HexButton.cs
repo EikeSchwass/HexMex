@@ -2,6 +2,7 @@ using System.Linq;
 using CocosSharp;
 using HexMex.Game;
 using HexMex.Helper;
+using HexMex.Scenes.Game;
 
 namespace HexMex.Controls
 {
@@ -12,10 +13,10 @@ namespace HexMex.Controls
         private float borderThickness = 1;
         private float radius;
 
-        public HexButton(string text, float radius)
+        public HexButton(string text, float radius, Font font)
         {
             this.radius = radius;
-            TextLabel = new CCLabel(text, "fonts/MarkerFelt-22.xnb", 100, CCLabelFormat.SystemFont);
+            TextLabel = new CCLabel(text, font.FontPath, font.FontSize, font.FontType);
             Text = text;
             HexagoneNode = new CCDrawNode();
             DrawHexagon();
@@ -28,18 +29,6 @@ namespace HexMex.Controls
             Touching += HexButton_Touching;
             Touched += HexButton_Touched;
             TouchCancelled += HexButton_Touched;
-        }
-
-        private void HexButton_Touched(CCTouch obj)
-        {
-            Parent.ReorderChild(this, 0);
-            Radius = 150;
-        }
-
-        private void HexButton_Touching(CCTouch obj)
-        {
-            Parent.ReorderChild(this, 1);
-            Radius = 164;
         }
 
         public CCColor4B BackgroundColor
@@ -107,19 +96,32 @@ namespace HexMex.Controls
 
         public override bool IsPointInBounds(CCTouch position)
         {
-            var point = position.Location - Position;
-            return HexagonHelper.IsPointInsideHexagon(Corners, point);
+            var location = ScreenToWorldspace(position.LocationOnScreen);
+            var point = location - this.GetGlobalPosition();
+            return HexagonHelper.IsPointInsidePolygon(Corners, point);
         }
 
         private void DrawHexagon()
         {
             HexagoneNode.ZOrder = ZOrder;
             HexagoneNode.Clear();
-            Corners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, Radius)
-                                   .ToArray();
+            Corners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, Radius).ToArray();
             HexagoneNode.DrawPolygon(Corners, 6, BackgroundColor, BorderThickness, BorderColor);
             ContentSize = new CCSize(Radius * 2, Radius * 2);
             UpdateTransform();
+        }
+
+        private void HexButton_Touched(Button sender, CCTouch obj)
+        {
+            Parent.ReorderChild(this, 0);
+            BorderThickness -= Radius / 100;
+
+        }
+
+        private void HexButton_Touching(Button sender, CCTouch obj)
+        {
+            Parent.ReorderChild(this, 1);
+            BorderThickness += Radius / 100;
         }
     }
 }

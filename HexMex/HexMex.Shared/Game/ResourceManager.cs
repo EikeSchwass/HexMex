@@ -8,11 +8,11 @@ namespace HexMex.Game
     // TODO Cleanup
     public class ResourceManager : ICCUpdatable
     {
-        public ResourceManager(PathFinder pathFinder, EdgeManager edgeManager, ResourcePackageManager resourcePackageManager, float checkInderval)
+        public ResourceManager(PathFinder pathFinder, EdgeManager edgeManager, ResourcePackageManager resourcePackageManager, WorldSettings worldSettings)
         {
             PathFinder = pathFinder;
             RequestCollection = new RequestCollection();
-            CheckInterval = checkInderval;
+            CheckInterval = worldSettings.ResourceManagerUpdateInterval;
             EdgeManager = edgeManager;
             ResourcePackageManager = resourcePackageManager;
         }

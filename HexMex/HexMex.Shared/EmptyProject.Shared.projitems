@@ -10,9 +10,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AppDelegate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\BuildButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Button.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Control.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HexButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\TextButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\ConstructionCompletedDelegate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\FixedSizeDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\ResourceSlot.cs" />
@@ -58,14 +60,19 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helper\HexagonHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\LinqExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\MathHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helper\NodeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\NoPathFoundException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\PathFinder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ResourceTypeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ICanSuspendApp.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\ControlLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\Font.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\GameLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\GameScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\HexagonLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\MenuEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\Menu.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\MenuLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\ResourcePackageLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\StructureLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\HexMexCamera.cs" />

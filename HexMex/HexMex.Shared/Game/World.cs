@@ -1,5 +1,4 @@
-﻿using System;
-using CocosSharp;
+﻿using CocosSharp;
 using HexMex.Controls;
 using HexMex.Game.Buildings;
 
@@ -10,13 +9,13 @@ namespace HexMex.Game
         public World(WorldSettings worldSettings)
         {
             WorldSettings = worldSettings;
-            EdgeManager = new EdgeManager();
             StructureManager = new StructureManager();
             ResourcePackageManager = new ResourcePackageManager();
+            EdgeManager = new EdgeManager(WorldSettings);
             HexagonManager = new HexagonManager(WorldSettings);
             ButtonManager = new ButtonManager(WorldSettings);
             PathFinder = new PathFinder(HexagonManager, EdgeManager, StructureManager);
-            ResourceManager = new ResourceManager(PathFinder, EdgeManager, ResourcePackageManager, 1);
+            ResourceManager = new ResourceManager(PathFinder, EdgeManager, ResourcePackageManager, WorldSettings);
             StructureManager.StructureAdded += StructureAdded;
         }
 
@@ -54,18 +53,7 @@ namespace HexMex.Game
             ResourcePackageManager.Update(dt);
             StructureManager.Update(dt);
         }
-
-        private void BuildingBlockTouched(Button button, HexagonNode hexagonNode)
-        {
-            StructureManager.CreateStrucuture(new Construction(hexagonNode, 10, ResourceManager, HexagonManager, s => { ReplaceConstructionWithBuilding(s, () => new VillageBuilding(hexagonNode, ResourceManager, HexagonManager)); }, ResourceType.Gold));
-            ButtonManager.RemoveButton(button);
-        }
-
-        private void ReplaceConstructionWithBuilding(Construction construction, Func<Structure> structureCreator)
-        {
-            StructureManager.RemoveStructure(construction);
-            StructureManager.CreateStrucuture(structureCreator());
-        }
+        
 
         private void StructureAdded(StructureManager manager, Structure structure)
         {
@@ -85,8 +73,7 @@ namespace HexMex.Game
 
                     if (StructureManager[adjacentHexagonNode] == null && ButtonManager[adjacentHexagonNode] == null)
                     {
-                        var button = new TextButton("Test", 100);
-                        button.Touched += touch => BuildingBlockTouched(button, adjacentHexagonNode);
+                        var button = new BuildButton(WorldSettings, adjacentHexagonNode);
                         ButtonManager.AddButton(button, adjacentHexagonNode);
                     }
                 }

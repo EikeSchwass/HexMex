@@ -31,19 +31,19 @@ namespace HexMex.Controls
         public virtual bool OnTouchMove(CCTouch touch)
         {
             TouchMoved?.Invoke(this, touch);
-            return true;
+            return false;
         }
 
         public virtual bool OnTouchDown(CCTouch touch)
         {
             TouchDown?.Invoke(this, touch);
-            return true;
+            return false;
         }
 
         public virtual bool OnTouchUp(CCTouch touch)
         {
             TouchUp?.Invoke(this, touch);
-            return true;
+            return false;
         }
 
 

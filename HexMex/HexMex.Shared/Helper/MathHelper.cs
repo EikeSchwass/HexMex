@@ -18,5 +18,15 @@ namespace HexMex.Helper
             yNew += centerOfRotation.Y;
             return new CCPoint(xNew, yNew);
         }
+
+        public static CCPoint[] RotateAround(this CCPoint[] points, CCPoint centerOfRotation, float angleInDegrees)
+        {
+            var result = new CCPoint[points.Length];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = points[i].RotateAround(centerOfRotation, angleInDegrees);
+            }
+            return result;
+        }
     }
 }

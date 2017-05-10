@@ -169,7 +169,7 @@ namespace HexMex.Scenes.Game
             var drawNode = GetDrawNode(hexagon.Position);
             drawNode.Clear();
 
-            drawNode.DrawPolygon(HexagonCorners, 6, ColorCollection.DefaultHexagonBackgroundColor, 2, ColorCollection.DefaultHexagonBorderColor);
+            drawNode.DrawPolygon(HexagonCorners, 6, ColorCollection.DefaultHexagonBackgroundColor, WorldSettings.HexagonBorderThickness, ColorCollection.DefaultHexagonBorderColor);
             drawNode.Position = hexagon.Position.GetWorldPosition(WorldSettings.HexagonRadius, WorldSettings.HexagonMargin);
 
             if (hexagon is ResourceHexagon resourceHexagon)

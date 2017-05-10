@@ -26,5 +26,23 @@ namespace HexMex.Helper
             }
             throw new ArgumentException("No element found/element is last entry", nameof(element));
         }
+
+        public static IEnumerable<TKey> Unique<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> selector)
+        {
+            var counter = new Dictionary<TKey, int>();
+            foreach (var element in source)
+            {
+                var key = selector(element);
+                if (counter.ContainsKey(key))
+                    counter[key]++;
+                else
+                    counter.Add(key, 1);
+            }
+            foreach (var kvp in counter)
+            {
+                if (kvp.Value == 1)
+                    yield return kvp.Key;
+            }
+        }
     }
 }

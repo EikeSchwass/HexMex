@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CocosSharp;
+using HexMex.Helper;
 
 namespace HexMex.Game
 {
@@ -10,6 +11,7 @@ namespace HexMex.Game
         public HexagonPosition Position1 { get; }
         public HexagonPosition Position2 { get; }
         public HexagonPosition Position3 { get; }
+        public bool IsYShape { get; }
 
         public HexagonNode(HexagonPosition position1, HexagonPosition position2, HexagonPosition position3)
         {
@@ -26,6 +28,18 @@ namespace HexMex.Game
             Position1 = positions[0];
             Position2 = positions[1];
             Position3 = positions[2];
+
+
+            IsYShape = false;
+            int singleZ = positions.Unique(p => p.Z).First();
+            foreach (var hexagonPosition in positions)
+            {
+                if (hexagonPosition.Z != singleZ)
+                {
+                    IsYShape = hexagonPosition.Z <= singleZ;
+                    break;
+                }
+            }
         }
 
         public bool Equals(HexagonNode other)

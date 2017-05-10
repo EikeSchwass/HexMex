@@ -27,7 +27,7 @@ namespace HexMex.Scenes.Game
             if (!Packages.ContainsKey(package))
             {
                 var node = new CCDrawNode();
-                node.DrawDot(CCPoint.Zero, 10, CCColor4B.Green);
+                node.DrawDot(CCPoint.Zero, WorldSettings.HexagonMargin, CCColor4B.Green);
                 Packages.Add(package, node);
             }
             var drawNode = Packages[package];

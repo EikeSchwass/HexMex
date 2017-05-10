@@ -13,9 +13,6 @@ namespace HexMex.Scenes.MainMenu
 
         public MainMenuLayer() : base(CCColor4B.Black)
         {
-            AddChild(StartGameButton);
-            AddChild(HelpButton);
-            AddChild(OptionsButton);
 
             StartGameButton.Touched += StartGameButton_Clicked;
             HelpButton.Touched += HelpButton_Clicked;
@@ -23,61 +20,51 @@ namespace HexMex.Scenes.MainMenu
 
             TouchHandler = new TouchHandler(this) { PintchingEnabled = false, DraggingEnabled = false };
 
-            Schedule();
         }
 
-        private float AnimationTime { get; set; }
-
-        private HexButton HelpButton { get; } = new HexButton("Help", 150);
-        private HexButton OptionsButton { get; } = new HexButton("Options", 150);
-        private HexButton StartGameButton { get; } = new HexButton("Start", 150);
+        private HexButton HelpButton { get; } = new HexButton("Help", 150, Font.MainMenuButtonFont);
+        private HexButton OptionsButton { get; } = new HexButton("Options", 150, Font.MainMenuButtonFont);
+        private HexButton StartGameButton { get; } = new HexButton("Start", 150, Font.MainMenuButtonFont);
         private TouchHandler TouchHandler { get; }
 
-        public override void Update(float dt)
-        {
-            base.Update(dt);
-            AnimationTime += dt * AnimationSpeed;
-            StartGameButton.BorderThickness = (float)(Math.Sin(AnimationTime) * 2 + 4);
-            HelpButton.BorderThickness = (float)(Math.Sin(AnimationTime) + 4);
-            OptionsButton.BorderThickness = (float)(Math.Sin(AnimationTime) + 4);
-        }
 
         protected override void AddedToScene()
         {
             base.AddedToScene();
-            var bounds = VisibleBoundsWorldspace;
+            var hexMexCamera = new HexMexCamera(VisibleBoundsWorldspace.Size);
+            Camera = hexMexCamera;
 
-            float centerX = bounds.MidX;
-            float centerY = bounds.MidY;
             var d = Math.Sin(Math.PI / 3) * HelpButton.Radius * 2;
             var deltaX = Math.Sin(Math.PI / 6) * d;
             var deltaY = Math.Cos(Math.PI / 6) * d;
 
-            StartGameButton.PositionX = centerX;
-            StartGameButton.PositionY = centerY + StartGameButton.Radius;
+            StartGameButton.PositionX = 0;
+            StartGameButton.PositionY = 0 + StartGameButton.Radius;
             HelpButton.PositionX = (float)(StartGameButton.PositionX - deltaX);
             HelpButton.PositionY = (float)(StartGameButton.PositionY - deltaY);
             OptionsButton.PositionX = (float)(StartGameButton.PositionX + deltaX);
             OptionsButton.PositionY = (float)(StartGameButton.PositionY - deltaY);
+            AddChild(StartGameButton);
+            AddChild(HelpButton);
+            AddChild(OptionsButton);
+            hexMexCamera.MoveToPosition(CCPoint.Zero);
         }
 
-        private void HelpButton_Clicked(CCTouch obj)
+        private void HelpButton_Clicked(Button sender, CCTouch obj)
         {
             Debug.WriteLine("Help Button Clicked");
         }
 
-        private void OptionsButton_Clicked(CCTouch obj)
+        private void OptionsButton_Clicked(Button sender, CCTouch obj)
         {
             Debug.WriteLine("Options Button Clicked");
         }
 
-        private void StartGameButton_Clicked(CCTouch obj)
+        private void StartGameButton_Clicked(Button sender, CCTouch obj)
         {
             World world = new World(new WorldSettings());
             Window.DefaultDirector.PushScene(new GameScene(Window, HexMexScene.DataLoader, world));
             world.Initialize();
-
-
         }
     }
 }

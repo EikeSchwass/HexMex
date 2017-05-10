@@ -48,7 +48,7 @@ namespace HexMex.Helper
             }
         }
 
-        public static bool IsPointInsideHexagon(IList<CCPoint> corners, CCPoint pointToTest)
+        public static bool IsPointInsidePolygon(IList<CCPoint> corners, CCPoint pointToTest)
         {
             var testX = pointToTest.X;
             var testY = pointToTest.Y;
@@ -63,6 +63,7 @@ namespace HexMex.Helper
             }
             return c;
         }
+        
 
     }
 }

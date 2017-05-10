@@ -88,7 +88,7 @@ namespace HexMex.Helper
 
         private static void Set<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, TValue value)
         {
-            if (!dictionary.ContainsKey(key))
+            if (dictionary.ContainsKey(key))
                 dictionary[key] = value;
             else
                 dictionary.Add(key, value);
