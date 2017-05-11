@@ -93,7 +93,7 @@ namespace HexMex.Controls
         {
             var location = ScreenToWorldspace(position.LocationOnScreen);
             var point = this.GetGlobalPosition();
-            return (location - point).Length <= Radius;
+            return (location - point).Length <= Radius * 2;
         }
 
         public override void OnTouchEnter(CCTouch touch)

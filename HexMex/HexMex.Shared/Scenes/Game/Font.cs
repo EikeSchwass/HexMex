@@ -13,6 +13,7 @@ namespace HexMex.Scenes.Game
 
         public static Font BuildMenuButtonFont { get; } = new Font("fonts/MarkerFelt-22.xnb", 50, CCLabelFormat.SystemFont);
         public static Font MainMenuButtonFont { get; } = new Font("fonts/MarkerFelt-22.xnb", 100, CCLabelFormat.SystemFont);
+        public static Font DialogTitleFont { get; } = new Font("fonts/MarkerFelt-22.xnb", 75, CCLabelFormat.SystemFont);
 
         public string FontPath { get; }
         public float FontSize { get; }

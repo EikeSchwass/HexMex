@@ -25,7 +25,7 @@ namespace HexMex.Scenes.Game
             AddChild(new CCLayerColor(camera, new CCColor4B(0, 0, 0, 0.4f)));
             AddChild(new ResourcePackageLayer(World.ResourcePackageManager, World.WorldSettings) { Camera = camera });
             AddChild(new StructureLayer(World.StructureManager, World.WorldSettings) { Camera = camera });
-            AddChild(new ControlLayer(World.ButtonManager, menuLayer) { Camera = camera });
+            AddChild(new ControlLayer(World.ButtonManager, World.StructureManager, menuLayer, World.ResourceManager, World.HexagonManager) { Camera = camera });
             AddChild(menuLayer);
         }
 

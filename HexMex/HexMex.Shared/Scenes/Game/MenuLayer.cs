@@ -9,19 +9,18 @@ namespace HexMex.Scenes.Game
         public MenuLayer(WorldSettings worldSettings)
         {
             WorldSettings = worldSettings;
-            BuildMenu = new Menu(new HexButton("Back", worldSettings.HexagonRadius / 4, Font.BuildMenuButtonFont), worldSettings, new MenuEntry("Test0", Font.BuildMenuButtonFont, new MenuEntry("Level1", Font.BuildMenuButtonFont)), new MenuEntry("test2", Font.BuildMenuButtonFont));
+            BuildMenu = new BuildMenu(null, WorldSettings,50);
             AddChild(BuildMenu);
             BuildMenu.Visible = false;
         }
 
         public WorldSettings WorldSettings { get; }
-        private Menu BuildMenu { get; }
+        private BuildMenu BuildMenu { get; }
 
         public void OpenMenu(HexagonNode hexagonNode) => OpenMenu(hexagonNode.GetWorldPosition(WorldSettings.HexagonRadius, WorldSettings.HexagonMargin));
 
         public void OpenMenu(CCPoint position)
         {
-            BuildMenu.Open(position);
         }
     }
 }

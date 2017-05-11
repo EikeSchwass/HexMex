@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CocosSharp;
+using HexMex.Controls.Buildings;
 using HexMex.Game;
 using HexMex.Game.Buildings;
 using HexMex.Helper;
@@ -19,40 +21,35 @@ namespace HexMex.Scenes.Game
             structureManager.StructureRemoved += StructureRemoved;
             HexagonCorners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, 1).Select(c => c.RotateAround(CCPoint.Zero, 30)).ToArray();
         }
-        private Dictionary<Structure, CCDrawNode> Structures { get; } = new Dictionary<Structure, CCDrawNode>();
+        private Dictionary<Structure, StructureControl> Structures { get; } = new Dictionary<Structure, StructureControl>();
 
         private void StructureAdded(StructureManager structureManager, Structure structure)
         {
-            var drawNode = new CCDrawNode();
-            var worldPosition = structure.Position.GetWorldPosition(WorldSettings.HexagonRadius, WorldSettings.HexagonMargin);
-            drawNode.Position = worldPosition;
-            AddChild(drawNode);
-            Structures.Add(structure, drawNode);
-            structure.RequiresRedraw += RedrawStructure;
-            RedrawStructure(structure);
-        }
-
-        private void RedrawStructure(Structure structure)
-        {
-            var drawNode = Structures[structure];
-            drawNode.Clear();
-            DrawStructureOutline(structure, drawNode);
-
-            if (structure is Construction)
+            StructureControl node;
+            switch (structure)
             {
-                drawNode.DrawDot(CCPoint.Zero, 10, CCColor4B.Red);
+                case Construction construction:
+                    node = new ConstructionControl(construction, WorldSettings.HexagonMargin);
+                    break;
+                case MineBuilding mineBuilding:
+                    node = new MineControl(mineBuilding, WorldSettings.HexagonMargin);
+                    break;
+                default:
+                    throw new ArgumentException("All Structures must have an appropiate control", nameof(structure));
+
             }
-
+            var worldPosition = structure.Position.GetWorldPosition(WorldSettings.HexagonRadius, WorldSettings.HexagonMargin);
+            node.Position = worldPosition;
+            AddChild(node);
+            node.OnRequiresRedraw(structure);
+            Structures.Add(structure, node);
         }
 
-        private void DrawStructureOutline(Structure structure, CCDrawNode drawNode)
-        {
-            drawNode.DrawPolygon(HexagonCorners.Select(c => c * structure.RenderInformation.HexagonRadius).ToArray(), 6, structure.RenderInformation.BackgroundColor, 1, structure.RenderInformation.BorderColor);
-        }
 
         private void StructureRemoved(StructureManager structureManager, Structure structure)
         {
-            structure.RequiresRedraw -= RedrawStructure;
+            var node = Structures[structure];
+            RemoveChild(node);
         }
     }
 }

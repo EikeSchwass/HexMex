@@ -13,6 +13,7 @@ namespace HexMex.Controls
 
         private bool TouchStartedOnThis { get; set; }
 
+        
         public virtual void OnRender() { }
 
         public override bool OnTouchDown(CCTouch touch)

@@ -29,11 +29,11 @@ namespace HexMex.Game.Buildings
         public RequestPriority Priority { get; set; }
         public StructureRenderInformation RenderInformation { get; }
 
-        private HexagonManager HexagonManager { get; }
+        public HexagonManager HexagonManager { get; }
         private FixedSizeDictionary<ResourceSlot, ResourceRequest> InputSlots { get; }
         private FixedSizeDictionary<ResourceSlot, ResourceProvision> OutputSlots { get; }
 
-        private ResourceManager ResourceManager { get; }
+        public ResourceManager ResourceManager { get; }
 
         public IEnumerable<ResourceSlot> GetInputSlots()
         {

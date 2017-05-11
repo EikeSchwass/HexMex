@@ -138,10 +138,9 @@ namespace HexMex.Scenes
                         control.OnTouchLeave(touch);
                         control.IsTouched = false;
                     }
-                    if (control is Menu menu && closeMenu)
+                    if (control is BuildMenu menu && closeMenu)
                     {
-                        if (menu.IsOpen)
-                            menu.Close();
+                        
                     }
                     return;
                 }
