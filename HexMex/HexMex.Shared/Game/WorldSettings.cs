@@ -18,7 +18,7 @@ namespace HexMex.Game
         public float HexagonRadius => 280;
         public int MaxNumberOfResourcesInHexagon => 294;
         public float ResourceManagerUpdateInterval { get; } = 1;
-        public float ResourceTimeBetweenNodes => 0.25f;
+        public float ResourceTimeBetweenNodes => 1f;
         public float ResourceTriangleEdgeLength { get; }
         public float ResourceTriangleHeight { get; }
         public float UniversalResourceStartFactor { get; }

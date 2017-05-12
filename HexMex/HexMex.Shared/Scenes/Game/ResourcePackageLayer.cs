@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using CocosSharp;
 using HexMex.Game;
+using HexMex.Helper;
 
 namespace HexMex.Scenes.Game
 {
@@ -8,46 +10,49 @@ namespace HexMex.Scenes.Game
     {
         public ResourcePackageLayer(World world, HexMexCamera camera) : base(camera)
         {
-            WorldSettings = world.WorldSettings;
+            World = world;
             world.ResourcePackageManager.PackageAdded += ResourcePackageManager_PackageAdded;
             world.ResourcePackageManager.PackageRemoved += ResourcePackageManager_PackageRemoved;
+            AddChild(DrawNode);
+            Schedule();
         }
 
-        public WorldSettings WorldSettings { get; }
-        private Dictionary<ResourcePackage, CCDrawNode> Packages { get; } = new Dictionary<ResourcePackage, CCDrawNode>();
+        public World World { get; }
+        private CCDrawNode DrawNode { get; } = new CCDrawNode();
+        private List<ResourcePackage> Packages { get; } = new List<ResourcePackage>();
 
-        private void DrawPackage(ResourcePackage package)
-        {
-            var drawNode = GetDrawNode(package);
-            drawNode.Position = package.GetWorldPosition(WorldSettings.HexagonRadius, WorldSettings.HexagonMargin);
-        }
-
-        private CCDrawNode GetDrawNode(ResourcePackage package)
-        {
-            if (!Packages.ContainsKey(package))
-            {
-                var node = new CCDrawNode();
-                node.DrawDot(CCPoint.Zero, WorldSettings.HexagonMargin, CCColor4B.Green);
-                Packages.Add(package, node);
-            }
-            var drawNode = Packages[package];
-            return drawNode;
-        }
+        private bool RedrawRequested { get; set; }
 
         private void ResourcePackageManager_PackageAdded(ResourcePackageManager packageManager, ResourcePackage package)
         {
-            package.RequiresRedraw += DrawPackage;
-            var drawNode = GetDrawNode(package);
-            drawNode.Position = package.GetWorldPosition(WorldSettings.HexagonRadius, WorldSettings.HexagonMargin);
-            AddChild(drawNode);
-            DrawPackage(package);
+            Packages.Add(package);
+            package.RequiresRedraw += r => RedrawRequested = true;
+            RedrawRequested = true;
         }
 
         private void ResourcePackageManager_PackageRemoved(ResourcePackageManager packageManager, ResourcePackage package)
         {
-            package.RequiresRedraw -= DrawPackage;
-            RemoveChild(Packages[package]);
             Packages.Remove(package);
+            RedrawRequested = true;
+        }
+
+        public override void Update(float dt)
+        {
+            base.Update(dt);
+            if (!RedrawRequested)
+                return;
+            RedrawRequested = false;
+            Render();
+        }
+
+        private void Render()
+        {
+            DrawNode.Clear();
+            foreach (var package in Packages)
+            {
+                var posiition = package.GetWorldPosition(World.WorldSettings.HexagonRadius, World.WorldSettings.HexagonMargin);
+                DrawNode.DrawDot(posiition, World.WorldSettings.HexagonMargin / 2, package.ResourceType.GetColor());
+            }
         }
     }
 }
