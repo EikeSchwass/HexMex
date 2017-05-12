@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using CocosSharp;
+using HexMex.Controls;
 using HexMex.Game;
+using HexMex.Game.Buildings;
 
 namespace HexMex.Scenes.Game
 {
@@ -18,6 +21,7 @@ namespace HexMex.Scenes.Game
             var structureLayer = new StructureLayer(World.StructureManager, World.WorldSettings, HexMexCamera);
             var buildMenuLayer = new BuildMenuLayer(HexMexCamera);
             var controlLayer = new ButtonLayer(World.ButtonManager, HexMexCamera);
+            buildMenuLayer.ConstructionRequested += ConstructBuilding;
             controlLayer.ConstructionRequested += (s, b) => buildMenuLayer.DisplayBuildMenuFor(b);
 
             var layers = new CCLayer[]
@@ -38,6 +42,15 @@ namespace HexMex.Scenes.Game
             TouchLayers = new ReadOnlyCollection<TouchLayer>(layers.OfType<TouchLayer>().Reverse().ToList());
 
             Schedule();
+        }
+
+        private void ConstructBuilding(BuildMenuLayer buildMenu, BuildingConstructionFactory selectedFactory, BuildButton buildButton)
+        {
+            if (World.StructureManager[buildButton.HexagonNode] != null)
+                throw new InvalidOperationException("Spot has to be empty");
+            var construction = new Construction(buildButton.HexagonNode, selectedFactory, World);
+            World.StructureManager.CreateStrucuture(construction);
+            World.ButtonManager.RemoveButton(buildButton);
         }
 
         public HexMexCamera HexMexCamera { get; }

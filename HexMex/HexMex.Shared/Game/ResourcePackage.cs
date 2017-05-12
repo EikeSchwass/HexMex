@@ -18,7 +18,7 @@ namespace HexMex.Game
             ResourceRequest = resourceRequest;
             Path = PathFinder.FindPath(startStructure.Position, destinationStructure.Position);
             CurrentNode = Path[0];
-            NextNode = Path[1];
+            NextNode = Path.Length > 1 ? Path[1] : Path[0];
             PathFinder.NodeRemoved += PathsChanged;
         }
 
@@ -54,7 +54,10 @@ namespace HexMex.Game
 
         public void Update(float dt)
         {
-            Progress += dt / EdgeManager.GetTimeForEdge(CurrentNode, NextNode);
+            if (CurrentNode == NextNode)
+                Progress = 1;
+            else
+                Progress += dt / EdgeManager.GetTimeForEdge(CurrentNode, NextNode);
             while (Progress >= 1)
             {
                 CurrentNode = NextNode;

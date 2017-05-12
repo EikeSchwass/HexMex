@@ -2,11 +2,11 @@
 
 namespace HexMex.Game.Buildings
 {
-    [BuildingInformation("Mine", 10, ResourceType.Gold, ResourceType.Gold, ResourceType.Iron)]
+    [BuildingInformation("Mine", "Extracts resources from adjacent hexagons", 10, new[] { ResourceType.Minable }, new[] { ResourceType.Minable }, 1, ResourceType.Gold, ResourceType.Gold, ResourceType.Iron)]
     public class MineBuilding : Building
     {
 
-        public MineBuilding(HexagonNode position, ResourceManager resourceManager, HexagonManager hexagonManager) : base(position, resourceManager, hexagonManager, 5, new[] { ResourceType.Any }, new[] { ResourceType.Any })
+        public MineBuilding(HexagonNode position, World world) : base(position, world, 5, new[] { ResourceType.Any }, new[] { ResourceType.Any })
         {
 
         }

@@ -19,6 +19,11 @@ namespace HexMex.Game
 
         public HexagonNode[] FindPath(HexagonNode from, HexagonNode to)
         {
+            if (from == to)
+                return new[]
+                {
+                    from
+                };
             return PathFinding.AStar(from, to, (i, j) => i + j, n => CalculateAdjacentNodes(n, to), CalculateHeuristik, CalculateCostOfEdge).ToArray();
         }
 

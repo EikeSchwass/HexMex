@@ -39,7 +39,7 @@ namespace HexMex.Game
             HexagonManager.RevealHexagonAt(p2);
             HexagonManager.RevealHexagonAt(p3);
 
-            StructureManager.CreateStrucuture(new MineBuilding(new HexagonNode(p1, p2, p3), ResourceManager, HexagonManager));
+            StructureManager.CreateStrucuture(new MineBuilding(new HexagonNode(p1, p2, p3), this));
 
             IsInitialized = true;
         }
@@ -53,7 +53,7 @@ namespace HexMex.Game
             ResourcePackageManager.Update(dt);
             StructureManager.Update(dt);
         }
-        
+
 
         private void StructureAdded(StructureManager manager, Structure structure)
         {

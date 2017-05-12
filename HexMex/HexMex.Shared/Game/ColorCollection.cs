@@ -13,6 +13,6 @@ namespace HexMex.Game
         public static CCColor4B BuildButtonBorderColor { get; } = CCColor4B.White;
         public static CCColor4B ConstructionBackgroundColor { get; } = CCColor4B.Gray;
         public static CCColor4B ConstructionProgressColor { get; } = CCColor4B.Lerp(CCColor4B.Gray, CCColor4B.Black, 0.5f);
-        public static CCColor4B BuildMenuBackgroundColor { get; } = new CCColor4B(0f, 0f, 0f, 0.5f);
+        public static CCColor4B BuildMenuBackgroundColor { get; } = new CCColor4B(0f, 0f, 0f, 0.75f);
     }
 }

@@ -51,6 +51,8 @@ namespace HexMex.Shared
             }
             var scene = new MainMenuScene(mainWindow);
             mainWindow.RunWithScene(scene);
+            mainWindow.DisplayStats = true;
+            mainWindow.StatsScale = 10;
         }
 
         public override void ApplicationWillEnterForeground(CCApplication application)

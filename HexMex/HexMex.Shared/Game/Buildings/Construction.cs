@@ -4,18 +4,19 @@ namespace HexMex.Game.Buildings
 {
     public class Construction : Structure, IHasProgress
     {
-        public Construction(HexagonNode position, BuildingConstructionFactory buildingConstructionFactory, ResourceManager resourceManager, HexagonManager hexagonManager, StructureManager structureManager) : base(position, resourceManager, hexagonManager, buildingConstructionFactory.BuildingInformation.ConstructionCost, Enumerable.Empty<ResourceType>())
+        public Construction(HexagonNode position, BuildingConstructionFactory buildingConstructionFactory, World world) : base(position, world, buildingConstructionFactory.BuildingInformation.ConstructionCost, Enumerable.Empty<ResourceType>())
         {
             ConstructionFactory = buildingConstructionFactory;
-            StructureManager = structureManager;
+            World = world;
         }
+
+        public BuildingConstructionFactory ConstructionFactory { get; }
 
         public bool IsConstructing { get; private set; }
         public float PassedConstructionTime { get; private set; }
 
         public float Progress { get; private set; }
-        public BuildingConstructionFactory ConstructionFactory { get; }
-        private StructureManager StructureManager { get; }
+        private World World { get; }
 
         public sealed override void Update(float dt)
         {
@@ -28,9 +29,9 @@ namespace HexMex.Game.Buildings
             {
                 PassedConstructionTime = 0;
                 IsConstructing = false;
-                var structure = ConstructionFactory.CreateFunction(Position, ResourceManager, HexagonManager);
-                StructureManager.RemoveStructure(this);
-                StructureManager.CreateStrucuture(structure);
+                var structure = ConstructionFactory.CreateFunction(Position, World);
+                World.StructureManager.RemoveStructure(this);
+                World.StructureManager.CreateStrucuture(structure);
             }
             OnRequiresRedraw();
         }

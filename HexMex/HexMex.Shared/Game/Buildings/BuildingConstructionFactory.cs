@@ -16,11 +16,11 @@ namespace HexMex.Game.Buildings
                             where !type.IsAutoClass
                             where type.IsSubclassOf(typeof(Building))
                             let description = type.GetCustomAttribute<BuildingInformationAttribute>()
-                            select new BuildingConstructionFactory(type, description, (pos, res, hex) => (Structure)Activator.CreateInstance(type, pos, res, hex));
+                            select new BuildingConstructionFactory(type, description, (pos, world) => (Structure)Activator.CreateInstance(type, pos, world));
             Factories = new ReadOnlyDictionary<Type, BuildingConstructionFactory>(factories.ToDictionary(f => f.Type));
         }
 
-        private BuildingConstructionFactory(Type type, BuildingInformationAttribute buildingInformation, Func<HexagonNode, ResourceManager, HexagonManager, Structure> createFunction)
+        private BuildingConstructionFactory(Type type, BuildingInformationAttribute buildingInformation, Func<HexagonNode, World, Structure> createFunction)
         {
             Type = type;
             CreateFunction = createFunction;
@@ -31,7 +31,7 @@ namespace HexMex.Game.Buildings
 
         public static IReadOnlyDictionary<Type, BuildingConstructionFactory> Factories { get; }
 
-        public Func<HexagonNode, ResourceManager, HexagonManager, Structure> CreateFunction { get; }
+        public Func<HexagonNode, World, Structure> CreateFunction { get; }
         private Type Type { get; }
     }
 }

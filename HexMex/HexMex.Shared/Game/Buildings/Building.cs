@@ -6,7 +6,7 @@ namespace HexMex.Game.Buildings
     {
         public float ProductionTime { get; }
 
-        protected Building(HexagonNode position, ResourceManager resourceManager, HexagonManager hexagonManager, float productionTime, IEnumerable<ResourceType> inputs, IEnumerable<ResourceType> outputs) : base(position, resourceManager, hexagonManager, inputs, outputs)
+        protected Building(HexagonNode position, World world, float productionTime, IEnumerable<ResourceType> inputs, IEnumerable<ResourceType> outputs) : base(position, world, inputs, outputs)
         {
             ProductionTime = productionTime;
         }

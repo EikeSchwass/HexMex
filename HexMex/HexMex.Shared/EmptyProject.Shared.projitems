@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Buildings\StructureControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Buildings\ConstructionControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Buildings\MineControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Buildings\VillageControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Button.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Container.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Control.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\GameTouchHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\BuildMenuLayer.BuildMenuEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\BuildMenuLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\BuildMenuLayer.SelectedEntryArea.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\ButtonLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\Font.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\GameLayer.cs" />

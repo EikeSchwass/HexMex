@@ -8,17 +8,17 @@ namespace HexMex.Game.Buildings
 {
     public abstract class Structure : IRenderable<Structure>, ICCUpdatable
     {
-        protected Structure(HexagonNode position, ResourceManager resourceManager, HexagonManager hexagonManager, IEnumerable<ResourceType> inputs, IEnumerable<ResourceType> outputs)
+        protected Structure(HexagonNode position, World world, IEnumerable<ResourceType> inputs, IEnumerable<ResourceType> outputs)
         {
             Position = position;
-            ResourceManager = resourceManager;
-            HexagonManager = hexagonManager;
+            ResourceManager = world.ResourceManager;
+            HexagonManager = world.HexagonManager;
             RenderInformation = new StructureRenderInformation(this);
             InputSlots = new FixedSizeDictionary<ResourceSlot, ResourceRequest>(inputs.Select(t => new ResourceSlot(t)));
             OutputSlots = new FixedSizeDictionary<ResourceSlot, ResourceProvision>(outputs.Select(t => new ResourceSlot(t)));
         }
 
-        protected Structure(HexagonNode position, ResourceManager resourceManager, HexagonManager hexagonManager) : this(position, resourceManager, hexagonManager, Enumerable.Empty<ResourceType>(), Enumerable.Empty<ResourceType>())
+        protected Structure(HexagonNode position, World world) : this(position, world, Enumerable.Empty<ResourceType>(), Enumerable.Empty<ResourceType>())
         {
         }
 

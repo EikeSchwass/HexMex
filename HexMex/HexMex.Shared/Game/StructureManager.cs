@@ -34,12 +34,7 @@ namespace HexMex.Game
             return Structures.Values.GetEnumerator();
         }
 
-        public Structure GetStructureAtPosition(HexagonNode hexagonNode)
-        {
-            if (!Structures.ContainsKey(hexagonNode))
-                return null;
-            return Structures[hexagonNode];
-        }
+        public Structure GetStructureAtPosition(HexagonNode hexagonNode) => !Structures.ContainsKey(hexagonNode) ? null : Structures[hexagonNode];
 
         public void Update(float dt)
         {

@@ -1,9 +1,9 @@
 ﻿namespace HexMex.Game.Buildings
 {
-    [BuildingInformation("Village", 5, ResourceType.Bread, ResourceType.Bread, ResourceType.Bread)]
+    [BuildingInformation("Village", "Whatever", 5, new[] { ResourceType.Water }, new[] { ResourceType.Bread, ResourceType.Water }, 5, ResourceType.Bread, ResourceType.Bread, ResourceType.Bread)]
     public class VillageBuilding : Building
     {
-        public VillageBuilding(HexagonNode position, ResourceManager resourceManager, HexagonManager hexagonManager) : base(position, resourceManager, hexagonManager, 5, new[] { ResourceType.Water }, new[] { ResourceType.Water })
+        public VillageBuilding(HexagonNode position, World world) : base(position, world, 5, new[] { ResourceType.Water }, new[] { ResourceType.Water, ResourceType.Bread, })
         {
         }
     }

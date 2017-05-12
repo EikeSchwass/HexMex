@@ -34,6 +34,9 @@ namespace HexMex.Scenes.Game
                 case MineBuilding mineBuilding:
                     node = new MineControl(mineBuilding, WorldSettings.HexagonMargin);
                     break;
+                case VillageBuilding villageBuilding:
+                    node = new VillageControl(villageBuilding, WorldSettings.HexagonMargin);
+                    break;
                 default:
                     throw new ArgumentException("All Structures must have an appropiate control", nameof(structure));
 

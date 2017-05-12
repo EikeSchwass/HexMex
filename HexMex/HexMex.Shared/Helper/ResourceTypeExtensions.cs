@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using CocosSharp;
 using HexMex.Game;
 
@@ -36,6 +38,21 @@ namespace HexMex.Helper
             if (type == ResourceType.Water)
                 return false;
             return true;
+        }
+
+        public static string GetText(this IEnumerable<ResourceType> source)
+        {
+            string result = "";
+            var groups = source.GroupBy(e => e);
+            foreach (var group in groups)
+            {
+                var count = group.Count();
+                result += $"{group.Key} {(count > 1 ? "x" + count : "")}, ";
+            }
+            if (result.Length < 3)
+                return result;
+            return result.Substring(0, result.Length - 2);
+
         }
     }
 }

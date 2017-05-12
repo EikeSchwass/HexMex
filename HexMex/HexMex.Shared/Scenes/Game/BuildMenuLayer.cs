@@ -22,11 +22,11 @@ namespace HexMex.Scenes.Game
             Visible = false;
         }
 
+        public event Action<BuildMenuLayer, BuildingConstructionFactory, BuildButton> ConstructionRequested;
+
         public sealed override bool Visible { get; set; }
 
         public CCNode AllMenuEntriesArea { get; } = new CCNode();
-
-        public CCNode SelectedMenuEntryArea { get; } = new CCNode();
 
         private CCRect ClientRectangle { get; set; }
 
@@ -44,10 +44,16 @@ namespace HexMex.Scenes.Game
             get => selectedEntry;
             set
             {
+                if (selectedEntry != null)
+                    selectedEntry.IsSelected = false;
                 selectedEntry = value;
+                if (selectedEntry != null)
+                    selectedEntry.IsSelected = true;
                 RenderSelectedEntry();
             }
         }
+
+        private SelectedEntryArea SelectedMenuEntryArea { get; set; }
 
         private BuildButton Target { get; set; }
 
@@ -69,6 +75,11 @@ namespace HexMex.Scenes.Game
         public override void OnTouchCancelled(TouchEventArgs e, TouchCancelReason cancelReason)
         {
             base.OnTouchCancelled(e, cancelReason);
+            foreach (var menuEntry in MenuEntries)
+            {
+                menuEntry.IsPressed = false;
+            }
+            SelectedMenuEntryArea.IsConstructButtonPressed = false;
         }
 
         public override void OnTouchDown(TouchEventArgs e)
@@ -81,11 +92,9 @@ namespace HexMex.Scenes.Game
             e.Handled = true;
             foreach (var menuEntry in MenuEntries)
             {
-                if (menuEntry.IsPointInBounds(e.Touch))
-                    menuEntry.IsPressed = true;
-                else
-                    menuEntry.IsPressed = false;
+                menuEntry.IsPressed = menuEntry.IsPointInBounds(e.Touch);
             }
+            SelectedMenuEntryArea.IsConstructButtonPressed = SelectedMenuEntryArea.IsPointInConstructButtonBounds(e.Touch);
         }
 
         public override void OnTouchUp(TouchEventArgs e)
@@ -105,31 +114,34 @@ namespace HexMex.Scenes.Game
             {
                 if (menuEntry.IsPointInBounds(e.Touch) && menuEntry.IsPressed)
                 {
-                    menuEntry.IsSelected = true;
                     SelectedEntry = menuEntry;
                 }
                 menuEntry.IsPressed = false;
             }
-
-            foreach (var menuEntry in MenuEntries)
+            if (SelectedMenuEntryArea.IsConstructButtonPressed && SelectedMenuEntryArea.IsPointInConstructButtonBounds(e.Touch))
             {
-                if (SelectedEntry != menuEntry)
-                    menuEntry.IsSelected = false;
+                ConstructionRequested?.Invoke(this, SelectedEntry.Factory, Target);
+                Target = null;
+                Visible = false;
             }
         }
 
         protected override void AddedToScene()
         {
             base.AddedToScene();
-            var clientSize = VisibleBoundsWorldspace.Size * 0.6f;
 
+            var clientSize = new CCSize(VisibleBoundsWorldspace.Size.Width * 0.6f, VisibleBoundsWorldspace.Size.Height * 0.8f);
             ClientRectangle = new CCRect(-clientSize.Width / 2, -clientSize.Height / 2, clientSize.Width, clientSize.Height);
-            UpdatePosition();
+
             AllMenuEntriesArea.Position = new CCPoint(ClientRectangle.MinX, ClientRectangle.MaxY);
-            SelectedMenuEntryArea.Position = new CCPoint(ClientRectangle.MinX, ClientRectangle.MaxY - 2 * ClientRectangle.Size.Height / 3);
+            SelectedMenuEntryArea = new SelectedEntryArea(ClientRectangle.Size.Width, ClientRectangle.Size.Height / 3)
+            {
+                Position = new CCPoint(ClientRectangle.MinX, ClientRectangle.MinY + ClientRectangle.Size.Height / 3)
+            };
             AddChild(RenderLinesNode);
             AddChild(MenuOutlineNode);
             AddChild(AllMenuEntriesArea);
+            AddChild(SelectedMenuEntryArea);
 
             const int columnCount = 3;
             float columnWidth = ClientRectangle.Size.Width / columnCount;
@@ -148,7 +160,9 @@ namespace HexMex.Scenes.Game
                 MenuEntries.Add(buildMenuEntry);
             }
 
+            UpdatePosition();
             RenderMenu();
+            SelectedEntry = MenuEntries.FirstOrDefault();
         }
 
         private void RenderLines()
@@ -172,9 +186,7 @@ namespace HexMex.Scenes.Game
 
         private void RenderSelectedEntry()
         {
-            SelectedMenuEntryArea.Children?.Clear();
-            throw new NotImplementedException("");
-            // TODO Draw slected area and add button for construction (see onenote)
+            SelectedMenuEntryArea.SelectedMenuEntry = SelectedEntry;
         }
 
         private void UpdatePosition()
