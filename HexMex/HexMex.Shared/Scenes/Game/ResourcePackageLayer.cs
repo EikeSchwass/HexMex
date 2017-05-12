@@ -6,11 +6,11 @@ namespace HexMex.Scenes.Game
 {
     public class ResourcePackageLayer : TouchLayer
     {
-        public ResourcePackageLayer(ResourcePackageManager resourcePackageManager, WorldSettings worldSettings, HexMexCamera camera) : base(camera)
+        public ResourcePackageLayer(World world, HexMexCamera camera) : base(camera)
         {
-            WorldSettings = worldSettings;
-            resourcePackageManager.PackageAdded += ResourcePackageManager_PackageAdded;
-            resourcePackageManager.PackageRemoved += ResourcePackageManager_PackageRemoved;
+            WorldSettings = world.WorldSettings;
+            world.ResourcePackageManager.PackageAdded += ResourcePackageManager_PackageAdded;
+            world.ResourcePackageManager.PackageRemoved += ResourcePackageManager_PackageRemoved;
         }
 
         public WorldSettings WorldSettings { get; }

@@ -14,11 +14,11 @@ namespace HexMex.Scenes.Game
         public WorldSettings WorldSettings { get; }
         private CCPoint[] HexagonCorners { get; }
 
-        public StructureLayer(StructureManager structureManager, WorldSettings worldSettings, HexMexCamera camera) : base(camera)
+        public StructureLayer(World world, HexMexCamera camera) : base(camera)
         {
-            WorldSettings = worldSettings;
-            structureManager.StructureAdded += StructureAdded;
-            structureManager.StructureRemoved += StructureRemoved;
+            WorldSettings = world.WorldSettings;
+            world.StructureManager.StructureAdded += StructureAdded;
+            world.StructureManager.StructureRemoved += StructureRemoved;
             HexagonCorners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, 1).Select(c => c.RotateAround(CCPoint.Zero, 30)).ToArray();
         }
         private Dictionary<Structure, StructureControl> Structures { get; } = new Dictionary<Structure, StructureControl>();

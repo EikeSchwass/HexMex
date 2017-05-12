@@ -7,9 +7,9 @@ namespace HexMex.Scenes.Game
 {
     public class ButtonLayer : TouchLayer
     {
-        public ButtonLayer(ButtonManager buttonManager, HexMexCamera hexMexCamera) : base(hexMexCamera)
+        public ButtonLayer(World world, HexMexCamera hexMexCamera) : base(hexMexCamera)
         {
-            ButtonManager = buttonManager;
+            ButtonManager = world.ButtonManager;
             ButtonManager.ButtonAdded += StructureAdded;
             ButtonManager.ButtonRemoved += StructureRemoved;
         }

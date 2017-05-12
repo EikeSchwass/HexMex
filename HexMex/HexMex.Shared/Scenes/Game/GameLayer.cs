@@ -15,12 +15,12 @@ namespace HexMex.Scenes.Game
             HexMexCamera = camera;
             TouchHandler = new GameTouchHandler(this, HexMexCamera);
             World = world;
-            var hexagonLayer = new HexagonLayer(World.HexagonManager, World.WorldSettings, HexMexCamera);
+            var hexagonLayer = new HexagonLayer(World, HexMexCamera);
             var blendLayer = new CCLayerColor(camera, new CCColor4B(0, 0, 0, 0.4f));
-            var resourcePackageLayer = new ResourcePackageLayer(World.ResourcePackageManager, World.WorldSettings, HexMexCamera);
-            var structureLayer = new StructureLayer(World.StructureManager, World.WorldSettings, HexMexCamera);
+            var resourcePackageLayer = new ResourcePackageLayer(World, HexMexCamera);
+            var structureLayer = new StructureLayer(World, HexMexCamera);
             var buildMenuLayer = new BuildMenuLayer(HexMexCamera);
-            var controlLayer = new ButtonLayer(World.ButtonManager, HexMexCamera);
+            var controlLayer = new ButtonLayer(World, HexMexCamera);
             buildMenuLayer.ConstructionRequested += ConstructBuilding;
             controlLayer.ConstructionRequested += (s, b) => buildMenuLayer.DisplayBuildMenuFor(b);
 
