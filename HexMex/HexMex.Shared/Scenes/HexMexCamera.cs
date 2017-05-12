@@ -1,4 +1,5 @@
-﻿using CocosSharp;
+﻿using System;
+using CocosSharp;
 
 namespace HexMex.Scenes
 {
@@ -22,6 +23,7 @@ namespace HexMex.Scenes
             Position = value;
             TargetInWorldspace = new CCPoint3(value, -1);
             CenterInWorldspace = new CCPoint3(value, 0);
+            PositionUpdated?.Invoke(this, Position);
         }
 
         public void SetZoomFactor(float zoomFactor)
@@ -31,6 +33,10 @@ namespace HexMex.Scenes
             var currentWidth = StartVisibleArea.Width / zoomFactor;
             var currentHeight = StartVisibleArea.Height / zoomFactor;
             OrthographicViewSizeWorldspace = new CCSize(currentWidth, currentHeight);
+            ZoomUpdated?.Invoke(this, ZoomFactor);
         }
+
+        public event Action<HexMexCamera, CCPoint> PositionUpdated;
+        public event Action<HexMexCamera, float> ZoomUpdated;
     }
 }

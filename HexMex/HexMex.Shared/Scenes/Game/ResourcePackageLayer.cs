@@ -4,9 +4,9 @@ using HexMex.Game;
 
 namespace HexMex.Scenes.Game
 {
-    public class ResourcePackageLayer : CCLayer
+    public class ResourcePackageLayer : TouchLayer
     {
-        public ResourcePackageLayer(ResourcePackageManager resourcePackageManager, WorldSettings worldSettings)
+        public ResourcePackageLayer(ResourcePackageManager resourcePackageManager, WorldSettings worldSettings, HexMexCamera camera) : base(camera)
         {
             WorldSettings = worldSettings;
             resourcePackageManager.PackageAdded += ResourcePackageManager_PackageAdded;

@@ -7,8 +7,8 @@ namespace HexMex.Controls
 {
     public class BuildButton : Button
     {
-        private CCColor4B backgroundColor = ColorCollection.DefaultBuildButtonBackgroundColor;
-        private CCColor4B borderColor = ColorCollection.DefaultBuildButtonBorderColor;
+        private CCColor4B backgroundColor = ColorCollection.BuildButtonBackgroundColor;
+        private CCColor4B borderColor = ColorCollection.BuildButtonBorderColor;
         private float borderThickness = 1;
 
         public BuildButton(WorldSettings settings, HexagonNode position)
@@ -94,15 +94,6 @@ namespace HexMex.Controls
             var location = ScreenToWorldspace(position.LocationOnScreen);
             var point = this.GetGlobalPosition();
             return (location - point).Length <= Radius * 2;
-        }
-
-        public override void OnTouchEnter(CCTouch touch)
-        {
-            BorderThickness = 2;
-        }
-        public override void OnTouchLeave(CCTouch touch)
-        {
-            BorderThickness = 1;
         }
 
     }

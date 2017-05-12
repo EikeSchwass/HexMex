@@ -4,8 +4,8 @@ namespace HexMex.Game.Buildings
 {
     public class StructureRenderInformation
     {
-        private CCColor4B backgroundColor = ColorCollection.DefaultStructureBackgroundColor;
-        private CCColor4B borderColor = ColorCollection.DefaultStructureBorderColor;
+        private CCColor4B backgroundColor = ColorCollection.StructureBackgroundColor;
+        private CCColor4B borderColor = ColorCollection.StructureBorderColor;
         private float hexagonRadius = 64;
 
         public StructureRenderInformation(Structure structure)

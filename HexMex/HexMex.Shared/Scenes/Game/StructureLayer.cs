@@ -9,12 +9,12 @@ using HexMex.Helper;
 
 namespace HexMex.Scenes.Game
 {
-    public class StructureLayer : CCLayer
+    public class StructureLayer : TouchLayer
     {
         public WorldSettings WorldSettings { get; }
         private CCPoint[] HexagonCorners { get; }
 
-        public StructureLayer(StructureManager structureManager, WorldSettings worldSettings)
+        public StructureLayer(StructureManager structureManager, WorldSettings worldSettings, HexMexCamera camera) : base(camera)
         {
             WorldSettings = worldSettings;
             structureManager.StructureAdded += StructureAdded;

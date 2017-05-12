@@ -22,9 +22,9 @@ namespace HexMex.Controls.Buildings
         public override void OnRequiresRedraw(Structure structure)
         {
             DrawNode.Clear();
-            DrawNode.DrawSolidCircle(CCPoint.Zero, Radius, ColorCollection.DefaultConstructionBackgroundColor);
-            DrawNode.DrawSolidArc(CCPoint.Zero, Radius, 0, (float)(Construction.Progress * PI * 2), ColorCollection.DefaultConstructionProgressColor);
-            DrawNode.DrawSolidCircle(CCPoint.Zero, Radius * 3 / 4, ColorCollection.DefaultConstructionBackgroundColor);
+            DrawNode.DrawSolidCircle(CCPoint.Zero, Radius, ColorCollection.ConstructionBackgroundColor);
+            DrawNode.DrawSolidArc(CCPoint.Zero, Radius, 0, (float)(Construction.Progress * PI * 2), ColorCollection.ConstructionProgressColor);
+            DrawNode.DrawSolidCircle(CCPoint.Zero, Radius * 3 / 4, ColorCollection.ConstructionBackgroundColor);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace HexMex.Shared
                 application.ContentSearchPaths.Add("ld");
                 CCSprite.DefaultTexelToContentSizeRatio = 1.0f;
             }
-            var scene = new MainMenuScene(mainWindow, DataLoader);
+            var scene = new MainMenuScene(mainWindow);
             mainWindow.RunWithScene(scene);
         }
 

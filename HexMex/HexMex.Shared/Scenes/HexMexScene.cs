@@ -1,5 +1,4 @@
 ﻿using CocosSharp;
-using HexMex.Helper;
 using HexMex.Shared;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -8,10 +7,10 @@ namespace HexMex.Scenes
 {
     public class HexMexScene : CCScene
     {
-        public HexMexScene(CCWindow window, DataLoader dataLoader) : base(window)
+        public HexMexScene(CCWindow window) : base(window)
         {
-            DataLoader = dataLoader;
             Schedule();
+
         }
 
         public override void Update(float dt)
@@ -25,8 +24,6 @@ namespace HexMex.Scenes
                     ((AppDelegate)Window.Application.ApplicationDelegate).AppSuspender.Suspend();
             }
         }
-
-        public DataLoader DataLoader { get; }
     }
 }
 

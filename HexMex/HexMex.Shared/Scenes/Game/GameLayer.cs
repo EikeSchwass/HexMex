@@ -1,52 +1,55 @@
-﻿using CocosSharp;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using CocosSharp;
 using HexMex.Game;
 
 namespace HexMex.Scenes.Game
 {
-    public class GameLayer : HexMexLayer
+    public class GameLayer : CCLayerColor
     {
-        private const float MINTOUCHDISTANCE = 10;
-        private float StartZoom { get; set; } = 1;
-        private CCPoint StartPosition { get; set; } = CCPoint.Zero;
-
-        public World World { get; }
-        public HexMexCamera HexMexCamera { get; }
-        public TouchHandler TouchHandler { get; }
-
-        public GameLayer(CCColor4B color, World world, HexMexCamera camera) : base(color)
+        public GameLayer(World world, HexMexCamera camera, CCColor4B color) : base(color)
         {
-            TouchHandler = new TouchHandler(this);
-            TouchHandler.Dragging += Dragging;
-            TouchHandler.Pintching += Pintching;
-            World = world;
             HexMexCamera = camera;
-            var menuLayer = new MenuLayer(World.WorldSettings) { Camera = camera };
-            AddChild(new HexagonLayer(World.HexagonManager, World.WorldSettings) { Camera = camera });
-            AddChild(new CCLayerColor(camera, new CCColor4B(0, 0, 0, 0.4f)));
-            AddChild(new ResourcePackageLayer(World.ResourcePackageManager, World.WorldSettings) { Camera = camera });
-            AddChild(new StructureLayer(World.StructureManager, World.WorldSettings) { Camera = camera });
-            AddChild(new ControlLayer(World.ButtonManager, World.StructureManager, menuLayer, World.ResourceManager, World.HexagonManager) { Camera = camera });
-            AddChild(menuLayer);
+            TouchHandler = new GameTouchHandler(this, HexMexCamera);
+            World = world;
+            var hexagonLayer = new HexagonLayer(World.HexagonManager, World.WorldSettings, HexMexCamera);
+            var blendLayer = new CCLayerColor(camera, new CCColor4B(0, 0, 0, 0.4f));
+            var resourcePackageLayer = new ResourcePackageLayer(World.ResourcePackageManager, World.WorldSettings, HexMexCamera);
+            var structureLayer = new StructureLayer(World.StructureManager, World.WorldSettings, HexMexCamera);
+            var buildMenuLayer = new BuildMenuLayer(HexMexCamera);
+            var controlLayer = new ButtonLayer(World.ButtonManager, HexMexCamera);
+            controlLayer.ConstructionRequested += (s, b) => buildMenuLayer.DisplayBuildMenuFor(b);
+
+            var layers = new CCLayer[]
+            {
+                hexagonLayer,
+                blendLayer,
+                resourcePackageLayer,
+                structureLayer,
+                controlLayer,
+                buildMenuLayer
+            };
+
+            foreach (var layer in layers)
+            {
+                AddChild(layer);
+            }
+
+            TouchLayers = new ReadOnlyCollection<TouchLayer>(layers.OfType<TouchLayer>().Reverse().ToList());
+
+            Schedule();
         }
 
-        private void Pintching(CCTouch touch1, CCTouch touch2)
+        public HexMexCamera HexMexCamera { get; }
+        public GameTouchHandler TouchHandler { get; }
+
+        public ReadOnlyCollection<TouchLayer> TouchLayers { get; }
+        public World World { get; }
+
+        public override void Update(float dt)
         {
-            var prevDiff = (touch1.PreviousLocation - touch2.PreviousLocation).Length;
-            var currentDiff = (touch1.Location - touch2.Location).Length;
-            if (currentDiff < MINTOUCHDISTANCE)
-                return;
-
-            var sizeFactor = currentDiff / prevDiff;
-            sizeFactor = sizeFactor - (sizeFactor - 1) / 2;
-
-            HexMexCamera.SetZoomFactor(sizeFactor * HexMexCamera.ZoomFactor);
-
+            base.Update(dt);
+            World.Update(dt);
         }
-
-        private void Dragging(CCPoint delta)
-        {
-            HexMexCamera.MoveToPosition(HexMexCamera.Position + delta / HexMexCamera.ZoomFactor);
-        }
-
     }
 }

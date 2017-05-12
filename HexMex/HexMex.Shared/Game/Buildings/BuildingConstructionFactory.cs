@@ -14,7 +14,7 @@ namespace HexMex.Game.Buildings
             var factories = from type in types
                             where !type.IsAbstract
                             where !type.IsAutoClass
-                            where type.IsSubclassOf(typeof(Structure))
+                            where type.IsSubclassOf(typeof(Building))
                             let description = type.GetCustomAttribute<BuildingInformationAttribute>()
                             select new BuildingConstructionFactory(type, description, (pos, res, hex) => (Structure)Activator.CreateInstance(type, pos, res, hex));
             Factories = new ReadOnlyDictionary<Type, BuildingConstructionFactory>(factories.ToDictionary(f => f.Type));

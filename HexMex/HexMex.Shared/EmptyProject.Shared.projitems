@@ -15,9 +15,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Buildings\ConstructionControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Buildings\MineControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Button.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Container.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Control.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\Dialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HexButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\IPointInBoundsCheck.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TextButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Building.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\BuildingConstructionFactory.cs" />
@@ -71,21 +73,22 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helper\PathFinder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ResourceTypeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ICanSuspendApp.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\ControlLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\GameTouchHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\BuildMenuLayer.BuildMenuEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\BuildMenuLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\ButtonLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\Font.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\GameLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\GameScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\HexagonLayer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\BuildMenuEntry.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\BuildMenu.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\MenuLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\ResourcePackageLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\StructureLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\HexMexCamera.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\HexMexLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\TouchLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\HexMexScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\MainMenu\MainMenuLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\MainMenu\MainMenuScene.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\TouchHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\TouchEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\TouchMode.cs" />
   </ItemGroup>
 </Project>

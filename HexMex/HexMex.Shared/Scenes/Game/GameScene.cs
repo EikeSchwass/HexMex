@@ -1,6 +1,5 @@
 ﻿using CocosSharp;
 using HexMex.Game;
-using HexMex.Helper;
 
 namespace HexMex.Scenes.Game
 {
@@ -11,20 +10,14 @@ namespace HexMex.Scenes.Game
 
         public sealed override CCCamera Camera { get; set; }
 
-        public GameScene(CCWindow window, DataLoader dataLoader, World world) : base(window, dataLoader)
+        public GameScene(CCWindow window, World world) : base(window)
         {
             World = world;
             HexMexCamera = new HexMexCamera(BoundingBoxTransformedToWorld.Size);
             HexMexCamera.MoveToPosition(CCPoint.Zero);
             Camera = HexMexCamera;
-            AddChild(new GameLayer(CCColor4B.Black, World, HexMexCamera));
-            Schedule();
+            AddChild(new GameLayer(World, HexMexCamera, CCColor4B.Black));
         }
 
-        public override void Update(float dt)
-        {
-            base.Update(dt);
-            World.Update(dt);
-        }
     }
 }

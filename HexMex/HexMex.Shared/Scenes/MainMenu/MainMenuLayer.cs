@@ -7,25 +7,70 @@ using HexMex.Scenes.Game;
 
 namespace HexMex.Scenes.MainMenu
 {
-    public class MainMenuLayer : HexMexLayer
+    public class MainMenuLayer : CCLayer
     {
-        public const float AnimationSpeed = 1.25f;
-
-        public MainMenuLayer() : base(CCColor4B.Black)
+        public MainMenuLayer()
         {
-
             StartGameButton.Touched += StartGameButton_Clicked;
             HelpButton.Touched += HelpButton_Clicked;
             OptionsButton.Touched += OptionsButton_Clicked;
 
-            TouchHandler = new TouchHandler(this) { PintchingEnabled = false, DraggingEnabled = false };
+            AddEventListener(new CCEventListenerTouchOneByOne
+            {
+                OnTouchBegan = TouchDown,
+                OnTouchCancelled = OnTouchCancelled,
+                OnTouchEnded = OnTouchUp,
+                OnTouchMoved = OnTouchMoved
+            });
+        }
 
+        private void OnTouchCancelled(CCTouch arg1, CCEvent arg2)
+        {
+            StartGameButton.IsPressed = false;
+            HelpButton.IsPressed = false;
+            OptionsButton.IsPressed = false;
+        }
+
+        private void OnTouchMoved(CCTouch arg1, CCEvent arg2)
+        {
+            if (!StartGameButton.IsPointInBounds(arg1) && StartGameButton.IsPressed)
+                StartGameButton.IsPressed = false;
+            if (!HelpButton.IsPointInBounds(arg1) && HelpButton.IsPressed)
+                HelpButton.IsPressed = false;
+            if (!OptionsButton.IsPointInBounds(arg1) && OptionsButton.IsPressed)
+                OptionsButton.IsPressed = false;
+        }
+
+        private bool TouchDown(CCTouch arg1, CCEvent arg2)
+        {
+            if (StartGameButton.IsPointInBounds(arg1))
+            {
+                StartGameButton.IsPressed = true;
+            }
+            if (HelpButton.IsPointInBounds(arg1))
+            {
+                HelpButton.IsPressed = true;
+            }
+            if (OptionsButton.IsPointInBounds(arg1))
+            {
+                OptionsButton.IsPressed = true;
+            }
+            return true;
+        }
+
+        private void OnTouchUp(CCTouch arg1, CCEvent arg2)
+        {
+            if (StartGameButton.IsPointInBounds(arg1) && StartGameButton.IsPressed)
+                StartGameButton.OnTouchUp();
+            if (HelpButton.IsPointInBounds(arg1) && HelpButton.IsPressed)
+                HelpButton.OnTouchUp();
+            if (OptionsButton.IsPointInBounds(arg1) && OptionsButton.IsPressed)
+                OptionsButton.OnTouchUp();
         }
 
         private HexButton HelpButton { get; } = new HexButton("Help", 150, Font.MainMenuButtonFont);
         private HexButton OptionsButton { get; } = new HexButton("Options", 150, Font.MainMenuButtonFont);
         private HexButton StartGameButton { get; } = new HexButton("Start", 150, Font.MainMenuButtonFont);
-        private TouchHandler TouchHandler { get; }
 
 
         protected override void AddedToScene()
@@ -50,20 +95,20 @@ namespace HexMex.Scenes.MainMenu
             hexMexCamera.MoveToPosition(CCPoint.Zero);
         }
 
-        private void HelpButton_Clicked(Button sender, CCTouch obj)
+        private void HelpButton_Clicked(Button sender)
         {
             Debug.WriteLine("Help Button Clicked");
         }
 
-        private void OptionsButton_Clicked(Button sender, CCTouch obj)
+        private void OptionsButton_Clicked(Button sender)
         {
             Debug.WriteLine("Options Button Clicked");
         }
 
-        private void StartGameButton_Clicked(Button sender, CCTouch obj)
+        private void StartGameButton_Clicked(Button sender)
         {
             World world = new World(new WorldSettings());
-            Window.DefaultDirector.PushScene(new GameScene(Window, HexMexScene.DataLoader, world));
+            Window.DefaultDirector.PushScene(new GameScene(Window, world));
             world.Initialize();
         }
     }

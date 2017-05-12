@@ -4,7 +4,7 @@ using HexMex.Game.Buildings;
 
 namespace HexMex.Controls.Buildings
 {
-    public abstract class StructureControl : Control
+    public abstract class StructureControl : CCNode
     {
         protected StructureControl(HexagonNode location, Structure structure)
         {

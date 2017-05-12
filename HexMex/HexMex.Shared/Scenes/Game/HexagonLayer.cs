@@ -7,9 +7,9 @@ using HexMex.Helper;
 
 namespace HexMex.Scenes.Game
 {
-    public class HexagonLayer : CCLayer
+    public class HexagonLayer : TouchLayer
     {
-        public HexagonLayer(HexagonManager hexagonManager, WorldSettings worldSettings)
+        public HexagonLayer(HexagonManager hexagonManager, WorldSettings worldSettings, HexMexCamera hexMexCamera) : base(hexMexCamera)
         {
             WorldSettings = worldSettings;
             HexagonManager = hexagonManager;
@@ -48,7 +48,7 @@ namespace HexMex.Scenes.Game
             {
                 var triangleCorners = GetTriangleCorners(i);
                 var color = resourceHexagon.ResourceType.GetColor();
-                drawNode.DrawPolygon(triangleCorners, 3, color, resourceHexagon.ResourceType.HasBorder() ? 0f : 0, ColorCollection.DefaultResourceBorderColor);
+                drawNode.DrawPolygon(triangleCorners, 3, color, resourceHexagon.ResourceType.HasBorder() ? 0f : 0, ColorCollection.ResourceBorderColor);
             }
         }
 
@@ -169,7 +169,7 @@ namespace HexMex.Scenes.Game
             var drawNode = GetDrawNode(hexagon.Position);
             drawNode.Clear();
 
-            drawNode.DrawPolygon(HexagonCorners, 6, ColorCollection.DefaultHexagonBackgroundColor, WorldSettings.HexagonBorderThickness, ColorCollection.DefaultHexagonBorderColor);
+            drawNode.DrawPolygon(HexagonCorners, 6, ColorCollection.HexagonBackgroundColor, WorldSettings.HexagonBorderThickness, ColorCollection.HexagonBorderColor);
             drawNode.Position = hexagon.Position.GetWorldPosition(WorldSettings.HexagonRadius, WorldSettings.HexagonMargin);
 
             if (hexagon is ResourceHexagon resourceHexagon)

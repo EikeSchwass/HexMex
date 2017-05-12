@@ -8,8 +8,8 @@ namespace HexMex.Controls
 {
     public class HexButton : Button
     {
-        private CCColor4B backgroundColor = ColorCollection.DefaultHexagonBackgroundColor;
-        private CCColor4B borderColor = ColorCollection.DefaultHexagonBorderColor;
+        private CCColor4B backgroundColor = ColorCollection.HexagonBackgroundColor;
+        private CCColor4B borderColor = ColorCollection.HexagonBorderColor;
         private float borderThickness = 1;
         private float radius;
 
@@ -26,9 +26,6 @@ namespace HexMex.Controls
             AddChild(HexagoneNode);
             AddChild(TextLabel);
 
-            Touching += HexButton_Touching;
-            Touched += HexButton_Touched;
-            TouchCancelled += HexButton_Touched;
         }
 
         public CCColor4B BackgroundColor
@@ -111,17 +108,20 @@ namespace HexMex.Controls
             UpdateTransform();
         }
 
-        private void HexButton_Touched(Button sender, CCTouch obj)
+        protected override void OnIsPressedChanged()
         {
-            Parent.ReorderChild(this, 0);
-            BorderThickness -= Radius / 100;
+            base.OnIsPressedChanged();
+            if (IsPressed)
+            {
+                Parent.ReorderChild(this, 1);
+                BorderThickness = 1 + Radius / 100;
+            }
+            else
+            {
+                Parent.ReorderChild(this, 0);
+                BorderThickness = 1;
+            }
 
-        }
-
-        private void HexButton_Touching(Button sender, CCTouch obj)
-        {
-            Parent.ReorderChild(this, 1);
-            BorderThickness += Radius / 100;
         }
     }
 }
