@@ -29,7 +29,7 @@ namespace HexMex.Game
                 if (HexMexRandom.NextDouble() < f)
                     hexagon = new ResourceHexagon(ResourceType.Water, HexMexRandom.Next(worldSettings.MaxNumberOfResourcesInHexagon + 1), hexagonPosition);
                 else
-                    hexagon = new ResourceHexagon(ResourceType.Nothing, HexMexRandom.Next(worldSettings.MaxNumberOfResourcesInHexagon + 1), hexagonPosition);
+                    hexagon = new ResourceHexagon(ResourceType.None, HexMexRandom.Next(worldSettings.MaxNumberOfResourcesInHexagon + 1), hexagonPosition);
             }
             return hexagon;
         }

@@ -17,14 +17,64 @@ namespace HexMex.Helper
         {
             switch (type)
             {
-                case ResourceType.Workforce: return CCColor4B.Yellow;
-                case ResourceType.Water: return CCColor4B.Blue;
-                case ResourceType.Meat: return CCColor4B.Orange;
-                case ResourceType.Bread: return CCColor4B.Gray;
-                case ResourceType.Nutrition: return CCColor4B.White;
-                case ResourceType.Any: return CCColor4B.Green;
-                case ResourceType.Nothing: return CCColor4B.Aquamarine;
-                default: throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                case ResourceType.None:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.PureWater:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Tree:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Stone:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.CoalOre:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.CopperOre:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.IronOre:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.GoldOre:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Diamonds:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Gold:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Copper:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Iron:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Wood:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Coal:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Sand:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Brick:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Paper:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Circuit:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Tools:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Barrel:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Pottasche:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Glas:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.WaterBarrel:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Knowledge:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Energy:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Water:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Degradeable:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case ResourceType.Any:
+                    return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
 

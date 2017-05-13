@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using CocosSharp;
+using static System.Math;
 
 namespace HexMex.Game.Buildings
 {
@@ -7,7 +9,6 @@ namespace HexMex.Game.Buildings
         public Construction(HexagonNode position, BuildingConstructionFactory buildingConstructionFactory, World world) : base(position, world, buildingConstructionFactory.BuildingInformation.ConstructionCost, Enumerable.Empty<ResourceType>())
         {
             ConstructionFactory = buildingConstructionFactory;
-            World = world;
         }
 
         public BuildingConstructionFactory ConstructionFactory { get; }
@@ -16,7 +17,6 @@ namespace HexMex.Game.Buildings
         public float PassedConstructionTime { get; private set; }
 
         public float Progress { get; private set; }
-        private World World { get; }
 
         public sealed override void Update(float dt)
         {
@@ -41,6 +41,14 @@ namespace HexMex.Game.Buildings
             base.StartProduction();
             IsConstructing = true;
             Progress = 0;
+        }
+
+        public override void Render(CCDrawNode drawNode)
+        {
+            var position = Position.GetWorldPosition(World.WorldSettings.HexagonRadius, World.WorldSettings.HexagonMargin);
+            drawNode.DrawSolidCircle(position, World.WorldSettings.HexagonMargin, ColorCollection.ConstructionBackgroundColor);
+            drawNode.DrawSolidArc(position, World.WorldSettings.HexagonMargin, (float)(PI / 2), (float)(-Progress * PI * 2), ColorCollection.ConstructionProgressColor);
+            drawNode.DrawSolidCircle(position, World.WorldSettings.HexagonMargin * 3 / 4, ColorCollection.ConstructionBackgroundColor);
         }
     }
 }

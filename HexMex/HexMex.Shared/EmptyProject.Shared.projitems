@@ -60,7 +60,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceHexagon.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Structure.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\VillageBuilding.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\CoalRefinery.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\StructureManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\World.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\WorldSettings.cs" />
@@ -94,5 +94,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controls\Buildings\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)ResourceDiagram.dgml" />
   </ItemGroup>
 </Project>

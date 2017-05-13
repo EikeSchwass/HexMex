@@ -10,6 +10,7 @@ namespace HexMex.Game.Buildings
     {
         protected Structure(HexagonNode position, World world, IEnumerable<ResourceType> inputs, IEnumerable<ResourceType> outputs)
         {
+            World = world;
             Position = position;
             ResourceManager = world.ResourceManager;
             HexagonManager = world.HexagonManager;
@@ -24,16 +25,17 @@ namespace HexMex.Game.Buildings
 
         public event Action<Structure> RequiresRedraw;
 
+        public HexagonManager HexagonManager { get; }
+
         public HexagonNode Position { get; }
 
         public RequestPriority Priority { get; set; }
         public StructureRenderInformation RenderInformation { get; }
 
-        public HexagonManager HexagonManager { get; }
+        public ResourceManager ResourceManager { get; }
+        protected World World { get; }
         private FixedSizeDictionary<ResourceSlot, ResourceRequest> InputSlots { get; }
         private FixedSizeDictionary<ResourceSlot, ResourceProvision> OutputSlots { get; }
-
-        public ResourceManager ResourceManager { get; }
 
         public IEnumerable<ResourceSlot> GetInputSlots()
         {
@@ -77,6 +79,8 @@ namespace HexMex.Game.Buildings
         {
         }
 
+        public abstract void Render(CCDrawNode drawNode);
+
         public virtual void Update(float dt)
         {
             if (InputSlots.All(s => s.Key.HasResource) && OutputSlots.All(s => !s.Key.HasResource))
@@ -103,6 +107,8 @@ namespace HexMex.Game.Buildings
 
         protected virtual bool AcceptsResourceForInput(ResourceType typeOfTheResource, ResourceType actualRequestedResourceType) => typeOfTheResource.CanBeUsedFor(actualRequestedResourceType);
 
+        protected virtual bool AllowsRequestingResource(ResourceType resourceType) => true;
+
         protected virtual bool CanExtractResourceFromHexagon(ResourceType resourceType) => false;
 
         protected void OnProductionFinished()
@@ -125,8 +131,6 @@ namespace HexMex.Game.Buildings
                                                        };
             }
         }
-
-        protected virtual bool AllowsRequestingResource(ResourceType resourceType) => true;
 
         protected virtual void StartProduction()
         {

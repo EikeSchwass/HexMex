@@ -1,23 +1,28 @@
-﻿using HexMex.Helper;
+﻿using CocosSharp;
+using HexMex.Helper;
 
 namespace HexMex.Game.Buildings
 {
-    [BuildingInformation("Mine", "Extracts resources from adjacent hexagons", 10, new[] { ResourceType.Minable }, new[] { ResourceType.Minable }, 1, ResourceType.Gold, ResourceType.Gold, ResourceType.Iron)]
+    [BuildingInformation("Mine", "Extracts resources from adjacent degradeable hexagons", 10, new[] {ResourceType.Degradeable}, new[] {ResourceType.Degradeable}, 1, ResourceType.Iron, ResourceType.Iron, ResourceType.Copper)]
     public class MineBuilding : Building
     {
-
-        public MineBuilding(HexagonNode position, World world) : base(position, world, 5, new[] { ResourceType.Any }, new[] { ResourceType.Any })
+        public MineBuilding(HexagonNode position, World world) : base(position, world, 5, new[] {ResourceType.Degradeable}, new[] {ResourceType.Degradeable})
         {
-
         }
 
-        protected override bool CanExtractResourceFromHexagon(ResourceType resourceType)
+        public override void Render(CCDrawNode drawNode)
         {
-            if (resourceType.CanBeUsedFor(ResourceType.Minable))
-                return true;
-            return false;
+            var position = Position.GetWorldPosition(World.WorldSettings.HexagonRadius, World.WorldSettings.HexagonMargin);
+            drawNode.DrawDot(position, World.WorldSettings.HexagonMargin, ColorCollection.MineBuildingColor);
         }
 
         protected override bool AllowsRequestingResource(ResourceType resourceType) => false;
+
+        protected override bool CanExtractResourceFromHexagon(ResourceType resourceType)
+        {
+            if (resourceType.CanBeUsedFor(ResourceType.Degradeable))
+                return true;
+            return false;
+        }
     }
 }

@@ -16,30 +16,13 @@ namespace HexMex.Scenes.Game
 
         public void Render(Structure structure, CCDrawNode drawNode)
         {
-            switch (structure)
-            {
-                case Construction construction:
-                    Render(construction, drawNode);
-                    break;
-                case MineBuilding building:
-                    Render(building, drawNode);
-                    break;
-                case VillageBuilding building:
-                    Render(building, drawNode);
-                    break;
-            }
+            structure.Render(drawNode);
         }
 
         private void Render(MineBuilding building, CCDrawNode drawNode)
         {
             var position = building.Position.GetWorldPosition(WorldSettings.HexagonRadius, WorldSettings.HexagonMargin);
             drawNode.DrawDot(position, WorldSettings.HexagonMargin, ColorCollection.MineBuildingColor);
-        }
-
-        private void Render(VillageBuilding building, CCDrawNode drawNode)
-        {
-            var position = building.Position.GetWorldPosition(WorldSettings.HexagonRadius, WorldSettings.HexagonMargin);
-            drawNode.DrawDot(position, WorldSettings.HexagonMargin, ColorCollection.VillageBuildingColor);
         }
 
         private void Render(Construction construction, CCDrawNode drawNode)

@@ -25,6 +25,6 @@ namespace HexMex.Game
         public float MapSizeFactor { get; } = 1;
         public float MenuRadius { get; } = 140;
         public CCColor4B MenuBackgroundColor { get; } = new CCColor4B(0.5f, 0.5f, 0.5f, 0.5f);
-        public float HexagonBorderThickness { get; } = 2;
+        public float HexagonBorderThickness { get; } = 4;
     }
 }

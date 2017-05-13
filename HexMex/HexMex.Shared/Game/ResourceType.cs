@@ -5,15 +5,42 @@ namespace HexMex.Game
     [Flags]
     public enum ResourceType : long
     {
-        Nothing = 0,
-        Workforce = 1,
-        Water = 2,
-        Meat = 4,
-        Bread = 8,
-        Nutrition = Meat | Bread,
-        Gold = 16,
-        Iron = 32,
-        Any = 63,
-        Minable = Gold | Iron
+        None = 0,
+        // Primitives
+        PureWater = 1 << 0,
+        Tree = 1 << 1,
+        Stone = 1 << 2,
+        CoalOre = 1 << 3,
+        CopperOre = 1 << 4,
+        IronOre = 1 << 5,
+        GoldOre = 1 << 6,
+        Diamonds = 1 << 7,
+
+        // Products
+        Gold = 1 << 8,
+        Copper = 1 << 9,
+        Iron = 1 << 10,
+        Wood = 1 << 11,
+        Coal = 1 << 12,
+        Sand = 1 << 13,
+        Brick = 1 << 14,
+        Paper = 1 << 15,
+        Circuit = 1 << 16,
+        Tools = 1 << 17,
+        Barrel = 1 << 18,
+        Pottasche = 1 << 19,
+        Glas = 1 << 20,
+        WaterBarrel = 1 << 21,
+
+        // Other
+        Knowledge = 1 << 22,
+        Energy = 1 << 23,
+
+        // Groups
+        Water = PureWater | WaterBarrel,
+        Degradeable = CoalOre | Stone | IronOre | CopperOre | GoldOre,
+        Any = (1 << 24) - 1,
+
+
     }
 }
