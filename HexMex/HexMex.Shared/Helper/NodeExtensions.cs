@@ -13,5 +13,11 @@ namespace HexMex.Helper
             }
             return position;
         }
+
+        public static void DrawCircle(this CCDrawNode node, CCPoint position, float radius, CCColor4B fillColor, float borderThickness, CCColor4B borderColor)
+        {
+            node.DrawSolidCircle(position, radius, borderColor);
+            node.DrawSolidCircle(position, radius - borderThickness, fillColor);
+        }
     }
 }

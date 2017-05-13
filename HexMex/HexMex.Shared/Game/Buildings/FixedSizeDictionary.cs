@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace HexMex.Game.Buildings
 {
+    // TODO Optimize
     public class FixedSizeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
         public FixedSizeDictionary(IEnumerable<TKey> keys)

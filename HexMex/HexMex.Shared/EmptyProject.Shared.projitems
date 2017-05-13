@@ -11,10 +11,9 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AppDelegate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BuildButton.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\Buildings\StructureControl.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\Buildings\ConstructionControl.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\Buildings\MineControl.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\Buildings\VillageControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Edge.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\EdgeLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\StructureRenderer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Button.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Container.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Control.cs" />
@@ -92,5 +91,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\MainMenu\MainMenuScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\TouchEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\TouchMode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Controls\Buildings\" />
   </ItemGroup>
 </Project>

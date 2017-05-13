@@ -76,6 +76,8 @@ namespace HexMex.Game
                         var button = new BuildButton(WorldSettings, adjacentHexagonNode);
                         ButtonManager.AddButton(button, adjacentHexagonNode);
                     }
+                    if (!EdgeManager.ContainsEdge(structure.Position, adjacentHexagonNode))
+                        EdgeManager.AddEdge(structure.Position, adjacentHexagonNode);
                 }
             }
         }

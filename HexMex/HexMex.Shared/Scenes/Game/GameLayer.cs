@@ -21,12 +21,14 @@ namespace HexMex.Scenes.Game
             var structureLayer = new StructureLayer(World, HexMexCamera);
             var buildMenuLayer = new BuildMenuLayer(HexMexCamera);
             var controlLayer = new ButtonLayer(World, HexMexCamera);
+            var edgeLayer = new EdgeLayer(World, HexMexCamera);
             buildMenuLayer.ConstructionRequested += ConstructBuilding;
             controlLayer.ConstructionRequested += (s, b) => buildMenuLayer.DisplayBuildMenuFor(b);
 
             var layers = new CCLayer[]
             {
                 hexagonLayer,
+                edgeLayer,
                 blendLayer,
                 resourcePackageLayer,
                 structureLayer,

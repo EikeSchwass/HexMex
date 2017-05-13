@@ -13,61 +13,80 @@ namespace HexMex.Scenes.Game
             Corners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, 1).ToArray();
             World = world;
             World.HexagonManager.HexagonRevealed += HexagonRevealed;
-            AddChild(DrawNode);
+            AddChild(StaticDrawNode);
+            AddChild(DynamicDrawNode);
+            StaticHexagons.AddRange(World.HexagonManager);
             Schedule(Update, 1);
+            RenderStatic();
         }
 
         private CCPoint[] Corners { get; }
 
-        private CCDrawNode DrawNode { get; } = new CCDrawNode();
+        private CCDrawNode StaticDrawNode { get; } = new CCDrawNode();
+        private CCDrawNode DynamicDrawNode { get; } = new CCDrawNode();
 
-        private List<Hexagon> Hexagons { get; } = new List<Hexagon>();
+        private List<Hexagon> StaticHexagons { get; } = new List<Hexagon>();
+        private List<Hexagon> DynamicHexagons { get; } = new List<Hexagon>();
 
-        private bool RedrawRequested { get; set; }
+        private bool RedrawRequested { get; set; } = true;
 
         private World World { get; }
 
         public override void Update(float dt)
         {
             base.Update(dt);
-            if (!RedrawRequested)
+            if (!RedrawRequested || DynamicHexagons.Count == 0)
                 return;
             RedrawRequested = false;
-            Render();
+            RenderDynamic();
         }
 
         private void HexagonRequiresRedraw(Hexagon hexagon)
         {
+            if (StaticHexagons.Contains(hexagon))
+            {
+                StaticHexagons.Remove(hexagon);
+                DynamicHexagons.Add(hexagon);
+            }
             RedrawRequested = true;
         }
 
         private void HexagonRevealed(HexagonManager hexagonManager, Hexagon hexagon)
         {
             hexagon.RequiresRedraw += HexagonRequiresRedraw;
-            Hexagons.Add(hexagon);
-            RedrawRequested = true;
+            StaticHexagons.Add(hexagon);
+            RenderStatic();
         }
 
-        private void Render()
+        private void RenderStatic()
         {
-            DrawNode.Clear();
-            foreach (var hexagon in Hexagons)
+            StaticDrawNode.Clear();
+            foreach (var hexagon in StaticHexagons)
             {
-                RenderHexagon(hexagon);
+                RenderHexagon(StaticDrawNode, hexagon);
             }
         }
 
-        private void RenderHexagon(Hexagon hexagon)
+        private void RenderDynamic()
+        {
+            DynamicDrawNode.Clear();
+            foreach (var hexagon in DynamicHexagons)
+            {
+                RenderHexagon(DynamicDrawNode, hexagon);
+            }
+        }
+
+        private void RenderHexagon(CCDrawNode drawNode, Hexagon hexagon)
         {
             var worldPosition = hexagon.Position.GetWorldPosition(World.WorldSettings.HexagonRadius, World.WorldSettings.HexagonMargin);
             var corners = Corners.Select(c => c * World.WorldSettings.HexagonRadius + worldPosition).ToArray();
-            DrawNode.DrawPolygon(corners, 6, ColorCollection.HexagonBackgroundColor, World.WorldSettings.HexagonBorderThickness, ColorCollection.HexagonBorderColor);
+            drawNode.DrawPolygon(corners, 6, ColorCollection.HexagonBackgroundColor, World.WorldSettings.HexagonBorderThickness, ColorCollection.HexagonBorderColor);
 
             if (hexagon is ResourceHexagon resourceHexagon)
             {
                 float factor = resourceHexagon.RemainingResources * 1.0f / World.WorldSettings.MaxNumberOfResourcesInHexagon;
                 var innerCorners = Corners.Select(c => c * (World.WorldSettings.HexagonRadius * factor) + worldPosition).ToArray();
-                DrawNode.DrawPolygon(innerCorners, 6, resourceHexagon.ResourceType.GetColor(), 0, CCColor4B.Transparent);
+                drawNode.DrawPolygon(innerCorners, 6, resourceHexagon.ResourceType.GetColor(), 0, CCColor4B.Transparent);
             }
         }
     }

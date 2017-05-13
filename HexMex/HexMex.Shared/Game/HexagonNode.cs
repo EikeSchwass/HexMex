@@ -13,6 +13,8 @@ namespace HexMex.Game
         public HexagonPosition Position3 { get; }
         public bool IsYShape { get; }
 
+
+        // TODO Optimize
         public HexagonNode(HexagonPosition position1, HexagonPosition position2, HexagonPosition position3)
         {
             if (position1 == position2 || position1 == position3 || position2 == position3)
@@ -47,6 +49,7 @@ namespace HexMex.Game
             return Position1.Equals(other.Position1) && Position2.Equals(other.Position2) && Position3.Equals(other.Position3);
         }
 
+        // TODO Optimize
         public IEnumerable<HexagonNode> GetAdjacentHexagonNodes()
         {
             var positions = new[]

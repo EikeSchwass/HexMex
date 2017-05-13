@@ -1,58 +1,55 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using CocosSharp;
-using HexMex.Controls.Buildings;
 using HexMex.Game;
 using HexMex.Game.Buildings;
-using HexMex.Helper;
 
 namespace HexMex.Scenes.Game
 {
     public class StructureLayer : TouchLayer
     {
-        public WorldSettings WorldSettings { get; }
-        private CCPoint[] HexagonCorners { get; }
-
         public StructureLayer(World world, HexMexCamera camera) : base(camera)
         {
             WorldSettings = world.WorldSettings;
             world.StructureManager.StructureAdded += StructureAdded;
             world.StructureManager.StructureRemoved += StructureRemoved;
-            HexagonCorners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, 1).Select(c => c.RotateAround(CCPoint.Zero, 30)).ToArray();
+            StructureRenderer = new StructureRenderer(WorldSettings);
+            Schedule();
+            AddChild(DrawNode);
         }
-        private Dictionary<Structure, StructureControl> Structures { get; } = new Dictionary<Structure, StructureControl>();
+
+        public WorldSettings WorldSettings { get; }
+
+        private CCDrawNode DrawNode { get; } = new CCDrawNode();
+
+        private bool RedrawRequested { get; set; }
+        private StructureRenderer StructureRenderer { get; }
+
+        private List<Structure> Structures { get; } = new List<Structure>();
+
+        public override void Update(float dt)
+        {
+            base.Update(dt);
+            if (!RedrawRequested)
+                return;
+            RedrawRequested = false;
+            DrawNode.Clear();
+            foreach (var structure in Structures)
+            {
+                StructureRenderer.Render(structure, DrawNode);
+            }
+        }
 
         private void StructureAdded(StructureManager structureManager, Structure structure)
         {
-            StructureControl node;
-            switch (structure)
-            {
-                case Construction construction:
-                    node = new ConstructionControl(construction, WorldSettings.HexagonMargin);
-                    break;
-                case MineBuilding mineBuilding:
-                    node = new MineControl(mineBuilding, WorldSettings.HexagonMargin);
-                    break;
-                case VillageBuilding villageBuilding:
-                    node = new VillageControl(villageBuilding, WorldSettings.HexagonMargin);
-                    break;
-                default:
-                    throw new ArgumentException("All Structures must have an appropiate control", nameof(structure));
-
-            }
-            var worldPosition = structure.Position.GetWorldPosition(WorldSettings.HexagonRadius, WorldSettings.HexagonMargin);
-            node.Position = worldPosition;
-            AddChild(node);
-            node.OnRequiresRedraw(structure);
-            Structures.Add(structure, node);
+            structure.RequiresRedraw += s => RedrawRequested = true;
+            Structures.Add(structure);
+            RedrawRequested = true;
         }
-
 
         private void StructureRemoved(StructureManager structureManager, Structure structure)
         {
-            var node = Structures[structure];
-            RemoveChild(node);
+            Structures.Remove(structure);
+            RedrawRequested = true;
         }
     }
 }
