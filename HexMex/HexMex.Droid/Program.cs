@@ -3,6 +3,7 @@ using Android.Content.PM;
 using Android.OS;
 using CocosSharp;
 using HexMex.Shared;
+using HexMex.UnitTests;
 using Microsoft.Xna.Framework;
 
 namespace HexMex.Droid
@@ -19,10 +20,11 @@ namespace HexMex.Droid
         {
             base.OnCreate(bundle);
 
-            CCApplication application = new CCApplication
-            {
-                ApplicationDelegate = new AppDelegate(new AndroidDataLoader(), this)
-            };
+#if DEBUG
+            Tests.RunTests();
+#endif
+
+            CCApplication application = new CCApplication {ApplicationDelegate = new AppDelegate(new AndroidDataLoader(), this)};
 
             SetContentView(application.AndroidContentView);
             application.StartGame();

@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AppDelegate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BuildButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\StructureDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Edge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\EdgeLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\StructureRenderer.cs" />
@@ -91,6 +92,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\MainMenu\MainMenuScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\TouchEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\TouchMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UnitTests\AssertException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UnitTests\StructureTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UnitTests\TestClassAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UnitTests\TestMethodAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UnitTests\Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controls\Buildings\" />
