@@ -7,13 +7,15 @@ namespace HexMex.Game
 {
     public class EdgeManager : IEnumerable<Edge>
     {
+        public event Action<EdgeManager, Edge> EdgeAdded;
+
+        public WorldSettings WorldSettings { get; }
+        private List<Edge> Edges { get; } = new List<Edge>();
+
         public EdgeManager(WorldSettings worldSettings)
         {
             WorldSettings = worldSettings;
         }
-
-        public WorldSettings WorldSettings { get; }
-        private List<Edge> Edges { get; } = new List<Edge>();
 
         public void AddEdge(HexagonNode from, HexagonNode to, float resourceTravelDuration = 1)
         {
@@ -22,7 +24,10 @@ namespace HexMex.Game
             EdgeAdded?.Invoke(this, edge);
         }
 
-        public event Action<EdgeManager, Edge> EdgeAdded;
+        public bool ContainsEdge(HexagonNode from, HexagonNode to)
+        {
+            return Edges.Any(e => e.Equals(from, to));
+        }
 
         public IEnumerator<Edge> GetEnumerator()
         {
@@ -44,11 +49,6 @@ namespace HexMex.Game
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
-        }
-
-        public bool ContainsEdge(HexagonNode from, HexagonNode to)
-        {
-            return Edges.Any(e => e.Equals(from, to));
         }
     }
 }

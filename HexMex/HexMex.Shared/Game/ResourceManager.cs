@@ -1,70 +1,114 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using CocosSharp;
 using HexMex.Game.Buildings;
+using HexMex.Helper;
 
 namespace HexMex.Game
 {
     // TODO Cleanup
     public class ResourceManager : ICCUpdatable
     {
-        public ResourceManager(PathFinder pathFinder, EdgeManager edgeManager, ResourcePackageManager resourcePackageManager, WorldSettings worldSettings)
+        public event Action<ResourceManager, ResourcePackage> PackageArrived;
+        public event Action<ResourceManager, ResourcePackage> PackageStarted;
+
+        public ReadOnlyCollection<ResourcePackage> AllPackages => AllPackageList.AsReadOnly();
+        public World World { get; }
+
+        private List<ResourcePackage> AllPackageList { get; } = new List<ResourcePackage>();
+        private ResourcePriorityQueue<ResourcePackage, ResourceType> Provisions { get; } = new ResourcePriorityQueue<ResourcePackage, ResourceType>((p, r) => p.ResourceType.CanBeUsedFor(r));
+        private ResourcePriorityQueue<ResourcePackage, ResourceType> Requests { get; } = new ResourcePriorityQueue<ResourcePackage, ResourceType>((p, r) => r.CanBeUsedFor(p.ResourceType));
+
+        public ResourceManager(World world)
         {
-            PathFinder = pathFinder;
-            RequestCollection = new RequestCollection();
-            CheckInterval = worldSettings.ResourceManagerUpdateInterval;
-            EdgeManager = edgeManager;
-            ResourcePackageManager = resourcePackageManager;
+            World = world;
         }
 
-        public float CheckInterval { get; set; }
-
-        public EdgeManager EdgeManager { get; }
-        public ResourcePackageManager ResourcePackageManager { get; }
-        public PathFinder PathFinder { get; }
-        private List<ResourceProvision.ResourceProvisionChanger> ProvidedResources { get; } = new List<ResourceProvision.ResourceProvisionChanger>();
-        private RequestCollection RequestCollection { get; }
-        private float TimeSinceLastCheck { get; set; }
-
-        public ResourceProvision ProvideResource(ResourceType resourceType, Structure structure, RequestPriority priority)
+        public ResourcePackage ProvideResource(Structure providingStructure, ResourceType resourceType, RequestPriority priority)
         {
-            ResourceProvision.ResourceProvisionChanger resourceProvisionChanger = ResourceProvision.CreateResourceProvision(resourceType, structure, priority);
-            ProvidedResources.Add(resourceProvisionChanger);
-            return resourceProvisionChanger.ResourceProvision;
+            var requestPackage = Requests.Dequeue(resourceType);
+            if (requestPackage != null)
+            {
+                requestPackage.StartStructure = providingStructure;
+                requestPackage.SpecifyResourceType(resourceType);
+                requestPackage.Move();
+                return requestPackage;
+            }
+            var resourcePackage = new ResourcePackage(resourceType, World.PathFinder, World.EdgeManager) { StartStructure = providingStructure };
+            AddPackage(resourcePackage);
+            Provisions.Enqueue(resourcePackage, priority);
+            return resourcePackage;
         }
 
-        public ResourceRequest RequestResource(ResourceType resourceType, Structure structure, RequestPriority priority)
+        public ResourcePackage RequestResource(Structure requestingStructure, ResourceType resourceType, RequestPriority priority)
         {
-            var request = ResourceRequest.CreateResourceRequest(resourceType, structure, priority);
-            RequestCollection.Add(request);
-            return request.ResourceRequest;
+            var providedPackage = Provisions.Dequeue(resourceType);
+            if (providedPackage != null)
+            {
+                providedPackage.DestinationStructure = requestingStructure;
+                providedPackage.SpecifyResourceType(resourceType);
+                providedPackage.Move();
+                return providedPackage;
+            }
+            var resourcePackage = new ResourcePackage(resourceType, World.PathFinder, World.EdgeManager) { DestinationStructure = requestingStructure };
+            AddPackage(resourcePackage);
+            Requests.Enqueue(resourcePackage, priority);
+            return resourcePackage;
         }
 
         public void Update(float dt)
         {
-            TimeSinceLastCheck += dt;
-            if (TimeSinceLastCheck >= CheckInterval)
+            var packages = AllPackages.ToArray();
+            foreach (var resourcePackage in packages)
             {
-                UpdateRequests();
-                TimeSinceLastCheck = 0;
+                if (resourcePackage.ResourceRequestState != ResourceRequestState.OnItsWay)
+                    continue;
+                resourcePackage.Update(dt);
             }
         }
 
-        private void UpdateRequests()
+        public void UpdateProvisionPriority(ResourcePackage resourcePackage, RequestPriority priority)
         {
-            foreach (var providedResource in ProvidedResources.Where(m => m.ResourceProvision.RequestState == ResourceRequestState.Pending))
+            var provisions = Provisions.ToArray();
+            foreach (var provision in provisions)
             {
-                var type = providedResource.ResourceProvision.ResourceType;
-                var nextRequest = RequestCollection.GetNextRequestThatWishes(type);
-                if (nextRequest == null)
-                    continue;
-                nextRequest.SetRequestState(ResourceRequestState.OnItsWay);
-                providedResource.SetRequestState(ResourceRequestState.OnItsWay);
-                var resourcePackage = new ResourcePackage(providedResource.ResourceProvision.ResourceType, PathFinder, EdgeManager, providedResource.ResourceProvision.Structure, nextRequest.ResourceRequest.RequestingStructure, nextRequest.ResourceRequest);
-                ResourcePackageManager.Add(resourcePackage);
-
-                //providedResource.ResourceProvision.Resource.MoveTo(nextRequest.ResourceRequest.RequestingStructure);
+                if (provision == resourcePackage)
+                {
+                    Provisions.UpdatePriority(provision, priority);
+                }
             }
+        }
+
+        public void UpdateRequestPriority(ResourcePackage resourcePackage, RequestPriority priority)
+        {
+            var requests = Requests.ToArray();
+            foreach (var request in requests)
+            {
+                if (request == resourcePackage)
+                {
+                    Requests.UpdatePriority(request, priority);
+                }
+            }
+        }
+
+        private void AddPackage(ResourcePackage resourcePackage)
+        {
+            AllPackageList.Add(resourcePackage);
+            resourcePackage.StartedMoving += ResourcePackage_StartedMoving;
+            resourcePackage.ArrivedAtDestination += ResourcePackage_ArrivedAtDestination;
+        }
+
+        private void ResourcePackage_ArrivedAtDestination(ResourcePackage resourcePackage)
+        {
+            PackageArrived?.Invoke(this, resourcePackage);
+            AllPackageList.Remove(resourcePackage);
+        }
+
+        private void ResourcePackage_StartedMoving(ResourcePackage resourcePackage)
+        {
+            PackageStarted?.Invoke(this, resourcePackage);
         }
     }
 }

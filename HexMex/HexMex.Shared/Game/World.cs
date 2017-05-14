@@ -6,28 +6,26 @@ namespace HexMex.Game
 {
     public class World : ICCUpdatable
     {
-        public World(WorldSettings worldSettings)
-        {
-            WorldSettings = worldSettings;
-            StructureManager = new StructureManager();
-            ResourcePackageManager = new ResourcePackageManager();
-            EdgeManager = new EdgeManager(WorldSettings);
-            HexagonManager = new HexagonManager(WorldSettings);
-            ButtonManager = new ButtonManager(WorldSettings);
-            PathFinder = new PathFinder(HexagonManager, EdgeManager, StructureManager);
-            ResourceManager = new ResourceManager(PathFinder, EdgeManager, ResourcePackageManager, WorldSettings);
-            StructureManager.StructureAdded += StructureAdded;
-        }
-
         public ButtonManager ButtonManager { get; }
         public EdgeManager EdgeManager { get; }
         public HexagonManager HexagonManager { get; }
         public bool IsInitialized { get; private set; }
         public PathFinder PathFinder { get; }
         public ResourceManager ResourceManager { get; }
-        public ResourcePackageManager ResourcePackageManager { get; }
         public StructureManager StructureManager { get; }
         public WorldSettings WorldSettings { get; }
+
+        public World(WorldSettings worldSettings)
+        {
+            WorldSettings = worldSettings;
+            StructureManager = new StructureManager();
+            EdgeManager = new EdgeManager(WorldSettings);
+            HexagonManager = new HexagonManager(WorldSettings);
+            ButtonManager = new ButtonManager(WorldSettings);
+            PathFinder = new PathFinder(HexagonManager, EdgeManager, StructureManager);
+            ResourceManager = new ResourceManager(this);
+            StructureManager.StructureAdded += StructureAdded;
+        }
 
         public void Initialize()
         {
@@ -39,7 +37,7 @@ namespace HexMex.Game
             HexagonManager.RevealHexagonAt(p2);
             HexagonManager.RevealHexagonAt(p3);
 
-            StructureManager.CreateStrucuture(new MineBuilding(new HexagonNode(p1, p2, p3), this));
+            StructureManager.CreateStrucuture(new DiamondExtractor(new HexagonNode(p1, p2, p3), this));
 
             IsInitialized = true;
         }
@@ -50,10 +48,8 @@ namespace HexMex.Game
                 return;
             HexagonManager.Update(dt);
             ResourceManager.Update(dt);
-            ResourcePackageManager.Update(dt);
             StructureManager.Update(dt);
         }
-
 
         private void StructureAdded(StructureManager manager, Structure structure)
         {

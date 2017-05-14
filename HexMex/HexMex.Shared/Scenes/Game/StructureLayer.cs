@@ -7,6 +7,15 @@ namespace HexMex.Scenes.Game
 {
     public class StructureLayer : TouchLayer
     {
+        public WorldSettings WorldSettings { get; }
+
+        private CCDrawNode DrawNode { get; } = new CCDrawNode();
+
+        private bool RedrawRequested { get; set; }
+        private StructureRenderer StructureRenderer { get; }
+
+        private List<Structure> Structures { get; } = new List<Structure>();
+
         public StructureLayer(World world, HexMexCamera camera) : base(camera)
         {
             WorldSettings = world.WorldSettings;
@@ -16,15 +25,6 @@ namespace HexMex.Scenes.Game
             Schedule();
             AddChild(DrawNode);
         }
-
-        public WorldSettings WorldSettings { get; }
-
-        private CCDrawNode DrawNode { get; } = new CCDrawNode();
-
-        private bool RedrawRequested { get; set; }
-        private StructureRenderer StructureRenderer { get; }
-
-        private List<Structure> Structures { get; } = new List<Structure>();
 
         public override void Update(float dt)
         {

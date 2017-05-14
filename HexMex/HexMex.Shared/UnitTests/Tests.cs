@@ -15,7 +15,7 @@ namespace HexMex.UnitTests
                                from method in type.GetMethods(BindingFlags.Public | BindingFlags.Instance)
                                where method.GetParameters().Length == 0
                                where method.GetCustomAttribute<TestMethodAttribute>() != null
-                               select new {Method = method, Type = type}).ToArray();
+                               select new { Method = method, Type = type }).ToArray();
             foreach (var testMethod in testMethods)
             {
                 try

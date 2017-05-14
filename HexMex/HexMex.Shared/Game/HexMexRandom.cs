@@ -7,8 +7,7 @@ namespace HexMex.Game
     {
         static int seed = Environment.TickCount;
 
-        private static ThreadLocal<Random> Random { get; } =
-            new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref seed)));
+        private static ThreadLocal<Random> Random { get; } = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref seed)));
 
         public static int Next(int max)
         {

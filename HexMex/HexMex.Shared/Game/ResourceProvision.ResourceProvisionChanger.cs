@@ -4,6 +4,8 @@
     {
         public class ResourceProvisionChanger
         {
+            public ResourceProvision ResourceProvision { get; }
+
             protected ResourceProvisionChanger(ResourceProvision parent)
             {
                 ResourceProvision = parent;
@@ -13,8 +15,6 @@
             {
                 ResourceProvisionChangerFactory = mr => new ResourceProvisionChanger(mr);
             }
-
-            public ResourceProvision ResourceProvision { get; }
 
             public void SetRequestState(ResourceRequestState requestState)
             {

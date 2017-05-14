@@ -7,19 +7,19 @@ namespace HexMex.Scenes.Game
 {
     public class StructureRenderer
     {
+        public WorldSettings WorldSettings { get; }
+
         public StructureRenderer(WorldSettings worldSettings)
         {
             WorldSettings = worldSettings;
         }
-
-        public WorldSettings WorldSettings { get; }
 
         public void Render(Structure structure, CCDrawNode drawNode)
         {
             structure.Render(drawNode);
         }
 
-        private void Render(MineBuilding building, CCDrawNode drawNode)
+        private void Render(DiamondExtractor building, CCDrawNode drawNode)
         {
             var position = building.Position.GetWorldPosition(WorldSettings.HexagonRadius, WorldSettings.HexagonMargin);
             drawNode.DrawDot(position, WorldSettings.HexagonMargin, ColorCollection.MineBuildingColor);

@@ -6,11 +6,6 @@ namespace HexMex.Game
 {
     public class ButtonManager
     {
-        public ButtonManager(WorldSettings worldSettings)
-        {
-            WorldSettings = worldSettings;
-        }
-
         public event ButtonListChangedEventHandler ButtonAdded;
         public event ButtonListChangedEventHandler ButtonRemoved;
 
@@ -18,6 +13,11 @@ namespace HexMex.Game
         public WorldSettings WorldSettings { get; }
 
         private Dictionary<HexagonNode, Button> Buttons { get; } = new Dictionary<HexagonNode, Button>();
+
+        public ButtonManager(WorldSettings worldSettings)
+        {
+            WorldSettings = worldSettings;
+        }
 
         public void AddButton(Button button, HexagonNode hexagonNode)
         {

@@ -2,8 +2,8 @@
 {
     public class ResourceIngredient
     {
-        public ResourceType ResourceType { get; }
         public int Amount { get; }
+        public ResourceType ResourceType { get; }
 
         public ResourceIngredient(int amount, ResourceType resourceType)
         {

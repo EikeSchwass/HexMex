@@ -11,8 +11,10 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AppDelegate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BuildButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\ResourceDirector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\StructureDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Edge.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\ResourcePackagePriorityQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\EdgeLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\StructureRenderer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Button.cs" />
@@ -27,17 +29,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Construction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\FixedSizeDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\ResourceSlot.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\BuildingInformationAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\StructureRenderInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ButtonListChangedEventHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ButtonManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\EdgeManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\IHasProgress.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\IHasResourceStorage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\MineBuilding.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\DiamondExtractor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\PathFinder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\RequestPriority.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\ResourcePackageManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ColorCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Connection.cs" />
@@ -67,12 +67,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Game\WorldSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\DataLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\HexagonHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helper\LinqExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helper\MathHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helper\NodeExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helper\ExtensionMethods.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\NoPathFoundException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\PathFinder.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helper\ResourceTypeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ICanSuspendApp.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\GameTouchHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\BuildMenuLayer.BuildMenuEntry.cs" />
@@ -93,6 +90,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\TouchEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\TouchMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UnitTests\AssertException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UnitTests\PriorityQueueTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UnitTests\StructureTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UnitTests\TestClassAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UnitTests\TestMethodAttribute.cs" />

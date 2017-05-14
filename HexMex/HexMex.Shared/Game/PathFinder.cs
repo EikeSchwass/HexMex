@@ -6,8 +6,9 @@ namespace HexMex.Game
 {
     public class PathFinder
     {
-        private HexagonManager HexagonManager { get; }
+        public event Action<HexagonNode> NodeRemoved;
         private EdgeManager EdgeManager { get; }
+        private HexagonManager HexagonManager { get; }
         private StructureManager StructureManager { get; }
 
         public PathFinder(HexagonManager hexagonManager, EdgeManager edgeManager, StructureManager structureManager)
@@ -20,11 +21,13 @@ namespace HexMex.Game
         public HexagonNode[] FindPath(HexagonNode from, HexagonNode to)
         {
             if (from == to)
-                return new[]
-                {
-                    from
-                };
+                return new[] {from};
             return PathFinding.AStar(from, to, (i, j) => i + j, n => CalculateAdjacentNodes(n, to), CalculateHeuristik, CalculateCostOfEdge).ToArray();
+        }
+
+        public void OnNodeRemoved(HexagonNode removedNode)
+        {
+            NodeRemoved?.Invoke(removedNode);
         }
 
         private IEnumerable<HexagonNode> CalculateAdjacentNodes(HexagonNode node, HexagonNode destination)
@@ -44,37 +47,20 @@ namespace HexMex.Game
 
         private float CalculateHeuristik(HexagonNode node, HexagonNode destination)
         {
-            var h1 = new[]
-            {
-                node.Position1,
-                node.Position2,
-                node.Position3
-            };
-            var h2 = new[]
-            {
-                destination.Position1,
-                destination.Position2,
-                destination.Position3
-            };
+            var h1 = new[] {node.Position1, node.Position2, node.Position3};
+            var h2 = new[] {destination.Position1, destination.Position2, destination.Position3};
 
             int min = int.MaxValue;
             foreach (var from in h1)
             {
                 foreach (var to in h2)
                 {
-                    var distance = (to - @from).DistanceToOrigin;
+                    var distance = (to - from).DistanceToOrigin;
                     if (min > distance)
                         min = distance;
                 }
             }
             return min * EdgeManager.GetMinTime();
         }
-
-        public void OnNodeRemoved(HexagonNode removedNode)
-        {
-            NodeRemoved?.Invoke(removedNode);
-        }
-
-        public event Action<HexagonNode> NodeRemoved;
     }
 }

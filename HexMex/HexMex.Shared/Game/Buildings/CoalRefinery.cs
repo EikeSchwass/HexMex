@@ -1,11 +1,14 @@
 ﻿using CocosSharp;
+using static HexMex.Game.Buildings.StructureDescription;
+using static HexMex.Game.ResourceType;
 
 namespace HexMex.Game.Buildings
 {
-    [BuildingInformation("Coal Refinery", "Converts coal ores into pure coal", 8, new[] {ResourceType.CoalOre}, new[] {ResourceType.Coal}, 1, ResourceType.Iron, ResourceType.Iron, ResourceType.Copper)]
     public class CoalRefinery : Building
     {
-        public CoalRefinery(HexagonNode position, World world) : base(position, world, 5, new[] {ResourceType.Degradeable}, new[] {ResourceType.Degradeable})
+        public static StructureDescription StructureDescription { get; } = new StructureDescription("Coal Refinery", "Converts coal ore to coal", new ResourceCollection(Iron, Copper), 15, new ResourceCollection(CoalOre), new ResourceCollection(Coal), 5);
+
+        public CoalRefinery(HexagonNode position, World world) : base(position, world)
         {
         }
 
@@ -14,7 +17,5 @@ namespace HexMex.Game.Buildings
             var position = Position.GetWorldPosition(World.WorldSettings.HexagonRadius, World.WorldSettings.HexagonMargin);
             drawNode.DrawDot(position, World.WorldSettings.HexagonMargin, ColorCollection.MineBuildingColor);
         }
-
-        protected override bool AllowsRequestingResource(ResourceType resourceType) => true;
     }
 }

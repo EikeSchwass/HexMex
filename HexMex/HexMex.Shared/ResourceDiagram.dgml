@@ -13,7 +13,8 @@
     <Node Id="CopperCable" Category="Category6" Bounds="777.825,346.55,95.28,25.96" Label="Circuit Factory" />
     <Node Id="CopperOre" Category="Category2" Bounds="818.565,519.4925,81.8,25.96" Label="Copper Ore" />
     <Node Id="CopperRefinery" Category="Category6" Bounds="806.906666666667,461.845,105.116666666667,25.96" Label="Copper Refinery" />
-    <Node Id="Diamonds" Category="Category4" Bounds="885.595571320661,65.1421564100293,73.7433333333333,25.96" Label="Diamonds" UseManualLocation="True" />
+    <Node Id="DiamondExtractor" Category="Category6" Bounds="1064.13333333333,0,115.386666666667,25.96" />
+    <Node Id="Diamonds" Category="Category4" Bounds="1084.955,57.6475,73.7433333333333,25.96" Label="Diamonds" />
     <Node Id="Energy" Category="Category1" Bounds="401.373333333333,57.6475,56.1833333333334,25.96" Label="Energy" />
     <Node Id="Forestry" Category="Category6" Bounds="528.225,346.55,62.48,25.96" />
     <Node Id="Glas" Category="Category4" Bounds="320.465,0,50,25.96" Label="Glas" />
@@ -55,6 +56,8 @@
     <Link Source="CopperCable" Target="Circuit" Bounds="825.465026855469,265.882507324219,0,80.66748046875" />
     <Link Source="CopperOre" Target="CopperRefinery" Bounds="859.465026855469,496.804992675781,0,22.6875" />
     <Link Source="CopperRefinery" Target="d1e85db6-2570-4744-8ab4-ce87c59fbe211" Bounds="844.978881835938,438.516723632813,9.307373046875,23.3282775878906" />
+    <Link Source="DiamondExtractor" Target="Diamonds" Bounds="1139.38928222656,25.9599990844727,11.6873779296875,25.9268531799316" />
+    <Link Source="Diamonds" Target="DiamondExtractor" Bounds="1092.57666015625,31.7206478118896,11.6873779296875,25.926851272583" />
     <Link Source="Forestry" Target="Wood" Bounds="561.03662109375,265.817260742188,9.77496337890625,80.7327270507813" />
     <Link Source="Gold" Target="CopperCable" Bounds="854.796264648438,377.143280029297,45.05322265625,27.0542297363281" />
     <Link Source="GoldOre" Target="GoldRefinery" Bounds="988.465026855469,496.804992675781,0,22.6875" />
@@ -113,7 +116,6 @@
     <Property Id="Layout" DataType="System.String" />
     <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
     <Property Id="TargetType" DataType="System.Type" />
-    <Property Id="UseManualLocation" DataType="System.Boolean" />
     <Property Id="Value" DataType="System.String" />
     <Property Id="ValueLabel" DataType="System.String" />
     <Property Id="ZoomLevel" DataType="System.String" />

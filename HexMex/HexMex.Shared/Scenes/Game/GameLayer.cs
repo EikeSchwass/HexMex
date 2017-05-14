@@ -10,6 +10,12 @@ namespace HexMex.Scenes.Game
 {
     public class GameLayer : CCLayerColor
     {
+        public HexMexCamera HexMexCamera { get; }
+        public GameTouchHandler TouchHandler { get; }
+
+        public ReadOnlyCollection<TouchLayer> TouchLayers { get; }
+        public World World { get; }
+
         public GameLayer(World world, HexMexCamera camera, CCColor4B color) : base(color)
         {
             HexMexCamera = camera;
@@ -25,16 +31,7 @@ namespace HexMex.Scenes.Game
             buildMenuLayer.ConstructionRequested += ConstructBuilding;
             controlLayer.ConstructionRequested += (s, b) => buildMenuLayer.DisplayBuildMenuFor(b);
 
-            var layers = new CCLayer[]
-            {
-                hexagonLayer,
-                edgeLayer,
-                blendLayer,
-                resourcePackageLayer,
-                structureLayer,
-                controlLayer,
-                buildMenuLayer
-            };
+            var layers = new CCLayer[] {hexagonLayer, edgeLayer, blendLayer, resourcePackageLayer, structureLayer, controlLayer, buildMenuLayer};
 
             foreach (var layer in layers)
             {
@@ -46,6 +43,12 @@ namespace HexMex.Scenes.Game
             Schedule();
         }
 
+        public override void Update(float dt)
+        {
+            base.Update(dt);
+            World.Update(dt);
+        }
+
         private void ConstructBuilding(BuildMenuLayer buildMenu, BuildingConstructionFactory selectedFactory, BuildButton buildButton)
         {
             if (World.StructureManager[buildButton.HexagonNode] != null)
@@ -53,18 +56,6 @@ namespace HexMex.Scenes.Game
             var construction = new Construction(buildButton.HexagonNode, selectedFactory, World);
             World.StructureManager.CreateStrucuture(construction);
             World.ButtonManager.RemoveButton(buildButton);
-        }
-
-        public HexMexCamera HexMexCamera { get; }
-        public GameTouchHandler TouchHandler { get; }
-
-        public ReadOnlyCollection<TouchLayer> TouchLayers { get; }
-        public World World { get; }
-
-        public override void Update(float dt)
-        {
-            base.Update(dt);
-            World.Update(dt);
         }
     }
 }

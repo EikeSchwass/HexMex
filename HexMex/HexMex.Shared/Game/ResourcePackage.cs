@@ -8,40 +8,29 @@ namespace HexMex.Game
 {
     public class ResourcePackage : ICCUpdatable, IRenderable<ResourcePackage>
     {
-        public ResourcePackage(ResourceType resourceType, PathFinder pathFinder, EdgeManager edgeManager, Structure startStructure, Structure destinationStructure, ResourceRequest resourceRequest)
+        public event Action<ResourcePackage> ArrivedAtDestination;
+        public event Action<ResourcePackage> RequiresRedraw;
+        public event Action<ResourcePackage> StartedMoving;
+
+        public HexagonNode CurrentNode { get; private set; }
+        public Structure DestinationStructure { get; set; }
+        public EdgeManager EdgeManager { get; }
+        public HexagonNode NextNode { get; private set; }
+        public HexagonNode[] Path { get; private set; }
+        public PathFinder PathFinder { get; }
+        public ResourceRequestState ResourceRequestState { get; private set; } = ResourceRequestState.Pending;
+        public ResourceType ResourceType { get; private set; }
+        public Structure StartStructure { get; set; }
+
+        private float Progress { get; set; }
+
+        public ResourcePackage(ResourceType resourceType, PathFinder pathFinder, EdgeManager edgeManager)
         {
             ResourceType = resourceType;
             PathFinder = pathFinder;
             EdgeManager = edgeManager;
-            StartStructure = startStructure;
-            DestinationStructure = destinationStructure;
-            ResourceRequest = resourceRequest;
-            Path = PathFinder.FindPath(startStructure.Position, destinationStructure.Position);
-            CurrentNode = Path[0];
-            NextNode = Path.Length > 1 ? Path[1] : Path[0];
             PathFinder.NodeRemoved += PathsChanged;
         }
-
-        private void PathsChanged(HexagonNode removedNode)
-        {
-            if (Path.Contains(removedNode))
-                Path = PathFinder.FindPath(CurrentNode, DestinationStructure.Position);
-        }
-        public Structure DestinationStructure { get; }
-        public ResourceType ResourceType { get; }
-        public PathFinder PathFinder { get; }
-        public EdgeManager EdgeManager { get; }
-
-        public Structure StartStructure { get; }
-        public ResourceRequest ResourceRequest { get; set; }
-
-        public HexagonNode CurrentNode { get; private set; }
-        public HexagonNode NextNode { get; private set; }
-        public float Progress { get; private set; }
-
-        public HexagonNode[] Path { get; set; }
-
-
 
         public CCPoint GetWorldPosition(float hexRadius, float hexMargin)
         {
@@ -52,8 +41,29 @@ namespace HexMex.Game
             return startPos + interpoled;
         }
 
+        public void Move()
+        {
+            if (StartStructure == null || DestinationStructure == null)
+                throw new InvalidOperationException("The start and destination structures have to be set before the package can start moving");
+            if (ResourceRequestState != ResourceRequestState.Pending)
+                throw new InvalidOperationException($"{nameof(Move)} can only be called, if the the {nameof(Game.ResourceRequestState)} is still {nameof(ResourceRequestState.Pending)}");
+            Path = PathFinder.FindPath(StartStructure.Position, DestinationStructure.Position);
+            CurrentNode = Path[0];
+            NextNode = Path.Length > 1 ? Path[1] : Path[0];
+            ResourceRequestState = ResourceRequestState.OnItsWay;
+            StartedMoving?.Invoke(this);
+        }
+
+        public void SpecifyResourceType(ResourceType resourceType)
+        {
+            ResourceType = resourceType & ResourceType;
+            RequiresRedraw?.Invoke(this);
+        }
+
         public void Update(float dt)
         {
+            if (ResourceRequestState == ResourceRequestState.Pending || ResourceRequestState == ResourceRequestState.Completed)
+                return;
             if (CurrentNode == NextNode)
                 Progress = 1;
             else
@@ -75,8 +85,10 @@ namespace HexMex.Game
             RequiresRedraw?.Invoke(this);
         }
 
-        public event Action<ResourcePackage> ArrivedAtDestination;
-
-        public event Action<ResourcePackage> RequiresRedraw;
+        private void PathsChanged(HexagonNode removedNode)
+        {
+            if (DestinationStructure != null)
+                Path = PathFinder.FindPath(StartStructure.Position, DestinationStructure.Position);
+        }
     }
 }

@@ -11,26 +11,6 @@ namespace HexMex.Controls
         private CCColor4B borderColor = ColorCollection.BuildButtonBorderColor;
         private float borderThickness = 1;
 
-        public BuildButton(WorldSettings settings, HexagonNode position)
-        {
-            WorldSettings = settings;
-            HexagonNode = position;
-            var x = (float)(Sin(PI / 3) * (WorldSettings.HexagonMargin - WorldSettings.HexagonBorderThickness));
-            var y = (float)(Cos(PI / 3) * (WorldSettings.HexagonMargin - WorldSettings.HexagonBorderThickness));
-            Radius = (float)Sqrt(x * x + y * y) * 2;
-            AddChild(BackgroundNode);
-            AddChild(OutlineNode);
-            AddChild(SpriteNode);
-            Render();
-        }
-
-        protected override void AddedToScene()
-        {
-            base.AddedToScene();
-            var scale = Radius * Radius / (SpriteNode.ScaledContentSize.Width * SpriteNode.ScaledContentSize.Height);
-            SpriteNode.Scale = scale;
-        }
-
         public CCColor4B BackgroundColor
         {
             get => backgroundColor;
@@ -71,6 +51,33 @@ namespace HexMex.Controls
 
         private WorldSettings WorldSettings { get; }
 
+        public BuildButton(WorldSettings settings, HexagonNode position)
+        {
+            WorldSettings = settings;
+            HexagonNode = position;
+            var x = (float)(Sin(PI / 3) * (WorldSettings.HexagonMargin - WorldSettings.HexagonBorderThickness));
+            var y = (float)(Cos(PI / 3) * (WorldSettings.HexagonMargin - WorldSettings.HexagonBorderThickness));
+            Radius = (float)Sqrt(x * x + y * y) * 2;
+            AddChild(BackgroundNode);
+            AddChild(OutlineNode);
+            AddChild(SpriteNode);
+            Render();
+        }
+
+        public override bool IsPointInBounds(CCTouch position)
+        {
+            var location = ScreenToWorldspace(position.LocationOnScreen);
+            var point = this.GetGlobalPosition();
+            return (location - point).Length <= Radius * 2;
+        }
+
+        protected override void AddedToScene()
+        {
+            base.AddedToScene();
+            var scale = Radius * Radius / (SpriteNode.ScaledContentSize.Width * SpriteNode.ScaledContentSize.Height);
+            SpriteNode.Scale = scale;
+        }
+
         private void Render()
         {
             RenderBackground();
@@ -88,13 +95,5 @@ namespace HexMex.Controls
             OutlineNode.Clear();
             OutlineNode.DrawEllipse(new CCRect(-Radius, -Radius, Radius * 2, Radius * 2), BorderThickness, BorderColor);
         }
-
-        public override bool IsPointInBounds(CCTouch position)
-        {
-            var location = ScreenToWorldspace(position.LocationOnScreen);
-            var point = this.GetGlobalPosition();
-            return (location - point).Length <= Radius * 2;
-        }
-
     }
 }

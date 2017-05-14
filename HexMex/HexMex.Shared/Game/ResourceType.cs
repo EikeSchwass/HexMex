@@ -6,6 +6,7 @@ namespace HexMex.Game
     public enum ResourceType : long
     {
         None = 0,
+
         // Primitives
         PureWater = 1 << 0,
         Tree = 1 << 1,
@@ -14,7 +15,7 @@ namespace HexMex.Game
         CopperOre = 1 << 4,
         IronOre = 1 << 5,
         GoldOre = 1 << 6,
-        Diamonds = 1 << 7,
+        DiamondOre = 1 << 7,
 
         // Products
         Gold = 1 << 8,
@@ -39,8 +40,6 @@ namespace HexMex.Game
         // Groups
         Water = PureWater | WaterBarrel,
         Degradeable = CoalOre | Stone | IronOre | CopperOre | GoldOre,
-        Any = (1 << 24) - 1,
-
-
+        Diamond = (1 << 24) - 1 - PureWater
     }
 }

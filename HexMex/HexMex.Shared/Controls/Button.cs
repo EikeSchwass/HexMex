@@ -7,6 +7,8 @@ namespace HexMex.Controls
     {
         private bool isPressed;
 
+        public event Action<Button> Touched;
+
         public bool IsPressed
         {
             get => isPressed;
@@ -17,9 +19,7 @@ namespace HexMex.Controls
             }
         }
 
-        protected virtual void OnIsPressedChanged() { }
-
-        public event Action<Button> Touched;
+        public abstract bool IsPointInBounds(CCTouch position);
 
         public void OnTouchUp()
         {
@@ -30,6 +30,8 @@ namespace HexMex.Controls
             }
         }
 
-        public abstract bool IsPointInBounds(CCTouch position);
+        protected virtual void OnIsPressedChanged()
+        {
+        }
     }
 }

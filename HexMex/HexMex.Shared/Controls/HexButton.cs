@@ -13,21 +13,6 @@ namespace HexMex.Controls
         private float borderThickness = 1;
         private float radius;
 
-        public HexButton(string text, float radius, Font font)
-        {
-            this.radius = radius;
-            TextLabel = new CCLabel(text, font.FontPath, font.FontSize, font.FontType);
-            Text = text;
-            HexagoneNode = new CCDrawNode();
-            DrawHexagon();
-
-            Schedule();
-
-            AddChild(HexagoneNode);
-            AddChild(TextLabel);
-
-        }
-
         public CCColor4B BackgroundColor
         {
             get => backgroundColor;
@@ -91,21 +76,25 @@ namespace HexMex.Controls
         private CCDrawNode HexagoneNode { get; }
         private CCLabel TextLabel { get; }
 
+        public HexButton(string text, float radius, Font font)
+        {
+            this.radius = radius;
+            TextLabel = new CCLabel(text, font.FontPath, font.FontSize, font.FontType);
+            Text = text;
+            HexagoneNode = new CCDrawNode();
+            DrawHexagon();
+
+            Schedule();
+
+            AddChild(HexagoneNode);
+            AddChild(TextLabel);
+        }
+
         public override bool IsPointInBounds(CCTouch position)
         {
             var location = ScreenToWorldspace(position.LocationOnScreen);
             var point = location - this.GetGlobalPosition();
             return HexagonHelper.IsPointInsidePolygon(Corners, point);
-        }
-
-        private void DrawHexagon()
-        {
-            HexagoneNode.ZOrder = ZOrder;
-            HexagoneNode.Clear();
-            Corners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, Radius).ToArray();
-            HexagoneNode.DrawPolygon(Corners, 6, BackgroundColor, BorderThickness, BorderColor);
-            ContentSize = new CCSize(Radius * 2, Radius * 2);
-            UpdateTransform();
         }
 
         protected override void OnIsPressedChanged()
@@ -121,7 +110,16 @@ namespace HexMex.Controls
                 Parent.ReorderChild(this, 0);
                 BorderThickness = 1;
             }
+        }
 
+        private void DrawHexagon()
+        {
+            HexagoneNode.ZOrder = ZOrder;
+            HexagoneNode.Clear();
+            Corners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, Radius).ToArray();
+            HexagoneNode.DrawPolygon(Corners, 6, BackgroundColor, BorderThickness, BorderColor);
+            ContentSize = new CCSize(Radius * 2, Radius * 2);
+            UpdateTransform();
         }
     }
 }

@@ -9,7 +9,6 @@ namespace HexMex.Game
 {
     public class StructureManager : IEnumerable<Structure>, ICCUpdatable
     {
-
         public event Action<StructureManager, Structure> StructureAdded;
         public event Action<StructureManager, Structure> StructureRemoved;
 
@@ -23,18 +22,18 @@ namespace HexMex.Game
             StructureAdded?.Invoke(this, structure);
         }
 
-        public void RemoveStructure(Structure structure)
-        {
-            Structures.Remove(structure.Position);
-            StructureRemoved?.Invoke(this, structure);
-        }
-
         public IEnumerator<Structure> GetEnumerator()
         {
             return Structures.Values.GetEnumerator();
         }
 
         public Structure GetStructureAtPosition(HexagonNode hexagonNode) => !Structures.ContainsKey(hexagonNode) ? null : Structures[hexagonNode];
+
+        public void RemoveStructure(Structure structure)
+        {
+            Structures.Remove(structure.Position);
+            StructureRemoved?.Invoke(this, structure);
+        }
 
         public void Update(float dt)
         {

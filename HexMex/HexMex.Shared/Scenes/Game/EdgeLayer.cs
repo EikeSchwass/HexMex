@@ -5,6 +5,11 @@ namespace HexMex.Scenes.Game
 {
     public class EdgeLayer : TouchLayer
     {
+        public World World { get; }
+        private CCDrawNode DrawNode { get; } = new CCDrawNode();
+
+        private bool RedrawRequested { get; set; }
+
         public EdgeLayer(World world, HexMexCamera camera) : base(camera)
         {
             World = world;
@@ -12,11 +17,6 @@ namespace HexMex.Scenes.Game
             AddChild(DrawNode);
             Schedule();
         }
-
-        public World World { get; }
-        private CCDrawNode DrawNode { get; } = new CCDrawNode();
-
-        private bool RedrawRequested { get; set; }
 
         public override void Update(float dt)
         {

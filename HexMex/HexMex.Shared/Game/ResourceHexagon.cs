@@ -6,12 +6,6 @@ namespace HexMex.Game
     {
         private int remainingResources;
 
-        public ResourceHexagon(ResourceType resourceType, int amount, HexagonPosition position) : base(position)
-        {
-            RemainingResources = amount;
-            ResourceType = resourceType;
-        }
-
         public override event Action<Hexagon> RequiresRedraw;
 
         public int RemainingResources
@@ -25,5 +19,11 @@ namespace HexMex.Game
         }
 
         public ResourceType ResourceType { get; }
+
+        public ResourceHexagon(ResourceType resourceType, int amount, HexagonPosition position) : base(position)
+        {
+            RemainingResources = amount;
+            ResourceType = resourceType;
+        }
     }
 }

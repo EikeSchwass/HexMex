@@ -4,8 +4,8 @@ namespace HexMex.Controls
 {
     public class TextButton : Button
     {
-        public string Text { get; }
         public float FontSize { get; }
+        public string Text { get; }
 
         public TextButton(string text, float fontSize)
         {

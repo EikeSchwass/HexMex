@@ -8,21 +8,6 @@ namespace HexMex.Scenes
     {
         private const float MINTOUCHDISTANCE = 10;
 
-        public GameTouchHandler(GameLayer gameLayer, HexMexCamera hexMexCamera)
-        {
-            GameLayer = gameLayer;
-            HexMexCamera = hexMexCamera;
-            var eventListener = new CCEventListenerTouchOneByOne
-            {
-                IsEnabled = true,
-                OnTouchBegan = OnTouchBegan,
-                OnTouchCancelled = OnTouchCancelled,
-                OnTouchEnded = OnTouchEnded,
-                OnTouchMoved = OnTouchMoved
-            };
-            gameLayer.AddEventListener(eventListener);
-        }
-
         public GameLayer GameLayer { get; }
         public HexMexCamera HexMexCamera { get; }
 
@@ -32,6 +17,14 @@ namespace HexMex.Scenes
         private float StartZoom { get; set; } = 1;
 
         private List<CCTouch> Touches { get; } = new List<CCTouch>();
+
+        public GameTouchHandler(GameLayer gameLayer, HexMexCamera hexMexCamera)
+        {
+            GameLayer = gameLayer;
+            HexMexCamera = hexMexCamera;
+            var eventListener = new CCEventListenerTouchOneByOne {IsEnabled = true, OnTouchBegan = OnTouchBegan, OnTouchCancelled = OnTouchCancelled, OnTouchEnded = OnTouchEnded, OnTouchMoved = OnTouchMoved};
+            gameLayer.AddEventListener(eventListener);
+        }
 
         private void Dragging(CCPoint delta)
         {

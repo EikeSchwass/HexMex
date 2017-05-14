@@ -7,14 +7,6 @@ namespace HexMex.Game.Buildings
     // TODO Optimize
     public class FixedSizeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
-        public FixedSizeDictionary(IEnumerable<TKey> keys)
-        {
-            foreach (var key in keys)
-            {
-                InternalDictionary.Add(key, default(TValue));
-            }
-        }
-
         public int Count => InternalDictionary.Count;
         public bool IsReadOnly => false;
 
@@ -27,6 +19,14 @@ namespace HexMex.Game.Buildings
         public ICollection<TKey> Keys => InternalDictionary.Keys;
         public ICollection<TValue> Values => InternalDictionary.Values;
         private Dictionary<TKey, TValue> InternalDictionary { get; } = new Dictionary<TKey, TValue>();
+
+        public FixedSizeDictionary(IEnumerable<TKey> keys)
+        {
+            foreach (var key in keys)
+            {
+                InternalDictionary.Add(key, default(TValue));
+            }
+        }
 
         public void Add(KeyValuePair<TKey, TValue> item)
         {

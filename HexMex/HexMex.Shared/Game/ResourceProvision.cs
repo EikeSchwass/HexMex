@@ -7,13 +7,7 @@ namespace HexMex.Game
     {
         private ResourceRequestState requestState;
 
-        private ResourceProvision(ResourceType resourceType, Structure structure, RequestPriority priority)
-        {
-            ResourceType = resourceType;
-            RequestState = ResourceRequestState.Pending;
-            Structure = structure;
-            Priority = priority;
-        }
+        public event Action<ResourceProvision> ProvisionAccepted;
 
         public RequestPriority Priority { get; }
 
@@ -36,6 +30,14 @@ namespace HexMex.Game
 
         private static Func<ResourceProvision, ResourceProvisionChanger> ResourceProvisionChangerFactory { get; set; }
 
+        private ResourceProvision(ResourceType resourceType, Structure structure, RequestPriority priority)
+        {
+            ResourceType = resourceType;
+            RequestState = ResourceRequestState.Pending;
+            Structure = structure;
+            Priority = priority;
+        }
+
         public static ResourceProvisionChanger CreateResourceProvision(ResourceType resourceType, Structure structure, RequestPriority priority)
         {
             if (ResourceProvisionChangerFactory == null)
@@ -45,8 +47,5 @@ namespace HexMex.Game
             var provisionChanger = ResourceProvisionChangerFactory(resourceProvision);
             return provisionChanger;
         }
-
-        public event Action<ResourceProvision> ProvisionAccepted;
-
     }
 }

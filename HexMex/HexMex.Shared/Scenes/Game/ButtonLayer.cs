@@ -7,17 +7,17 @@ namespace HexMex.Scenes.Game
 {
     public class ButtonLayer : TouchLayer
     {
+        public event Action<ButtonLayer, BuildButton> ConstructionRequested;
+
+        public ButtonManager ButtonManager { get; }
+        private List<Button> Buttons { get; } = new List<Button>();
+
         public ButtonLayer(World world, HexMexCamera hexMexCamera) : base(hexMexCamera)
         {
             ButtonManager = world.ButtonManager;
             ButtonManager.ButtonAdded += StructureAdded;
             ButtonManager.ButtonRemoved += StructureRemoved;
         }
-
-        public event Action<ButtonLayer, BuildButton> ConstructionRequested;
-
-        public ButtonManager ButtonManager { get; }
-        private List<Button> Buttons { get; } = new List<Button>();
 
         public override void OnTouchCancelled(TouchEventArgs e, TouchCancelReason cancelReason)
         {

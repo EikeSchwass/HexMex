@@ -7,6 +7,10 @@ namespace HexMex.Shared
 {
     public class AppDelegate : CCApplicationDelegate
     {
+        public ICanSuspendApp AppSuspender { get; }
+
+        private DataLoader DataLoader { get; }
+
         public AppDelegate(DataLoader dataLoader, ICanSuspendApp appSuspender)
         {
             if (DataLoader != null)
@@ -14,9 +18,6 @@ namespace HexMex.Shared
             DataLoader = dataLoader;
             AppSuspender = appSuspender;
         }
-
-        private DataLoader DataLoader { get; }
-        public ICanSuspendApp AppSuspender { get; }
 
         public override void ApplicationDidEnterBackground(CCApplication application)
         {

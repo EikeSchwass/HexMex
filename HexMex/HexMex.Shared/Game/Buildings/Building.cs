@@ -1,40 +1,52 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace HexMex.Game.Buildings
 {
     public abstract class Building : Structure
     {
-        public float ProductionTime { get; }
+        public event Action<Building> ProductionCompleted;
+        public bool IsIdle => !IsProducing && ResourceDirector.PendingProvisions.Count == 0 && ResourceDirector.PendingRequests.Count == 0;
+        public bool IsProducing { get; private set; }
+        public float ProductionTime { get; private set; } = 1;
+        public float RemainingProductionTime { get; private set; }
 
-        protected Building(HexagonNode position, World world, float productionTime, IEnumerable<ResourceType> inputs, IEnumerable<ResourceType> outputs) : base(position, world, inputs, outputs)
+        protected Building(HexagonNode position, World world) : base(position, world)
         {
-            ProductionTime = productionTime;
         }
 
-        public override void Update(float dt)
+        public sealed override void Update(float dt)
         {
             base.Update(dt);
-            if (!Producing)
-                return;
-            CurrentProductionTime += dt;
-            if (CurrentProductionTime >= ProductionTime)
+            if (IsIdle)
             {
-                OnProductionFinished();
-                CurrentProductionTime = 0;
-                Producing = false;
+                Idling();
+            }
+            else if (IsProducing)
+            {
+                RemainingProductionTime -= dt;
+                if (RemainingProductionTime <= 0)
+                {
+                    IsProducing = false;
+                    RemainingProductionTime = 0;
+                    OnProductionCompleted();
+                    ProductionCompleted?.Invoke(this);
+                }
             }
         }
 
-        protected override void StartProduction()
+        protected virtual void OnProductionCompleted() { }
+
+        protected virtual void Idling()
         {
-            base.StartProduction();
-            if (Producing)
-                return;
-            Producing = true;
-            CurrentProductionTime = 0;
         }
 
-        private float CurrentProductionTime { get; set; }
-        private bool Producing { get; set; }
+        protected void StartProduction(float productionTime)
+        {
+            if (IsProducing)
+                throw new InvalidOperationException("Building is already producing");
+            IsProducing = true;
+            RemainingProductionTime = productionTime;
+            ProductionTime = productionTime;
+        }
     }
 }

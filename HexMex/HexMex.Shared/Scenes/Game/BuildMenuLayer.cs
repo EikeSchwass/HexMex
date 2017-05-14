@@ -14,14 +14,6 @@ namespace HexMex.Scenes.Game
     {
         private BuildMenuEntry selectedEntry;
 
-        public BuildMenuLayer(HexMexCamera hexMexCamera)
-        {
-            HexMexCamera = hexMexCamera;
-            HexMexCamera.PositionUpdated += (c, p) => UpdatePosition();
-            HexMexCamera.ZoomUpdated += (c, p) => UpdatePosition();
-            Visible = false;
-        }
-
         public event Action<BuildMenuLayer, BuildingConstructionFactory, BuildButton> ConstructionRequested;
 
         public sealed override bool Visible { get; set; }
@@ -56,6 +48,14 @@ namespace HexMex.Scenes.Game
         private SelectedEntryArea SelectedMenuEntryArea { get; set; }
 
         private BuildButton Target { get; set; }
+
+        public BuildMenuLayer(HexMexCamera hexMexCamera)
+        {
+            HexMexCamera = hexMexCamera;
+            HexMexCamera.PositionUpdated += (c, p) => UpdatePosition();
+            HexMexCamera.ZoomUpdated += (c, p) => UpdatePosition();
+            Visible = false;
+        }
 
         public void DisplayBuildMenuFor(BuildButton buildButton)
         {
@@ -134,10 +134,7 @@ namespace HexMex.Scenes.Game
             ClientRectangle = new CCRect(-clientSize.Width / 2, -clientSize.Height / 2, clientSize.Width, clientSize.Height);
 
             AllMenuEntriesArea.Position = new CCPoint(ClientRectangle.MinX, ClientRectangle.MaxY);
-            SelectedMenuEntryArea = new SelectedEntryArea(ClientRectangle.Size.Width, ClientRectangle.Size.Height / 3)
-            {
-                Position = new CCPoint(ClientRectangle.MinX, ClientRectangle.MinY + ClientRectangle.Size.Height / 3)
-            };
+            SelectedMenuEntryArea = new SelectedEntryArea(ClientRectangle.Size.Width, ClientRectangle.Size.Height / 3) {Position = new CCPoint(ClientRectangle.MinX, ClientRectangle.MinY + ClientRectangle.Size.Height / 3)};
             AddChild(RenderLinesNode);
             AddChild(MenuOutlineNode);
             AddChild(AllMenuEntriesArea);

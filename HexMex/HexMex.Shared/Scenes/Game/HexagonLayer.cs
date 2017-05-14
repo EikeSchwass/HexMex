@@ -8,6 +8,18 @@ namespace HexMex.Scenes.Game
 {
     public class HexagonLayer : TouchLayer
     {
+        private CCPoint[] Corners { get; }
+        private CCDrawNode DynamicDrawNode { get; } = new CCDrawNode();
+        private List<Hexagon> DynamicHexagons { get; } = new List<Hexagon>();
+
+        private bool RedrawRequested { get; set; } = true;
+
+        private CCDrawNode StaticDrawNode { get; } = new CCDrawNode();
+
+        private List<Hexagon> StaticHexagons { get; } = new List<Hexagon>();
+
+        private World World { get; }
+
         public HexagonLayer(World world, HexMexCamera camera) : base(camera)
         {
             Corners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, 1).ToArray();
@@ -19,18 +31,6 @@ namespace HexMex.Scenes.Game
             Schedule(Update, 1);
             RenderStatic();
         }
-
-        private CCPoint[] Corners { get; }
-
-        private CCDrawNode StaticDrawNode { get; } = new CCDrawNode();
-        private CCDrawNode DynamicDrawNode { get; } = new CCDrawNode();
-
-        private List<Hexagon> StaticHexagons { get; } = new List<Hexagon>();
-        private List<Hexagon> DynamicHexagons { get; } = new List<Hexagon>();
-
-        private bool RedrawRequested { get; set; } = true;
-
-        private World World { get; }
 
         public override void Update(float dt)
         {
@@ -58,15 +58,6 @@ namespace HexMex.Scenes.Game
             RenderStatic();
         }
 
-        private void RenderStatic()
-        {
-            StaticDrawNode.Clear();
-            foreach (var hexagon in StaticHexagons)
-            {
-                RenderHexagon(StaticDrawNode, hexagon);
-            }
-        }
-
         private void RenderDynamic()
         {
             DynamicDrawNode.Clear();
@@ -87,6 +78,15 @@ namespace HexMex.Scenes.Game
                 float factor = resourceHexagon.RemainingResources * 1.0f / World.WorldSettings.MaxNumberOfResourcesInHexagon;
                 var innerCorners = Corners.Select(c => c * (World.WorldSettings.HexagonRadius * factor) + worldPosition).ToArray();
                 drawNode.DrawPolygon(innerCorners, 6, resourceHexagon.ResourceType.GetColor(), 0, CCColor4B.Transparent);
+            }
+        }
+
+        private void RenderStatic()
+        {
+            StaticDrawNode.Clear();
+            foreach (var hexagon in StaticHexagons)
+            {
+                RenderHexagon(StaticDrawNode, hexagon);
             }
         }
     }

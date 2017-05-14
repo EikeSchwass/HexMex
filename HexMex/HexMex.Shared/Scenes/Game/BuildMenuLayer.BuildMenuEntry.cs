@@ -13,17 +13,6 @@ namespace HexMex.Scenes.Game
             private bool isSelected;
             private float margin = 8;
 
-            public BuildMenuEntry(BuildingConstructionFactory factory, float width, float height)
-            {
-                Factory = factory;
-                Width = width;
-                Height = height;
-                Label = new CCLabel(factory.BuildingInformation.Name, Font.BuildMenuButtonFont.FontPath, Font.BuildMenuButtonFont.FontSize, Font.BuildMenuButtonFont.FontType);
-                Border = new CCDrawNode();
-                AddChild(Border);
-                AddChild(Label);
-            }
-
             public CCDrawNode Border { get; }
 
             public BuildingConstructionFactory Factory { get; }
@@ -34,6 +23,16 @@ namespace HexMex.Scenes.Game
                 set
                 {
                     isPressed = value;
+                    DrawBorder();
+                }
+            }
+
+            public bool IsSelected
+            {
+                get => isSelected;
+                set
+                {
+                    isSelected = value;
                     DrawBorder();
                 }
             }
@@ -52,17 +51,18 @@ namespace HexMex.Scenes.Game
 
             private float Height { get; }
 
-            public bool IsSelected
-            {
-                get => isSelected;
-                set
-                {
-                    isSelected = value;
-                    DrawBorder();
-                }
-            }
-
             private float Width { get; }
+
+            public BuildMenuEntry(BuildingConstructionFactory factory, float width, float height)
+            {
+                Factory = factory;
+                Width = width;
+                Height = height;
+                Label = new CCLabel(factory.StructureDescription.Name, Font.BuildMenuButtonFont.FontPath, Font.BuildMenuButtonFont.FontSize, Font.BuildMenuButtonFont.FontType);
+                Border = new CCDrawNode();
+                AddChild(Border);
+                AddChild(Label);
+            }
 
             public bool IsPointInBounds(CCTouch touch)
             {

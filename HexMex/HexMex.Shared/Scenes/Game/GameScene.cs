@@ -5,10 +5,9 @@ namespace HexMex.Scenes.Game
 {
     public class GameScene : HexMexScene
     {
-        public World World { get; }
-        public HexMexCamera HexMexCamera { get; }
-
         public sealed override CCCamera Camera { get; set; }
+        public HexMexCamera HexMexCamera { get; }
+        public World World { get; }
 
         public GameScene(CCWindow window, World world) : base(window)
         {
@@ -18,6 +17,5 @@ namespace HexMex.Scenes.Game
             Camera = HexMexCamera;
             AddChild(new GameLayer(World, HexMexCamera, CCColor4B.Black));
         }
-
     }
 }

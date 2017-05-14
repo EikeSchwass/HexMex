@@ -7,32 +7,19 @@ namespace HexMex.Scenes.Game
 {
     public class ResourcePackageLayer : TouchLayer
     {
-        public ResourcePackageLayer(World world, HexMexCamera camera) : base(camera)
-        {
-            World = world;
-            world.ResourcePackageManager.PackageAdded += ResourcePackageManager_PackageAdded;
-            world.ResourcePackageManager.PackageRemoved += ResourcePackageManager_PackageRemoved;
-            AddChild(DrawNode);
-            Schedule();
-        }
-
         public World World { get; }
         private CCDrawNode DrawNode { get; } = new CCDrawNode();
         private List<ResourcePackage> Packages { get; } = new List<ResourcePackage>();
 
         private bool RedrawRequested { get; set; }
 
-        private void ResourcePackageManager_PackageAdded(ResourcePackageManager packageManager, ResourcePackage package)
+        public ResourcePackageLayer(World world, HexMexCamera camera) : base(camera)
         {
-            Packages.Add(package);
-            package.RequiresRedraw += r => RedrawRequested = true;
-            RedrawRequested = true;
-        }
-
-        private void ResourcePackageManager_PackageRemoved(ResourcePackageManager packageManager, ResourcePackage package)
-        {
-            Packages.Remove(package);
-            RedrawRequested = true;
+            World = world;
+            world.ResourceManager.PackageStarted += ResourceManager_PackageStarted;
+            world.ResourceManager.PackageArrived += ResourceManager_PackageArrived;
+            AddChild(DrawNode);
+            Schedule();
         }
 
         public override void Update(float dt)
@@ -53,6 +40,19 @@ namespace HexMex.Scenes.Game
                 var posiition = package.GetWorldPosition(World.WorldSettings.HexagonRadius, World.WorldSettings.HexagonMargin);
                 DrawNode.DrawCircle(posiition, radius, package.ResourceType.GetColor(), 3, CCColor4B.Black);
             }
+        }
+
+        private void ResourceManager_PackageStarted(ResourceManager packageManager, ResourcePackage package)
+        {
+            Packages.Add(package);
+            package.RequiresRedraw += r => RedrawRequested = true;
+            RedrawRequested = true;
+        }
+
+        private void ResourceManager_PackageArrived(ResourceManager packageManager, ResourcePackage package)
+        {
+            Packages.Remove(package);
+            RedrawRequested = true;
         }
     }
 }

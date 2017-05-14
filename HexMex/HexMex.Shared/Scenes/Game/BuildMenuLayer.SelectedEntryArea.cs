@@ -11,12 +11,6 @@ namespace HexMex.Scenes.Game
             private bool isConstructButtonPressed;
             private BuildMenuEntry selectedMenuEntry;
 
-            public SelectedEntryArea(float width, float height)
-            {
-                Width = width;
-                Height = height;
-            }
-
             public bool IsConstructButtonPressed
             {
                 get => isConstructButtonPressed;
@@ -43,6 +37,12 @@ namespace HexMex.Scenes.Game
 
             private float Width { get; }
 
+            public SelectedEntryArea(float width, float height)
+            {
+                Width = width;
+                Height = height;
+            }
+
             public bool IsPointInConstructButtonBounds(CCTouch touch)
             {
                 if (ConstructButton == null)
@@ -61,12 +61,12 @@ namespace HexMex.Scenes.Game
                     return;
                 }
                 Visible = true;
-                var buildingInformation = value.Factory.BuildingInformation;
+                var structureDescription = value.Factory.StructureDescription;
                 Children?.Clear();
                 var drawNode = new CCDrawNode();
                 AddChild(drawNode);
 
-                float columnWidth = Width / (buildingInformation.IsProducer ? 3 : 2);
+                float columnWidth = Width / (structureDescription.IsProducer ? 3 : 2);
                 float headerHeight = Height / 6;
                 float footerHeight = Height / 4;
                 float contentHeight = Height - headerHeight - footerHeight;
@@ -80,28 +80,19 @@ namespace HexMex.Scenes.Game
                     drawNode.DrawLine(new CCPoint(x, 0), new CCPoint(x, -headerHeight - contentHeight), 1, CCColor4B.White);
                 }
                 var titleLabel = new MenuLabel("Description", 50f, new CCSize(columnWidth, headerHeight), new CCPoint(columnWidth / 2, -headerHeight / 2));
-                var descriptionLabel = new MenuLabel(buildingInformation.Description, 30f, new CCSize(columnWidth, contentHeight), new CCPoint(columnWidth / 2, -headerHeight - contentHeight / 2));
+                var descriptionLabel = new MenuLabel(structureDescription.Description, 30f, new CCSize(columnWidth, contentHeight), new CCPoint(columnWidth / 2, -headerHeight - contentHeight / 2));
                 var constructionHeaderLabel = new MenuLabel("Construction", 50f, new CCSize(columnWidth, headerHeight), new CCPoint(columnWidth / 2 + columnWidth, -headerHeight / 2));
-                var constructionLabel = new MenuLabel(buildingInformation.ConstructionCost.GetText() + $"{Environment.NewLine}({buildingInformation.ConstructionTime} s)", 30f, new CCSize(columnWidth, contentHeight), new CCPoint(columnWidth + columnWidth / 2, -headerHeight - contentHeight / 2));
-                if (buildingInformation.IsProducer) // Production Column
+                var constructionLabel = new MenuLabel(structureDescription.ConstructionCost.GetText() + $"{Environment.NewLine}({structureDescription.ConstructionTime} s)", 30f, new CCSize(columnWidth, contentHeight), new CCPoint(columnWidth + columnWidth / 2, -headerHeight - contentHeight / 2));
+                if (structureDescription.IsProducer) // Production Column
                 {
                     var productionHeaderHeight = contentHeight / 4;
                     var productionContentHeight = (contentHeight - productionHeaderHeight * 3) / 2;
                     var productionHeaderLabel = new MenuLabel("Production", 50f, new CCSize(columnWidth, headerHeight), new CCPoint(columnWidth * 2 + columnWidth / 2, -headerHeight / 2));
-                    var ingredientsHeaderLabel = new MenuLabel("Ingredients", 35f, new CCSize(columnWidth, productionHeaderHeight), new CCPoint(columnWidth * 2 + columnWidth / 2, -headerHeight - productionHeaderHeight / 2))
-                    {
-                        HorizontalAlignment = CCTextAlignment.Left
-                    };
-                    var productsHeaderLabel = new MenuLabel("Products", 35f, new CCSize(columnWidth, productionHeaderHeight), new CCPoint(columnWidth * 2 + columnWidth / 2, -headerHeight - productionHeaderHeight - productionContentHeight - productionHeaderHeight / 2))
-                    {
-                        HorizontalAlignment = CCTextAlignment.Left
-                    };
-                    var productionTimeHeaderLabel = new MenuLabel("Duration: " + buildingInformation.ProductionInformation.ProductionTime + " s", 35f, new CCSize(columnWidth, productionHeaderHeight), new CCPoint(columnWidth * 2 + columnWidth / 2, -headerHeight - productionHeaderHeight * 2 - productionContentHeight * 2 - productionHeaderHeight / 2))
-                    {
-                        HorizontalAlignment = CCTextAlignment.Left
-                    };
-                    var ingredientsLabel = new MenuLabel(buildingInformation.ProductionInformation.Ingredients.GetText(), 30f, new CCSize(columnWidth, productionContentHeight), new CCPoint(columnWidth * 2 + columnWidth / 2, -headerHeight - productionHeaderHeight - productionContentHeight / 2));
-                    var productsLabel = new MenuLabel(buildingInformation.ProductionInformation.Products.GetText(), 30f, new CCSize(columnWidth, productionContentHeight), new CCPoint(columnWidth * 2 + columnWidth / 2, -headerHeight - productionHeaderHeight * 2 - productionContentHeight - productionContentHeight / 2));
+                    var ingredientsHeaderLabel = new MenuLabel("Ingredients", 35f, new CCSize(columnWidth, productionHeaderHeight), new CCPoint(columnWidth * 2 + columnWidth / 2, -headerHeight - productionHeaderHeight / 2)) {HorizontalAlignment = CCTextAlignment.Left};
+                    var productsHeaderLabel = new MenuLabel("Products", 35f, new CCSize(columnWidth, productionHeaderHeight), new CCPoint(columnWidth * 2 + columnWidth / 2, -headerHeight - productionHeaderHeight - productionContentHeight - productionHeaderHeight / 2)) {HorizontalAlignment = CCTextAlignment.Left};
+                    var productionTimeHeaderLabel = new MenuLabel("Duration: " + structureDescription.ProductionInformation.ProductionTime + " s", 35f, new CCSize(columnWidth, productionHeaderHeight), new CCPoint(columnWidth * 2 + columnWidth / 2, -headerHeight - productionHeaderHeight * 2 - productionContentHeight * 2 - productionHeaderHeight / 2)) {HorizontalAlignment = CCTextAlignment.Left};
+                    var ingredientsLabel = new MenuLabel(structureDescription.ProductionInformation.Ingredients.GetText(), 30f, new CCSize(columnWidth, productionContentHeight), new CCPoint(columnWidth * 2 + columnWidth / 2, -headerHeight - productionHeaderHeight - productionContentHeight / 2));
+                    var productsLabel = new MenuLabel(structureDescription.ProductionInformation.Products.GetText(), 30f, new CCSize(columnWidth, productionContentHeight), new CCPoint(columnWidth * 2 + columnWidth / 2, -headerHeight - productionHeaderHeight * 2 - productionContentHeight - productionContentHeight / 2));
 
                     AddChild(productionHeaderLabel);
                     AddChild(ingredientsHeaderLabel);
@@ -116,14 +107,10 @@ namespace HexMex.Scenes.Game
                 AddChild(constructionHeaderLabel);
                 AddChild(constructionLabel);
 
-                ConstructButton = new MenuLabel("CONSTRUCT", 70f, new CCSize(Width, footerHeight), new CCPoint(Width / 2, -Height + footerHeight / 2))
-                {
-                    Color = CCColor3B.Green
-                };
+                ConstructButton = new MenuLabel("CONSTRUCT", 70f, new CCSize(Width, footerHeight), new CCPoint(Width / 2, -Height + footerHeight / 2)) {Color = CCColor3B.Green};
                 AddChild(ConstructButton);
                 UpdateConstructButton();
             }
-
 
             private void UpdateConstructButton()
             {
@@ -135,6 +122,14 @@ namespace HexMex.Scenes.Game
 
             private class MenuLabel : CCLabel
             {
+                public sealed override CCPoint Position
+                {
+                    get => base.Position;
+                    set => base.Position = value;
+                }
+
+                public CCSize Size { get; }
+
                 public MenuLabel(string text, float fontSize, CCSize size) : this(text, fontSize, size, CCPoint.Zero)
                 {
                 }
@@ -147,14 +142,6 @@ namespace HexMex.Scenes.Game
                     Position = position;
                     Size = size;
                 }
-
-                public sealed override CCPoint Position
-                {
-                    get => base.Position;
-                    set => base.Position = value;
-                }
-
-                public CCSize Size { get; }
             }
         }
     }

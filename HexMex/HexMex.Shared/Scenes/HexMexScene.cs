@@ -10,7 +10,6 @@ namespace HexMex.Scenes
         public HexMexScene(CCWindow window) : base(window)
         {
             Schedule();
-
         }
 
         public override void Update(float dt)
@@ -26,5 +25,3 @@ namespace HexMex.Scenes
         }
     }
 }
-
-

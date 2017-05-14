@@ -16,15 +16,7 @@ namespace HexMex.Helper
         public static readonly float Sin60 = (float)Math.Sin(Rad60);
         public static readonly float Cos60 = (float)Math.Cos(Rad60);
 
-        public static HexagonPosition[] AdjacentHexagonPositionOffsets { get; } =
-        {
-            new HexagonPosition(1, -1, 0),
-            new HexagonPosition(1, 0, -1),
-            new HexagonPosition(-1, 1, 0),
-            new HexagonPosition(-1, 0, 1),
-            new HexagonPosition(0, -1, 1),
-            new HexagonPosition(0, 1, -1)
-        };
+        public static HexagonPosition[] AdjacentHexagonPositionOffsets { get; } = {new HexagonPosition(1, -1, 0), new HexagonPosition(1, 0, -1), new HexagonPosition(-1, 1, 0), new HexagonPosition(-1, 0, 1), new HexagonPosition(0, -1, 1), new HexagonPosition(0, 1, -1)};
 
         public static CCPoint CalculateWorldPosition(int x, int y, int z, float radius, float margin)
         {
@@ -63,7 +55,5 @@ namespace HexMex.Helper
             }
             return c;
         }
-        
-
     }
 }

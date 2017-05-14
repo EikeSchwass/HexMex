@@ -8,15 +8,18 @@ namespace HexMex.Scenes
         public const float MinZoomFactor = 0.125f;
         public const float MaxZoomFactor = 1.5f;
 
+        public event Action<HexMexCamera, CCPoint> PositionUpdated;
+        public event Action<HexMexCamera, float> ZoomUpdated;
+
+        public CCPoint Position { get; private set; }
+        public CCSize StartVisibleArea { get; }
+        public float ZoomFactor { get; private set; } = 1;
+
         public HexMexCamera(CCSize targetVisibleDimensionsWorldspace) : base(CCCameraProjection.Projection2D, targetVisibleDimensionsWorldspace, new CCPoint3(0, 0, -1))
         {
             StartVisibleArea = targetVisibleDimensionsWorldspace;
             MoveToPosition(CCPoint.Zero);
         }
-
-        public CCPoint Position { get; private set; }
-        public CCSize StartVisibleArea { get; }
-        public float ZoomFactor { get; private set; } = 1;
 
         public void MoveToPosition(CCPoint value)
         {
@@ -35,8 +38,5 @@ namespace HexMex.Scenes
             OrthographicViewSizeWorldspace = new CCSize(currentWidth, currentHeight);
             ZoomUpdated?.Invoke(this, ZoomFactor);
         }
-
-        public event Action<HexMexCamera, CCPoint> PositionUpdated;
-        public event Action<HexMexCamera, float> ZoomUpdated;
     }
 }

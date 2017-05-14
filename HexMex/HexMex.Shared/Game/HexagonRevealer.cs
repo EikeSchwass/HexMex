@@ -4,8 +4,8 @@ namespace HexMex.Game
 {
     public class HexagonRevealer
     {
-        private HexagonManager HexagonManager { get; }
         public WorldSettings WorldSettings { get; }
+        private HexagonManager HexagonManager { get; }
 
         public HexagonRevealer(HexagonManager hexagonManager, WorldSettings worldSettings)
         {
@@ -20,7 +20,7 @@ namespace HexMex.Game
             Hexagon hexagon = null;
 
             if (hexagonPosition == HexagonPosition.Zero)
-                hexagon = new ResourceHexagon(ResourceType.Any, (int)(worldSettings.UniversalResourceStartFactor * worldSettings.MaxNumberOfResourcesInHexagon), hexagonPosition);
+                hexagon = new ResourceHexagon(ResourceType.DiamondOre, (int)(worldSettings.UniversalResourceStartFactor * worldSettings.MaxNumberOfResourcesInHexagon), hexagonPosition);
             else if (alreadyRevealed <= 2)
                 hexagon = new ResourceHexagon(ResourceType.Water, worldSettings.MaxNumberOfResourcesInHexagon, hexagonPosition);
             else
