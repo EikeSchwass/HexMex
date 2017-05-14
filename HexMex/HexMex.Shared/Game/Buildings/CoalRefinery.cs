@@ -15,7 +15,7 @@ namespace HexMex.Game.Buildings
         public override void Render(CCDrawNode drawNode)
         {
             var position = Position.GetWorldPosition(World.WorldSettings.HexagonRadius, World.WorldSettings.HexagonMargin);
-            drawNode.DrawDot(position, World.WorldSettings.HexagonMargin, ColorCollection.MineBuildingColor);
+            drawNode.DrawDot(position, World.WorldSettings.HexagonMargin * 2, ColorCollection.MineBuildingColor);
         }
     }
 }
