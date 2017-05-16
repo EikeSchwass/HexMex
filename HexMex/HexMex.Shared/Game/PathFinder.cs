@@ -21,7 +21,7 @@ namespace HexMex.Game
         public HexagonNode[] FindPath(HexagonNode from, HexagonNode to)
         {
             if (from == to)
-                return new[] {from};
+                return new[] { from };
             return PathFinding.AStar(from, to, (i, j) => i + j, n => CalculateAdjacentNodes(n, to), CalculateHeuristik, CalculateCostOfEdge).ToArray();
         }
 
@@ -30,12 +30,13 @@ namespace HexMex.Game
             NodeRemoved?.Invoke(removedNode);
         }
 
+        // ReSharper disable once UnusedParameter.Local
         private IEnumerable<HexagonNode> CalculateAdjacentNodes(HexagonNode node, HexagonNode destination)
         {
             var adjacentHexagonNodes = node.GetAccessibleAdjacentHexagonNodes(HexagonManager);
             foreach (var adjacentHexagonNode in adjacentHexagonNodes)
             {
-                if (StructureManager.GetStructureAtPosition(adjacentHexagonNode) != null || adjacentHexagonNode == destination)
+                if (EdgeManager.ContainsEdge(node, adjacentHexagonNode))
                     yield return adjacentHexagonNode;
             }
         }
@@ -47,8 +48,8 @@ namespace HexMex.Game
 
         private float CalculateHeuristik(HexagonNode node, HexagonNode destination)
         {
-            var h1 = new[] {node.Position1, node.Position2, node.Position3};
-            var h2 = new[] {destination.Position1, destination.Position2, destination.Position3};
+            var h1 = new[] { node.Position1, node.Position2, node.Position3 };
+            var h2 = new[] { destination.Position1, destination.Position2, destination.Position3 };
 
             int min = int.MaxValue;
             foreach (var from in h1)

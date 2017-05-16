@@ -1,4 +1,5 @@
 ﻿using CocosSharp;
+using HexMex.Helper;
 using static HexMex.Game.Buildings.StructureDescription;
 using static HexMex.Game.ResourceType;
 
@@ -14,8 +15,8 @@ namespace HexMex.Game.Buildings
 
         public override void Render(CCDrawNode drawNode)
         {
-            var position = Position.GetWorldPosition(World.WorldSettings.HexagonRadius, World.WorldSettings.HexagonMargin);
-            drawNode.DrawDot(position, World.WorldSettings.HexagonMargin * 2, ColorCollection.MineBuildingColor);
+            var position = Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
+            drawNode.DrawCircle(position, World.GameSettings.LayoutSettings.HexagonMargin * 2, World.GameSettings.VisualSettings.ColorCollection.GrayDark, World.GameSettings.VisualSettings.StructureBorderThickness, World.GameSettings.VisualSettings.ColorCollection.White);
         }
     }
 }

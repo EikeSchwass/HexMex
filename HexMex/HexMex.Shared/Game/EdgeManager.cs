@@ -9,12 +9,12 @@ namespace HexMex.Game
     {
         public event Action<EdgeManager, Edge> EdgeAdded;
 
-        public WorldSettings WorldSettings { get; }
+        public GameplaySettings GameplaySettings { get; }
         private List<Edge> Edges { get; } = new List<Edge>();
 
-        public EdgeManager(WorldSettings worldSettings)
+        public EdgeManager(GameplaySettings gameplaySettings)
         {
-            WorldSettings = worldSettings;
+            GameplaySettings = gameplaySettings;
         }
 
         public void AddEdge(HexagonNode from, HexagonNode to, float resourceTravelDuration = 1)
@@ -34,7 +34,7 @@ namespace HexMex.Game
             return Edges.GetEnumerator();
         }
 
-        public float GetMinTime() => 1;
+        public float GetMinTime() => GameplaySettings.DefaultResourceTimeBetweenNodes;
 
         public float GetTimeForEdge(HexagonNode from, HexagonNode to)
         {

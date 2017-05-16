@@ -8,8 +8,8 @@ namespace HexMex.Controls
 {
     public class HexButton : Button
     {
-        private CCColor4B backgroundColor = ColorCollection.HexagonBackgroundColor;
-        private CCColor4B borderColor = ColorCollection.HexagonBorderColor;
+        private CCColor4B backgroundColor;
+        private CCColor4B borderColor;
         private float borderThickness = 1;
         private float radius;
 
@@ -78,10 +78,12 @@ namespace HexMex.Controls
 
         public HexButton(string text, float radius, Font font)
         {
+            HexagoneNode = new CCDrawNode();
+            BorderColor = new ColorCollection().White;
+            BackgroundColor = new ColorCollection().GrayVeryDark;
             this.radius = radius;
             TextLabel = new CCLabel(text, font.FontPath, font.FontSize, font.FontType);
             Text = text;
-            HexagoneNode = new CCDrawNode();
             DrawHexagon();
 
             Schedule();

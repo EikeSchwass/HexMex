@@ -22,6 +22,7 @@ namespace HexMex.Scenes.Game
 
         private CCRect ClientRectangle { get; set; }
 
+        public VisualSettings VisualSettings { get; }
         private HexMexCamera HexMexCamera { get; }
 
         private List<BuildMenuEntry> MenuEntries { get; } = new List<BuildMenuEntry>();
@@ -49,8 +50,9 @@ namespace HexMex.Scenes.Game
 
         private BuildButton Target { get; set; }
 
-        public BuildMenuLayer(HexMexCamera hexMexCamera)
+        public BuildMenuLayer(World world, HexMexCamera hexMexCamera)
         {
+            VisualSettings = world.GameSettings.VisualSettings;
             HexMexCamera = hexMexCamera;
             HexMexCamera.PositionUpdated += (c, p) => UpdatePosition();
             HexMexCamera.ZoomUpdated += (c, p) => UpdatePosition();
@@ -134,7 +136,7 @@ namespace HexMex.Scenes.Game
             ClientRectangle = new CCRect(-clientSize.Width / 2, -clientSize.Height / 2, clientSize.Width, clientSize.Height);
 
             AllMenuEntriesArea.Position = new CCPoint(ClientRectangle.MinX, ClientRectangle.MaxY);
-            SelectedMenuEntryArea = new SelectedEntryArea(ClientRectangle.Size.Width, ClientRectangle.Size.Height / 3) {Position = new CCPoint(ClientRectangle.MinX, ClientRectangle.MinY + ClientRectangle.Size.Height / 3)};
+            SelectedMenuEntryArea = new SelectedEntryArea(ClientRectangle.Size.Width, ClientRectangle.Size.Height / 3) { Position = new CCPoint(ClientRectangle.MinX, ClientRectangle.MinY + ClientRectangle.Size.Height / 3) };
             AddChild(RenderLinesNode);
             AddChild(MenuOutlineNode);
             AddChild(AllMenuEntriesArea);
@@ -169,16 +171,17 @@ namespace HexMex.Scenes.Game
             RenderLinesNode.Clear();
             var targetPos = Target.GetGlobalPosition();
             targetPos = ConvertToWorldspace(targetPos) * HexMexCamera.ZoomFactor - HexMexCamera.Position * HexMexCamera.ZoomFactor;
-            RenderLinesNode.DrawLine(new CCPoint(ClientRectangle.MinX, ClientRectangle.MinY), targetPos, 1, CCColor4B.White);
-            RenderLinesNode.DrawLine(new CCPoint(ClientRectangle.MaxX, ClientRectangle.MinY), targetPos, 1, CCColor4B.White);
-            RenderLinesNode.DrawLine(new CCPoint(ClientRectangle.MinX, ClientRectangle.MaxY), targetPos, 1, CCColor4B.White);
-            RenderLinesNode.DrawLine(new CCPoint(ClientRectangle.MaxX, ClientRectangle.MaxY), targetPos, 1, CCColor4B.White);
+            var colorCollection = VisualSettings.ColorCollection;
+            RenderLinesNode.DrawLine(new CCPoint(ClientRectangle.MinX, ClientRectangle.MinY), targetPos, 1, colorCollection.White);
+            RenderLinesNode.DrawLine(new CCPoint(ClientRectangle.MaxX, ClientRectangle.MinY), targetPos, 1, colorCollection.White);
+            RenderLinesNode.DrawLine(new CCPoint(ClientRectangle.MinX, ClientRectangle.MaxY), targetPos, 1, colorCollection.White);
+            RenderLinesNode.DrawLine(new CCPoint(ClientRectangle.MaxX, ClientRectangle.MaxY), targetPos, 1, colorCollection.White);
         }
 
         private void RenderMenu()
         {
             MenuOutlineNode.Clear();
-            MenuOutlineNode.DrawRect(ClientRectangle, ColorCollection.BuildMenuBackgroundColor, 1, CCColor4B.White);
+            MenuOutlineNode.DrawRect(ClientRectangle, VisualSettings.ColorCollection.GrayDark, 1, VisualSettings.ColorCollection.GrayVeryLight);
         }
 
         private void RenderSelectedEntry()

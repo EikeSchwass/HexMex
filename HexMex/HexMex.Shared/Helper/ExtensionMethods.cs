@@ -5,6 +5,7 @@ using CocosSharp;
 using HexMex.Game;
 using HexMex.Game.Buildings;
 using static System.Math;
+using static HexMex.Game.ResourceType;
 
 namespace HexMex.Helper
 {
@@ -15,41 +16,43 @@ namespace HexMex.Helper
             return (actualType & requestedType) == requestedType;
         }
 
-        public static CCColor4B GetColor(this ResourceType type)
+        public static CCColor4B GetColor(this ResourceType type, ColorCollection colorCollection)
         {
             switch (type)
             {
-                case ResourceType.None: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.PureWater: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Tree: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Stone: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.CoalOre: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.CopperOre: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.IronOre: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.GoldOre: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.DiamondOre: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Gold: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Copper: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Iron: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Wood: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Coal: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Sand: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Brick: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Paper: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Circuit: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Tools: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Barrel: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Pottasche: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Glas: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.WaterBarrel: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Knowledge: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Energy: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Water: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Degradeable: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
-                case ResourceType.Diamond: return new CCColor4B(0.25f, 0.25f, 0.25f, 0.25f);
+                case None: return CCColor4B.Lerp(colorCollection.GrayNormal, CCColor4B.Transparent, 0.5f);
+                case PureWater: return colorCollection.BlueLight;
+                case Tree: return colorCollection.GreenDark;
+                case Stone: return colorCollection.GrayNormal;
+                case CoalOre: return CCColor4B.Lerp(Coal.GetColor(colorCollection), colorCollection.GrayNormal, 0.5f);
+                case CopperOre: return CCColor4B.Lerp(Copper.GetColor(colorCollection), colorCollection.GrayNormal, 0.5f);
+                case IronOre: return CCColor4B.Lerp(Iron.GetColor(colorCollection), colorCollection.GrayNormal, 0.5f);
+                case GoldOre: return CCColor4B.Lerp(Gold.GetColor(colorCollection), colorCollection.GrayNormal, 0.5f);
+                case DiamondOre: return CCColor4B.Lerp(Diamond.GetColor(colorCollection), colorCollection.GrayNormal, 0.5f);
+                case Gold: return colorCollection.YellowNormal;
+                case Copper: return colorCollection.RedDark;
+                case Iron: return colorCollection.BlueVeryLight;
+                case Wood: return colorCollection.RedVeryDark;
+                case Coal: return colorCollection.GrayVeryDark;
+                case Sand: return CCColor4B.Lerp(colorCollection.YellowNormal, colorCollection.RedNormal, 0.5f);
+                case Brick: return colorCollection.RedNormal;
+                case Paper: return colorCollection.White;
+                case Circuit: return colorCollection.GreenNormal;
+                case Tools: return colorCollection.GrayLight;
+                case Barrel: return colorCollection.BlueVeryDark;
+                case Pottasche: return colorCollection.GrayDark;
+                case Glas: return CCColor4B.Lerp(colorCollection.GrayVeryLight, CCColor4B.Transparent, 0.5f);
+                case WaterBarrel: return colorCollection.BlueDark;
+                case Knowledge: return colorCollection.RedLight;
+                case Energy: return colorCollection.YellowLight;
+                case Water: return colorCollection.BlueNormal;
+                case Degradeable: return colorCollection.GrayVeryLight;
+                case Diamond: return colorCollection.YellowVeryLight;
                 default: throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
+
+        public static CCColor4F ToColor4F(this CCColor4B color) => new CCColor4F(color);
 
         public static string GetText(this StructureDescription.ResourceCollection source)
         {
@@ -72,7 +75,7 @@ namespace HexMex.Helper
 
         public static bool IsPassable(this ResourceType type)
         {
-            if (type == ResourceType.Water)
+            if (type == Water)
                 return false;
             return true;
         }

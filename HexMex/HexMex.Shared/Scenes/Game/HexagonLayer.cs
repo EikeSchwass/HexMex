@@ -69,15 +69,15 @@ namespace HexMex.Scenes.Game
 
         private void RenderHexagon(CCDrawNode drawNode, Hexagon hexagon)
         {
-            var worldPosition = hexagon.Position.GetWorldPosition(World.WorldSettings.HexagonRadius, World.WorldSettings.HexagonMargin);
-            var corners = Corners.Select(c => c * World.WorldSettings.HexagonRadius + worldPosition).ToArray();
-            drawNode.DrawPolygon(corners, 6, ColorCollection.HexagonBackgroundColor, World.WorldSettings.HexagonBorderThickness, ColorCollection.HexagonBorderColor);
+            var worldPosition = hexagon.Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
+            var corners = Corners.Select(c => c * World.GameSettings.LayoutSettings.HexagonRadius + worldPosition).ToArray();
+            drawNode.DrawPolygon(corners, 6, World.GameSettings.VisualSettings.ColorCollection.GrayDark, World.GameSettings.VisualSettings.HexagonOuterBorderThickness, World.GameSettings.VisualSettings.ColorCollection.White);
 
             if (hexagon is ResourceHexagon resourceHexagon)
             {
-                float factor = resourceHexagon.RemainingResources * 1.0f / World.WorldSettings.MaxNumberOfResourcesInHexagon;
-                var innerCorners = Corners.Select(c => c * (World.WorldSettings.HexagonRadius * factor) + worldPosition).ToArray();
-                drawNode.DrawPolygon(innerCorners, 6, resourceHexagon.ResourceType.GetColor(), 0, CCColor4B.Transparent);
+                float factor = resourceHexagon.RemainingResources * 1.0f / World.GameSettings.GameplaySettings.MaxNumberOfResourcesInHexagon;
+                var innerCorners = Corners.Select(c => c * (World.GameSettings.LayoutSettings.HexagonRadius * factor) + worldPosition).ToArray();
+                drawNode.DrawPolygon(corners, 6, resourceHexagon.ResourceType.GetColor(World.GameSettings.VisualSettings.ColorCollection), World.GameSettings.VisualSettings.HexagonInnerBorderThickness, World.GameSettings.VisualSettings.ColorCollection.White);
             }
         }
 

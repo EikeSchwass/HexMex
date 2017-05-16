@@ -16,6 +16,7 @@ namespace HexMex.Scenes.Game
             HexMexCamera.MoveToPosition(CCPoint.Zero);
             Camera = HexMexCamera;
             AddChild(new GameLayer(World, HexMexCamera, CCColor4B.Black));
+            HexMexCamera.SetZoomFactor(0.5f);
         }
     }
 }

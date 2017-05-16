@@ -5,8 +5,8 @@ namespace HexMex.Scenes
 {
     public class HexMexCamera : CCCamera
     {
-        public const float MinZoomFactor = 0.125f;
-        public const float MaxZoomFactor = 1.5f;
+        public const float MinZoomFactor = 0.08f;
+        public const float MaxZoomFactor = 1f;
 
         public event Action<HexMexCamera, CCPoint> PositionUpdated;
         public event Action<HexMexCamera, float> ZoomUpdated;

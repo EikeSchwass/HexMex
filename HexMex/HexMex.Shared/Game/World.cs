@@ -13,15 +13,15 @@ namespace HexMex.Game
         public PathFinder PathFinder { get; }
         public ResourceManager ResourceManager { get; }
         public StructureManager StructureManager { get; }
-        public WorldSettings WorldSettings { get; }
+        public GameSettings GameSettings { get; }
 
-        public World(WorldSettings worldSettings)
+        public World(GameSettings gameSettings)
         {
-            WorldSettings = worldSettings;
+            GameSettings = gameSettings;
             StructureManager = new StructureManager();
-            EdgeManager = new EdgeManager(WorldSettings);
-            HexagonManager = new HexagonManager(WorldSettings);
-            ButtonManager = new ButtonManager(WorldSettings);
+            EdgeManager = new EdgeManager(GameSettings.GameplaySettings);
+            HexagonManager = new HexagonManager(GameSettings.GameplaySettings);
+            ButtonManager = new ButtonManager(GameSettings.LayoutSettings);
             PathFinder = new PathFinder(HexagonManager, EdgeManager, StructureManager);
             ResourceManager = new ResourceManager(this);
             StructureManager.StructureAdded += StructureAdded;
@@ -69,7 +69,7 @@ namespace HexMex.Game
 
                     if (StructureManager[adjacentHexagonNode] == null && ButtonManager[adjacentHexagonNode] == null)
                     {
-                        var button = new BuildButton(WorldSettings, adjacentHexagonNode);
+                        var button = new BuildButton(GameSettings, adjacentHexagonNode);
                         ButtonManager.AddButton(button, adjacentHexagonNode);
                     }
                     if (!EdgeManager.ContainsEdge(structure.Position, adjacentHexagonNode))

@@ -19,7 +19,7 @@ namespace HexMex.Scenes.MainMenu
             HelpButton.Touched += HelpButton_Clicked;
             OptionsButton.Touched += OptionsButton_Clicked;
 
-            AddEventListener(new CCEventListenerTouchOneByOne {OnTouchBegan = TouchDown, OnTouchCancelled = OnTouchCancelled, OnTouchEnded = OnTouchUp, OnTouchMoved = OnTouchMoved});
+            AddEventListener(new CCEventListenerTouchOneByOne { OnTouchBegan = TouchDown, OnTouchCancelled = OnTouchCancelled, OnTouchEnded = OnTouchUp, OnTouchMoved = OnTouchMoved });
         }
 
         protected override void AddedToScene()
@@ -83,7 +83,7 @@ namespace HexMex.Scenes.MainMenu
 
         private void StartGameButton_Clicked(Button sender)
         {
-            World world = new World(new WorldSettings());
+            World world = new World(new GameSettings());
             Window.DefaultDirector.PushScene(new GameScene(Window, world));
             world.Initialize();
         }

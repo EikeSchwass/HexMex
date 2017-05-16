@@ -7,22 +7,17 @@ namespace HexMex.Scenes.Game
 {
     public class StructureLayer : TouchLayer
     {
-        public WorldSettings WorldSettings { get; }
-
         private CCDrawNode DrawNode { get; } = new CCDrawNode();
 
         private bool RedrawRequested { get; set; }
-        private StructureRenderer StructureRenderer { get; }
 
         private List<Structure> Structures { get; } = new List<Structure>();
 
         public StructureLayer(World world, HexMexCamera camera) : base(camera)
         {
-            WorldSettings = world.WorldSettings;
             world.StructureManager.StructureAdded += StructureAdded;
             world.StructureManager.StructureRemoved += StructureRemoved;
-            StructureRenderer = new StructureRenderer(WorldSettings);
-            Schedule();
+            Schedule(Update, 0.5f);
             AddChild(DrawNode);
         }
 
@@ -32,10 +27,15 @@ namespace HexMex.Scenes.Game
             if (!RedrawRequested)
                 return;
             RedrawRequested = false;
+            Render();
+        }
+
+        private void Render()
+        {
             DrawNode.Clear();
             foreach (var structure in Structures)
             {
-                StructureRenderer.Render(structure, DrawNode);
+                structure.Render(DrawNode);
             }
         }
 
@@ -43,13 +43,14 @@ namespace HexMex.Scenes.Game
         {
             structure.RequiresRedraw += s => RedrawRequested = true;
             Structures.Add(structure);
-            RedrawRequested = true;
+            Render();
         }
 
         private void StructureRemoved(StructureManager structureManager, Structure structure)
         {
             Structures.Remove(structure);
             RedrawRequested = true;
+            Render();
         }
     }
 }

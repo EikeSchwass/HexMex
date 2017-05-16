@@ -36,9 +36,9 @@ namespace HexMex.Scenes.Game
             DrawNode.Clear();
             foreach (var package in Packages)
             {
-                var radius = World.WorldSettings.HexagonMargin / 2;
-                var posiition = package.GetWorldPosition(World.WorldSettings.HexagonRadius, World.WorldSettings.HexagonMargin);
-                DrawNode.DrawCircle(posiition, radius, package.ResourceType.GetColor(), 3, CCColor4B.Black);
+                var radius = World.GameSettings.LayoutSettings.HexagonMargin * 0.8f;
+                var posiition = package.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
+                DrawNode.DrawCircle(posiition, radius, package.ResourceType.GetColor(World.GameSettings.VisualSettings.ColorCollection), 3, World.GameSettings.VisualSettings.ColorCollection.Black);
             }
         }
 

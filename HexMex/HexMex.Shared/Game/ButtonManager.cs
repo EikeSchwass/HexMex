@@ -10,20 +10,20 @@ namespace HexMex.Game
         public event ButtonListChangedEventHandler ButtonRemoved;
 
         public Button this[HexagonNode hexagonNode] => Buttons.ContainsKey(hexagonNode) ? Buttons[hexagonNode] : null;
-        public WorldSettings WorldSettings { get; }
+        public LayoutSettings LayoutSettings { get; }
 
         private Dictionary<HexagonNode, Button> Buttons { get; } = new Dictionary<HexagonNode, Button>();
 
-        public ButtonManager(WorldSettings worldSettings)
+        public ButtonManager(LayoutSettings layoutSettings)
         {
-            WorldSettings = worldSettings;
+            LayoutSettings = layoutSettings;
         }
 
         public void AddButton(Button button, HexagonNode hexagonNode)
         {
             Buttons.Add(hexagonNode, button);
             ButtonAdded?.Invoke(this, button);
-            button.Position = hexagonNode.GetWorldPosition(WorldSettings.HexagonRadius, WorldSettings.HexagonMargin);
+            button.Position = hexagonNode.GetWorldPosition(LayoutSettings.HexagonRadius, LayoutSettings.HexagonMargin);
         }
 
         public void RemoveButton(Button button)

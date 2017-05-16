@@ -7,8 +7,8 @@ namespace HexMex.Controls
 {
     public class BuildButton : Button
     {
-        private CCColor4B backgroundColor = ColorCollection.BuildButtonBackgroundColor;
-        private CCColor4B borderColor = ColorCollection.BuildButtonBorderColor;
+        private CCColor4B backgroundColor;
+        private CCColor4B borderColor;
         private float borderThickness = 1;
 
         public CCColor4B BackgroundColor
@@ -17,7 +17,7 @@ namespace HexMex.Controls
             set
             {
                 backgroundColor = value;
-                RenderBackground();
+                Render();
             }
         }
 
@@ -27,7 +27,7 @@ namespace HexMex.Controls
             set
             {
                 borderColor = value;
-                RenderOutline();
+                Render();
             }
         }
 
@@ -37,7 +37,7 @@ namespace HexMex.Controls
             set
             {
                 borderThickness = value;
-                RenderOutline();
+                Render();
             }
         }
 
@@ -46,20 +46,20 @@ namespace HexMex.Controls
         public float Radius { get; }
 
         public CCSprite SpriteNode { get; } = new CCSprite("images/plus");
-        private CCDrawNode BackgroundNode { get; } = new CCDrawNode();
-        private CCDrawNode OutlineNode { get; } = new CCDrawNode();
+        private CCDrawNode DrawNode { get; } = new CCDrawNode();
 
-        private WorldSettings WorldSettings { get; }
+        private GameSettings GameSettings { get; }
 
-        public BuildButton(WorldSettings settings, HexagonNode position)
+        public BuildButton(GameSettings settings, HexagonNode position)
         {
-            WorldSettings = settings;
+            GameSettings = settings;
+            BorderColor = GameSettings.VisualSettings.ColorCollection.White;
+            BackgroundColor = GameSettings.VisualSettings.ColorCollection.GrayVeryDark;
             HexagonNode = position;
-            var x = (float)(Sin(PI / 3) * (WorldSettings.HexagonMargin - WorldSettings.HexagonBorderThickness));
-            var y = (float)(Cos(PI / 3) * (WorldSettings.HexagonMargin - WorldSettings.HexagonBorderThickness));
+            var x = (float)(Sin(PI / 3) * (GameSettings.LayoutSettings.HexagonMargin - GameSettings.VisualSettings.HexagonOuterBorderThickness));
+            var y = (float)(Cos(PI / 3) * (GameSettings.LayoutSettings.HexagonMargin - GameSettings.VisualSettings.HexagonOuterBorderThickness));
             Radius = (float)Sqrt(x * x + y * y) * 2;
-            AddChild(BackgroundNode);
-            AddChild(OutlineNode);
+            AddChild(DrawNode);
             AddChild(SpriteNode);
             Render();
         }
@@ -80,20 +80,8 @@ namespace HexMex.Controls
 
         private void Render()
         {
-            RenderBackground();
-            RenderOutline();
-        }
-
-        private void RenderBackground()
-        {
-            BackgroundNode.Clear();
-            BackgroundNode.DrawDot(CCPoint.Zero, Radius, BackgroundColor);
-        }
-
-        private void RenderOutline()
-        {
-            OutlineNode.Clear();
-            OutlineNode.DrawEllipse(new CCRect(-Radius, -Radius, Radius * 2, Radius * 2), BorderThickness, BorderColor);
+            DrawNode.Clear();
+            DrawNode.DrawCircle(CCPoint.Zero, Radius, BackgroundColor, BorderThickness, BorderColor);
         }
     }
 }

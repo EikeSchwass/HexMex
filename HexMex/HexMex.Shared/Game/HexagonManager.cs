@@ -16,9 +16,9 @@ namespace HexMex.Game
 
         private Dictionary<HexagonPosition, Hexagon> Hexagons { get; } = new Dictionary<HexagonPosition, Hexagon>();
 
-        public HexagonManager(WorldSettings worldSettings)
+        public HexagonManager(GameplaySettings gameplaySettings)
         {
-            HexagonRevealer = new HexagonRevealer(this, worldSettings);
+            HexagonRevealer = new HexagonRevealer(this, gameplaySettings);
         }
 
         public bool CanReachThrough(HexagonPosition pos1, HexagonPosition pos2)

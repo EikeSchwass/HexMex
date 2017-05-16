@@ -22,16 +22,15 @@ namespace HexMex.Scenes.Game
             TouchHandler = new GameTouchHandler(this, HexMexCamera);
             World = world;
             var hexagonLayer = new HexagonLayer(World, HexMexCamera);
-            var blendLayer = new CCLayerColor(camera, new CCColor4B(0, 0, 0, 0.4f));
             var resourcePackageLayer = new ResourcePackageLayer(World, HexMexCamera);
             var structureLayer = new StructureLayer(World, HexMexCamera);
-            var buildMenuLayer = new BuildMenuLayer(HexMexCamera);
+            var buildMenuLayer = new BuildMenuLayer(World, HexMexCamera);
             var controlLayer = new ButtonLayer(World, HexMexCamera);
             var edgeLayer = new EdgeLayer(World, HexMexCamera);
             buildMenuLayer.ConstructionRequested += ConstructBuilding;
             controlLayer.ConstructionRequested += (s, b) => buildMenuLayer.DisplayBuildMenuFor(b);
 
-            var layers = new CCLayer[] {hexagonLayer, edgeLayer, blendLayer, resourcePackageLayer, structureLayer, controlLayer, buildMenuLayer};
+            var layers = new CCLayer[] { hexagonLayer, edgeLayer, resourcePackageLayer, structureLayer, controlLayer, buildMenuLayer };
 
             foreach (var layer in layers)
             {
