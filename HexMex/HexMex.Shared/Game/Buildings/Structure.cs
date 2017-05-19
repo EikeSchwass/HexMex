@@ -28,6 +28,11 @@ namespace HexMex.Game.Buildings
             ResourceDirector.ResourceArrived(resource);
         }
 
+        public void OnAdjacentHexagonProvidedResource(ResourceType resourceType)
+        {
+            ResourceDirector.AdjacentHexagonProvidedResource(resourceType);
+        }
+
         /// <summary>
         /// Get's called everytime a Resource passes the Node the Building is located at.
         /// </summary>

@@ -2,14 +2,20 @@
 
 namespace HexMex.Game
 {
-    public abstract class Hexagon : IRenderable<Hexagon>
+    public class Hexagon : IRenderable<Hexagon>
     {
-        public abstract event Action<Hexagon> RequiresRedraw;
+        public event Action<Hexagon> RequiresRedraw;
 
         public HexagonPosition Position { get; }
 
-        protected Hexagon(HexagonPosition position)
+        public ResourceType ResourceType { get; }
+
+        public int PayoutSum { get; }
+
+        public Hexagon(ResourceType resourceType, int payoutSum, HexagonPosition position)
         {
+            PayoutSum = payoutSum;
+            ResourceType = resourceType;
             Position = position;
         }
     }

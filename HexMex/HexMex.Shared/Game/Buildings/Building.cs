@@ -5,48 +5,70 @@ namespace HexMex.Game.Buildings
     public abstract class Building : Structure
     {
         public event Action<Building> ProductionCompleted;
-        public bool IsIdle => !IsProducing && ResourceDirector.PendingProvisions.Count == 0 && ResourceDirector.PendingRequests.Count == 0;
+        public event Action<Building> ProductionStarted;
+        public float ProductionTime { get; }
+        public float CurrentProductionTime { get; private set; }
         public bool IsProducing { get; private set; }
-        public float ProductionTime { get; private set; } = 1;
-        public float RemainingProductionTime { get; private set; }
 
-        protected Building(HexagonNode position, World world) : base(position, world)
+        private bool NotifiedAddedToWorld { get; set; }
+
+        protected Building(HexagonNode position, World world, float productionTime) : base(position, world)
         {
+            ProductionTime = productionTime;
+            ResourceDirector.AllIngredientsArrived += ResourceDirector_AllIngredientsArrived;
+            ResourceDirector.AllProvisionsLeft += ResourceDirector_AllProvisionsLeft;
         }
 
-        public sealed override void Update(float dt)
+        public override void Update(float dt)
         {
             base.Update(dt);
-            if (IsIdle)
+            if (!NotifiedAddedToWorld)
             {
-                Idling();
+                OnAddedToWorld();
+                NotifiedAddedToWorld = true;
             }
-            else if (IsProducing)
-            {
-                RemainingProductionTime -= dt;
-                if (RemainingProductionTime <= 0)
-                {
-                    IsProducing = false;
-                    RemainingProductionTime = 0;
-                    OnProductionCompleted();
-                    ProductionCompleted?.Invoke(this);
-                }
-            }
+            if (!IsProducing)
+                return;
+            CurrentProductionTime += dt;
+            if (CurrentProductionTime >= ProductionTime)
+                CompleteProduction();
         }
 
-        protected virtual void OnProductionCompleted() { }
-
-        protected virtual void Idling()
+        protected virtual void OnAddedToWorld()
         {
         }
 
-        protected void StartProduction(float productionTime)
+        protected abstract void OnProductionCompleted();
+
+        protected abstract void OnProductionStarted();
+
+        private void CheckAndStartProduction()
         {
-            if (IsProducing)
-                throw new InvalidOperationException("Building is already producing");
-            IsProducing = true;
-            RemainingProductionTime = productionTime;
-            ProductionTime = productionTime;
+            if (ResourceDirector.ReadyForProduction)
+            {
+                CurrentProductionTime = 0;
+                IsProducing = true;
+                OnProductionStarted();
+                ProductionStarted?.Invoke(this);
+            }
+        }
+
+        private void CompleteProduction()
+        {
+            CurrentProductionTime = 0;
+            IsProducing = false;
+            OnProductionCompleted();
+            ProductionCompleted?.Invoke(this);
+        }
+
+        private void ResourceDirector_AllIngredientsArrived(ResourceDirector arg1, ResourceType[] arg2)
+        {
+            CheckAndStartProduction();
+        }
+
+        private void ResourceDirector_AllProvisionsLeft(ResourceDirector obj)
+        {
+            CheckAndStartProduction();
         }
     }
 }

@@ -73,12 +73,9 @@ namespace HexMex.Scenes.Game
             var corners = Corners.Select(c => c * World.GameSettings.LayoutSettings.HexagonRadius + worldPosition).ToArray();
             drawNode.DrawPolygon(corners, 6, World.GameSettings.VisualSettings.ColorCollection.GrayDark, World.GameSettings.VisualSettings.HexagonOuterBorderThickness, World.GameSettings.VisualSettings.ColorCollection.White);
 
-            if (hexagon is ResourceHexagon resourceHexagon)
-            {
-                float factor = resourceHexagon.RemainingResources * 1.0f / World.GameSettings.GameplaySettings.MaxNumberOfResourcesInHexagon;
-                var innerCorners = Corners.Select(c => c * (World.GameSettings.LayoutSettings.HexagonRadius * factor) + worldPosition).ToArray();
-                drawNode.DrawPolygon(corners, 6, resourceHexagon.ResourceType.GetColor(World.GameSettings.VisualSettings.ColorCollection), World.GameSettings.VisualSettings.HexagonInnerBorderThickness, World.GameSettings.VisualSettings.ColorCollection.White);
-            }
+            drawNode.DrawPolygon(corners, 6, hexagon.ResourceType.GetColor(World.GameSettings.VisualSettings.ColorCollection), World.GameSettings.VisualSettings.HexagonInnerBorderThickness, World.GameSettings.VisualSettings.ColorCollection.White);
+            if (hexagon.PayoutSum > 0)
+                drawNode.DrawNumber(hexagon.PayoutSum, worldPosition, 80, 6, World.GameSettings.VisualSettings.ColorCollection.White.ToColor4F());
         }
 
         private void RenderStatic()

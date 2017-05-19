@@ -12,14 +12,18 @@ namespace HexMex.Game.Buildings
 
         public ReadOnlyCollection<ResourceType> ArrivedResources => ArrivedResourceList.AsReadOnly();
         public ReadOnlyCollection<ResourceType> PendingProvisions => ProvidedResourceList.Select(r => r.ResourceType).ToList().AsReadOnly();
-        public ReadOnlyCollection<ResourceType> PendingRequests => RequestedResourceList.Select(r => r.ResourceType).ToList().AsReadOnly();
+        public ReadOnlyCollection<ResourceType> PendingRequests => RequestedNetworkResourceList.Select(r => r.ResourceType).ToList().AsReadOnly();
         public RequestPriority Priority { get; private set; } = RequestPriority.Normal;
         public Structure Structure { get; }
         public World World { get; }
 
         private List<ResourceType> ArrivedResourceList { get; } = new List<ResourceType>();
         private List<ResourcePackage> ProvidedResourceList { get; } = new List<ResourcePackage>();
-        private List<ResourcePackage> RequestedResourceList { get; } = new List<ResourcePackage>();
+        private List<ResourcePackage> RequestedNetworkResourceList { get; } = new List<ResourcePackage>();
+        private List<ResourceType> RequestedHexagonResourceList { get; } = new List<ResourceType>();
+
+        public bool ReadyForProduction => ProvidedResourceList.Count == 0 && RequestedNetworkResourceList.Count == 0 && RequestedHexagonResourceList.Count == 0;
+
 
         public ResourceDirector(Structure structure)
         {
@@ -42,22 +46,28 @@ namespace HexMex.Game.Buildings
             }
         }
 
-        public void RequestIngredients(params ResourceType[] resourceTypes)
+        public void RequestIngredients(ResourceType[] networkResourceTypes, ResourceType[] extractionResourceTypes)
         {
-            if (RequestedResourceList.Any())
+            if (RequestedNetworkResourceList.Any() || RequestedHexagonResourceList.Any())
                 throw new InvalidOperationException("Can't request new Resources until all current requests are completed");
-            foreach (var resourceType in resourceTypes)
+            foreach (var resourceType in networkResourceTypes ?? Enumerable.Empty<ResourceType>())
             {
                 var resourcePackage = World.ResourceManager.RequestResource(Structure, resourceType, Priority);
-                RequestedResourceList.Add(resourcePackage);
+                RequestedNetworkResourceList.Add(resourcePackage);
             }
+            RequestedHexagonResourceList.AddRange(extractionResourceTypes ?? Enumerable.Empty<ResourceType>());
         }
 
         public void ResourceArrived(ResourcePackage resourcePackage)
         {
-            RequestedResourceList.Remove(resourcePackage);
+            RequestedNetworkResourceList.Remove(resourcePackage);
             ArrivedResourceList.Add(resourcePackage.ResourceType);
-            if (RequestedResourceList.Count == 0)
+            NewResourceAvailable();
+        }
+
+        private void NewResourceAvailable()
+        {
+            if (RequestedNetworkResourceList.Count == 0 && RequestedHexagonResourceList.Count == 0)
             {
                 AllIngredientsArrived?.Invoke(this, ArrivedResourceList.ToArray());
                 ArrivedResourceList.Clear();
@@ -71,7 +81,7 @@ namespace HexMex.Game.Buildings
         public void SetPriority(RequestPriority newPriority)
         {
             Priority = newPriority;
-            foreach (var resourcePackage in RequestedResourceList)
+            foreach (var resourcePackage in RequestedNetworkResourceList)
             {
                 World.ResourceManager.UpdateRequestPriority(resourcePackage, Priority);
             }
@@ -87,6 +97,15 @@ namespace HexMex.Game.Buildings
             if (ProvidedResourceList.Count == 0)
             {
                 AllProvisionsLeft?.Invoke(this);
+            }
+        }
+
+        public void AdjacentHexagonProvidedResource(ResourceType resourceType)
+        {
+            if (RequestedHexagonResourceList.Contains(resourceType))
+            {
+                RequestedHexagonResourceList.Remove(resourceType);
+                NewResourceAvailable();
             }
         }
     }

@@ -38,6 +38,7 @@ namespace HexMex.Game
 
         public CCColor4B Black => CCColor4B.Black;
         public CCColor4B White => CCColor4B.White;
+        public CCColor4B Transparent => CCColor4B.Transparent;
 
         protected virtual CCColor4B[] GreenColorPalette { get; } =
         {
@@ -83,6 +84,7 @@ namespace HexMex.Game
             new CCColor4B(61, 61, 61),
             new CCColor4B(38, 38, 38)
         };
+
     }
 
     public class DarkerColors : ColorCollection

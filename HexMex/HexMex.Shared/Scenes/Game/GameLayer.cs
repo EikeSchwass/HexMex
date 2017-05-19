@@ -27,10 +27,12 @@ namespace HexMex.Scenes.Game
             var buildMenuLayer = new BuildMenuLayer(World, HexMexCamera);
             var controlLayer = new ButtonLayer(World, HexMexCamera);
             var edgeLayer = new EdgeLayer(World, HexMexCamera);
+            var diceLayer = new DiceLayer(World);
+            var diceEffectLayer = new DiceEffectLayer(World, HexMexCamera);
             buildMenuLayer.ConstructionRequested += ConstructBuilding;
             controlLayer.ConstructionRequested += (s, b) => buildMenuLayer.DisplayBuildMenuFor(b);
 
-            var layers = new CCLayer[] { hexagonLayer, edgeLayer, resourcePackageLayer, structureLayer, controlLayer, buildMenuLayer };
+            var layers = new CCLayer[] { hexagonLayer, diceEffectLayer, edgeLayer, resourcePackageLayer, structureLayer, controlLayer, diceLayer, buildMenuLayer };
 
             foreach (var layer in layers)
             {

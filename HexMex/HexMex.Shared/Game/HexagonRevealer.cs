@@ -20,31 +20,41 @@ namespace HexMex.Game
             Hexagon hexagon = null;
 
             if (hexagonPosition == HexagonPosition.Zero)
-                hexagon = new ResourceHexagon(ResourceType.DiamondOre, (int)(GameplaySettings.DiamondStartAmountFactor * GameplaySettings.MaxNumberOfResourcesInHexagon), hexagonPosition);
+                hexagon = new Hexagon(ResourceType.DiamondOre, GameplaySettings.DieCount, hexagonPosition);
             else if (alreadyRevealed == 1)
-                hexagon = new ResourceHexagon(ResourceType.PureWater, GameplaySettings.MaxNumberOfResourcesInHexagon, hexagonPosition);
+                hexagon = new Hexagon(ResourceType.PureWater, 0, hexagonPosition);
             else if (alreadyRevealed == 2)
-                hexagon = new ResourceHexagon(ResourceType.CoalOre, GameplaySettings.MaxNumberOfResourcesInHexagon, hexagonPosition);
+                hexagon = new Hexagon(ResourceType.CoalOre, GetNextDieSumFor(ResourceType.CoalOre), hexagonPosition);
             else
             {
                 var waterProbability = GameplaySettings.WaterSigmoid(hexagonPosition.DistanceToOrigin);
                 if (HexMexRandom.NextDouble() < waterProbability)
-                    hexagon = new ResourceHexagon(ResourceType.Water, GameplaySettings.MaxNumberOfResourcesInHexagon, hexagonPosition);
+                    hexagon = new Hexagon(ResourceType.PureWater, 0, hexagonPosition);
                 else
                 {
                     var resourceType = GetNextResourceType();
-                    var resourceAmount = GetNextResourceAmount(resourceType);
-                    hexagon = new ResourceHexagon(resourceType, resourceAmount, hexagonPosition);
+                    var dieSum = GetNextDieSumFor(resourceType);
+                    hexagon = new Hexagon(resourceType, dieSum, hexagonPosition);
                 }
             }
             return hexagon;
         }
 
-        private int GetNextResourceAmount(ResourceType resourceType)
+        private int GetNextDieSumFor(ResourceType resourceType)
         {
             var spawnInfo = GameplaySettings.SpawnInformation[resourceType];
-            var nextGaussian = HexMexRandom.GetNextGaussian(spawnInfo.AmountMean, spawnInfo.AmountDeviation, 0, GameplaySettings.MaxNumberOfResourcesInHexagon + 1);
-            return (int)nextGaussian;
+            var dieSumProbabilities = HexMexRandom.CalculateDieProbabilities(GameplaySettings.DieCount, GameplaySettings.DieFaceCount);
+            var nextGaussian = HexMexRandom.GetNextGaussian(spawnInfo.TargetPayoutProbability, spawnInfo.PayoutProbabilityDeviation, 0, dieSumProbabilities.Values.Max());
+
+            var bestMatches = dieSumProbabilities.Keys.OrderBy(key => Math.Abs(dieSumProbabilities[key] - nextGaussian)).ToArray();
+            while (true)
+            {
+                foreach (var match in bestMatches)
+                {
+                    if (HexMexRandom.NextDouble() < 0.5)
+                        return match;
+                }
+            }
         }
 
         private ResourceType GetNextResourceType()

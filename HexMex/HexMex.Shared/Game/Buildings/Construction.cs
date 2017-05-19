@@ -18,7 +18,7 @@ namespace HexMex.Game.Buildings
         {
             ConstructionFactory = buildingConstructionFactory;
             ResourceDirector.AllIngredientsArrived += StartConstructing;
-            ResourceDirector.RequestIngredients(ConstructionFactory.StructureDescription.ConstructionCost.ResourceTypes.ToArray());
+            ResourceDirector.RequestIngredients(ConstructionFactory.StructureDescription.ConstructionCost.ResourceTypes.ToArray(), null);
         }
 
         public override void Render(CCDrawNode drawNode)

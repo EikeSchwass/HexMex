@@ -3,19 +3,19 @@
     public struct ResourceSpawnInfo
     {
         public double SpawnProbability { get; }
-        public double AmountMean { get; }
-        public double AmountDeviation { get; }
+        public double TargetPayoutProbability { get; }
+        public double PayoutProbabilityDeviation { get; }
 
-        public ResourceSpawnInfo(double spawnProbability, double amountMean, double amountDeviation)
+        public ResourceSpawnInfo(double spawnProbability, double targetPayoutProbability, double payoutProbabilityDeviation)
         {
             SpawnProbability = spawnProbability;
-            AmountMean = amountMean;
-            AmountDeviation = amountDeviation;
+            TargetPayoutProbability = targetPayoutProbability;
+            PayoutProbabilityDeviation = payoutProbabilityDeviation;
         }
 
         public bool Equals(ResourceSpawnInfo other)
         {
-            return SpawnProbability.Equals(other.SpawnProbability) && AmountMean.Equals(other.AmountMean) && AmountDeviation.Equals(other.AmountDeviation);
+            return SpawnProbability.Equals(other.SpawnProbability) && TargetPayoutProbability.Equals(other.TargetPayoutProbability) && PayoutProbabilityDeviation.Equals(other.PayoutProbabilityDeviation);
         }
 
         public override bool Equals(object obj)
@@ -30,8 +30,8 @@
             unchecked
             {
                 var hashCode = SpawnProbability.GetHashCode();
-                hashCode = (hashCode * 397) ^ AmountMean.GetHashCode();
-                hashCode = (hashCode * 397) ^ AmountDeviation.GetHashCode();
+                hashCode = (hashCode * 397) ^ TargetPayoutProbability.GetHashCode();
+                hashCode = (hashCode * 397) ^ PayoutProbabilityDeviation.GetHashCode();
                 return hashCode;
             }
         }

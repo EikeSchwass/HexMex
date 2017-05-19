@@ -14,6 +14,7 @@ namespace HexMex.Game
         public ResourceManager ResourceManager { get; }
         public StructureManager StructureManager { get; }
         public GameSettings GameSettings { get; }
+        public DiceManager DiceManager { get; }
 
         public World(GameSettings gameSettings)
         {
@@ -24,6 +25,7 @@ namespace HexMex.Game
             ButtonManager = new ButtonManager(GameSettings.LayoutSettings);
             PathFinder = new PathFinder(HexagonManager, EdgeManager, StructureManager);
             ResourceManager = new ResourceManager(this);
+            DiceManager=new DiceManager(this);
             StructureManager.StructureAdded += StructureAdded;
         }
 
@@ -46,6 +48,7 @@ namespace HexMex.Game
         {
             if (!IsInitialized)
                 return;
+            DiceManager.Update(dt);
             HexagonManager.Update(dt);
             ResourceManager.Update(dt);
             StructureManager.Update(dt);

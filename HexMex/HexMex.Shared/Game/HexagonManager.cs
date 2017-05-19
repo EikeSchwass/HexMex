@@ -27,11 +27,9 @@ namespace HexMex.Game
             var h2 = this[pos2];
             if (h1 == null || h2 == null)
                 return false;
-            if (h1 is ResourceHexagon resourceHexagon1 && h2 is ResourceHexagon resourceHexagon2)
-            {
-                if (resourceHexagon1.ResourceType.IsPassable() || resourceHexagon2.ResourceType.IsPassable())
-                    return true;
-            }
+
+            if (h1.ResourceType.IsPassable() || h2.ResourceType.IsPassable())
+                return true;
             return false;
         }
 
