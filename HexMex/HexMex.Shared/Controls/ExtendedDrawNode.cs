@@ -27,18 +27,18 @@ namespace HexMex.Controls
             UsageIndex = 0;
         }
 
-        public void DrawCircle(CCPoint position, float radius, CCColor4B fillColor, float borderThickness, CCColor4B borderColor, CircleBorderPosition borderPosition)
+        public void DrawCircle(CCPoint position, float radius, CCColor4B fillColor, float borderThickness, CCColor4B borderColor, CircleBorderPosition borderPosition = CircleBorderPosition.HalfHalf)
         {
             float borderOffset = borderPosition == CircleBorderPosition.Inside ? 0 : (borderPosition == CircleBorderPosition.Outside ? borderThickness : borderThickness / 2);
             float radiusOffset = borderPosition == CircleBorderPosition.Inside ? -borderThickness : (borderPosition == CircleBorderPosition.Outside ? 0 : -borderThickness / 2);
 
             // Border Circle
-            DrawNode.DrawCircle(position, radius + borderOffset, borderColor);
+            DrawNode.DrawSolidCircle(position, radius + borderOffset, borderColor);
             // Normal Circle
-            DrawNode.DrawCircle(position, radius + radiusOffset, fillColor);
+            DrawNode.DrawSolidCircle(position, radius + radiusOffset, fillColor);
         }
 
-        public void DrawCircle(CCPoint position, float radius, CCColor4B fillColor) => DrawCircle(position, radius, fillColor, 0, CCColor4B.Transparent, CircleBorderPosition.HalfHalf);
+        public void DrawCircle(CCPoint position, float radius, CCColor4B fillColor) => DrawCircle(position, radius, fillColor, 0, CCColor4B.Transparent);
 
         public void DrawLine(CCPoint from, CCPoint to, float thickness, CCColor4B color)
         {

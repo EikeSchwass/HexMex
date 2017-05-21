@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace HexMex.Game.Buildings
+namespace HexMex.Game
 {
     public class StructureDescription
     {

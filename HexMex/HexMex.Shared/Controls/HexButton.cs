@@ -1,6 +1,6 @@
 using System.Linq;
 using CocosSharp;
-using HexMex.Game;
+using HexMex.Game.Settings;
 using HexMex.Helper;
 using HexMex.Scenes.Game;
 

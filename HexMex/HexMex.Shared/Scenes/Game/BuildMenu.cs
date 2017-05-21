@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CocosSharp;
 using HexMex.Game;
-using HexMex.Game.Buildings;
+using HexMex.Game.Settings;
 using HexMex.Helper;
 
 namespace HexMex.Scenes.Game

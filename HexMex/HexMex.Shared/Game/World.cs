@@ -1,6 +1,7 @@
 ﻿using CocosSharp;
 using HexMex.Controls;
 using HexMex.Game.Buildings;
+using HexMex.Game.Settings;
 
 namespace HexMex.Game
 {
@@ -38,6 +39,7 @@ namespace HexMex.Game
             HexagonManager.RevealHexagonAt(p3);
 
             StructureManager.CreateStrucuture(new DiamondExtractor(new HexagonNode(p1, p2, p3), this));
+            StructureManager.CreateStrucuture(new Habor(new HexagonNode(new HexagonPosition(1, 1, -2), p2, p3), this));
 
             IsInitialized = true;
         }
@@ -53,6 +55,8 @@ namespace HexMex.Game
 
         private void StructureAdded(StructureManager manager, Structure structure)
         {
+            if (ButtonManager[structure.Position] != null)
+                ButtonManager.RemoveButton(ButtonManager[structure.Position]);
             if (!(structure is Construction))
             {
                 foreach (var adjacentHexagonNode in structure.Position.GetAccessibleAdjacentHexagonNodes(HexagonManager))

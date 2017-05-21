@@ -1,4 +1,4 @@
-﻿namespace HexMex.Game.Buildings
+﻿namespace HexMex.Game
 {
     public enum RequestPriority : ushort
     {

@@ -1,6 +1,7 @@
 ﻿using CocosSharp;
 using HexMex.Controls;
 using HexMex.Game;
+using HexMex.Game.Settings;
 
 namespace HexMex.Scenes.Game
 {

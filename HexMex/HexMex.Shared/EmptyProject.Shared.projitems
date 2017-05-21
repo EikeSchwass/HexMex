@@ -13,15 +13,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BuildButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CircleBorderPosition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ExtendedDrawNode.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\ResourceDirector.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\StructureDescription.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Habor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceDirector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\StructureDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\DiceThrowResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Edge.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\GameplaySettings.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\LayoutSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Settings\GameplaySettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Settings\LayoutSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourcePackagePriorityQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceSpawnInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\VisualSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Settings\VisualSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\BuildMenu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\EdgeLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Button.cs" />
@@ -31,10 +32,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\IPointInBoundsCheck.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TextButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Building.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\BuildingConstructionFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\BuildingConstructionFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Construction.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\FixedSizeDictionary.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\ResourceSlot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\FixedSizeDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceSlot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ButtonListChangedEventHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ButtonManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\EdgeManager.cs" />
@@ -44,7 +45,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Game\PathFinder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\RequestPriority.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceStorage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\ColorCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Settings\ColorCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Connection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\HexagonManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\HexagonNode.cs" />
@@ -64,11 +65,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Game\RequestCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Hexagon.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceType.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Structure.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Structure.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\CoalRefinery.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\StructureManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\World.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\GameSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Settings\GameSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\DataLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\HexagonHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ExtensionMethods.cs" />
@@ -102,6 +103,7 @@
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controls\Buildings\" />
     <Folder Include="$(MSBuildThisFileDirectory)Controls\Dialogs\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Game\Settings\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)ResourceDiagram.dgml" />

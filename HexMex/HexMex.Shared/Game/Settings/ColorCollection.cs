@@ -1,6 +1,6 @@
 ﻿using CocosSharp;
 
-namespace HexMex.Game
+namespace HexMex.Game.Settings
 {
     public class ColorCollection
     {

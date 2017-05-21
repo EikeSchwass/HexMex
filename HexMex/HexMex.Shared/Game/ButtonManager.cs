@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HexMex.Controls;
+using HexMex.Game.Settings;
 
 namespace HexMex.Game
 {
@@ -28,6 +29,8 @@ namespace HexMex.Game
 
         public void RemoveButton(Button button)
         {
+            if (Buttons.All(b => b.Value != button))
+                return;
             var hexagonNode = Buttons.First(b => b.Value == button).Key;
             Buttons.Remove(hexagonNode);
             ButtonRemoved?.Invoke(this, button);

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using CocosSharp;
+using HexMex.Game.Settings;
 using HexMex.Helper;
 using static System.Math;
 

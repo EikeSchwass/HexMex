@@ -110,5 +110,10 @@ namespace HexMex.Helper
             else
                 dictionary.Add(key, value);
         }
+
+        public List<TNode> Greedy(TNode start, TNode destination)
+        {
+            
+        }
     }
 }

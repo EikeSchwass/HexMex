@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using HexMex.Game.Buildings;
 
-namespace HexMex.Game.Buildings
+namespace HexMex.Game
 {
     public class BuildingConstructionFactory
     {

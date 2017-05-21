@@ -2,6 +2,7 @@
 
 using System.Linq;
 using System.Reflection;
+using HexMex.Game;
 using HexMex.Game.Buildings;
 
 namespace HexMex.UnitTests

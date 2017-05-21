@@ -1,7 +1,8 @@
 using System;
 using CocosSharp;
+using HexMex.Controls;
 
-namespace HexMex.Game.Buildings
+namespace HexMex.Game
 {
     public abstract class Structure : IRenderable<Structure>, ICCUpdatable
     {
@@ -48,7 +49,7 @@ namespace HexMex.Game.Buildings
             ResourceDirector.ResourcePassesThrough(resource);
         }
 
-        public abstract void Render(CCDrawNode drawNode);
+        public abstract void Render(ExtendedDrawNode drawNode);
 
         public virtual void Update(float dt)
         {

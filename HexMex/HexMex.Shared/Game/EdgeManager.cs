@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using HexMex.Game.Settings;
 
 namespace HexMex.Game
 {

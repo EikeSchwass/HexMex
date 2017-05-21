@@ -1,37 +1,31 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using static System.Math;
 
-namespace HexMex.Game
+namespace HexMex.Game.Settings
 {
     public class GameplaySettings
     {
         public float DefaultResourceTimeBetweenNodes { get; set; } = 1.33f;
         public float MapSize { get; set; } = 4;
         public float MapSizeStrictness { get; set; } = 1;
-        public int DieCount { get; set; } = 2;
-        public int DieFaceCount { get; set; } = 6;
-        public float DiceThrowInterval { get; set; } = 3;
         public float PayoutBoostTime { get; set; } = 300;
         public float MaxPayoutBoost { get; set; } = 3;
 
         public ReadOnlyDictionary<ResourceType, ResourceSpawnInfo> SpawnInformation { get; }
 
-        public ResourceType[] SpawnResourceTypes => SpawnInformation.Keys.ToArray();
-
         public GameplaySettings()
         {
             var spawnDictionary = new Dictionary<ResourceType, ResourceSpawnInfo>
             {
-                {ResourceType.CoalOre, new ResourceSpawnInfo(1, 5)},
-                {ResourceType.CopperOre, new ResourceSpawnInfo(0.8, 7)},
-                {ResourceType.DiamondOre, new ResourceSpawnInfo(0.05, 30)},
-                {ResourceType.GoldOre, new ResourceSpawnInfo(0.25, 20)},
-                {ResourceType.IronOre, new ResourceSpawnInfo(1.1, 6)},
+                {ResourceType.CoalOre, new ResourceSpawnInfo(1, 2.5f)},
+                {ResourceType.CopperOre, new ResourceSpawnInfo(0.8, 3.5f)},
+                {ResourceType.DiamondOre, new ResourceSpawnInfo(0.05, 15)},
+                {ResourceType.GoldOre, new ResourceSpawnInfo(0.25, 10)},
+                {ResourceType.IronOre, new ResourceSpawnInfo(1.1, 3)},
                 {ResourceType.PureWater, new ResourceSpawnInfo(0.5,1)},
-                {ResourceType.Stone, new ResourceSpawnInfo(1, 6.5f)},
-                {ResourceType.Tree, new ResourceSpawnInfo(1.25, 3)}
+                {ResourceType.Stone, new ResourceSpawnInfo(1, 3.25f)},
+                {ResourceType.Tree, new ResourceSpawnInfo(1.25, 1.5f)}
             };
 
             SpawnInformation = new ReadOnlyDictionary<ResourceType, ResourceSpawnInfo>(spawnDictionary);

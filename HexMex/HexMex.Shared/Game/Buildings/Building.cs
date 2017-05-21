@@ -2,13 +2,14 @@
 
 namespace HexMex.Game.Buildings
 {
-    public abstract class Building : Structure
+    public abstract class Building : Structure, IHasProgress
     {
         public event Action<Building> ProductionCompleted;
         public event Action<Building> ProductionStarted;
         public float ProductionTime { get; }
         public float CurrentProductionTime { get; private set; }
         public bool IsProducing { get; private set; }
+        public float Progress => IsProducing ? CurrentProductionTime / ProductionTime : 0;
 
         private bool NotifiedAddedToWorld { get; set; }
 
@@ -32,11 +33,10 @@ namespace HexMex.Game.Buildings
             CurrentProductionTime += dt;
             if (CurrentProductionTime >= ProductionTime)
                 CompleteProduction();
+            OnRequiresRedraw();
         }
 
-        protected virtual void OnAddedToWorld()
-        {
-        }
+        protected abstract void OnAddedToWorld();
 
         protected abstract void OnProductionCompleted();
 

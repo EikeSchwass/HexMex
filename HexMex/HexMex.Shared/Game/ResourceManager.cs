@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using CocosSharp;
-using HexMex.Game.Buildings;
 using HexMex.Helper;
 
 namespace HexMex.Game

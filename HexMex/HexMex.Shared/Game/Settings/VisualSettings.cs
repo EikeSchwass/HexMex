@@ -1,4 +1,4 @@
-﻿namespace HexMex.Game
+﻿namespace HexMex.Game.Settings
 {
     public class VisualSettings
     {
@@ -19,5 +19,6 @@
         public int BuildButtonRadius { get; } = 48;
         public float EdgeThickness { get; } = 6;
         public float ResourcePackageRadius { get; } = 24;
+        public float ProgressRadiusFactor { get; } = 0.75f;
     }
 }

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using CocosSharp;
 using HexMex.Controls;
 using HexMex.Game;
+using HexMex.Game.Settings;
 using HexMex.Scenes.Game;
 
 namespace HexMex.Scenes.MainMenu

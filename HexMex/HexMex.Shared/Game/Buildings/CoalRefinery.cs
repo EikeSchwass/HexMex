@@ -1,6 +1,5 @@
-﻿using CocosSharp;
-using HexMex.Helper;
-using static HexMex.Game.Buildings.StructureDescription;
+﻿using HexMex.Controls;
+using static HexMex.Game.StructureDescription;
 using static HexMex.Game.ResourceType;
 
 namespace HexMex.Game.Buildings
@@ -15,11 +14,10 @@ namespace HexMex.Game.Buildings
 
         protected override void OnAddedToWorld()
         {
-            base.OnAddedToWorld();
             ResourceDirector.RequestIngredients(null, new[] { CoalOre });
         }
 
-        public override void Render(CCDrawNode drawNode)
+        public override void Render(ExtendedDrawNode drawNode)
         {
             var position = Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
             drawNode.DrawCircle(position, World.GameSettings.VisualSettings.BuildingRadius, World.GameSettings.VisualSettings.ColorCollection.GrayDark, World.GameSettings.VisualSettings.StructureBorderThickness, World.GameSettings.VisualSettings.ColorCollection.White);

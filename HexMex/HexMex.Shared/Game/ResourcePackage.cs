@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using CocosSharp;
-using HexMex.Game.Buildings;
 using HexMex.Helper;
 
 namespace HexMex.Game

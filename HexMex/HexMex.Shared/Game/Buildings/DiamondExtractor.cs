@@ -1,27 +1,28 @@
-﻿using CocosSharp;
-using HexMex.Helper;
-using static HexMex.Game.Buildings.StructureDescription;
+﻿using HexMex.Controls;
+using static HexMex.Game.StructureDescription;
 using static HexMex.Game.ResourceType;
 
 namespace HexMex.Game.Buildings
 {
     public class DiamondExtractor : Building
     {
-        public static StructureDescription StructureDescription { get; } = new StructureDescription("Diamond Extractor", "Extracts diamonds from adjacent hexagons. Diamonds can be used for everything, except pure water.", new ResourceCollection(Tools, Circuit, Circuit, Gold, Copper, Glas), 20, new ResourceCollection(DiamondOre), new ResourceCollection(Diamond), 2);
+        public static StructureDescription StructureDescription { get; } = new StructureDescription("Diamond Extractor", "Extracts diamonds from adjacent hexagons. Diamonds can be used to trade at a habor.", new ResourceCollection(Tools, Circuit, Circuit, Gold, Copper, Glas), 20, new ResourceCollection(DiamondOre), new ResourceCollection(Diamond), 3);
 
-        public DiamondExtractor(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime)
-        {
-        }
+        public DiamondExtractor(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime) { }
 
-        public override void Render(CCDrawNode drawNode)
+        public override void Render(ExtendedDrawNode drawNode)
         {
             var position = Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
-            drawNode.DrawCircle(position, World.GameSettings.VisualSettings.BuildingRadius, World.GameSettings.VisualSettings.ColorCollection.YellowLight, World.GameSettings.VisualSettings.StructureBorderThickness, World.GameSettings.VisualSettings.ColorCollection.White);
+            var visualSettings = World.GameSettings.VisualSettings;
+            drawNode.DrawCircle(position,
+                                visualSettings.BuildingRadius,
+                                visualSettings.ColorCollection.YellowLight,
+                                visualSettings.StructureBorderThickness,
+                                visualSettings.ColorCollection.White);
         }
 
         protected override void OnAddedToWorld()
         {
-            base.OnAddedToWorld();
             ResourceDirector.RequestIngredients(null, new[] { DiamondOre });
         }
 

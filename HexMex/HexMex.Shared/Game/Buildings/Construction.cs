@@ -1,7 +1,5 @@
 ﻿using System.Linq;
-using CocosSharp;
-using HexMex.Helper;
-using static System.Math;
+using HexMex.Controls;
 
 namespace HexMex.Game.Buildings
 {
@@ -21,12 +19,11 @@ namespace HexMex.Game.Buildings
             ResourceDirector.RequestIngredients(ConstructionFactory.StructureDescription.ConstructionCost.ResourceTypes.ToArray(), null);
         }
 
-        public override void Render(CCDrawNode drawNode)
+        public override void Render(ExtendedDrawNode drawNode)
         {
             var position = Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
             var radius = World.GameSettings.VisualSettings.ConstructionRadius;
             drawNode.DrawCircle(position, radius, World.GameSettings.VisualSettings.ColorCollection.GrayNormal, World.GameSettings.VisualSettings.StructureBorderThickness, World.GameSettings.VisualSettings.ColorCollection.White);
-            drawNode.DrawSolidArc(position, radius * 0.75f, (float)(PI / 2), (float)(-Progress * PI * 2), World.GameSettings.VisualSettings.ColorCollection.GrayVeryLight);
         }
 
         public sealed override void Update(float dt)

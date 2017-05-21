@@ -4,6 +4,7 @@ using System.Linq;
 using CocosSharp;
 using HexMex.Controls;
 using HexMex.Game;
+using HexMex.Game.Settings;
 using HexMex.Helper;
 
 namespace HexMex.Scenes.Game
