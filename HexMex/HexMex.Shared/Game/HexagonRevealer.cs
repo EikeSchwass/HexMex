@@ -20,11 +20,11 @@ namespace HexMex.Game
             Hexagon hexagon = null;
 
             if (hexagonPosition == HexagonPosition.Zero)
-                hexagon = new Hexagon(ResourceType.DiamondOre, GameplaySettings.DieCount, hexagonPosition);
+                hexagon = new Hexagon(ResourceType.DiamondOre, GetPayoutIntervalFor(ResourceType.DiamondOre), hexagonPosition);
             else if (alreadyRevealed == 1)
-                hexagon = new Hexagon(ResourceType.PureWater, 0, hexagonPosition);
+                hexagon = new Hexagon(ResourceType.PureWater, GetPayoutIntervalFor(ResourceType.PureWater), hexagonPosition);
             else if (alreadyRevealed == 2)
-                hexagon = new Hexagon(ResourceType.CoalOre, GetNextDieSumFor(ResourceType.CoalOre), hexagonPosition);
+                hexagon = new Hexagon(ResourceType.CoalOre, GetPayoutIntervalFor(ResourceType.CoalOre), hexagonPosition);
             else
             {
                 var waterProbability = GameplaySettings.WaterSigmoid(hexagonPosition.DistanceToOrigin);
@@ -33,28 +33,17 @@ namespace HexMex.Game
                 else
                 {
                     var resourceType = GetNextResourceType();
-                    var dieSum = GetNextDieSumFor(resourceType);
+                    var dieSum = GetPayoutIntervalFor(resourceType);
                     hexagon = new Hexagon(resourceType, dieSum, hexagonPosition);
                 }
             }
             return hexagon;
         }
 
-        private int GetNextDieSumFor(ResourceType resourceType)
+        private float GetPayoutIntervalFor(ResourceType resourceType)
         {
             var spawnInfo = GameplaySettings.SpawnInformation[resourceType];
-            var dieSumProbabilities = HexMexRandom.CalculateDieProbabilities(GameplaySettings.DieCount, GameplaySettings.DieFaceCount);
-            var nextGaussian = HexMexRandom.GetNextGaussian(spawnInfo.TargetPayoutProbability, spawnInfo.PayoutProbabilityDeviation, 0, dieSumProbabilities.Values.Max());
-
-            var bestMatches = dieSumProbabilities.Keys.OrderBy(key => Math.Abs(dieSumProbabilities[key] - nextGaussian)).ToArray();
-            while (true)
-            {
-                foreach (var match in bestMatches)
-                {
-                    if (HexMexRandom.NextDouble() < 0.5)
-                        return match;
-                }
-            }
+            return spawnInfo.PayoutInterval;
         }
 
         private ResourceType GetNextResourceType()

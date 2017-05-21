@@ -11,9 +11,10 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AppDelegate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BuildButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CircleBorderPosition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ExtendedDrawNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\ResourceDirector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\StructureDescription.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\DiceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\DiceThrowResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Edge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\GameplaySettings.cs" />
@@ -21,13 +22,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourcePackagePriorityQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceSpawnInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\VisualSettings.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\DiceEffectLayer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\DiceLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\BuildMenu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\EdgeLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Button.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Container.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Control.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\Dialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HexButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\IPointInBoundsCheck.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TextButton.cs" />
@@ -77,14 +76,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helper\PathFinder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ICanSuspendApp.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\GameTouchHandler.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\BuildMenuLayer.BuildMenuEntry.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\BuildMenuLayer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\BuildMenuLayer.SelectedEntryArea.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\ButtonLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\Font.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\GameLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\GameScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\HexagonLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\Menu.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\MenuLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\ResourcePackageLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\StructureLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\HexMexCamera.cs" />
@@ -103,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controls\Buildings\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Controls\Dialogs\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)ResourceDiagram.dgml" />

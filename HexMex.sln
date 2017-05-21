@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMex.Droid", "HexMex\HexM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMex.iOS", "HexMex\HexMex.iOS\HexMex.iOS.csproj", "{2B15F318-31DB-4652-ABA4-00455DFBA4AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoSpriteFont", "AutoSpriteFont\AutoSpriteFont.csproj", "{111B8591-C08C-4EEF-A29D-113587D947A4}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		HexMex\HexMex.Shared\EmptyProject.Shared.projitems*{1258bf54-0f7c-40a5-bdd9-fd5be89c92a0}*SharedItemsImports = 4
@@ -86,6 +88,30 @@ Global
 		{2B15F318-31DB-4652-ABA4-00455DFBA4AF}.Release|iPhone.Build.0 = Release|iPhone
 		{2B15F318-31DB-4652-ABA4-00455DFBA4AF}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{2B15F318-31DB-4652-ABA4-00455DFBA4AF}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Ad-Hoc|Any CPU.ActiveCfg = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Ad-Hoc|Any CPU.Build.0 = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Ad-Hoc|iPhone.Build.0 = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Ad-Hoc|iPhoneSimulator.Build.0 = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.AppStore|Any CPU.Build.0 = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.AppStore|iPhone.ActiveCfg = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.AppStore|iPhone.Build.0 = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.AppStore|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.AppStore|iPhoneSimulator.Build.0 = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Release|iPhone.Build.0 = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{111B8591-C08C-4EEF-A29D-113587D947A4}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

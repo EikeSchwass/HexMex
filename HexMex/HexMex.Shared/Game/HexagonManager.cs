@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using CocosSharp;
 using HexMex.Helper;
 
@@ -70,7 +69,7 @@ namespace HexMex.Game
 
         public void Update(float dt)
         {
-            foreach (var hexagon in this.OfType<ICCUpdatable>())
+            foreach (var hexagon in this)
             {
                 hexagon.Update(dt);
             }

@@ -8,10 +8,13 @@ namespace HexMex.Controls
 {
     public class HexButton : Button
     {
-        private CCColor4B backgroundColor;
-        private CCColor4B borderColor;
+        private CCColor4B backgroundColor = new ColorCollection().GrayVeryDark;
+        private CCColor4B borderColor = new ColorCollection().White;
         private float borderThickness = 1;
+        private CCColor3B foregroundColor = new CCColor3B(new ColorCollection().White);
         private float radius;
+        private string text;
+        private float fontSize = 30;
 
         public CCColor4B BackgroundColor
         {
@@ -45,14 +48,22 @@ namespace HexMex.Controls
 
         public float FontSize
         {
-            get => TextLabel.SystemFontSize;
-            set => TextLabel.SystemFontSize = value;
+            get => fontSize;
+            set
+            {
+                fontSize = value;
+                DrawHexagon();
+            }
         }
 
         public CCColor3B ForegroundColor
         {
-            get => TextLabel.Color;
-            set => TextLabel.Color = value;
+            get => foregroundColor;
+            set
+            {
+                foregroundColor = value;
+                DrawHexagon();
+            }
         }
 
         public float Radius
@@ -67,29 +78,27 @@ namespace HexMex.Controls
 
         public string Text
         {
-            get => TextLabel.Text;
-            set => TextLabel.Text = value;
+            get => text;
+            set
+            {
+                text = value;
+                DrawHexagon();
+            }
         }
 
         private CCPoint[] Corners { get; set; }
 
-        private CCDrawNode HexagoneNode { get; }
-        private CCLabel TextLabel { get; }
+        private ExtendedDrawNode DrawNode { get; }
 
-        public HexButton(string text, float radius, Font font)
+        public HexButton(string text, float radius)
         {
-            HexagoneNode = new CCDrawNode();
-            BorderColor = new ColorCollection().White;
-            BackgroundColor = new ColorCollection().GrayVeryDark;
+            DrawNode = new ExtendedDrawNode();
             this.radius = radius;
-            TextLabel = new CCLabel(text, font.FontPath, font.FontSize, font.FontType);
             Text = text;
             DrawHexagon();
+            AddChild(DrawNode);
 
             Schedule();
-
-            AddChild(HexagoneNode);
-            AddChild(TextLabel);
         }
 
         public override bool IsPointInBounds(CCTouch position)
@@ -116,11 +125,12 @@ namespace HexMex.Controls
 
         private void DrawHexagon()
         {
-            HexagoneNode.ZOrder = ZOrder;
-            HexagoneNode.Clear();
-            Corners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, Radius).ToArray();
-            HexagoneNode.DrawPolygon(Corners, 6, BackgroundColor, BorderThickness, BorderColor);
+            DrawNode.ZOrder = ZOrder;
+            DrawNode.Clear();
             ContentSize = new CCSize(Radius * 2, Radius * 2);
+            Corners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, Radius).ToArray();
+            DrawNode.DrawPolygon(Corners, BackgroundColor, BorderThickness, BorderColor);
+            DrawNode.DrawText(CCPoint.Zero, Text, Font.ArialFonts[30], ContentSize, ForegroundColor);
             UpdateTransform();
         }
     }

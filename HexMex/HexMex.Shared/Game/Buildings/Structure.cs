@@ -17,6 +17,12 @@ namespace HexMex.Game.Buildings
             World = world;
             Position = position;
             ResourceDirector = new ResourceDirector(this);
+            var hex1 = World.HexagonManager[position.Position1];
+            var hex2 = World.HexagonManager[position.Position2];
+            var hex3 = World.HexagonManager[position.Position3];
+            hex1.Payout += OnAdjacentHexagonProvidedResource;
+            hex2.Payout += OnAdjacentHexagonProvidedResource;
+            hex3.Payout += OnAdjacentHexagonProvidedResource;
         }
 
         /// <summary>
@@ -28,7 +34,7 @@ namespace HexMex.Game.Buildings
             ResourceDirector.ResourceArrived(resource);
         }
 
-        public void OnAdjacentHexagonProvidedResource(ResourceType resourceType)
+        public void OnAdjacentHexagonProvidedResource(Hexagon hexagon, ResourceType resourceType)
         {
             ResourceDirector.AdjacentHexagonProvidedResource(resourceType);
         }

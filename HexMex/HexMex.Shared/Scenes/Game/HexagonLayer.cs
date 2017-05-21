@@ -1,22 +1,16 @@
-using System.Collections.Generic;
 using System.Linq;
 using CocosSharp;
+using HexMex.Controls;
 using HexMex.Game;
 using HexMex.Helper;
+using static System.Math;
 
 namespace HexMex.Scenes.Game
 {
     public class HexagonLayer : TouchLayer
     {
         private CCPoint[] Corners { get; }
-        private CCDrawNode DynamicDrawNode { get; } = new CCDrawNode();
-        private List<Hexagon> DynamicHexagons { get; } = new List<Hexagon>();
-
-        private bool RedrawRequested { get; set; } = true;
-
-        private CCDrawNode StaticDrawNode { get; } = new CCDrawNode();
-
-        private List<Hexagon> StaticHexagons { get; } = new List<Hexagon>();
+        private ExtendedDrawNode DrawNode { get; } = new ExtendedDrawNode();
 
         private World World { get; }
 
@@ -24,67 +18,49 @@ namespace HexMex.Scenes.Game
         {
             Corners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, 1).ToArray();
             World = world;
-            World.HexagonManager.HexagonRevealed += HexagonRevealed;
-            AddChild(StaticDrawNode);
-            AddChild(DynamicDrawNode);
-            StaticHexagons.AddRange(World.HexagonManager);
-            Schedule(Update, 1);
-            RenderStatic();
+            AddChild(DrawNode);
+            Schedule(Update, 0.05f);
+            Render();
         }
 
         public override void Update(float dt)
         {
             base.Update(dt);
-            if (!RedrawRequested || DynamicHexagons.Count == 0)
-                return;
-            RedrawRequested = false;
-            RenderDynamic();
+            Render();
         }
 
-        private void HexagonRequiresRedraw(Hexagon hexagon)
+        private void Render()
         {
-            if (StaticHexagons.Contains(hexagon))
+            DrawNode.Clear();
+            foreach (var hexagon in World.HexagonManager)
             {
-                StaticHexagons.Remove(hexagon);
-                DynamicHexagons.Add(hexagon);
-            }
-            RedrawRequested = true;
-        }
-
-        private void HexagonRevealed(HexagonManager hexagonManager, Hexagon hexagon)
-        {
-            hexagon.RequiresRedraw += HexagonRequiresRedraw;
-            StaticHexagons.Add(hexagon);
-            RenderStatic();
-        }
-
-        private void RenderDynamic()
-        {
-            DynamicDrawNode.Clear();
-            foreach (var hexagon in DynamicHexagons)
-            {
-                RenderHexagon(DynamicDrawNode, hexagon);
+                RenderHexagon(hexagon);
             }
         }
 
-        private void RenderHexagon(CCDrawNode drawNode, Hexagon hexagon)
+        private void RenderHexagon(Hexagon hexagon)
         {
+            var visualSettings = World.GameSettings.VisualSettings;
+            var colorCollection = visualSettings.ColorCollection;
             var worldPosition = hexagon.Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
             var corners = Corners.Select(c => c * World.GameSettings.LayoutSettings.HexagonRadius + worldPosition).ToArray();
-            drawNode.DrawPolygon(corners, 6, World.GameSettings.VisualSettings.ColorCollection.GrayDark, World.GameSettings.VisualSettings.HexagonOuterBorderThickness, World.GameSettings.VisualSettings.ColorCollection.White);
-
-            drawNode.DrawPolygon(corners, 6, hexagon.ResourceType.GetColor(World.GameSettings.VisualSettings.ColorCollection), World.GameSettings.VisualSettings.HexagonInnerBorderThickness, World.GameSettings.VisualSettings.ColorCollection.White);
-            if (hexagon.PayoutSum > 0)
-                drawNode.DrawNumber(hexagon.PayoutSum, worldPosition, 80, 6, World.GameSettings.VisualSettings.ColorCollection.White.ToColor4F());
+            DrawNode.DrawPolygon(corners, hexagon.ResourceType.GetColor(colorCollection), visualSettings.HexagonOuterBorderThickness, colorCollection.White);
+            DrawNode.DrawSolidArc(worldPosition, World.GameSettings.LayoutSettings.HexagonProgressRadius, (float)(hexagon.TimeSinceLastPayout / hexagon.PayoutInterval * 2 * PI), colorCollection.GrayVeryLight);
         }
 
-        private void RenderStatic()
+        private static double GetEffectWidth(double t)
         {
-            StaticDrawNode.Clear();
-            foreach (var hexagon in StaticHexagons)
-            {
-                RenderHexagon(StaticDrawNode, hexagon);
-            }
+            const double maxAt = 0.1;
+            const double maxHeight = 2;
+
+            const double sinh = 0.8813735870;
+            const double heightFactor = 6 + 4 * 1.4142135623;
+            const double exp = 1 / maxAt * sinh;
+
+            double firstPart = 1 / (1 + Exp(-exp * 2 * t)) - 0.5;
+            double secondPart = Exp(-exp / 8 * t);
+            double result = firstPart * secondPart * heightFactor * maxHeight;
+            return result;
         }
     }
 }

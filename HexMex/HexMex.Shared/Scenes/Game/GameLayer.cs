@@ -24,15 +24,12 @@ namespace HexMex.Scenes.Game
             var hexagonLayer = new HexagonLayer(World, HexMexCamera);
             var resourcePackageLayer = new ResourcePackageLayer(World, HexMexCamera);
             var structureLayer = new StructureLayer(World, HexMexCamera);
-            var buildMenuLayer = new BuildMenuLayer(World, HexMexCamera);
+            var menuLayer = new MenuLayer(World, HexMexCamera);
             var controlLayer = new ButtonLayer(World, HexMexCamera);
             var edgeLayer = new EdgeLayer(World, HexMexCamera);
-            var diceLayer = new DiceLayer(World);
-            var diceEffectLayer = new DiceEffectLayer(World, HexMexCamera);
-            buildMenuLayer.ConstructionRequested += ConstructBuilding;
-            controlLayer.ConstructionRequested += (s, b) => buildMenuLayer.DisplayBuildMenuFor(b);
+            controlLayer.ConstructionRequested += (buttonLayer, buildButton) => ConstructionMenuRequested(buildButton, menuLayer);
 
-            var layers = new CCLayer[] { hexagonLayer, diceEffectLayer, edgeLayer, resourcePackageLayer, structureLayer, controlLayer, diceLayer, buildMenuLayer };
+            var layers = new CCLayer[] { hexagonLayer, edgeLayer, resourcePackageLayer, structureLayer, controlLayer, menuLayer };
 
             foreach (var layer in layers)
             {
@@ -44,13 +41,20 @@ namespace HexMex.Scenes.Game
             Schedule();
         }
 
+        private void ConstructionMenuRequested(BuildButton buildButton, MenuLayer menuLayer)
+        {
+            var buildMenu = new BuildMenu(World.GameSettings.VisualSettings);
+            buildMenu.ConstructionRequested += (sender, selectedFactory) => ConstructBuilding(selectedFactory, buildButton);
+            menuLayer.DisplayMenu(buildMenu);
+        }
+
         public override void Update(float dt)
         {
             base.Update(dt);
             World.Update(dt);
         }
 
-        private void ConstructBuilding(BuildMenuLayer buildMenu, BuildingConstructionFactory selectedFactory, BuildButton buildButton)
+        private void ConstructBuilding(BuildingConstructionFactory selectedFactory, BuildButton buildButton)
         {
             if (World.StructureManager[buildButton.HexagonNode] != null)
                 throw new InvalidOperationException("Spot has to be empty");

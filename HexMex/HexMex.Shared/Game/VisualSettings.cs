@@ -9,5 +9,10 @@
         public float PlusCrossRadius { get; } = 8;
         public float DiceAnimationTime { get; } = 1f;
         public float DiceAnimationSize { get; } = 171;
+        public int BuildMenuButtonsPerRow { get; } = 3;
+        public int BuildMenuButtonFontSize { get; } = 20;
+        public int BuildMenuButtonMargin { get; } = 4;
+        public float BuildMenuButtonBorderThickness { get; } = 1;
+        public float BuildMenuBorderThickness { get; } = 1;
     }
 }

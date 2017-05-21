@@ -22,18 +22,16 @@ namespace HexMex.Game
 
         public GameplaySettings()
         {
-            var probabilities = HexMexRandom.CalculateDieProbabilities(DieCount, DieFaceCount);
-            var maxProbability = probabilities.Values.Max();
             var spawnDictionary = new Dictionary<ResourceType, ResourceSpawnInfo>
             {
-                {ResourceType.CoalOre, new ResourceSpawnInfo(1, 0.8 * maxProbability, maxProbability / 8)},
-                {ResourceType.CopperOre, new ResourceSpawnInfo(0.8, 0.8 * maxProbability, maxProbability / 8)},
-                {ResourceType.DiamondOre, new ResourceSpawnInfo(0.05, 0.05 * maxProbability, maxProbability / 8)},
-                {ResourceType.GoldOre, new ResourceSpawnInfo(0.25, 0.25 * maxProbability, maxProbability / 8)},
-                {ResourceType.IronOre, new ResourceSpawnInfo(1.1, 1.1 * maxProbability, maxProbability / 8)},
-                {ResourceType.PureWater, new ResourceSpawnInfo(0.5, 1, 0)},
-                {ResourceType.Stone, new ResourceSpawnInfo(1, 1 * maxProbability, maxProbability / 8)},
-                {ResourceType.Tree, new ResourceSpawnInfo(1.25, 1.25 * maxProbability, maxProbability / 8)}
+                {ResourceType.CoalOre, new ResourceSpawnInfo(1, 5)},
+                {ResourceType.CopperOre, new ResourceSpawnInfo(0.8, 7)},
+                {ResourceType.DiamondOre, new ResourceSpawnInfo(0.05, 30)},
+                {ResourceType.GoldOre, new ResourceSpawnInfo(0.25, 20)},
+                {ResourceType.IronOre, new ResourceSpawnInfo(1.1, 6)},
+                {ResourceType.PureWater, new ResourceSpawnInfo(0.5,1)},
+                {ResourceType.Stone, new ResourceSpawnInfo(1, 6.5f)},
+                {ResourceType.Tree, new ResourceSpawnInfo(1.25, 3)}
             };
 
             SpawnInformation = new ReadOnlyDictionary<ResourceType, ResourceSpawnInfo>(spawnDictionary);

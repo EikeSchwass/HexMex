@@ -9,9 +9,9 @@ namespace HexMex.Scenes.MainMenu
 {
     public class MainMenuLayer : CCLayer
     {
-        private HexButton HelpButton { get; } = new HexButton("Help", 150, Font.MainMenuButtonFont);
-        private HexButton OptionsButton { get; } = new HexButton("Options", 150, Font.MainMenuButtonFont);
-        private HexButton StartGameButton { get; } = new HexButton("Start", 150, Font.MainMenuButtonFont);
+        private HexButton HelpButton { get; } = new HexButton("Help", 150);
+        private HexButton OptionsButton { get; } = new HexButton("Options", 150);
+        private HexButton StartGameButton { get; } = new HexButton("Start", 150);
 
         public MainMenuLayer()
         {
