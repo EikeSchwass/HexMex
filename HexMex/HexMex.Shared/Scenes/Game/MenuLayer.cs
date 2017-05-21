@@ -82,5 +82,10 @@ namespace HexMex.Scenes.Game
 
             DrawNode.Position = new CCPoint(ClientRectangle.MinX, ClientRectangle.MaxY);
         }
+
+        public void Close()
+        {
+            Visible = false;
+        }
     }
 }

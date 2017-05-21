@@ -3,20 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using CocosSharp;
 using HexMex.Helper;
+using static System.Math;
 
 namespace HexMex.Game
 {
     public class HexagonManager : IEnumerable<Hexagon>, ICCUpdatable
     {
         public event Action<HexagonManager, Hexagon> HexagonRevealed;
+        public GameplaySettings GameplaySettings { get; }
 
         public Hexagon this[HexagonPosition hexagonPosition] => GetHexagonAtPosition(hexagonPosition);
         private HexagonRevealer HexagonRevealer { get; }
 
         private Dictionary<HexagonPosition, Hexagon> Hexagons { get; } = new Dictionary<HexagonPosition, Hexagon>();
 
+        private float PassedTime { get; set; }
+
         public HexagonManager(GameplaySettings gameplaySettings)
         {
+            GameplaySettings = gameplaySettings;
             HexagonRevealer = new HexagonRevealer(this, gameplaySettings);
         }
 
@@ -69,15 +74,31 @@ namespace HexMex.Game
 
         public void Update(float dt)
         {
+#if DEBUG
+            dt *= 2;
+#endif
+            PassedTime += dt;
+            float payoutBoost = InitialDiamondPayoutFactor(PassedTime);
             foreach (var hexagon in this)
             {
-                hexagon.Update(dt);
+                hexagon.Update(dt * payoutBoost);
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        private float InitialDiamondPayoutFactor(float passedTime)
+        {
+            double maxFactor = GameplaySettings.MaxPayoutBoost;
+            double payoutSpan = GameplaySettings.PayoutBoostTime;
+            if (passedTime > payoutSpan)
+                return 1;
+            double t = passedTime;
+            var result = (-1 / (1 + Exp(-10 / payoutSpan * (t - payoutSpan / 2))) + 1) * (maxFactor - 1) + 1;
+            return (float)result;
         }
     }
 }

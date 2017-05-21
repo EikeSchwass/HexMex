@@ -13,8 +13,8 @@ namespace HexMex.Game
         public int DieCount { get; set; } = 2;
         public int DieFaceCount { get; set; } = 6;
         public float DiceThrowInterval { get; set; } = 3;
-        public double DiamondGuaranteeShrinkage { get; set; } = 0.1;
-        public double DiamondGuaranteeBase { get; set; } = 1.5;
+        public float PayoutBoostTime { get; set; } = 300;
+        public float MaxPayoutBoost { get; set; } = 3;
 
         public ReadOnlyDictionary<ResourceType, ResourceSpawnInfo> SpawnInformation { get; }
 

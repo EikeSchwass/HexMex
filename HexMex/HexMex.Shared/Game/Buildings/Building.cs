@@ -44,7 +44,7 @@ namespace HexMex.Game.Buildings
 
         private void CheckAndStartProduction()
         {
-            if (ResourceDirector.ReadyForProduction)
+            if (ResourceDirector.ReadyForProduction && !IsProducing)
             {
                 CurrentProductionTime = 0;
                 IsProducing = true;

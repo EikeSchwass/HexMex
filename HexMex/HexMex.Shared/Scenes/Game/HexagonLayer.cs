@@ -18,8 +18,9 @@ namespace HexMex.Scenes.Game
         {
             Corners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, 1).ToArray();
             World = world;
+            World.HexagonManager.HexagonRevealed += (hm, h) => Render();
             AddChild(DrawNode);
-            Schedule(Update, 0.05f);
+            Schedule(Update, 0.5f);
             Render();
         }
 
@@ -42,10 +43,22 @@ namespace HexMex.Scenes.Game
         {
             var visualSettings = World.GameSettings.VisualSettings;
             var colorCollection = visualSettings.ColorCollection;
-            var worldPosition = hexagon.Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
-            var corners = Corners.Select(c => c * World.GameSettings.LayoutSettings.HexagonRadius + worldPosition).ToArray();
-            DrawNode.DrawPolygon(corners, hexagon.ResourceType.GetColor(colorCollection), visualSettings.HexagonOuterBorderThickness, colorCollection.White);
-            DrawNode.DrawSolidArc(worldPosition, World.GameSettings.LayoutSettings.HexagonProgressRadius, (float)(hexagon.TimeSinceLastPayout / hexagon.PayoutInterval * 2 * PI), colorCollection.GrayVeryLight);
+            var layoutSettings = World.GameSettings.LayoutSettings;
+            var worldPosition = hexagon.Position.GetWorldPosition(layoutSettings.HexagonRadius, layoutSettings.HexagonMargin);
+            var corners = Corners.Select(c => c * layoutSettings.HexagonRadius + worldPosition).ToArray();
+            var innerColor = CCColor4B.Lerp(hexagon.ResourceType.GetColor(colorCollection), colorCollection.Black, 0.05f);
+            var outerColor = CCColor4B.Lerp(hexagon.ResourceType.GetColor(colorCollection), colorCollection.Black, 0.75f);
+            var center = new CCV3F_C4B(worldPosition, innerColor);
+            var adjacentHexagonPositions = hexagon.Position.GetAdjacentHexagonPositions();
+            for (int i = 0; i < corners.Length; i++)
+            {
+                var p1 = new CCV3F_C4B(corners[i], outerColor);
+                var p2 = new CCV3F_C4B(corners[(i + 1) % corners.Length], outerColor);
+                DrawNode.DrawTriangle(p1, center, p2);
+                if (World.HexagonManager[adjacentHexagonPositions[(6 - i + 2) % 6]]?.ResourceType != hexagon.ResourceType)
+                    DrawNode.DrawLine(corners[i], corners[(i + 1) % corners.Length], visualSettings.HexagonOuterBorderThickness, CCColor4B.Lerp(colorCollection.White, CCColor4B.Transparent, 0.5f));
+            }
+            DrawNode.DrawText(worldPosition, hexagon.ResourceType.ToString(), Font.ArialFonts[30], new CCSize(layoutSettings.HexagonRadius * 2, layoutSettings.HexagonRadius * 2));
         }
 
         private static double GetEffectWidth(double t)

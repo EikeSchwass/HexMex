@@ -24,7 +24,7 @@ namespace HexMex.Game.Buildings
         public override void Render(CCDrawNode drawNode)
         {
             var position = Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
-            var radius = World.GameSettings.LayoutSettings.HexagonMargin;
+            var radius = World.GameSettings.VisualSettings.ConstructionRadius;
             drawNode.DrawCircle(position, radius, World.GameSettings.VisualSettings.ColorCollection.GrayNormal, World.GameSettings.VisualSettings.StructureBorderThickness, World.GameSettings.VisualSettings.ColorCollection.White);
             drawNode.DrawSolidArc(position, radius * 0.75f, (float)(PI / 2), (float)(-Progress * PI * 2), World.GameSettings.VisualSettings.ColorCollection.GrayVeryLight);
         }

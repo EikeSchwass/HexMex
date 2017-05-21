@@ -13,6 +13,8 @@ namespace HexMex.Scenes.Game
         private BuildMenuEntry selectedEntry;
         public event Action<BuildMenu, BuildingConstructionFactory> ConstructionRequested;
         private List<BuildMenuEntry> BuildMenuEntries { get; } = new List<BuildMenuEntry>();
+        private CCRect ConstructButtonRect { get; set; }
+        private bool ConstructButtonIsPressed { get; set; }
 
         private BuildMenuEntry SelectedEntry
         {
@@ -28,6 +30,8 @@ namespace HexMex.Scenes.Game
             }
         }
 
+        public HexagonNode TargetNode { get; set; }
+
         public BuildMenu(VisualSettings visualSettings) : base(visualSettings)
         {
         }
@@ -39,6 +43,7 @@ namespace HexMex.Scenes.Game
             {
                 buildMenuEntry.IsPressed = false;
             }
+            ConstructButtonIsPressed = false;
             Render();
         }
 
@@ -49,6 +54,7 @@ namespace HexMex.Scenes.Game
             {
                 buildMenuEntry.IsPressed = buildMenuEntry.Position.ContainsPoint(position);
             }
+            ConstructButtonIsPressed = ConstructButtonRect.ContainsPoint(position);
             Render();
         }
 
@@ -63,12 +69,25 @@ namespace HexMex.Scenes.Game
                 }
                 buildMenuEntry.IsPressed = false;
             }
+            if (ConstructButtonRect.ContainsPoint(position) && ConstructButtonIsPressed)
+            {
+                Construct();
+            }
+            else
+                ConstructButtonIsPressed = false;
             Render();
+        }
+
+        private void Construct()
+        {
+            Host.Close();
+            ConstructionRequested?.Invoke(this, SelectedEntry.Factory);
         }
 
         protected override void OnAddedToScene()
         {
             base.OnAddedToScene();
+            BuildMenuEntries.Clear();
             var factories = BuildingConstructionFactory.Factories.Values.ToArray();
             var buttonsPerRow = VisualSettings.BuildMenuButtonsPerRow;
             var fontSize = VisualSettings.BuildMenuButtonFontSize;
@@ -84,7 +103,7 @@ namespace HexMex.Scenes.Game
                 var rect = new CCRect(centerX - buttonSize.Width / 2, centerY - buttonSize.Height / 2, buttonWidth - margin * 2, buttonHeight - margin * 2);
                 BuildMenuEntries.Add(new BuildMenuEntry(factory, rect, this));
             }
-            SelectedEntry = BuildMenuEntries.FirstOrDefault();
+            SelectedEntry = BuildMenuEntries.FirstOrDefault(bme => bme.Factory == SelectedEntry?.Factory) ?? BuildMenuEntries.FirstOrDefault();
             Render();
         }
 
@@ -126,6 +145,8 @@ namespace HexMex.Scenes.Game
 
             var footerHeight = totalHeight / 4;
             var footerSize = new CCSize(ClientSize.Width, footerHeight);
+
+            ConstructButtonRect = new CCRect(0, -ClientSize.Height, ClientSize.Width, footerHeight);
 
             var contentFont = Font.ArialFonts[16];
             var headerFont = Font.ArialFonts[20];

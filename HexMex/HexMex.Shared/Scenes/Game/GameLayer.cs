@@ -16,6 +16,8 @@ namespace HexMex.Scenes.Game
         public ReadOnlyCollection<TouchLayer> TouchLayers { get; }
         public World World { get; }
 
+        private BuildMenu BuildMenu { get; }
+
         public GameLayer(World world, HexMexCamera camera, CCColor4B color) : base(color)
         {
             HexMexCamera = camera;
@@ -38,14 +40,16 @@ namespace HexMex.Scenes.Game
 
             TouchLayers = new ReadOnlyCollection<TouchLayer>(layers.OfType<TouchLayer>().Reverse().ToList());
 
+            BuildMenu = new BuildMenu(World.GameSettings.VisualSettings);
+            BuildMenu.ConstructionRequested += ConstructBuilding;
+
             Schedule();
         }
 
         private void ConstructionMenuRequested(BuildButton buildButton, MenuLayer menuLayer)
         {
-            var buildMenu = new BuildMenu(World.GameSettings.VisualSettings);
-            buildMenu.ConstructionRequested += (sender, selectedFactory) => ConstructBuilding(selectedFactory, buildButton);
-            menuLayer.DisplayMenu(buildMenu);
+            BuildMenu.TargetNode = buildButton.HexagonNode;
+            menuLayer.DisplayMenu(BuildMenu);
         }
 
         public override void Update(float dt)
@@ -54,13 +58,13 @@ namespace HexMex.Scenes.Game
             World.Update(dt);
         }
 
-        private void ConstructBuilding(BuildingConstructionFactory selectedFactory, BuildButton buildButton)
+        private void ConstructBuilding(BuildMenu buildMenu, BuildingConstructionFactory selectedFactory)
         {
-            if (World.StructureManager[buildButton.HexagonNode] != null)
+            if (World.StructureManager[buildMenu.TargetNode] != null)
                 throw new InvalidOperationException("Spot has to be empty");
-            var construction = new Construction(buildButton.HexagonNode, selectedFactory, World);
+            var construction = new Construction(buildMenu.TargetNode, selectedFactory, World);
             World.StructureManager.CreateStrucuture(construction);
-            World.ButtonManager.RemoveButton(buildButton);
+            World.ButtonManager.RemoveButton(World.ButtonManager[buildMenu.TargetNode]);
         }
     }
 }

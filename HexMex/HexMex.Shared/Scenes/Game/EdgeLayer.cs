@@ -31,7 +31,8 @@ namespace HexMex.Scenes.Game
             {
                 var p1 = edge.From.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
                 var p2 = edge.To.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
-                DrawNode.DrawSegment(p1, p2, World.GameSettings.LayoutSettings.HexagonMargin / 4, World.GameSettings.VisualSettings.ColorCollection.White.ToColor4F());
+                var color = CCColor4B.Lerp(World.GameSettings.VisualSettings.ColorCollection.White, CCColor4B.Transparent, 0.1f).ToColor4F();
+                DrawNode.DrawSegment(p1, p2, World.GameSettings.VisualSettings.EdgeThickness, color);
             }
         }
     }

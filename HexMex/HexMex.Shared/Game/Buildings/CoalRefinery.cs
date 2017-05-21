@@ -22,7 +22,7 @@ namespace HexMex.Game.Buildings
         public override void Render(CCDrawNode drawNode)
         {
             var position = Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
-            drawNode.DrawCircle(position, World.GameSettings.LayoutSettings.HexagonMargin * 2, World.GameSettings.VisualSettings.ColorCollection.GrayDark, World.GameSettings.VisualSettings.StructureBorderThickness, World.GameSettings.VisualSettings.ColorCollection.White);
+            drawNode.DrawCircle(position, World.GameSettings.VisualSettings.BuildingRadius, World.GameSettings.VisualSettings.ColorCollection.GrayDark, World.GameSettings.VisualSettings.StructureBorderThickness, World.GameSettings.VisualSettings.ColorCollection.White);
         }
 
         protected override void OnProductionCompleted()
