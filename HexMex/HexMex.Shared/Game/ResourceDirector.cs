@@ -17,18 +17,31 @@ namespace HexMex.Game
         public Structure Structure { get; }
         public World World { get; }
 
+        public bool ReadyForProduction => ProvidedResourceList.Count == 0 && RequestedNetworkResourceList.Count == 0 && RequestedHexagonResourceList.Count == 0;
+
         private List<ResourceType> ArrivedResourceList { get; } = new List<ResourceType>();
         private List<ResourcePackage> ProvidedResourceList { get; } = new List<ResourcePackage>();
         private List<ResourcePackage> RequestedNetworkResourceList { get; } = new List<ResourcePackage>();
         private List<ResourceType> RequestedHexagonResourceList { get; } = new List<ResourceType>();
-
-        public bool ReadyForProduction => ProvidedResourceList.Count == 0 && RequestedNetworkResourceList.Count == 0 && RequestedHexagonResourceList.Count == 0;
-
+        private bool HasAdjacentWater { get; }
 
         public ResourceDirector(Structure structure)
         {
             Structure = structure;
             World = structure.World;
+            var h1 = World.HexagonManager[Structure.Position.Position1];
+            var h2 = World.HexagonManager[Structure.Position.Position2];
+            var h3 = World.HexagonManager[Structure.Position.Position3];
+            HasAdjacentWater = h1.ResourceType == ResourceType.PureWater || h2.ResourceType == ResourceType.PureWater || h3.ResourceType == ResourceType.PureWater;
+        }
+
+        public void AdjacentHexagonProvidedResource(ResourceType resourceType)
+        {
+            if (RequestedHexagonResourceList.Contains(resourceType))
+            {
+                RequestedHexagonResourceList.Remove(resourceType);
+                NewResourceAvailable();
+            }
         }
 
         public void ProvideResources(params ResourceType[] resourceTypes)
@@ -50,6 +63,15 @@ namespace HexMex.Game
         {
             if (RequestedNetworkResourceList.Any() || RequestedHexagonResourceList.Any())
                 throw new InvalidOperationException("Can't request new Resources until all current requests are completed");
+            if (networkResourceTypes?.Contains(ResourceType.Water) == true)
+            {
+                if (HasAdjacentWater && Structure.CanExtractWaterFromAdjacentHexagons)
+                {
+                    var waterCount = networkResourceTypes.Count(r => r == ResourceType.PureWater || r == ResourceType.Water);
+                    networkResourceTypes = networkResourceTypes.Where(r => r != ResourceType.Water && r != ResourceType.PureWater).ToArray();
+                    extractionResourceTypes = (extractionResourceTypes ?? new ResourceType[0]).Concat(Enumerable.Repeat(ResourceType.PureWater, waterCount)).ToArray();
+                }
+            }
             foreach (var resourceType in networkResourceTypes ?? Enumerable.Empty<ResourceType>())
             {
                 var resourcePackage = World.ResourceManager.RequestResource(Structure, resourceType, Priority);
@@ -65,18 +87,7 @@ namespace HexMex.Game
             NewResourceAvailable();
         }
 
-        private void NewResourceAvailable()
-        {
-            if (RequestedNetworkResourceList.Count == 0 && RequestedHexagonResourceList.Count == 0)
-            {
-                AllIngredientsArrived?.Invoke(this, ArrivedResourceList.ToArray());
-                ArrivedResourceList.Clear();
-            }
-        }
-
-        public void ResourcePassesThrough(ResourcePackage resourcePackage)
-        {
-        }
+        public void ResourcePassesThrough(ResourcePackage resourcePackage) { }
 
         public void SetPriority(RequestPriority newPriority)
         {
@@ -91,21 +102,21 @@ namespace HexMex.Game
             }
         }
 
+        private void NewResourceAvailable()
+        {
+            if (RequestedNetworkResourceList.Count == 0 && RequestedHexagonResourceList.Count == 0)
+            {
+                AllIngredientsArrived?.Invoke(this, ArrivedResourceList.ToArray());
+                ArrivedResourceList.Clear();
+            }
+        }
+
         private void ResourcePackageStartedMoving(ResourcePackage providedResourcePackage)
         {
             ProvidedResourceList.Remove(providedResourcePackage);
             if (ProvidedResourceList.Count == 0)
             {
                 AllProvisionsLeft?.Invoke(this);
-            }
-        }
-
-        public void AdjacentHexagonProvidedResource(ResourceType resourceType)
-        {
-            if (RequestedHexagonResourceList.Contains(resourceType))
-            {
-                RequestedHexagonResourceList.Remove(resourceType);
-                NewResourceAvailable();
             }
         }
     }

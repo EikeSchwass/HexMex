@@ -10,6 +10,7 @@ namespace HexMex.Game
 
         public HexagonNode Position { get; }
         public World World { get; }
+        public bool CanExtractWaterFromAdjacentHexagons { get; protected set; }
 
         protected ResourceDirector ResourceDirector { get; }
 

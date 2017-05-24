@@ -35,12 +35,14 @@ namespace HexMex.Game
         Diamond=1<<22,
 
         // Other
-        Knowledge = 1 << 23,
-        Energy = 1 << 24,
+        Knowledge1 = 1 << 23,
+        Knowledge2 = 1 << 24,
+        Knowledge3 = 1 << 25,
+        Energy = 1 << 26,
 
         // Groups
         Water = PureWater | WaterBarrel,
         Degradeable = CoalOre | Stone | IronOre | CopperOre | GoldOre,
-        Anything = (1 << 25) - 1 - Energy
+        Anything = (1 << 27) - 1 - Energy
     }
 }

@@ -43,7 +43,9 @@ namespace HexMex.Helper
                 case Pottasche: return colorCollection.GrayDark;
                 case Glas: return CCColor4B.Lerp(colorCollection.GrayVeryLight, CCColor4B.Transparent, 0.5f);
                 case WaterBarrel: return colorCollection.BlueDark;
-                case Knowledge: return colorCollection.RedLight;
+                case Knowledge1: return colorCollection.GrayLight;
+                case Knowledge2: return colorCollection.GrayVeryLight;
+                case Knowledge3: return colorCollection.White;
                 case Energy: return colorCollection.YellowLight;
                 case Water: return colorCollection.BlueNormal;
                 case Degradeable: return colorCollection.GrayVeryLight;
