@@ -24,7 +24,12 @@ namespace HexMex.Scenes.Game
 
         public void DisplayMenu(Menu menu)
         {
+            DrawNode.Clear();
             Visible = true;
+            if (Menu != null)
+            {
+                Menu.Host = null;
+            }
             Menu = menu;
             Menu.Host = this;
             Menu.AddedToScene();
@@ -56,7 +61,7 @@ namespace HexMex.Scenes.Game
             e.Handled = true;
             if (!IsPointInBounds(e.Touch))
                 return;
-            Menu.TouchDown(ScreenToWorldspace(e.Touch.LocationOnScreen)-new CCPoint(ClientRectangle.MinX,ClientRectangle.MaxY));
+            Menu.TouchDown(ScreenToWorldspace(e.Touch.LocationOnScreen) - new CCPoint(ClientRectangle.MinX, ClientRectangle.MaxY));
         }
 
         public override void OnTouchUp(TouchEventArgs e)
@@ -77,8 +82,8 @@ namespace HexMex.Scenes.Game
         protected override void AddedToScene()
         {
             base.AddedToScene();
-            float width = VisibleBoundsWorldspace.Size.Width * 0.6f;
-            var height = VisibleBoundsWorldspace.Size.Height * 0.8f;
+            float width = VisibleBoundsWorldspace.Size.Width * 0.7f;
+            var height = VisibleBoundsWorldspace.Size.Height * 0.9f;
             ClientRectangle = new CCRect((VisibleBoundsWorldspace.Size.Width - width) / 2, (VisibleBoundsWorldspace.Size.Height - height) / 2, width, height);
 
             DrawNode.Position = new CCPoint(ClientRectangle.MinX, ClientRectangle.MaxY);
@@ -87,6 +92,9 @@ namespace HexMex.Scenes.Game
         public void Close()
         {
             Visible = false;
+            if (Menu != null)
+                Menu.Host = null;
+            DrawNode.Clear();
         }
     }
 }

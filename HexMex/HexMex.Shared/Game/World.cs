@@ -26,6 +26,7 @@ namespace HexMex.Game
             PathFinder = new PathFinder(HexagonManager, EdgeManager, StructureManager);
             ResourceManager = new ResourceManager(this);
             StructureManager.StructureAdded += StructureAdded;
+            StructureManager.StructureRemoved += StructureRemoved;
         }
 
         public void Initialize()
@@ -57,6 +58,7 @@ namespace HexMex.Game
         {
             if (ButtonManager[structure.Position] != null)
                 ButtonManager.RemoveButton(ButtonManager[structure.Position]);
+            ButtonManager.AddButton(new StructureButton(GameSettings, structure), structure.Position);
             if (!(structure is Construction))
             {
                 foreach (var adjacentHexagonNode in structure.Position.GetAccessibleAdjacentHexagonNodes(HexagonManager))
@@ -80,6 +82,11 @@ namespace HexMex.Game
                         EdgeManager.AddEdge(structure.Position, adjacentHexagonNode);
                 }
             }
+        }
+        private void StructureRemoved(StructureManager structureManager, Structure structure)
+        {
+            if (ButtonManager[structure.Position] != null)
+                ButtonManager.RemoveButton(ButtonManager[structure.Position]);
         }
     }
 }

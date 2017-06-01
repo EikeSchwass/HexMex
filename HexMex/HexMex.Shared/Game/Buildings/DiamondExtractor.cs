@@ -1,4 +1,5 @@
-﻿using HexMex.Controls;
+﻿using CocosSharp;
+using HexMex.Controls;
 using static HexMex.Game.StructureDescription;
 using static HexMex.Game.ResourceType;
 
@@ -8,14 +9,13 @@ namespace HexMex.Game.Buildings
     {
         public static StructureDescription StructureDescription { get; } = new StructureDescription("Diamond Extractor", "Extracts diamonds from adjacent hexagons. Diamonds can be used to trade at a habor.", new ResourceCollection(Tools, Circuit, Circuit, Gold, Copper, Glas), 20, new ResourceCollection(DiamondOre), new ResourceCollection(Diamond), 3);
 
-        public DiamondExtractor(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime) { }
+        public DiamondExtractor(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime, StructureDescription) { }
 
-        public override void Render(ExtendedDrawNode drawNode)
+        public override void Render(ExtendedDrawNode drawNode, CCPoint position, float radius)
         {
-            var position = Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
             var visualSettings = World.GameSettings.VisualSettings;
             drawNode.DrawCircle(position,
-                                visualSettings.BuildingRadius,
+                                radius,
                                 visualSettings.ColorCollection.YellowLight,
                                 visualSettings.StructureBorderThickness,
                                 visualSettings.ColorCollection.White);

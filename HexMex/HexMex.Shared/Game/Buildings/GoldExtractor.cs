@@ -1,18 +1,19 @@
+using CocosSharp;
 using HexMex.Controls;
 
-namespace HexMex.Game.Buildings {
+namespace HexMex.Game.Buildings
+{
     public class GoldExtractor : Building
     {
         public static StructureDescription StructureDescription { get; } = new StructureDescription("Gold Extractor", "Extracts gold from adjacent hexagons.", new StructureDescription.ResourceCollection(ResourceType.Iron, ResourceType.Iron, ResourceType.Stone, ResourceType.Copper, ResourceType.Wood), 7, new StructureDescription.ResourceCollection(ResourceType.GoldOre), new StructureDescription.ResourceCollection(ResourceType.Gold), 3.5f);
 
-        public GoldExtractor(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime) { }
+        public GoldExtractor(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime, StructureDescription) { }
 
-        public override void Render(ExtendedDrawNode drawNode)
+        public override void Render(ExtendedDrawNode drawNode, CCPoint position, float radius)
         {
-            var position = Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
             var visualSettings = World.GameSettings.VisualSettings;
             drawNode.DrawCircle(position,
-                                visualSettings.BuildingRadius,
+                                radius,
                                 visualSettings.ColorCollection.YellowLight,
                                 visualSettings.StructureBorderThickness,
                                 visualSettings.ColorCollection.White);
@@ -20,7 +21,7 @@ namespace HexMex.Game.Buildings {
 
         protected override void OnAddedToWorld()
         {
-            ResourceDirector.RequestIngredients(null, new[] { ResourceType.GoldOre });
+            ResourceDirector.RequestIngredients(null, new[] {ResourceType.GoldOre});
         }
 
         protected override void OnProductionCompleted()
@@ -30,7 +31,7 @@ namespace HexMex.Game.Buildings {
 
         protected override void OnProductionStarted()
         {
-            ResourceDirector.RequestIngredients(null, new[] { ResourceType.GoldOre });
+            ResourceDirector.RequestIngredients(null, new[] {ResourceType.GoldOre});
         }
     }
 }

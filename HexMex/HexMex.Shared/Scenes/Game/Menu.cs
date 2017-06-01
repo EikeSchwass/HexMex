@@ -17,8 +17,8 @@ namespace HexMex.Scenes.Game
             set
             {
                 host = value;
-                ClientSize = host.ClientRectangle.Size;
-                DrawNode = host.DrawNode;
+                ClientSize = host?.ClientRectangle.Size ?? CCSize.Zero;
+                DrawNode = host?.DrawNode;
             }
         }
 
@@ -47,5 +47,6 @@ namespace HexMex.Scenes.Game
         protected virtual void OnAddedToScene()
         {
         }
+
     }
 }

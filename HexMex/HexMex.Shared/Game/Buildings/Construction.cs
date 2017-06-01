@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using CocosSharp;
 using HexMex.Controls;
 
 namespace HexMex.Game.Buildings
@@ -12,17 +13,15 @@ namespace HexMex.Game.Buildings
 
         public float Progress { get; private set; }
 
-        public Construction(HexagonNode position, BuildingConstructionFactory buildingConstructionFactory, World world) : base(position, world)
+        public Construction(HexagonNode position, BuildingConstructionFactory buildingConstructionFactory, World world) : base(position, world, new StructureDescription("Construction", $"Constructs {buildingConstructionFactory.StructureDescription.Name}", buildingConstructionFactory.StructureDescription.ConstructionCost, buildingConstructionFactory.StructureDescription.ConstructionTime))
         {
             ConstructionFactory = buildingConstructionFactory;
             ResourceDirector.AllIngredientsArrived += StartConstructing;
             ResourceDirector.RequestIngredients(ConstructionFactory.StructureDescription.ConstructionCost.ResourceTypes.ToArray(), null);
         }
 
-        public override void Render(ExtendedDrawNode drawNode)
+        public override void Render(ExtendedDrawNode drawNode, CCPoint position, float radius)
         {
-            var position = Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
-            var radius = World.GameSettings.VisualSettings.ConstructionRadius;
             drawNode.DrawCircle(position, radius, World.GameSettings.VisualSettings.ColorCollection.GrayNormal, World.GameSettings.VisualSettings.StructureBorderThickness, World.GameSettings.VisualSettings.ColorCollection.White);
         }
 

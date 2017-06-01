@@ -12,11 +12,14 @@ namespace HexMex.Game
         public World World { get; }
         public bool CanExtractWaterFromAdjacentHexagons { get; protected set; }
 
-        protected ResourceDirector ResourceDirector { get; }
+        public StructureDescription Description { get; }
 
-        protected Structure(HexagonNode position, World world)
+        public ResourceDirector ResourceDirector { get; }
+
+        protected Structure(HexagonNode position, World world, StructureDescription description)
         {
             World = world;
+            Description = description;
             Position = position;
             ResourceDirector = new ResourceDirector(this);
             var hex1 = World.HexagonManager[position.Position1];
@@ -50,7 +53,7 @@ namespace HexMex.Game
             ResourceDirector.ResourcePassesThrough(resource);
         }
 
-        public abstract void Render(ExtendedDrawNode drawNode);
+        public abstract void Render(ExtendedDrawNode drawNode, CCPoint position, float radius);
 
         public virtual void Update(float dt)
         {

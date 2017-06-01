@@ -1,18 +1,19 @@
+using CocosSharp;
 using HexMex.Controls;
 
-namespace HexMex.Game.Buildings {
+namespace HexMex.Game.Buildings
+{
     public class ToolBlacksmith : Building
     {
         public static StructureDescription StructureDescription { get; } = new StructureDescription("Tool Blacksmith", "Needs Iron and produces tools.", new StructureDescription.ResourceCollection(ResourceType.Iron, ResourceType.Iron, ResourceType.Iron), 6, new StructureDescription.ResourceCollection(ResourceType.Iron), new StructureDescription.ResourceCollection(ResourceType.Tools), 3f);
 
-        public ToolBlacksmith(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime) { }
+        public ToolBlacksmith(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime, StructureDescription) { }
 
-        public override void Render(ExtendedDrawNode drawNode)
+        public override void Render(ExtendedDrawNode drawNode, CCPoint position, float radius)
         {
-            var position = Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
             var visualSettings = World.GameSettings.VisualSettings;
             drawNode.DrawCircle(position,
-                                visualSettings.BuildingRadius,
+                                radius,
                                 visualSettings.ColorCollection.GrayVeryLight,
                                 visualSettings.StructureBorderThickness,
                                 visualSettings.ColorCollection.White);
@@ -20,7 +21,7 @@ namespace HexMex.Game.Buildings {
 
         protected override void OnAddedToWorld()
         {
-            ResourceDirector.RequestIngredients(new[] { ResourceType.Iron }, null);
+            ResourceDirector.RequestIngredients(new[] {ResourceType.Iron}, null);
         }
 
         protected override void OnProductionCompleted()
@@ -30,7 +31,7 @@ namespace HexMex.Game.Buildings {
 
         protected override void OnProductionStarted()
         {
-            ResourceDirector.RequestIngredients(new[] { ResourceType.Iron }, null);
+            ResourceDirector.RequestIngredients(new[] {ResourceType.Iron}, null);
         }
     }
 }

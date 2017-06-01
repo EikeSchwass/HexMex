@@ -1,3 +1,4 @@
+using CocosSharp;
 using HexMex.Controls;
 
 namespace HexMex.Game.Buildings {
@@ -5,14 +6,13 @@ namespace HexMex.Game.Buildings {
     {
         public static StructureDescription StructureDescription { get; } = new StructureDescription("Iron Extractor", "Extracts iron from adjacent hexagons.", new StructureDescription.ResourceCollection(ResourceType.Iron, ResourceType.Iron, ResourceType.Wood), 8, new StructureDescription.ResourceCollection(ResourceType.IronOre), new StructureDescription.ResourceCollection(ResourceType.Iron), 2);
 
-        public IronExtractor(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime) { }
+        public IronExtractor(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime, StructureDescription) { }
 
-        public override void Render(ExtendedDrawNode drawNode)
+        public override void Render(ExtendedDrawNode drawNode, CCPoint position, float radius)
         {
-            var position = Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
             var visualSettings = World.GameSettings.VisualSettings;
             drawNode.DrawCircle(position,
-                                visualSettings.BuildingRadius,
+                                radius,
                                 visualSettings.ColorCollection.GrayLight,
                                 visualSettings.StructureBorderThickness,
                                 visualSettings.ColorCollection.White);

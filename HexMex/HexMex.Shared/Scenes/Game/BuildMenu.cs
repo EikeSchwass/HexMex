@@ -86,19 +86,21 @@ namespace HexMex.Scenes.Game
 
         protected override void OnAddedToScene()
         {
+            DrawNode.Clear();
             base.OnAddedToScene();
             BuildMenuEntries.Clear();
-            var factories = BuildingConstructionFactory.Factories.Values.ToArray();
+            var factories = BuildingConstructionFactory.Factories.Values.OrderBy(k => k.StructureDescription.Name).ToArray();
             var buttonsPerRow = VisualSettings.BuildMenuButtonsPerRow;
             var fontSize = VisualSettings.BuildMenuButtonFontSize;
             var margin = VisualSettings.BuildMenuButtonMargin;
             var buttonWidth = ClientSize.Width / buttonsPerRow;
-            var buttonHeight = fontSize * 4;
+            var buttonHeight = fontSize * 2.5f;
             var buttonSize = new CCSize(buttonWidth - margin * 2, buttonHeight - margin * 2);
             for (int i = 0; i < factories.Length; i++)
             {
                 var factory = factories[i];
                 float centerX = i % buttonsPerRow * buttonWidth + buttonWidth / 2;
+                // ReSharper disable once PossibleLossOfFraction
                 float centerY = -i / buttonsPerRow * buttonHeight - buttonHeight / 2;
                 var rect = new CCRect(centerX - buttonSize.Width / 2, centerY - buttonSize.Height / 2, buttonWidth - margin * 2, buttonHeight - margin * 2);
                 BuildMenuEntries.Add(new BuildMenuEntry(factory, rect, this));
@@ -109,6 +111,8 @@ namespace HexMex.Scenes.Game
 
         private void Render()
         {
+            if (Host == null)
+                return;
             var colorCollection = VisualSettings.ColorCollection;
             DrawNode.Clear();
             DrawNode.DrawRect(ClientSize.Center.InvertY, ClientSize, CCColor4B.Lerp(colorCollection.GrayVeryDark, colorCollection.Transparent, 0.5f), VisualSettings.BuildMenuBorderThickness, colorCollection.White);
@@ -196,8 +200,8 @@ namespace HexMex.Scenes.Game
                 var backColor = IsPressed ? colorCollection.GrayVeryDark : colorCollection.GrayDark;
                 var borderColor = IsSelected ? colorCollection.YellowNormal : colorCollection.White;
                 var borderThickness = BuildMenu.VisualSettings.BuildMenuButtonBorderThickness;
-                BuildMenu.DrawNode.DrawRect(Position, backColor, borderThickness, borderColor);
-                BuildMenu.DrawNode.DrawText(Position.Center, Factory.StructureDescription.Name, Font.ArialFonts[16], Position.Size);
+                BuildMenu.DrawNode?.DrawRect(Position, backColor, borderThickness, borderColor);
+                BuildMenu.DrawNode?.DrawText(Position.Center, Factory.StructureDescription.Name, Font.ArialFonts[16], Position.Size);
             }
         }
     }

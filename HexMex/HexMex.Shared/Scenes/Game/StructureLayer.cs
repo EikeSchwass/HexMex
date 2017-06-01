@@ -1,9 +1,6 @@
 using System.Collections.Generic;
-using CocosSharp;
 using HexMex.Controls;
 using HexMex.Game;
-using HexMex.Game.Buildings;
-using static System.Math;
 
 namespace HexMex.Scenes.Game
 {
@@ -38,15 +35,9 @@ namespace HexMex.Scenes.Game
         {
             DrawNode.Clear();
             var settings = World.GameSettings;
-            var arcColor = CCColor4B.Lerp(settings.VisualSettings.ColorCollection.GrayNormal, settings.VisualSettings.ColorCollection.Transparent, 0.333f);
             foreach (var structure in Structures)
             {
-                structure.Render(DrawNode);
-                if (structure is IHasProgress progress)
-                {
-                    var position = structure.Position.GetWorldPosition(settings.LayoutSettings.HexagonRadius, settings.LayoutSettings.HexagonMargin);
-                    DrawNode.DrawSolidArc(position, settings.VisualSettings.BuildingRadius * settings.VisualSettings.ProgressRadiusFactor, (float)(progress.Progress * PI * 2), arcColor);
-                }
+                structure.Render(DrawNode, structure.Position.GetWorldPosition(settings.LayoutSettings.HexagonRadius, settings.LayoutSettings.HexagonMargin), settings.VisualSettings.BuildingRadius);
             }
         }
 

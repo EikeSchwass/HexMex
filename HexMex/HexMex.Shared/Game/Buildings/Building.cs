@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace HexMex.Game.Buildings
 {
@@ -13,7 +14,7 @@ namespace HexMex.Game.Buildings
 
         private bool NotifiedAddedToWorld { get; set; }
 
-        protected Building(HexagonNode position, World world, float productionTime) : base(position, world)
+        protected Building(HexagonNode position, World world, float productionTime, StructureDescription description) : base(position, world, description)
         {
             ProductionTime = productionTime;
             ResourceDirector.AllIngredientsArrived += ResourceDirector_AllIngredientsArrived;
@@ -31,9 +32,8 @@ namespace HexMex.Game.Buildings
             if (!IsProducing)
                 return;
             CurrentProductionTime += dt;
-            if (CurrentProductionTime >= ProductionTime)
+            if (CurrentProductionTime >= ProductionTime && !ResourceDirector.PendingProvisions.Any())
                 CompleteProduction();
-            OnRequiresRedraw();
         }
 
         protected abstract void OnAddedToWorld();

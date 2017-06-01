@@ -1,3 +1,4 @@
+using CocosSharp;
 using HexMex.Controls;
 
 namespace HexMex.Game.Buildings {
@@ -5,14 +6,13 @@ namespace HexMex.Game.Buildings {
     {
         public static StructureDescription StructureDescription { get; } = new StructureDescription("Paper Factory", "Produces paper from wood.", new StructureDescription.ResourceCollection(ResourceType.Copper, ResourceType.Iron, ResourceType.Tools), 3, new StructureDescription.ResourceCollection(ResourceType.Wood, ResourceType.Wood, ResourceType.Water), new StructureDescription.ResourceCollection(ResourceType.Paper), 3f);
 
-        public PaperFactory(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime) { }
+        public PaperFactory(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime, StructureDescription) { }
 
-        public override void Render(ExtendedDrawNode drawNode)
+        public override void Render(ExtendedDrawNode drawNode, CCPoint position, float radius)
         {
-            var position = Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
             var visualSettings = World.GameSettings.VisualSettings;
             drawNode.DrawCircle(position,
-                                visualSettings.BuildingRadius,
+                                radius,
                                 visualSettings.ColorCollection.GrayVeryLight,
                                 visualSettings.StructureBorderThickness,
                                 visualSettings.ColorCollection.White);

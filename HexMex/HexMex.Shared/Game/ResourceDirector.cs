@@ -12,12 +12,12 @@ namespace HexMex.Game
 
         public ReadOnlyCollection<ResourceType> ArrivedResources => ArrivedResourceList.AsReadOnly();
         public ReadOnlyCollection<ResourceType> PendingProvisions => ProvidedResourceList.Select(r => r.ResourceType).ToList().AsReadOnly();
-        public ReadOnlyCollection<ResourceType> PendingRequests => RequestedNetworkResourceList.Select(r => r.ResourceType).ToList().AsReadOnly();
+        public ReadOnlyCollection<ResourceType> PendingRequests => RequestedNetworkResourceList.Select(r => r.ResourceType).Concat(RequestedHexagonResourceList).ToList().AsReadOnly();
         public RequestPriority Priority { get; private set; } = RequestPriority.Normal;
         public Structure Structure { get; }
         public World World { get; }
 
-        public bool ReadyForProduction => ProvidedResourceList.Count == 0 && RequestedNetworkResourceList.Count == 0 && RequestedHexagonResourceList.Count == 0;
+        public bool ReadyForProduction => !ProvidedResourceList.Any() && !RequestedNetworkResourceList.Any() && !RequestedHexagonResourceList.Any();
 
         private List<ResourceType> ArrivedResourceList { get; } = new List<ResourceType>();
         private List<ResourcePackage> ProvidedResourceList { get; } = new List<ResourcePackage>();

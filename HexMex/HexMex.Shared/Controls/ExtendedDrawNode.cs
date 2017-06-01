@@ -9,7 +9,7 @@ namespace HexMex.Controls
     public class ExtendedDrawNode : CCNode
     {
         private CCDrawNode DrawNode { get; }
-        private List<CCLabel> Labels { get; } = new List<CCLabel>();
+        private Dictionary<CCLabel, int> Labels { get; } = new Dictionary<CCLabel, int>();
         private int UsageIndex { get; set; }
 
         public ExtendedDrawNode()
@@ -20,7 +20,7 @@ namespace HexMex.Controls
         public void Clear()
         {
             DrawNode.Clear();
-            foreach (var label in Labels)
+            foreach (var label in Labels.Keys)
             {
                 label.Visible = false;
             }
@@ -78,20 +78,22 @@ namespace HexMex.Controls
         public void DrawText(CCPoint position, string text, Font font, CCSize targetSize, CCColor3B color)
         {
             CCLabel label;
-            if (UsageIndex >= Labels.Count)
+            if (UsageIndex >= Labels.Count || Labels.ElementAt(UsageIndex).Value != font.FontSize)
             {
+                if (UsageIndex < Labels.Count && Labels.ElementAt(UsageIndex).Value != font.FontSize)
+                    Labels.Remove(Labels.ElementAt(UsageIndex).Key);
                 label = new CCLabel(text, font.FontPath, font.FontSize, targetSize, font.FontType)
                 {
                     HorizontalAlignment = CCTextAlignment.Left,
                     VerticalAlignment = CCVerticalTextAlignment.Center,
                     LineBreak = CCLabelLineBreak.Word
                 };
-                Labels.Add(label);
+                Labels.Add(label, font.FontSize);
                 AddChild(label);
             }
             else
             {
-                label = Labels[UsageIndex];
+                label = Labels.ElementAt(UsageIndex).Key;
             }
             if (label.Text != text)
                 label.Text = text;

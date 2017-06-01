@@ -17,6 +17,7 @@ namespace HexMex.Scenes.Game
         public World World { get; }
 
         private BuildMenu BuildMenu { get; }
+        public StructureMenu StructureMenu { get; }
 
         public GameLayer(World world, HexMexCamera camera, CCColor4B color) : base(color)
         {
@@ -30,6 +31,7 @@ namespace HexMex.Scenes.Game
             var controlLayer = new ButtonLayer(World, HexMexCamera);
             var edgeLayer = new EdgeLayer(World, HexMexCamera);
             controlLayer.ConstructionRequested += (buttonLayer, buildButton) => ConstructionMenuRequested(buildButton, menuLayer);
+            controlLayer.DisplayStructureRequested += (buttonLayer, structureButton) => DisplayStructureMenu(structureButton, menuLayer);
 
             var layers = new CCLayer[] { hexagonLayer, edgeLayer, resourcePackageLayer, structureLayer, controlLayer, menuLayer };
 
@@ -42,8 +44,15 @@ namespace HexMex.Scenes.Game
 
             BuildMenu = new BuildMenu(World.GameSettings.VisualSettings);
             BuildMenu.ConstructionRequested += ConstructBuilding;
+            StructureMenu = new StructureMenu(World.GameSettings.VisualSettings, World);
 
             Schedule();
+        }
+        private void DisplayStructureMenu(StructureButton structureButton, MenuLayer menuLayer)
+        {
+            BuildMenu.TargetNode = structureButton.Structure.Position;
+            StructureMenu.Structure = structureButton.Structure;
+            menuLayer.DisplayMenu(StructureMenu);
         }
 
         private void ConstructionMenuRequested(BuildButton buildButton, MenuLayer menuLayer)
@@ -64,7 +73,6 @@ namespace HexMex.Scenes.Game
                 throw new InvalidOperationException("Spot has to be empty");
             var construction = new Construction(buildMenu.TargetNode, selectedFactory, World);
             World.StructureManager.CreateStrucuture(construction);
-            World.ButtonManager.RemoveButton(World.ButtonManager[buildMenu.TargetNode]);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace HexMex.Scenes.Game
     public class ButtonLayer : TouchLayer
     {
         public event Action<ButtonLayer, BuildButton> ConstructionRequested;
+        public event Action<ButtonLayer, StructureButton> DisplayStructureRequested;
 
         public ButtonManager ButtonManager { get; }
         private List<Button> Buttons { get; } = new List<Button>();
@@ -87,6 +88,11 @@ namespace HexMex.Scenes.Game
             ConstructionRequested?.Invoke(this, (BuildButton)button);
         }
 
+        private void StructureButtonTouched(Button button)
+        {
+            DisplayStructureRequested?.Invoke(this, (StructureButton)button);
+        }
+
         private void ButtonAdded(ButtonManager buttonManager, Button button)
         {
             Buttons.Add(button);
@@ -95,6 +101,10 @@ namespace HexMex.Scenes.Game
             if (button is BuildButton buildButton)
             {
                 buildButton.Touched += BuildButtonTouched;
+            }
+            else if (button is StructureButton structureButton)
+            {
+                structureButton.Touched += StructureButtonTouched;
             }
             else
             {
@@ -109,6 +119,10 @@ namespace HexMex.Scenes.Game
             if (button is BuildButton buildButton)
             {
                 buildButton.Touched -= BuildButtonTouched;
+            }
+            else if (button is StructureButton structureButton)
+            {
+                structureButton.Touched -= StructureButtonTouched;
             }
             else
             {

@@ -50,6 +50,7 @@ namespace HexMex.Helper
                 case Water: return colorCollection.BlueNormal;
                 case Degradeable: return colorCollection.GrayVeryLight;
                 case Diamond: return colorCollection.YellowVeryLight;
+                case Anything: return colorCollection.White;
                 default: throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }

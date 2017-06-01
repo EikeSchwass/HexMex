@@ -13,10 +13,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BuildButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CircleBorderPosition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ExtendedDrawNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\StructureButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\BarrelBlacksmith.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\BrickFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\CircuitFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\CoalPowerplant.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\CopperExtractor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Forestry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\GlasFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\GoldExtractor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Habor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\IronExtractor.cs" />
@@ -24,7 +28,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Laboratory2.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Laboratory3.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\PaperFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\PotaschFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\SandFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\ToolBlacksmith.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\WaterPowerplant.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\WaterPump.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceDirector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\StructureDescription.cs" />
@@ -35,6 +42,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourcePackagePriorityQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceSpawnInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Settings\VisualSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\StructureMenu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\BuildMenu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\EdgeLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Button.cs" />

@@ -1,4 +1,5 @@
-﻿using HexMex.Controls;
+﻿using CocosSharp;
+using HexMex.Controls;
 using static HexMex.Game.StructureDescription;
 using static HexMex.Game.ResourceType;
 
@@ -8,19 +9,20 @@ namespace HexMex.Game.Buildings
     {
         public static StructureDescription StructureDescription { get; } = new StructureDescription("Coal Refinery", "Converts coal ore to coal", new ResourceCollection(Coal, Coal, Iron), 15, new ResourceCollection(CoalOre), new ResourceCollection(Coal), 5);
 
-        public CoalRefinery(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime)
+        public CoalRefinery(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime, StructureDescription) { }
+
+        public override void Render(ExtendedDrawNode drawNode, CCPoint position, float radius)
         {
+            drawNode.DrawCircle(position,
+                                radius,
+                                World.GameSettings.VisualSettings.ColorCollection.GrayDark,
+                                World.GameSettings.VisualSettings.StructureBorderThickness,
+                                World.GameSettings.VisualSettings.ColorCollection.White);
         }
 
         protected override void OnAddedToWorld()
         {
-            ResourceDirector.RequestIngredients(null, new[] { CoalOre });
-        }
-
-        public override void Render(ExtendedDrawNode drawNode)
-        {
-            var position = Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
-            drawNode.DrawCircle(position, World.GameSettings.VisualSettings.BuildingRadius, World.GameSettings.VisualSettings.ColorCollection.GrayDark, World.GameSettings.VisualSettings.StructureBorderThickness, World.GameSettings.VisualSettings.ColorCollection.White);
+            ResourceDirector.RequestIngredients(null, new[] {CoalOre});
         }
 
         protected override void OnProductionCompleted()
@@ -30,7 +32,7 @@ namespace HexMex.Game.Buildings
 
         protected override void OnProductionStarted()
         {
-            ResourceDirector.RequestIngredients(null, new[] { CoalOre });
+            ResourceDirector.RequestIngredients(null, new[] {CoalOre});
         }
     }
 }
