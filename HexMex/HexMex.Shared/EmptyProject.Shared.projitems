@@ -33,6 +33,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\ToolBlacksmith.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\WaterPowerplant.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\WaterPump.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\KnowledgeManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceDirector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\StructureDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\DiceThrowResult.cs" />

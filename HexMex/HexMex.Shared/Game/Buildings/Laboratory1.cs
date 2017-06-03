@@ -1,7 +1,8 @@
 using CocosSharp;
 using HexMex.Controls;
 
-namespace HexMex.Game.Buildings {
+namespace HexMex.Game.Buildings
+{
     public class Laboratory1 : Building
     {
         public static StructureDescription StructureDescription { get; } = new StructureDescription("Laboratory 1", "Generates simple knowledge", new StructureDescription.ResourceCollection(ResourceType.Brick, ResourceType.Iron, ResourceType.Copper, ResourceType.Wood), 7, new StructureDescription.ResourceCollection(ResourceType.Water, ResourceType.Coal, ResourceType.Wood), new StructureDescription.ResourceCollection(ResourceType.Knowledge1), 5f);
@@ -25,7 +26,7 @@ namespace HexMex.Game.Buildings {
 
         protected override void OnProductionCompleted()
         {
-            ResourceDirector.ProvideResources(ResourceType.Knowledge1);
+            World.KnowledgeManager.Knowledge1++;
         }
 
         protected override void OnProductionStarted()

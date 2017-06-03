@@ -61,7 +61,7 @@ namespace HexMex.Game
         public IEnumerable<HexagonNode> GetAccessibleAdjacentHexagonNodes(HexagonManager hexagonManager)
         {
             var hexPos = new[] {Position1, Position2, Position3};
-            var adjacent = GetAdjacentHexagonNodes().ToArray();
+            var adjacent = GetAdjacentHexagonNodes();
             foreach (var hexagonNode in adjacent)
             {
                 var otherPos = new[] {hexagonNode.Position1, hexagonNode.Position2, hexagonNode.Position3};

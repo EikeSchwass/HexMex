@@ -32,7 +32,7 @@ namespace HexMex.Game
         Pottasche = 1 << 19,
         Glas = 1 << 20,
         WaterBarrel = 1 << 21,
-        Diamond=1<<22,
+        Diamond = 1 << 22,
 
         // Other
         Knowledge1 = 1 << 23,
@@ -43,6 +43,6 @@ namespace HexMex.Game
         // Groups
         Water = PureWater | WaterBarrel,
         Degradeable = CoalOre | Stone | IronOre | CopperOre | GoldOre,
-        Anything = (1 << 27) - 1 - Energy
+        Anything = (1 << 27) - 1 - Energy - Knowledge1 - Knowledge2 - Knowledge3
     }
 }

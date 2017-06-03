@@ -1,4 +1,5 @@
-﻿using CocosSharp;
+﻿using System.Linq;
+using CocosSharp;
 using HexMex.Controls;
 using HexMex.Game.Buildings;
 using HexMex.Game.Settings;
@@ -15,10 +16,12 @@ namespace HexMex.Game
         public ResourceManager ResourceManager { get; }
         public StructureManager StructureManager { get; }
         public GameSettings GameSettings { get; }
+        public KnowledgeManager KnowledgeManager { get; }
 
         public World(GameSettings gameSettings)
         {
             GameSettings = gameSettings;
+            KnowledgeManager = new KnowledgeManager();
             StructureManager = new StructureManager();
             EdgeManager = new EdgeManager(GameSettings.GameplaySettings);
             HexagonManager = new HexagonManager(GameSettings.GameplaySettings);
@@ -83,10 +86,15 @@ namespace HexMex.Game
                 }
             }
         }
+
+        // TODO Implement
         private void StructureRemoved(StructureManager structureManager, Structure structure)
         {
             if (ButtonManager[structure.Position] != null)
                 ButtonManager.RemoveButton(ButtonManager[structure.Position]);
+            var hexagonNodes = structure.Position.GetAccessibleAdjacentHexagonNodes(HexagonManager).Where(s => StructureManager[s] is Building).ToArray();
+            if (hexagonNodes.Any())
+                ButtonManager.AddButton(new BuildButton(GameSettings, structure.Position), structure.Position);
         }
     }
 }

@@ -20,7 +20,6 @@ namespace HexMex.Scenes.Game
             World = world;
             World.HexagonManager.HexagonRevealed += (hm, h) => Render();
             AddChild(DrawNode);
-            Schedule(Update, 0.5f);
             Render();
         }
 

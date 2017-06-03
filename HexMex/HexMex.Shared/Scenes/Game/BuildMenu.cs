@@ -93,7 +93,7 @@ namespace HexMex.Scenes.Game
             var buttonsPerRow = VisualSettings.BuildMenuButtonsPerRow;
             var fontSize = VisualSettings.BuildMenuButtonFontSize;
             var margin = VisualSettings.BuildMenuButtonMargin;
-            var buttonWidth = ClientSize.Width / buttonsPerRow;
+            var buttonWidth = ClientArea.Size.Width / buttonsPerRow;
             var buttonHeight = fontSize * 2.5f;
             var buttonSize = new CCSize(buttonWidth - margin * 2, buttonHeight - margin * 2);
             for (int i = 0; i < factories.Length; i++)
@@ -115,7 +115,7 @@ namespace HexMex.Scenes.Game
                 return;
             var colorCollection = VisualSettings.ColorCollection;
             DrawNode.Clear();
-            DrawNode.DrawRect(ClientSize.Center.InvertY, ClientSize, CCColor4B.Lerp(colorCollection.GrayVeryDark, colorCollection.Transparent, 0.5f), VisualSettings.BuildMenuBorderThickness, colorCollection.White);
+            DrawNode.DrawRect(ClientArea.Size.Center.InvertY, ClientArea.Size, CCColor4B.Lerp(colorCollection.GrayVeryDark, colorCollection.Transparent, 0.5f), VisualSettings.BuildMenuBorderThickness, colorCollection.White);
             RenderMenuEntries();
             if (SelectedEntry != null)
                 RenderSelectedEntryArea();
@@ -132,14 +132,14 @@ namespace HexMex.Scenes.Game
         private void RenderSelectedEntryArea()
         {
             var colorCollection = VisualSettings.ColorCollection;
-            DrawNode.DrawRect(new CCPoint(ClientSize.Width / 2, -ClientSize.Height + ClientSize.Height / 4), new CCSize(ClientSize.Width, ClientSize.Height / 2), colorCollection.GrayVeryDark, 1, colorCollection.White);
+            DrawNode.DrawRect(new CCPoint(ClientArea.Size.Width / 2, -ClientArea.Size.Height + ClientArea.Size.Height / 4), new CCSize(ClientArea.Size.Width, ClientArea.Size.Height / 2), colorCollection.GrayVeryDark, 1, colorCollection.White);
 
-            var y = -ClientSize.Height / 2;
+            var y = -ClientArea.Size.Height / 2;
             var structureDescription = SelectedEntry.Factory.StructureDescription;
             var newLine = Environment.NewLine;
 
-            float totalHeight = ClientSize.Height / 2;
-            float columnWidth = ClientSize.Width / (structureDescription.IsProducer ? 3 : 2);
+            float totalHeight = ClientArea.Size.Height / 2;
+            float columnWidth = ClientArea.Size.Width / (structureDescription.IsProducer ? 3 : 2);
 
             var headerHeight = totalHeight / 8;
             var headerSize = new CCSize(columnWidth, headerHeight);
@@ -148,9 +148,9 @@ namespace HexMex.Scenes.Game
             var contentSize = new CCSize(columnWidth, contentHeight);
 
             var footerHeight = totalHeight / 4;
-            var footerSize = new CCSize(ClientSize.Width, footerHeight);
+            var footerSize = new CCSize(ClientArea.Size.Width, footerHeight);
 
-            ConstructButtonRect = new CCRect(0, -ClientSize.Height, ClientSize.Width, footerHeight);
+            ConstructButtonRect = new CCRect(0, -ClientArea.Size.Height, ClientArea.Size.Width, footerHeight);
 
             var contentFont = Font.ArialFonts[16];
             var headerFont = Font.ArialFonts[20];
@@ -169,9 +169,9 @@ namespace HexMex.Scenes.Game
                 DrawNode.DrawText(columnWidth * 2.5f, y - headerHeight - contentHeight / 2, $"- Ingredients -{newLine}{structureDescription.ProductionInformation.Ingredients.GetText()}{newLine}- Products -{newLine}{structureDescription.ProductionInformation.Products.GetText()}{newLine}- Duration -{newLine}{structureDescription.ProductionInformation.ProductionTime} s", contentFont, contentSize);
             }
 
-            DrawNode.DrawText(ClientSize.Width / 2, y - headerHeight - contentHeight - footerHeight / 2, "Construct", Font.ArialFonts[30], footerSize, new CCColor3B(colorCollection.GreenLight));
+            DrawNode.DrawText(ClientArea.Size.Width / 2, y - headerHeight - contentHeight - footerHeight / 2, "Construct", Font.ArialFonts[30], footerSize, new CCColor3B(colorCollection.GreenLight));
 
-            DrawNode.DrawRect(new CCPoint(0, y) + new CCSize(ClientSize.Width, -headerHeight).Center, new CCSize(ClientSize.Width, headerHeight), colorCollection.GrayDark, 1, colorCollection.White);
+            DrawNode.DrawRect(new CCPoint(0, y) + new CCSize(ClientArea.Size.Width, -headerHeight).Center, new CCSize(ClientArea.Size.Width, headerHeight), colorCollection.GrayDark, 1, colorCollection.White);
             DrawNode.DrawRect(new CCPoint(0, y) + new CCSize(columnWidth, -headerHeight - contentHeight).Center + new CCPoint(columnWidth, 0) * 0, new CCSize(columnWidth, headerHeight + contentHeight), colorCollection.Transparent, 1, colorCollection.White);
             DrawNode.DrawRect(new CCPoint(0, y) + new CCSize(columnWidth, -headerHeight - contentHeight).Center + new CCPoint(columnWidth, 0) * 1, new CCSize(columnWidth, headerHeight + contentHeight), colorCollection.Transparent, 1, colorCollection.White);
             DrawNode.DrawRect(new CCPoint(0, y) + new CCSize(columnWidth, -headerHeight - contentHeight).Center + new CCPoint(columnWidth, 0) * 2, new CCSize(columnWidth, headerHeight + contentHeight), colorCollection.Transparent, 1, colorCollection.White);

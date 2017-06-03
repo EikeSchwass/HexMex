@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using CocosSharp;
 using HexMex.Controls;
 
@@ -10,6 +11,8 @@ namespace HexMex.Game.Buildings
 
         public bool IsConstructing { get; private set; }
         public float PassedConstructionTime { get; private set; }
+
+        public event Action<Construction> ConstructionCompleted;
 
         public float Progress { get; private set; }
 
@@ -39,6 +42,7 @@ namespace HexMex.Game.Buildings
                 var structure = ConstructionFactory.CreateFunction(Position, World);
                 World.StructureManager.RemoveStructure(this);
                 World.StructureManager.CreateStrucuture(structure);
+                ConstructionCompleted?.Invoke(this);
             }
             OnRequiresRedraw();
         }

@@ -9,7 +9,7 @@ namespace HexMex.Scenes.Game
         protected VisualSettings VisualSettings { get; }
         private MenuLayer host;
         protected ExtendedDrawNode DrawNode { get; private set; }
-        protected CCSize ClientSize { get; private set; }
+        protected CCRect ClientArea { get; private set; }
 
         public MenuLayer Host
         {
@@ -17,7 +17,7 @@ namespace HexMex.Scenes.Game
             set
             {
                 host = value;
-                ClientSize = host?.ClientRectangle.Size ?? CCSize.Zero;
+                ClientArea = host?.ClientRectangle ?? CCRect.Zero;
                 DrawNode = host?.DrawNode;
             }
         }

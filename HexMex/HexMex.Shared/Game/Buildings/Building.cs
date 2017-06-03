@@ -12,6 +12,8 @@ namespace HexMex.Game.Buildings
         public bool IsProducing { get; private set; }
         public float Progress => IsProducing ? CurrentProductionTime / ProductionTime : 0;
 
+        public bool IsSuspended { get; private set; }
+
         private bool NotifiedAddedToWorld { get; set; }
 
         protected Building(HexagonNode position, World world, float productionTime, StructureDescription description) : base(position, world, description)
@@ -19,6 +21,16 @@ namespace HexMex.Game.Buildings
             ProductionTime = productionTime;
             ResourceDirector.AllIngredientsArrived += ResourceDirector_AllIngredientsArrived;
             ResourceDirector.AllProvisionsLeft += ResourceDirector_AllProvisionsLeft;
+        }
+
+        public void Suspend()
+        {
+            IsSuspended = true;
+        }
+
+        public void Resume()
+        {
+            IsSuspended = false;
         }
 
         public override void Update(float dt)
@@ -29,7 +41,7 @@ namespace HexMex.Game.Buildings
                 OnAddedToWorld();
                 NotifiedAddedToWorld = true;
             }
-            if (!IsProducing)
+            if (!IsProducing || IsSuspended)
                 return;
             CurrentProductionTime += dt;
             if (CurrentProductionTime >= ProductionTime && !ResourceDirector.PendingProvisions.Any())
