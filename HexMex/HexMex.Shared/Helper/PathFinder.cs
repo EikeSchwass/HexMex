@@ -12,7 +12,7 @@ namespace HexMex.Helper
 
     public delegate TCost HeuristikDelegate<in TNode, out TCost>(TNode node, TNode destination);
 
-    public class PathFinding<TNode,TCost> where TCost : IComparable<TCost>
+    public class PathFinding<TNode, TCost> where TCost : IComparable<TCost>
     {
         public CostAdditionDelegate<TCost> CostAddition { get; }
         public AdjacentNodesDelegate<TNode> AdjacentNodes { get; }
@@ -45,6 +45,9 @@ namespace HexMex.Helper
         /// <returns>A path of nodes from the start node to the destination node. The start node as well as the destination node are included and the start node is the first element (A* usually returns the path in inverted order).</returns>
         public List<TNode> AStar(TNode start, TNode destination)
         {
+            if (Equals(start, destination))
+                return new List<TNode> { start };
+
             Dictionary<TNode, TCost> g = new Dictionary<TNode, TCost>();
             Dictionary<TNode, TNode> predecessor = new Dictionary<TNode, TNode>();
 
@@ -110,6 +113,6 @@ namespace HexMex.Helper
             else
                 dictionary.Add(key, value);
         }
-        
+
     }
 }

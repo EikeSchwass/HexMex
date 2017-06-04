@@ -1,5 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
 using CocosSharp;
 using HexMex.Game;
+using HexMex.Game.Buildings;
 using HexMex.Helper;
 
 namespace HexMex.Scenes.Game
@@ -14,7 +17,8 @@ namespace HexMex.Scenes.Game
         public EdgeLayer(World world, HexMexCamera camera) : base(camera)
         {
             World = world;
-            World.EdgeManager.EdgeAdded += (s, e) => RedrawRequested = true;
+            World.StructureManager.StructureAdded += (sm, s) => RedrawRequested = true;
+            World.StructureManager.StructureRemoved += (sm, s) => RedrawRequested = true;
             AddChild(DrawNode);
             Schedule();
         }
@@ -27,12 +31,19 @@ namespace HexMex.Scenes.Game
             RedrawRequested = false;
 
             DrawNode.Clear();
-            foreach (var edge in World.EdgeManager)
+            List<HexagonNode> handledPositions = new List<HexagonNode>();
+            foreach (var structure in World.StructureManager)
             {
-                var p1 = edge.From.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
-                var p2 = edge.To.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
-                var color = CCColor4B.Lerp(World.GameSettings.VisualSettings.ColorCollection.White, CCColor4B.Transparent, 0.1f).ToColor4F();
-                DrawNode.DrawSegment(p1, p2, World.GameSettings.VisualSettings.EdgeThickness, color);
+                if (structure is Construction)
+                    continue;
+                handledPositions.Add(structure.Position);
+                foreach (var accessibleNode in structure.Position.GetAccessibleAdjacentHexagonNodes(World.HexagonManager).Where(h => !handledPositions.Contains(h)))
+                {
+                    var p1 = structure.Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
+                    var p2 = accessibleNode.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
+                    var color = CCColor4B.Lerp(World.GameSettings.VisualSettings.ColorCollection.White, CCColor4B.Transparent, 0.1f).ToColor4F();
+                    DrawNode.DrawSegment(p1, p2, World.GameSettings.VisualSettings.EdgeThickness, color);
+                }
             }
         }
     }

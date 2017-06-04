@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Linq;
 using CocosSharp;
-using HexMex.Helper;
+using HexMex.Game.Settings;
 
 namespace HexMex.Game
 {
@@ -13,22 +12,21 @@ namespace HexMex.Game
 
         public HexagonNode CurrentNode { get; private set; }
         public Structure DestinationStructure { get; set; }
-        public EdgeManager EdgeManager { get; }
         public HexagonNode NextNode { get; private set; }
-        public HexagonNode[] Path { get; private set; }
-        public PathFinder PathFinder { get; }
+        public Path Path { get; private set; }
+        public CachedPathFinder PathFinder { get; }
+        public GameplaySettings GameplaySettings { get; }
         public ResourceRequestState ResourceRequestState { get; private set; } = ResourceRequestState.Pending;
         public ResourceType ResourceType { get; private set; }
         public Structure StartStructure { get; set; }
 
         private float Progress { get; set; }
 
-        public ResourcePackage(ResourceType resourceType, PathFinder pathFinder, EdgeManager edgeManager)
+        public ResourcePackage(ResourceType resourceType, CachedPathFinder pathFinder, GameplaySettings gameplaySettings)
         {
             ResourceType = resourceType;
             PathFinder = pathFinder;
-            EdgeManager = edgeManager;
-            PathFinder.NodeRemoved += PathsChanged;
+            GameplaySettings = gameplaySettings;
         }
 
         public CCPoint GetWorldPosition(float hexRadius, float hexMargin)
@@ -46,9 +44,10 @@ namespace HexMex.Game
                 throw new InvalidOperationException("The start and destination structures have to be set before the package can start moving");
             if (ResourceRequestState != ResourceRequestState.Pending)
                 throw new InvalidOperationException($"{nameof(Move)} can only be called, if the the {nameof(Game.ResourceRequestState)} is still {nameof(ResourceRequestState.Pending)}");
-            Path = PathFinder.FindPath(StartStructure.Position, DestinationStructure.Position);
-            CurrentNode = Path[0];
-            NextNode = Path.Length > 1 ? Path[1] : Path[0];
+            Path = PathFinder.GetPath(StartStructure.Position, DestinationStructure.Position);
+            Path.Invalidated += PathsChanged;
+            CurrentNode = Path.Start;
+            NextNode = Path.AllHops.Count > 1 ? Path.AllHops[1] : Path.AllHops[0];
             ResourceRequestState = ResourceRequestState.OnItsWay;
             StartedMoving?.Invoke(this);
         }
@@ -66,14 +65,16 @@ namespace HexMex.Game
             if (CurrentNode == NextNode)
                 Progress = 1;
             else
-                Progress += dt / EdgeManager.GetTimeForEdge(CurrentNode, NextNode);
+                Progress += dt / GameplaySettings.DefaultResourceTimeBetweenNodes;
             while (Progress >= 1)
             {
                 CurrentNode = NextNode;
-                if (NextNode == Path.Last())
+                if (NextNode == Path.Destination)
                 {
                     DestinationStructure.OnResourceArrived(this);
                     ArrivedAtDestination?.Invoke(this);
+                    if (Path != null)
+                        Path.Invalidated -= PathsChanged;
                 }
                 else
                 {
@@ -84,10 +85,10 @@ namespace HexMex.Game
             RequiresRedraw?.Invoke(this);
         }
 
-        private void PathsChanged(HexagonNode removedNode)
+        private void PathsChanged(Path path, Path newPath)
         {
             if (DestinationStructure != null)
-                Path = PathFinder.FindPath(StartStructure.Position, DestinationStructure.Position);
+                Path = newPath;
         }
     }
 }

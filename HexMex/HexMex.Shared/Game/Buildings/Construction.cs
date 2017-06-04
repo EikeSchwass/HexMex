@@ -12,6 +12,8 @@ namespace HexMex.Game.Buildings
         public bool IsConstructing { get; private set; }
         public float PassedConstructionTime { get; private set; }
 
+        private bool ResourcesRequested { get; set; }
+
         public event Action<Construction> ConstructionCompleted;
 
         public float Progress { get; private set; }
@@ -20,7 +22,6 @@ namespace HexMex.Game.Buildings
         {
             ConstructionFactory = buildingConstructionFactory;
             ResourceDirector.AllIngredientsArrived += StartConstructing;
-            ResourceDirector.RequestIngredients(ConstructionFactory.StructureDescription.ConstructionCost.ResourceTypes.ToArray(), null);
         }
 
         public override void Render(ExtendedDrawNode drawNode, CCPoint position, float radius)
@@ -31,6 +32,11 @@ namespace HexMex.Game.Buildings
         public sealed override void Update(float dt)
         {
             base.Update(dt);
+            if (!ResourcesRequested)
+            {
+                ResourcesRequested = true;
+                ResourceDirector.RequestIngredients(ConstructionFactory.StructureDescription.ConstructionCost.ResourceTypes.ToArray(), null);
+            }
             if (!IsConstructing)
                 return;
             PassedConstructionTime += dt;

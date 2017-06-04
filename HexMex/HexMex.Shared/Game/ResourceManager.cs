@@ -35,7 +35,7 @@ namespace HexMex.Game
                 requestPackage.Move();
                 return requestPackage;
             }
-            var resourcePackage = new ResourcePackage(resourceType, World.PathFinder, World.EdgeManager) { StartStructure = providingStructure };
+            var resourcePackage = new ResourcePackage(resourceType, World.PathFinder,World.GameSettings.GameplaySettings) { StartStructure = providingStructure };
             AddPackage(resourcePackage);
             Provisions.Enqueue(resourcePackage, priority);
             return resourcePackage;
@@ -51,7 +51,7 @@ namespace HexMex.Game
                 providedPackage.Move();
                 return providedPackage;
             }
-            var resourcePackage = new ResourcePackage(resourceType, World.PathFinder, World.EdgeManager) { DestinationStructure = requestingStructure };
+            var resourcePackage = new ResourcePackage(resourceType, World.PathFinder,World.GameSettings.GameplaySettings) { DestinationStructure = requestingStructure };
             AddPackage(resourcePackage);
             Requests.Enqueue(resourcePackage, priority);
             return resourcePackage;

@@ -9,10 +9,10 @@ namespace HexMex.Game
     public class World : ICCUpdatable
     {
         public ButtonManager ButtonManager { get; }
-        public EdgeManager EdgeManager { get; }
+        //public EdgeManager EdgeManager { get; }
         public HexagonManager HexagonManager { get; }
         public bool IsInitialized { get; private set; }
-        public PathFinder PathFinder { get; }
+        public CachedPathFinder PathFinder { get; }
         public ResourceManager ResourceManager { get; }
         public StructureManager StructureManager { get; }
         public GameSettings GameSettings { get; }
@@ -23,10 +23,10 @@ namespace HexMex.Game
             GameSettings = gameSettings;
             KnowledgeManager = new KnowledgeManager();
             StructureManager = new StructureManager();
-            EdgeManager = new EdgeManager(GameSettings.GameplaySettings);
+            //EdgeManager = new EdgeManager(GameSettings.GameplaySettings);
             HexagonManager = new HexagonManager(GameSettings.GameplaySettings);
             ButtonManager = new ButtonManager(GameSettings.LayoutSettings);
-            PathFinder = new PathFinder(HexagonManager, EdgeManager, StructureManager);
+            PathFinder = new CachedPathFinder(HexagonManager, StructureManager, GameSettings.GameplaySettings);
             ResourceManager = new ResourceManager(this);
             StructureManager.StructureAdded += StructureAdded;
             StructureManager.StructureRemoved += StructureRemoved;
@@ -81,8 +81,8 @@ namespace HexMex.Game
                         var button = new BuildButton(GameSettings, adjacentHexagonNode);
                         ButtonManager.AddButton(button, adjacentHexagonNode);
                     }
-                    if (!EdgeManager.ContainsEdge(structure.Position, adjacentHexagonNode))
-                        EdgeManager.AddEdge(structure.Position, adjacentHexagonNode);
+                    /*if (!EdgeManager.ContainsEdge(structure.Position, adjacentHexagonNode))
+                        EdgeManager.AddEdge(structure.Position, adjacentHexagonNode);*/
                 }
             }
         }
