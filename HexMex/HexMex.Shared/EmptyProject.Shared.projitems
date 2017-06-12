@@ -33,7 +33,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\ToolBlacksmith.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\WaterPowerplant.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\WaterPump.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\KnowledgeManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\EnvironmentResource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\GlobalResourceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceDirector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\StructureDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\DiceThrowResult.cs" />
@@ -43,6 +44,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourcePackagePriorityQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceSpawnInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Settings\VisualSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\StructureDescriptionDatabase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\StructureMenu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\BuildMenu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\EdgeLayer.cs" />

@@ -5,9 +5,9 @@ namespace HexMex.Game.Buildings
 {
     public class ToolBlacksmith : Building
     {
-        public static StructureDescription StructureDescription { get; } = new StructureDescription("Tool Blacksmith", "Needs Iron and produces tools.", new StructureDescription.ResourceCollection(ResourceType.Iron, ResourceType.Iron, ResourceType.Iron), 6, new StructureDescription.ResourceCollection(ResourceType.Iron), new StructureDescription.ResourceCollection(ResourceType.Tools), 3f);
+        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<ToolBlacksmith>();
 
-        public ToolBlacksmith(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime, StructureDescription) { }
+        public ToolBlacksmith(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 
         public override void Render(ExtendedDrawNode drawNode, CCPoint position, float radius)
         {
@@ -18,20 +18,7 @@ namespace HexMex.Game.Buildings
                                 visualSettings.StructureBorderThickness,
                                 visualSettings.ColorCollection.White);
         }
-
-        protected override void OnAddedToWorld()
-        {
-            ResourceDirector.RequestIngredients(new[] {ResourceType.Iron}, null);
-        }
-
-        protected override void OnProductionCompleted()
-        {
-            ResourceDirector.ProvideResources(ResourceType.Tools);
-        }
-
-        protected override void OnProductionStarted()
-        {
-            ResourceDirector.RequestIngredients(new[] {ResourceType.Iron}, null);
-        }
+        
+        
     }
 }

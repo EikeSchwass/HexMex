@@ -1,12 +1,14 @@
+using System.Linq;
 using CocosSharp;
 using HexMex.Controls;
 
-namespace HexMex.Game.Buildings {
+namespace HexMex.Game.Buildings
+{
     public class WaterPowerplant : Building
     {
-        public static StructureDescription StructureDescription { get; } = new StructureDescription("Water Powerplant", "Needs adjacent water to produce power", new StructureDescription.ResourceCollection(ResourceType.Brick, ResourceType.Brick, ResourceType.Iron, ResourceType.Wood), 12, new StructureDescription.ResourceCollection(ResourceType.PureWater, ResourceType.PureWater, ResourceType.PureWater, ResourceType.PureWater, ResourceType.PureWater, ResourceType.PureWater), new StructureDescription.ResourceCollection(ResourceType.Energy, ResourceType.Energy), 1f);
+        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<WaterPowerplant>();
 
-        public WaterPowerplant(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime, StructureDescription) { }
+        public WaterPowerplant(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 
         public override void Render(ExtendedDrawNode drawNode, CCPoint position, float radius)
         {
@@ -18,19 +20,14 @@ namespace HexMex.Game.Buildings {
                                 visualSettings.ColorCollection.White);
         }
 
-        protected override void OnAddedToWorld()
+        protected override void RequestIngredients()
         {
-            ResourceDirector.RequestIngredients(null, new[] { ResourceType.PureWater, ResourceType.PureWater, ResourceType.PureWater, ResourceType.PureWater, ResourceType.PureWater, ResourceType.PureWater });
+            ResourceDirector.RequestIngredients(null, StructureDescription.ProductionInformation.Ingredients.ResourceTypes.ToArray());
         }
 
         protected override void OnProductionCompleted()
         {
             ResourceDirector.ProvideResources(ResourceType.Energy, ResourceType.Energy);
-        }
-
-        protected override void OnProductionStarted()
-        {
-            ResourceDirector.RequestIngredients(null, new[] { ResourceType.PureWater, ResourceType.PureWater, ResourceType.PureWater, ResourceType.PureWater, ResourceType.PureWater, ResourceType.PureWater });
         }
     }
 }

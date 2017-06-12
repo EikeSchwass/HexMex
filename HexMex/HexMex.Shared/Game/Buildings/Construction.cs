@@ -45,6 +45,7 @@ namespace HexMex.Game.Buildings
             {
                 PassedConstructionTime = 0;
                 IsConstructing = false;
+
                 var structure = ConstructionFactory.CreateFunction(Position, World);
                 World.StructureManager.RemoveStructure(this);
                 World.StructureManager.CreateStrucuture(structure);
@@ -55,7 +56,7 @@ namespace HexMex.Game.Buildings
 
         private void StartConstructing(ResourceDirector arg1, ResourceType[] arg2)
         {
-            IsConstructing = true;
+            World.GlobalResourceManager.Enqueue(new EnergyPackage(ConstructionFactory.StructureDescription.ConstructionCost.EnvironmentResource.Energy, e => IsConstructing = true));
         }
     }
 }

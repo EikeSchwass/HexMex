@@ -6,9 +6,9 @@ namespace HexMex.Game.Buildings
 {
     public class WaterPump : Building
     {
-        public static StructureDescription StructureDescription { get; } = new StructureDescription("Water Pump", "Pumps water from an adjacent hexagon and fills it into barrels for transportation.", new StructureDescription.ResourceCollection(Brick, Copper, Tools, Circuit), 7, new StructureDescription.ResourceCollection(Barrel, PureWater, PureWater), new StructureDescription.ResourceCollection(WaterBarrel), 4f);
+        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<WaterPump>();
 
-        public WaterPump(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime, StructureDescription) { }
+        public WaterPump(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 
         public override void Render(ExtendedDrawNode drawNode, CCPoint position, float radius)
         {
@@ -20,17 +20,7 @@ namespace HexMex.Game.Buildings
                                 visualSettings.ColorCollection.White);
         }
 
-        protected override void OnAddedToWorld()
-        {
-            ResourceDirector.RequestIngredients(new[] { Barrel }, new[] { PureWater, PureWater });
-        }
-
-        protected override void OnProductionCompleted()
-        {
-            ResourceDirector.ProvideResources(WaterBarrel);
-        }
-
-        protected override void OnProductionStarted()
+        protected override void RequestIngredients()
         {
             ResourceDirector.RequestIngredients(new[] { Barrel }, new[] { PureWater, PureWater });
         }

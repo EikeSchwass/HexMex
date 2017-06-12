@@ -11,6 +11,9 @@ namespace HexMex.Game.Settings
         public float MapSizeStrictness { get; set; } = 1;
         public float PayoutBoostTime { get; set; } = 300;
         public float MaxPayoutBoost { get; set; } = 3;
+        public int StartCO2 { get; set; } = 0;
+        public int StartO2 { get; set; } = 1000;
+        public int StartEnergy { get; set; } = 0;
 
         public ReadOnlyDictionary<ResourceType, ResourceSpawnInfo> SpawnInformation { get; }
 

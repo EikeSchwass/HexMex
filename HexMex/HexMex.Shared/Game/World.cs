@@ -9,21 +9,19 @@ namespace HexMex.Game
     public class World : ICCUpdatable
     {
         public ButtonManager ButtonManager { get; }
-        //public EdgeManager EdgeManager { get; }
         public HexagonManager HexagonManager { get; }
         public bool IsInitialized { get; private set; }
         public CachedPathFinder PathFinder { get; }
         public ResourceManager ResourceManager { get; }
         public StructureManager StructureManager { get; }
         public GameSettings GameSettings { get; }
-        public KnowledgeManager KnowledgeManager { get; }
+        public GlobalResourceManager GlobalResourceManager { get; }
 
         public World(GameSettings gameSettings)
         {
             GameSettings = gameSettings;
-            KnowledgeManager = new KnowledgeManager();
             StructureManager = new StructureManager();
-            //EdgeManager = new EdgeManager(GameSettings.GameplaySettings);
+            GlobalResourceManager = new GlobalResourceManager(GameSettings.GameplaySettings);
             HexagonManager = new HexagonManager(GameSettings.GameplaySettings);
             ButtonManager = new ButtonManager(GameSettings.LayoutSettings);
             PathFinder = new CachedPathFinder(HexagonManager, StructureManager, GameSettings.GameplaySettings);

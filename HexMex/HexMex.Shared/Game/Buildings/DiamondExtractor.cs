@@ -1,15 +1,14 @@
-﻿using CocosSharp;
+﻿using System.Linq;
+using CocosSharp;
 using HexMex.Controls;
-using static HexMex.Game.StructureDescription;
-using static HexMex.Game.ResourceType;
 
 namespace HexMex.Game.Buildings
 {
     public class DiamondExtractor : Building
     {
-        public static StructureDescription StructureDescription { get; } = new StructureDescription("Diamond Extractor", "Extracts diamonds from adjacent hexagons. Diamonds can be used to trade at a habor.", new ResourceCollection(Tools, Circuit, Circuit, Gold, Copper, Glas), 20, new ResourceCollection(DiamondOre), new ResourceCollection(Diamond), 3);
+        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<DiamondExtractor>();
 
-        public DiamondExtractor(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime, StructureDescription) { }
+        public DiamondExtractor(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 
         public override void Render(ExtendedDrawNode drawNode, CCPoint position, float radius)
         {
@@ -21,19 +20,10 @@ namespace HexMex.Game.Buildings
                                 visualSettings.ColorCollection.White);
         }
 
-        protected override void OnAddedToWorld()
+        protected override void RequestIngredients()
         {
-            ResourceDirector.RequestIngredients(null, new[] { DiamondOre });
+            ResourceDirector.RequestIngredients(null,StructureDescription.ProductionInformation.Ingredients.ResourceTypes.ToArray());
         }
-
-        protected override void OnProductionCompleted()
-        {
-            ResourceDirector.ProvideResources(Diamond);
-        }
-
-        protected override void OnProductionStarted()
-        {
-            ResourceDirector.RequestIngredients(null, new[] { DiamondOre });
-        }
+        
     }
 }

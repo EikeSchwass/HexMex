@@ -1,12 +1,13 @@
 using CocosSharp;
 using HexMex.Controls;
 
-namespace HexMex.Game.Buildings {
+namespace HexMex.Game.Buildings
+{
     public class CoalPowerplant : Building
     {
-        public static StructureDescription StructureDescription { get; } = new StructureDescription("Coal Powerplant", "Burns Coal to produce power", new StructureDescription.ResourceCollection(ResourceType.Brick, ResourceType.Brick, ResourceType.Wood), 7, new StructureDescription.ResourceCollection(ResourceType.Coal, ResourceType.Coal), new StructureDescription.ResourceCollection(ResourceType.Energy, ResourceType.Energy, ResourceType.Energy, ResourceType.Energy), 1f);
+        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<CoalPowerplant>();
 
-        public CoalPowerplant(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime, StructureDescription) { }
+        public CoalPowerplant(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 
         public override void Render(ExtendedDrawNode drawNode, CCPoint position, float radius)
         {
@@ -16,21 +17,6 @@ namespace HexMex.Game.Buildings {
                                 visualSettings.ColorCollection.GrayVeryDark,
                                 visualSettings.StructureBorderThickness,
                                 visualSettings.ColorCollection.White);
-        }
-
-        protected override void OnAddedToWorld()
-        {
-            ResourceDirector.RequestIngredients(new[] { ResourceType.Coal, ResourceType.Coal }, null);
-        }
-
-        protected override void OnProductionCompleted()
-        {
-            ResourceDirector.ProvideResources(ResourceType.Energy, ResourceType.Energy, ResourceType.Energy, ResourceType.Energy);
-        }
-
-        protected override void OnProductionStarted()
-        {
-            ResourceDirector.RequestIngredients(new[] { ResourceType.Coal, ResourceType.Coal }, null);
         }
     }
 }

@@ -1,12 +1,14 @@
+using System.Linq;
 using CocosSharp;
 using HexMex.Controls;
 
-namespace HexMex.Game.Buildings {
+namespace HexMex.Game.Buildings
+{
     public class SandFactory : Building
     {
-        public static StructureDescription StructureDescription { get; } = new StructureDescription("Sand Factory", "Produces sand from stone. Needs to be adjacent to stone", new StructureDescription.ResourceCollection(ResourceType.Iron, ResourceType.Tools, ResourceType.Copper, ResourceType.Wood), 10, new StructureDescription.ResourceCollection(ResourceType.Stone, ResourceType.Stone), new StructureDescription.ResourceCollection(ResourceType.Sand, ResourceType.Sand, ResourceType.Sand), 7f);
+        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<SandFactory>();
 
-        public SandFactory(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime, StructureDescription) { }
+        public SandFactory(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 
         public override void Render(ExtendedDrawNode drawNode, CCPoint position, float radius)
         {
@@ -18,19 +20,10 @@ namespace HexMex.Game.Buildings {
                                 visualSettings.ColorCollection.White);
         }
 
-        protected override void OnAddedToWorld()
+        protected override void RequestIngredients()
         {
-            ResourceDirector.RequestIngredients(null, new[] { ResourceType.Stone, ResourceType.Stone });
+            ResourceDirector.RequestIngredients(null, StructureDescription.ProductionInformation.Ingredients.ResourceTypes.ToArray());
         }
-
-        protected override void OnProductionCompleted()
-        {
-            ResourceDirector.ProvideResources(ResourceType.Sand, ResourceType.Sand, ResourceType.Sand);
-        }
-
-        protected override void OnProductionStarted()
-        {
-            ResourceDirector.RequestIngredients(null, new[] { ResourceType.Stone, ResourceType.Stone });
-        }
+        
     }
 }

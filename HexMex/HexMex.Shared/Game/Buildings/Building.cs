@@ -16,21 +16,21 @@ namespace HexMex.Game.Buildings
 
         private bool NotifiedAddedToWorld { get; set; }
 
-        protected Building(HexagonNode position, World world, float productionTime, StructureDescription description) : base(position, world, description)
+        protected Building(HexagonNode position, World world, StructureDescription structureDescription) : base(position, world, structureDescription)
         {
-            ProductionTime = productionTime;
+            ProductionTime = structureDescription.ProductionInformation.ProductionTime;
             ResourceDirector.AllIngredientsArrived += ResourceDirector_AllIngredientsArrived;
             ResourceDirector.AllProvisionsLeft += ResourceDirector_AllProvisionsLeft;
-        }
-
-        public void Suspend()
-        {
-            IsSuspended = true;
         }
 
         public void Resume()
         {
             IsSuspended = false;
+        }
+
+        public void Suspend()
+        {
+            IsSuspended = true;
         }
 
         public override void Update(float dt)
@@ -48,20 +48,39 @@ namespace HexMex.Game.Buildings
                 CompleteProduction();
         }
 
-        protected abstract void OnAddedToWorld();
+        protected virtual void OnAddedToWorld()
+        {
+            RequestIngredients();
+        }
 
-        protected abstract void OnProductionCompleted();
+        protected virtual void OnProductionCompleted()
+        {
+            ResourceDirector.ProvideResources(Description.ProductionInformation.Products.ResourceTypes.ToArray());
+            World.GlobalResourceManager.EnvironmentResource += Description.ProductionInformation.Products.EnvironmentResource;
+        }
 
-        protected abstract void OnProductionStarted();
+        protected virtual void OnProductionStarted()
+        {
+            RequestIngredients();
+        }
+
+        protected virtual void RequestIngredients()
+        {
+            ResourceDirector.RequestIngredients(Description.ProductionInformation.Ingredients.ResourceTypes.ToArray(), null);
+        }
 
         private void CheckAndStartProduction()
         {
             if (ResourceDirector.ReadyForProduction && !IsProducing)
             {
-                CurrentProductionTime = 0;
-                IsProducing = true;
-                OnProductionStarted();
-                ProductionStarted?.Invoke(this);
+                World.GlobalResourceManager.Enqueue(new EnergyPackage(Description.ProductionInformation.Ingredients.EnvironmentResource.Energy,
+                                                                      e =>
+                                                                      {
+                                                                          CurrentProductionTime = 0;
+                                                                          IsProducing = true;
+                                                                          OnProductionStarted();
+                                                                          ProductionStarted?.Invoke(this);
+                                                                      }));
             }
         }
 

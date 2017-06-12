@@ -1,12 +1,14 @@
+using System.Linq;
 using CocosSharp;
 using HexMex.Controls;
 
-namespace HexMex.Game.Buildings {
+namespace HexMex.Game.Buildings
+{
     public class IronExtractor : Building
     {
-        public static StructureDescription StructureDescription { get; } = new StructureDescription("Iron Extractor", "Extracts iron from adjacent hexagons.", new StructureDescription.ResourceCollection(ResourceType.Iron, ResourceType.Iron, ResourceType.Wood), 8, new StructureDescription.ResourceCollection(ResourceType.IronOre), new StructureDescription.ResourceCollection(ResourceType.Iron), 2);
+        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<IronExtractor>();
 
-        public IronExtractor(HexagonNode position, World world) : base(position, world, StructureDescription.ProductionInformation.ProductionTime, StructureDescription) { }
+        public IronExtractor(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 
         public override void Render(ExtendedDrawNode drawNode, CCPoint position, float radius)
         {
@@ -18,19 +20,10 @@ namespace HexMex.Game.Buildings {
                                 visualSettings.ColorCollection.White);
         }
 
-        protected override void OnAddedToWorld()
+        protected override void RequestIngredients()
         {
-            ResourceDirector.RequestIngredients(null, new[] { ResourceType.IronOre });
+            ResourceDirector.RequestIngredients(null, StructureDescription.ProductionInformation.Ingredients.ResourceTypes.ToArray());
         }
-
-        protected override void OnProductionCompleted()
-        {
-            ResourceDirector.ProvideResources(ResourceType.Iron);
-        }
-
-        protected override void OnProductionStarted()
-        {
-            ResourceDirector.RequestIngredients(null, new[] { ResourceType.IronOre });
-        }
+        
     }
 }

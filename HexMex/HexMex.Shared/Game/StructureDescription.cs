@@ -25,9 +25,7 @@ namespace HexMex.Game
             Description = description;
         }
 
-        public StructureDescription(string name, string description, ResourceCollection constructionCost, float constructionTime) : this(name, description, constructionCost, constructionTime, null, null, 0)
-        {
-        }
+        public StructureDescription(string name, string description, ResourceCollection constructionCost, float constructionTime) : this(name, description, constructionCost, constructionTime, null, null, 0) { }
 
         public class ProducerInformation
         {
@@ -45,12 +43,16 @@ namespace HexMex.Game
 
         public class ResourceCollection
         {
+            public EnvironmentResource EnvironmentResource { get; }
             public ReadOnlyCollection<ResourceType> ResourceTypes { get; }
 
-            public ResourceCollection(params ResourceType[] resourceTypes)
+            public ResourceCollection(EnvironmentResource environmentResource, params ResourceType[] resourceTypes)
             {
+                EnvironmentResource = environmentResource;
                 ResourceTypes = new ReadOnlyCollection<ResourceType>(resourceTypes);
             }
+
+            public ResourceCollection(params ResourceType[] resourceTypes) : this((EnvironmentResource)0, resourceTypes) { }
         }
     }
 }
