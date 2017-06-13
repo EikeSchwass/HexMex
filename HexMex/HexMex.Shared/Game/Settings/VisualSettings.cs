@@ -23,5 +23,7 @@
         public int StructureMenuHeaderFontSize { get; } = 24;
         public int StructureMenuDescriptionFontSize { get; } = 18;
         public int StructureMenuFooterFontSize { get; } = 24;
+        public float StatisticsMargin { get; } = 20;
+        public int StatisticsFontSize { get; } = 14;
     }
 }

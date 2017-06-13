@@ -44,13 +44,13 @@ namespace HexMex.Game
             }
         }
 
-        public void ProvideResources(params ResourceType[] resourceTypes)
+        public void ProvideResources(params ResourceTypeSource[] resourceTypes)
         {
             if (ProvidedResourceList.Any())
                 throw new InvalidOperationException("Can't provide new Resources until all currently provided resources are on it's way");
             foreach (var resourceType in resourceTypes)
             {
-                var resourcePackage = World.ResourceManager.ProvideResource(Structure, resourceType, Priority);
+                var resourcePackage = World.ResourceManager.ProvideResource(Structure, resourceType.ResourceType, Priority);
                 ProvidedResourceList.Add(resourcePackage);
                 if (resourcePackage.ResourceRequestState != ResourceRequestState.Pending)
                     ResourcePackageStartedMoving(resourcePackage);
@@ -59,25 +59,31 @@ namespace HexMex.Game
             }
         }
 
-        public void RequestIngredients(ResourceType[] networkResourceTypes, ResourceType[] extractionResourceTypes)
+        public void RequestIngredients(ResourceTypeSource[] resourceTypes)
         {
             if (RequestedNetworkResourceList.Any() || RequestedHexagonResourceList.Any())
                 throw new InvalidOperationException("Can't request new Resources until all current requests are completed");
-            if (networkResourceTypes?.Contains(ResourceType.Water) == true)
+            if (HasAdjacentWater && Structure.CanExtractWaterFromAdjacentHexagons && resourceTypes.Any(r => r.SourceType == SourceType.Network && r.ResourceType == ResourceType.Water))
             {
-                if (HasAdjacentWater && Structure.CanExtractWaterFromAdjacentHexagons)
+                var waterCount = resourceTypes.Count(r => r.SourceType == SourceType.Network && (r.ResourceType == ResourceType.PureWater || r.ResourceType == ResourceType.Water));
+                resourceTypes = resourceTypes.Where(r => r.SourceType == SourceType.Network && r.ResourceType != ResourceType.Water && r.ResourceType != ResourceType.PureWater).ToArray();
+                for (int i = 0; i < waterCount; i++)
                 {
-                    var waterCount = networkResourceTypes.Count(r => r == ResourceType.PureWater || r == ResourceType.Water);
-                    networkResourceTypes = networkResourceTypes.Where(r => r != ResourceType.Water && r != ResourceType.PureWater).ToArray();
-                    extractionResourceTypes = (extractionResourceTypes ?? new ResourceType[0]).Concat(Enumerable.Repeat(ResourceType.PureWater, waterCount)).ToArray();
+                    RequestedHexagonResourceList.Add(ResourceType.PureWater);
                 }
             }
-            foreach (var resourceType in networkResourceTypes ?? Enumerable.Empty<ResourceType>())
+            foreach (var resourceType in resourceTypes)
             {
-                var resourcePackage = World.ResourceManager.RequestResource(Structure, resourceType, Priority);
-                RequestedNetworkResourceList.Add(resourcePackage);
+                if (resourceType.SourceType == SourceType.Network)
+                {
+                    var resourcePackage = World.ResourceManager.RequestResource(Structure, resourceType.ResourceType, Priority);
+                    RequestedNetworkResourceList.Add(resourcePackage);
+                }
+                else
+                {
+                    RequestedHexagonResourceList.Add(resourceType.ResourceType);
+                }
             }
-            RequestedHexagonResourceList.AddRange(extractionResourceTypes ?? Enumerable.Empty<ResourceType>());
         }
 
         public void ResourceArrived(ResourcePackage resourcePackage)

@@ -25,15 +25,16 @@ namespace HexMex.Scenes.Game
             TouchHandler = new GameTouchHandler(this, HexMexCamera);
             World = world;
             var hexagonLayer = new HexagonLayer(World, HexMexCamera);
+            var edgeLayer = new EdgeLayer(World, HexMexCamera);
             var resourcePackageLayer = new ResourcePackageLayer(World, HexMexCamera);
             var structureLayer = new StructureLayer(World, HexMexCamera);
-            var menuLayer = new MenuLayer(World, HexMexCamera);
             var controlLayer = new ButtonLayer(World, HexMexCamera);
-            var edgeLayer = new EdgeLayer(World, HexMexCamera);
+            var statisticLayer = new StatisticLayer(World);
+            var menuLayer = new MenuLayer(World, HexMexCamera);
             controlLayer.ConstructionRequested += (buttonLayer, buildButton) => ConstructionMenuRequested(buildButton, menuLayer);
             controlLayer.DisplayStructureRequested += (buttonLayer, structureButton) => DisplayStructureMenu(structureButton, menuLayer);
 
-            var layers = new CCLayer[] { hexagonLayer, edgeLayer, resourcePackageLayer, structureLayer, controlLayer, menuLayer };
+            var layers = new CCLayer[] { hexagonLayer, edgeLayer, resourcePackageLayer, structureLayer, controlLayer, statisticLayer, menuLayer };
 
             foreach (var layer in layers)
             {
@@ -42,7 +43,7 @@ namespace HexMex.Scenes.Game
 
             TouchLayers = new ReadOnlyCollection<TouchLayer>(layers.OfType<TouchLayer>().Reverse().ToList());
 
-            BuildMenu = new BuildMenu(World.GameSettings.VisualSettings);
+            BuildMenu = new BuildMenu(World.UnlockManager, World.GameSettings.VisualSettings);
             BuildMenu.ConstructionRequested += ConstructBuilding;
             StructureMenu = new StructureMenu(World.GameSettings.VisualSettings, World);
 

@@ -18,10 +18,10 @@ namespace HexMex.Game.Buildings
                                 visualSettings.StructureBorderThickness,
                                 visualSettings.ColorCollection.White);
         }
-        
+
         protected override void OnProductionCompleted()
         {
-            World.GlobalResourceManager.Knowledge2++;
+            World.GlobalResourceManager.Knowledge += Knowledge.Knowledge2One;
         }
     }
 }

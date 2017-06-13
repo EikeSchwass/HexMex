@@ -15,6 +15,7 @@ namespace HexMex.Game.Buildings
         public bool IsSuspended { get; private set; }
 
         private bool NotifiedAddedToWorld { get; set; }
+        private bool Enqueued { get; set; }
 
         protected Building(HexagonNode position, World world, StructureDescription structureDescription) : base(position, world, structureDescription)
         {
@@ -66,21 +67,34 @@ namespace HexMex.Game.Buildings
 
         protected virtual void RequestIngredients()
         {
-            ResourceDirector.RequestIngredients(Description.ProductionInformation.Ingredients.ResourceTypes.ToArray(), null);
+            ResourceDirector.RequestIngredients(Description.ProductionInformation.Ingredients.ResourceTypes.ToArray());
         }
 
-        private void CheckAndStartProduction()
+        protected void CheckAndStartProduction()
         {
-            if (ResourceDirector.ReadyForProduction && !IsProducing)
+            if (ResourceDirector.ReadyForProduction && !IsProducing && !Enqueued)
             {
-                World.GlobalResourceManager.Enqueue(new EnergyPackage(Description.ProductionInformation.Ingredients.EnvironmentResource.Energy,
-                                                                      e =>
-                                                                      {
-                                                                          CurrentProductionTime = 0;
-                                                                          IsProducing = true;
-                                                                          OnProductionStarted();
-                                                                          ProductionStarted?.Invoke(this);
-                                                                      }));
+                var energy = Description.ProductionInformation.Ingredients.EnvironmentResource.Energy;
+                if (energy > 0)
+                {
+                    World.GlobalResourceManager.Enqueue(new EnergyPackage(energy,
+                                                                          e =>
+                                                                          {
+                                                                              CurrentProductionTime = 0;
+                                                                              IsProducing = true;
+                                                                              OnProductionStarted();
+                                                                              ProductionStarted?.Invoke(this);
+                                                                              Enqueued = false;
+                                                                          }));
+                    Enqueued = true;
+                }
+                else
+                {
+                    CurrentProductionTime = 0;
+                    IsProducing = true;
+                    OnProductionStarted();
+                    ProductionStarted?.Invoke(this);
+                }
             }
         }
 

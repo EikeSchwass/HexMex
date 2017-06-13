@@ -19,11 +19,6 @@ namespace HexMex.Game.Buildings
                                 visualSettings.StructureBorderThickness,
                                 visualSettings.ColorCollection.White);
         }
-
-        protected override void RequestIngredients()
-        {
-            ResourceDirector.RequestIngredients(null, StructureDescription.ProductionInformation.Ingredients.ResourceTypes.ToArray());
-        }
         
     }
 }

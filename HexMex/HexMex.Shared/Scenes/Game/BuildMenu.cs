@@ -10,6 +10,7 @@ namespace HexMex.Scenes.Game
 {
     public class BuildMenu : Menu
     {
+        public UnlockManager UnlockManager { get; }
         private BuildMenuEntry selectedEntry;
         public event Action<BuildMenu, BuildingConstructionFactory> ConstructionRequested;
         private List<BuildMenuEntry> BuildMenuEntries { get; } = new List<BuildMenuEntry>();
@@ -32,8 +33,9 @@ namespace HexMex.Scenes.Game
 
         public HexagonNode TargetNode { get; set; }
 
-        public BuildMenu(VisualSettings visualSettings) : base(visualSettings)
+        public BuildMenu(UnlockManager unlockManager,VisualSettings visualSettings) : base(visualSettings)
         {
+            UnlockManager = unlockManager;
         }
 
         public override void TouchCancel(CCPoint position, TouchCancelReason reason)
@@ -89,7 +91,7 @@ namespace HexMex.Scenes.Game
             DrawNode.Clear();
             base.OnAddedToScene();
             BuildMenuEntries.Clear();
-            var factories = BuildingConstructionFactory.Factories.Values.OrderBy(k => k.StructureDescription.Name).ToArray();
+            var factories = BuildingConstructionFactory.Factories.Values.Where(k=>UnlockManager[k.StructureDescription]).OrderBy(k => k.StructureDescription.VerbalStructureDescription.Name).ToArray();
             var buttonsPerRow = VisualSettings.BuildMenuButtonsPerRow;
             var fontSize = VisualSettings.BuildMenuButtonFontSize;
             var margin = VisualSettings.BuildMenuButtonMargin;
@@ -157,11 +159,11 @@ namespace HexMex.Scenes.Game
 
             // --- Description ---
             DrawNode.DrawText(columnWidth * 0.5f, y - headerHeight / 2, "Description", headerFont, headerSize);
-            DrawNode.DrawText(columnWidth * 0.5f, y - headerHeight - contentHeight / 2, structureDescription.Description, contentFont, contentSize);
+            DrawNode.DrawText(columnWidth * 0.5f, y - headerHeight - contentHeight / 2, structureDescription.VerbalStructureDescription.Description, contentFont, contentSize);
 
             // --- Construction ---
             DrawNode.DrawText(columnWidth * 1.5f, y - headerHeight / 2, "Construction", headerFont, headerSize);
-            DrawNode.DrawText(columnWidth * 1.5f, y - headerHeight - contentHeight / 2, structureDescription.ConstructionCost.GetText() + $"{newLine}({structureDescription.ConstructionTime} s)", contentFont, contentSize);
+            DrawNode.DrawText(columnWidth * 1.5f, y - headerHeight - contentHeight / 2, structureDescription.ConstructionInformation.GetText() + $"{newLine}({structureDescription.ConstructionInformation.ConstructionTime} s)", contentFont, contentSize);
 
             if (structureDescription.IsProducer)
             {
@@ -201,7 +203,7 @@ namespace HexMex.Scenes.Game
                 var borderColor = IsSelected ? colorCollection.YellowNormal : colorCollection.White;
                 var borderThickness = BuildMenu.VisualSettings.BuildMenuButtonBorderThickness;
                 BuildMenu.DrawNode?.DrawRect(Position, backColor, borderThickness, borderColor);
-                BuildMenu.DrawNode?.DrawText(Position.Center, Factory.StructureDescription.Name, Font.ArialFonts[16], Position.Size);
+                BuildMenu.DrawNode?.DrawText(Position.Center, Factory.StructureDescription.VerbalStructureDescription.Name, Font.ArialFonts[16], Position.Size);
             }
         }
     }

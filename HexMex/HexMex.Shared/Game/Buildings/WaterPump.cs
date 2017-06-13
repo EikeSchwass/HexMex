@@ -19,10 +19,5 @@ namespace HexMex.Game.Buildings
                                 visualSettings.StructureBorderThickness,
                                 visualSettings.ColorCollection.White);
         }
-
-        protected override void RequestIngredients()
-        {
-            ResourceDirector.RequestIngredients(new[] { Barrel }, new[] { PureWater, PureWater });
-        }
     }
 }

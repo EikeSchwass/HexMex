@@ -1,7 +1,8 @@
 using CocosSharp;
 using HexMex.Controls;
 
-namespace HexMex.Game.Buildings {
+namespace HexMex.Game.Buildings
+{
     public class Laboratory3 : Building
     {
         public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<Laboratory3>();
@@ -17,12 +18,12 @@ namespace HexMex.Game.Buildings {
                                 visualSettings.StructureBorderThickness,
                                 visualSettings.ColorCollection.White);
         }
-        
+
 
         protected override void OnProductionCompleted()
         {
-            World.GlobalResourceManager.Knowledge3++;
+            World.GlobalResourceManager.Knowledge += Knowledge.Knowledge3One;
         }
-        
+
     }
 }

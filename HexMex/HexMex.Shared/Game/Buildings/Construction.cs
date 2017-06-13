@@ -18,7 +18,7 @@ namespace HexMex.Game.Buildings
 
         public float Progress { get; private set; }
 
-        public Construction(HexagonNode position, BuildingConstructionFactory buildingConstructionFactory, World world) : base(position, world, new StructureDescription("Construction", $"Constructs {buildingConstructionFactory.StructureDescription.Name}", buildingConstructionFactory.StructureDescription.ConstructionCost, buildingConstructionFactory.StructureDescription.ConstructionTime))
+        public Construction(HexagonNode position, BuildingConstructionFactory buildingConstructionFactory, World world) : base(position, world, new StructureDescription(new VerbalStructureDescription("Construction", $"Constructs {buildingConstructionFactory.StructureDescription.VerbalStructureDescription.Name}"),Knowledge.Zero, buildingConstructionFactory.StructureDescription.ConstructionInformation))
         {
             ConstructionFactory = buildingConstructionFactory;
             ResourceDirector.AllIngredientsArrived += StartConstructing;
@@ -35,13 +35,13 @@ namespace HexMex.Game.Buildings
             if (!ResourcesRequested)
             {
                 ResourcesRequested = true;
-                ResourceDirector.RequestIngredients(ConstructionFactory.StructureDescription.ConstructionCost.ResourceTypes.ToArray(), null);
+                ResourceDirector.RequestIngredients(ConstructionFactory.StructureDescription.ConstructionInformation.ResourceTypes.ToArray());
             }
             if (!IsConstructing)
                 return;
             PassedConstructionTime += dt;
-            Progress = PassedConstructionTime / ConstructionFactory.StructureDescription.ConstructionTime;
-            if (PassedConstructionTime >= ConstructionFactory.StructureDescription.ConstructionTime)
+            Progress = PassedConstructionTime / ConstructionFactory.StructureDescription.ConstructionInformation.ConstructionTime;
+            if (PassedConstructionTime >= ConstructionFactory.StructureDescription.ConstructionInformation.ConstructionTime)
             {
                 PassedConstructionTime = 0;
                 IsConstructing = false;
@@ -56,7 +56,7 @@ namespace HexMex.Game.Buildings
 
         private void StartConstructing(ResourceDirector arg1, ResourceType[] arg2)
         {
-            World.GlobalResourceManager.Enqueue(new EnergyPackage(ConstructionFactory.StructureDescription.ConstructionCost.EnvironmentResource.Energy, e => IsConstructing = true));
+            World.GlobalResourceManager.Enqueue(new EnergyPackage(ConstructionFactory.StructureDescription.ConstructionInformation.EnvironmentResource.Energy, e => IsConstructing = true));
         }
     }
 }

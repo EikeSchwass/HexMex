@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using HexMex.Game.Settings;
 
 namespace HexMex.Game
@@ -7,36 +8,16 @@ namespace HexMex.Game
     public class GlobalResourceManager
     {
         public GameplaySettings GameplaySettings { get; }
-        private int knowledge1;
-        private int knowledge2;
-        private int knowledge3;
+        private Knowledge knowledge;
         private EnvironmentResource environmentResource;
         public event Action<GlobalResourceManager> ValueChanged;
 
-        public int Knowledge1
+        public Knowledge Knowledge
         {
-            get => knowledge1;
+            get => knowledge;
             set
             {
-                knowledge1 = value;
-                ValueChanged?.Invoke(this);
-            }
-        }
-        public int Knowledge2
-        {
-            get => knowledge2;
-            set
-            {
-                knowledge2 = value;
-                ValueChanged?.Invoke(this);
-            }
-        }
-        public int Knowledge3
-        {
-            get => knowledge3;
-            set
-            {
-                knowledge3 = value;
+                knowledge = value;
                 ValueChanged?.Invoke(this);
             }
         }
@@ -59,10 +40,12 @@ namespace HexMex.Game
         }
         private void CheckForEnergyChange(GlobalResourceManager obj)
         {
+            if (!EnergyQueue.Any())
+                return;
             var nextEnergyPackage = EnergyQueue.Peek();
             if (EnvironmentResource.Energy >= nextEnergyPackage.RequiredEnergy)
             {
-                EnvironmentResource -= (EnvironmentResource)nextEnergyPackage.RequiredEnergy;
+                environmentResource -= (EnvironmentResource)nextEnergyPackage.RequiredEnergy;
                 EnergyQueue.Dequeue();
                 nextEnergyPackage.Callback(nextEnergyPackage);
             }
@@ -73,6 +56,7 @@ namespace HexMex.Game
         public void Enqueue(EnergyPackage energyPackage)
         {
             EnergyQueue.Enqueue(energyPackage);
+            CheckForEnergyChange(this);
         }
     }
 

@@ -55,9 +55,12 @@ namespace HexMex.Helper
             }
         }
 
+        public static ResourceTypeSource FromNetwork(this ResourceType resourceType) => new ResourceTypeSource(resourceType, SourceType.Network);
+        public static ResourceTypeSource FromHexagon(this ResourceType resourceType) => new ResourceTypeSource(resourceType, SourceType.Hexagon);
+
         public static CCColor4F ToColor4F(this CCColor4B color) => new CCColor4F(color);
 
-        public static string GetText(this StructureDescription.ResourceCollection source)
+        public static string GetText(this ResourceCollection source)
         {
             string result = "";
             var groups = source.ResourceTypes.GroupBy(e => e);
@@ -165,7 +168,7 @@ namespace HexMex.Helper
             }
             return result;
         }
-        
+
 
         public static int IndexOf<T>(this IEnumerable<T> source, T element)
         {

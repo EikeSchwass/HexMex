@@ -101,7 +101,7 @@ namespace HexMex.Scenes.Game
             var colorCollection = VisualSettings.ColorCollection;
             float resourceRadius = 16;
             float structureRadius = 64;
-            var ingredients = Structure.Description.ProductionInformation?.Ingredients.ResourceTypes.OrderBy(i => i).ToList() ?? Structure.Description.ConstructionCost.ResourceTypes.OrderBy(i => i).ToList();
+            var ingredients = Structure.Description.ProductionInformation?.Ingredients.ResourceTypes.OrderBy(i => i).ToList() ?? Structure.Description.ConstructionInformation.ResourceTypes.OrderBy(i => i).ToList();
             var products = Structure.Description.ProductionInformation?.Products.ResourceTypes;
             float ingredientSpacing = size.Width / (ingredients.Count == 0 ? 1 : ingredients.Count);
             float productsSpacing = size.Width / (products?.Count == 0 ? 1 : products?.Count) ?? 1;
@@ -114,11 +114,11 @@ namespace HexMex.Scenes.Game
             for (int i = 0; i < ingredients.Count; i++)
             {
                 var resourceType = ingredients[i];
-                bool arrived = !pendingRequests.Contains(resourceType);
+                bool arrived = !pendingRequests.Contains(resourceType.ResourceType);
                 if (!arrived)
-                    pendingRequests.Remove(resourceType);
+                    pendingRequests.Remove(resourceType.ResourceType);
                 float x = i * ingredientSpacing + ingredientSpacing / 2 + topLeft.X;
-                var resourceColor = resourceType.GetColor(colorCollection);
+                var resourceColor = resourceType.ResourceType.GetColor(colorCollection);
                 DrawNode.DrawCircle(new CCPoint(x, ingredientY), resourceRadius, resourceColor, 2, arrived ? colorCollection.White : colorCollection.GrayNormal);
             }
 
@@ -135,7 +135,7 @@ namespace HexMex.Scenes.Game
                 var pendingProvisions = Structure.ResourceDirector.PendingProvisions.ToList();
                 for (int i = 0; i < (products?.Count ?? 0); i++)
                 {
-                    var resourceType = products?[i] ?? ResourceType.Anything;
+                    var resourceType = products?[i].ResourceType ?? ResourceType.Anything;
                     bool provided = pendingProvisions.Contains(resourceType);
                     if (provided)
                         pendingProvisions.Remove(resourceType);
@@ -169,8 +169,8 @@ namespace HexMex.Scenes.Game
             DrawNode.DrawRect(new CCPoint(ClientArea.Size.Width / 2, -headerHeight - descriptionHeight / 2), ClientArea.Size.Width, descriptionHeight, colorCollection.Transparent, 1, colorCollection.White);
             DrawNode.DrawRect(new CCPoint(ClientArea.Size.Width / 2, -headerHeight - descriptionHeight - contentHeight / 2), ClientArea.Size.Width, contentHeight, colorCollection.Transparent, 1, colorCollection.White);
             DrawNode.DrawRect(new CCPoint(ClientArea.Size.Width / 2, -headerHeight - descriptionHeight - contentHeight - footerHeight / 2), ClientArea.Size.Width, footerHeight, colorCollection.Transparent, 1, colorCollection.White);
-            DrawNode.DrawText(ClientArea.Size.Center.X, -headerHeight / 2, Structure.Description.Name, Font.ArialFonts[VisualSettings.StructureMenuHeaderFontSize], new CCSize(ClientArea.Size.Width, headerHeight));
-            DrawNode.DrawText(ClientArea.Size.Center.X, -headerHeight - descriptionHeight / 2, Structure.Description.Description, Font.ArialFonts[VisualSettings.StructureMenuDescriptionFontSize], new CCSize(ClientArea.Size.Width, descriptionHeight));
+            DrawNode.DrawText(ClientArea.Size.Center.X, -headerHeight / 2, Structure.Description.VerbalStructureDescription.Name, Font.ArialFonts[VisualSettings.StructureMenuHeaderFontSize], new CCSize(ClientArea.Size.Width, headerHeight));
+            DrawNode.DrawText(ClientArea.Size.Center.X, -headerHeight - descriptionHeight / 2, Structure.Description.VerbalStructureDescription.Description, Font.ArialFonts[VisualSettings.StructureMenuDescriptionFontSize], new CCSize(ClientArea.Size.Width, descriptionHeight));
             if (Structure is Building building)
             {
                 if (SuspendEntry == null)

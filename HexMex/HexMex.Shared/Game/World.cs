@@ -16,12 +16,14 @@ namespace HexMex.Game
         public StructureManager StructureManager { get; }
         public GameSettings GameSettings { get; }
         public GlobalResourceManager GlobalResourceManager { get; }
+        public UnlockManager UnlockManager { get; }
 
         public World(GameSettings gameSettings)
         {
             GameSettings = gameSettings;
             StructureManager = new StructureManager();
             GlobalResourceManager = new GlobalResourceManager(GameSettings.GameplaySettings);
+            UnlockManager = new UnlockManager(GlobalResourceManager);
             HexagonManager = new HexagonManager(GameSettings.GameplaySettings);
             ButtonManager = new ButtonManager(GameSettings.LayoutSettings);
             PathFinder = new CachedPathFinder(HexagonManager, StructureManager, GameSettings.GameplaySettings);
@@ -42,6 +44,7 @@ namespace HexMex.Game
 
             StructureManager.CreateStrucuture(new DiamondExtractor(new HexagonNode(p1, p2, p3), this));
             StructureManager.CreateStrucuture(new Habor(new HexagonNode(new HexagonPosition(1, 1, -2), p2, p3), this));
+            StructureManager.CreateStrucuture(new SolarPowerplant(new HexagonNode(new HexagonPosition(1, 1, -2), new HexagonPosition(2, 0, -2), p3), this));
 
             IsInitialized = true;
         }

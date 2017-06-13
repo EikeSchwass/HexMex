@@ -20,10 +20,5 @@ namespace HexMex.Game.Buildings
                                 World.GameSettings.VisualSettings.StructureBorderThickness,
                                 World.GameSettings.VisualSettings.ColorCollection.White);
         }
-
-        protected override void RequestIngredients()
-        {
-            ResourceDirector.RequestIngredients(new[] { ResourceType.Diamond }, new[] { ResourceType.PureWater });
-        }
     }
 }
