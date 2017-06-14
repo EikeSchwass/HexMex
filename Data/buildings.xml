@@ -1,0 +1,35 @@
+<xml>
+	<Buildings>
+		<Building NameID="coalName" DescriptionID="coalDescription">
+			<ConstructionInformation ConstructionTime="5">
+				<Wood />
+				<Iron />
+				<Wood />
+			</ConstructionCost>
+			<ProductionInformation ProductionTime="2">
+				<Ingredients>
+					<CoalOre Source="Hexagon" />
+				</Ingredients>
+				<Products>
+					<Coal />
+				</Products>
+			</ProductionInformation>
+		</Building>
+		<Building NameID="haborName" DescriptionID="haborDescription">
+			<UnlockCost Knowledge1="5" />
+			<ConstructionInformation ConstructionTime="5">
+				<Wood />
+				<Iron />
+				<Wood />
+			</ConstructionCost>
+			<ProductionInformation ProductionTime="2">
+				<Ingredients>
+					<Diamond />
+				</Ingredients>
+				<Products>
+					<Anything />
+				</Products>
+			</ProductionInformation>
+		</Building>
+	</Buildings>
+</xml>
