@@ -5,9 +5,9 @@ namespace HexMex.Game
     public class UnlockManager
     {
         public GlobalResourceManager GlobalResourceManager { get; }
-        private Dictionary<StructureDescription, bool> UnlockedStructures { get; } = new Dictionary<StructureDescription, bool>();
+        private Dictionary<BuildingDescription, bool> UnlockedStructures { get; } = new Dictionary<BuildingDescription, bool>();
 
-        public event Action<UnlockManager, StructureDescription> NewStructureUnlocked;
+        public event Action<UnlockManager, BuildingDescription> NewStructureUnlocked;
 
         public UnlockManager(GlobalResourceManager globalResourceManager)
         {
@@ -18,7 +18,7 @@ namespace HexMex.Game
             }
         }
 
-        public void Unlock(StructureDescription structureDescription)
+        public void Unlock(BuildingDescription structureDescription)
         {
             if (GlobalResourceManager.Knowledge < structureDescription.UnlockCost)
                 throw new InvalidOperationException("Not enough knowledge aquired");
@@ -26,6 +26,6 @@ namespace HexMex.Game
             UnlockedStructures[structureDescription] = true;
             NewStructureUnlocked?.Invoke(this, structureDescription);
         }
-        public bool this[StructureDescription structureDescription] => UnlockedStructures[structureDescription];
+        public bool this[BuildingDescription structureDescription] => UnlockedStructures[structureDescription];
     }
 }

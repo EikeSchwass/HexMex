@@ -6,7 +6,7 @@ namespace HexMex.Game.Buildings
 {
     public class IronExtractor : Building
     {
-        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<IronExtractor>();
+        public static BuildingDescription StructureDescription { get; } = BuildingDescriptionDatabase.Get<IronExtractor>();
 
         public IronExtractor(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 

@@ -6,7 +6,7 @@ namespace HexMex.Game.Buildings
 {
     public class Forestry : Building
     {
-        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<Forestry>();
+        public static BuildingDescription StructureDescription { get; } = BuildingDescriptionDatabase.Get<Forestry>();
 
         public Forestry(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 

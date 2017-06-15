@@ -5,7 +5,7 @@ using HexMex.Controls;
 namespace HexMex.Game.Buildings {
     public class CopperExtractor : Building
     {
-        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<CopperExtractor>();
+        public static BuildingDescription StructureDescription { get; } = BuildingDescriptionDatabase.Get<CopperExtractor>();
 
         public CopperExtractor(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 

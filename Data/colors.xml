@@ -1,0 +1,5 @@
+<xml>
+	<ColorCollection name="default" >
+		<Color ID="haborFill" Value="ff00ff" />
+	</ColorCollection>
+</xml>

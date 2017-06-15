@@ -5,7 +5,7 @@ namespace HexMex.Game.Buildings
 {
     public class CoalPowerplant : Building
     {
-        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<CoalPowerplant>();
+        public static BuildingDescription StructureDescription { get; } = BuildingDescriptionDatabase.Get<CoalPowerplant>();
 
         public CoalPowerplant(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 

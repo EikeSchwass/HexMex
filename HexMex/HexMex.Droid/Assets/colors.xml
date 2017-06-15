@@ -1,0 +1,5 @@
+<xml>
+	<ColorCollection NameKey="defaultColorCollectionName" DescriptionKey="defaultColorCollectionDescription" InnerHexagonBlendIntensity="0.95" OuterHexagonBlendIntensity="0.05">
+		<Color ColorKey="haborFill" Value="ff00ff" />
+	</ColorCollection>
+</xml>

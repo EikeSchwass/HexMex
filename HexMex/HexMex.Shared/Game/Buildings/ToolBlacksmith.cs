@@ -5,7 +5,7 @@ namespace HexMex.Game.Buildings
 {
     public class ToolBlacksmith : Building
     {
-        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<ToolBlacksmith>();
+        public static BuildingDescription StructureDescription { get; } = BuildingDescriptionDatabase.Get<ToolBlacksmith>();
 
         public ToolBlacksmith(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 

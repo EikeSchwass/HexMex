@@ -5,7 +5,7 @@ namespace HexMex.Game.Buildings
 {
     public class Laboratory2 : Building
     {
-        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<Laboratory2>();
+        public static BuildingDescription StructureDescription { get; } = BuildingDescriptionDatabase.Get<Laboratory2>();
 
         public Laboratory2(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 

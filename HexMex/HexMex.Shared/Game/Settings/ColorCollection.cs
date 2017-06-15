@@ -1,4 +1,5 @@
 ﻿using CocosSharp;
+using HexMex.Helper;
 
 namespace HexMex.Game.Settings
 {
@@ -6,88 +7,123 @@ namespace HexMex.Game.Settings
     {
         // Color table generated via: http://paletton.com/#uid=7370I0kllllaFw0g0qFqFg0w0aF
 
-        public CCColor4B GreenVeryLight => GreenColorPalette[0];
-        public CCColor4B GreenLight => GreenColorPalette[1];
-        public CCColor4B GreenNormal => GreenColorPalette[2];
-        public CCColor4B GreenDark => GreenColorPalette[3];
-        public CCColor4B GreenVeryDark => GreenColorPalette[4];
+        private ColorCollectionFile ColorCollectionFile { get; set; }
 
-        public CCColor4B BlueVeryLight => BlueColorPalette[0];
-        public CCColor4B BlueLight => BlueColorPalette[1];
-        public CCColor4B BlueNormal => BlueColorPalette[2];
-        public CCColor4B BlueDark => BlueColorPalette[3];
-        public CCColor4B BlueVeryDark => BlueColorPalette[4];
+        public CCColor4B BuildButtonBorder => ColorCollectionFile["buildButtonBorder"];
+        public CCColor4B BuildButtonFill => ColorCollectionFile["buildButtonFill"];
 
-        public CCColor4B YellowVeryLight => YellowColorPalette[0];
-        public CCColor4B YellowLight => YellowColorPalette[1];
-        public CCColor4B YellowNormal => YellowColorPalette[2];
-        public CCColor4B YellowDark => YellowColorPalette[3];
-        public CCColor4B YellowVeryDark => YellowColorPalette[4];
+        public CCColor4B HexButtonFill => ColorCollectionFile["hexButtonFill"];
+        public CCColor4B HexButtonBorder => ColorCollectionFile["hexButtonBorder"];
+        public CCColor3B HexButtonForeground => new CCColor3B(ColorCollectionFile["hexButtonForeground"]);
 
-        public CCColor4B RedVeryLight => RedColorPalette[0];
-        public CCColor4B RedLight => RedColorPalette[1];
-        public CCColor4B RedNormal => RedColorPalette[2];
-        public CCColor4B RedDark => RedColorPalette[3];
-        public CCColor4B RedVeryDark => RedColorPalette[4];
+        public CCColor4B ConstructionFill => ColorCollectionFile["constructionFill"];
+        public CCColor4B ConstructionBorder => ColorCollectionFile["constructionBorder"];
 
-        public CCColor4B GrayVeryLight => GrayColorPalette[0];
-        public CCColor4B GrayLight => GrayColorPalette[1];
-        public CCColor4B GrayNormal => GrayColorPalette[2];
-        public CCColor4B GrayDark => GrayColorPalette[3];
-        public CCColor4B GrayVeryDark => GrayColorPalette[4];
+        public CCColor4B ResourceNone => ColorCollectionFile["resourceNone"];
+        public CCColor4B ResourcePureWater => ColorCollectionFile["resourcePureWater"];
+        public CCColor4B ResourceTree => ColorCollectionFile["resourceTree"];
+        public CCColor4B ResourceStone => ColorCollectionFile["resourceStone"];
+        public CCColor4B ResourceCoalOre => ColorCollectionFile["resourceCoalOre"];
+        public CCColor4B ResourceCopperOre => ColorCollectionFile["resourceCopperOre"];
+        public CCColor4B ResourceIronOre => ColorCollectionFile["resourceIronOre"];
+        public CCColor4B ResourceGoldOre => ColorCollectionFile["resourceGoldOre"];
+        public CCColor4B ResourceDiamondOre => ColorCollectionFile["resourceDiamondOre"];
+        public CCColor4B ResourceGold => ColorCollectionFile["resourceGold"];
+        public CCColor4B ResourceCopper => ColorCollectionFile["resourceCopper"];
+        public CCColor4B ResourceIron => ColorCollectionFile["resourceIron"];
+        public CCColor4B ResourceWood => ColorCollectionFile["resourceWood"];
+        public CCColor4B ResourceCoal => ColorCollectionFile["resourceCoal"];
+        public CCColor4B ResourceSand => ColorCollectionFile["resourceSand"];
+        public CCColor4B ResourceBrick => ColorCollectionFile["resourceBrick"];
+        public CCColor4B ResourcePaper => ColorCollectionFile["resourcePaper"];
+        public CCColor4B ResourceCircuit => ColorCollectionFile["resourceCircuit"];
+        public CCColor4B ResourceTools => ColorCollectionFile["resourceTools"];
+        public CCColor4B ResourceBarrel => ColorCollectionFile["resourceBarrel"];
+        public CCColor4B ResourcePottasche => ColorCollectionFile["resourcePottasche"];
+        public CCColor4B ResourceGlas => ColorCollectionFile["resourceGlas"];
+        public CCColor4B ResourceWaterBarrel => ColorCollectionFile["resourceWaterBarrel"];
+        public CCColor4B ResourceKnowledge1 => ColorCollectionFile["resourceKnowledge1"];
+        public CCColor4B ResourceKnowledge2 => ColorCollectionFile["resourceKnowledge2"];
+        public CCColor4B ResourceKnowledge3 => ColorCollectionFile["resourceKnowledge3"];
+        public CCColor4B ResourceEnergy => ColorCollectionFile["resourceEnergy"];
+        public CCColor4B ResourceWater => ColorCollectionFile["resourceWater"];
+        public CCColor4B ResourceDegradeable => ColorCollectionFile["resourceDegradeable"];
+        public CCColor4B ResourceDiamond => ColorCollectionFile["resourceDiamond"];
+        public CCColor4B ResourceAnything => ColorCollectionFile["resourceAnything"];
 
-        public CCColor4B Black => CCColor4B.Black;
-        public CCColor4B White => CCColor4B.White;
-        public CCColor4B Transparent => CCColor4B.Transparent;
+        public CCColor4B BuildMenuBackground => ColorCollectionFile["buildMenuBackground"];
+        public CCColor4B BuildMenuBorder => ColorCollectionFile["buildMenuBorder"];
+        public CCColor4B BuildMenuSelectedBackground => ColorCollectionFile["buildMenuSelectedBackground"];
+        public CCColor4B BuildMenuSelectedBorder => ColorCollectionFile["buildMenuSelectedBorder"];
+        public CCColor3B BuildMenuConstructButtonForeground => new CCColor3B(ColorCollectionFile["buildMenuConstructButtonForeground"]);
+        public CCColor4B BuildMenuHeaderBackground => ColorCollectionFile["buildMenuHeaderBackground"];
+        public CCColor4B BuildMenuHeaderBorder => ColorCollectionFile["buildMenuHeaderBorder"];
+        public CCColor4B BuildMenuGridBackground => ColorCollectionFile["buildMenuGridBackground"];
+        public CCColor4B BuildMenuGridBorder => ColorCollectionFile["buildMenuGridBorder"];
+        public CCColor4B BuildMenuEntryPressedBackground => ColorCollectionFile["buildMenuEntryPressedBackground"];
+        public CCColor4B BuildMenuEntryReleasedBackground => ColorCollectionFile["buildMenuEntryReleasedBackground"];
+        public CCColor4B BuildMenuEntrySelectedBorder => ColorCollectionFile["buildMenuEntrySelectedBorder"];
+        public CCColor4B BuildMenuEntryNotSelectedBorder => ColorCollectionFile["buildMenuEntryNotSelectedBorder"];
 
-        protected virtual CCColor4B[] GreenColorPalette { get; } =
+        public CCColor4F BuildButtonBackground => ColorCollectionFile["buildButtonBackground"].ToColor4F();
+        public CCColor4F BuildButtonForeground => ColorCollectionFile["buildButtonForeground"].ToColor4F();
+
+        public CCColor4F EdgeBackground => ColorCollectionFile["edgeBackground"].ToColor4F();
+
+        public CCColor4B HexagonBorder => ColorCollectionFile["hexagonBorder"];
+
+        public CCColor4B ResourcePackageBorder => ColorCollectionFile["resourcePackageBorder"];
+
+        public CCColor4B StructureMenuResourceArrivedBorder => ColorCollectionFile["structureMenuResourceArrivedBorder"];
+        public CCColor4B StructureMenuResourceNotArrivedBorder => ColorCollectionFile["structureMenuResourceNotArrivedBorder"];
+        public CCColor4B StructureMenuProgressCircleFill => ColorCollectionFile["structureMenuProgressCircleFill"];
+        public CCColor4B StructureMenuBackground => ColorCollectionFile["structureMenuBackground"];
+        public CCColor4B StructureMenuBorder => ColorCollectionFile["structureMenuBorder"];
+        public CCColor4B StructureMenuGridBackground => ColorCollectionFile["structureMenuGridBackground"];
+        public CCColor4B StructureMenuGridBorder => ColorCollectionFile["structureMenuGridBorder"];
+        public CCColor4B StructureMenuSuspendButtonPressed => ColorCollectionFile["structureMenuSuspendButtonPressed"];
+        public CCColor4B StructureMenuSuspendButtonReleased => ColorCollectionFile["structureMenuSuspendButtonReleased"];
+        public CCColor4B StructureMenuCancelButtonPressed => ColorCollectionFile["structureMenuCancelButtonPressed"];
+        public CCColor4B StructureMenuCancelButtonReleased => ColorCollectionFile["structureMenuCancelButtonReleased"];
+        public CCColor4B StructureMenuDeconstructButtonPressed => ColorCollectionFile["buildMenu"];
+        public CCColor4B StructureMenuDeconstructButtonReleased => ColorCollectionFile["buildMenu"];
+
+        public CCColor4B HexagonBlendColor => ColorCollectionFile["hexagonBlendColor"];
+        public float InnerHexagonBlendIntensity => ColorCollectionFile.InnerHexagonBlendIntensity;
+        public float OuterHexagonBlendIntensity => ColorCollectionFile.OuterHexagonBlendIntensity;
+
+        public CCColor4B GetInnerHexagonColor(ResourceType resourceType)
         {
-            new CCColor4B(113, 170, 151),
-            new CCColor4B(71, 141, 118),
-            new CCColor4B(38, 113, 88),
-            new CCColor4B(14, 85, 62),
-            new CCColor4B(0, 57, 38)
-        };
+            var color = resourceType.GetColor(this);
+            var blendColor = HexagonBlendColor;
+            var blendIntensity = InnerHexagonBlendIntensity;
+            var result = CCColor4B.Lerp(color, blendColor, blendIntensity);
+            return result;
+        }
 
-        protected virtual CCColor4B[] BlueColorPalette { get; } =
+        public CCColor4B GetOuterHexagonColor(ResourceType resourceType)
         {
-            new CCColor4B(122, 134, 173),
-            new CCColor4B(80, 95, 144),
-            new CCColor4B(47, 63, 115),
-            new CCColor4B(23, 37, 86),
-            new CCColor4B(7, 18, 57)
-        };
+            var color = resourceType.GetColor(this);
+            var blendColor = HexagonBlendColor;
+            var blendIntensity = OuterHexagonBlendIntensity;
+            var result = CCColor4B.Lerp(color, blendColor, blendIntensity);
+            return result;
+        }
 
-        protected virtual CCColor4B[] YellowColorPalette { get; } =
+
+        public ColorCollection(ColorCollectionFile colorCollectionFile)
         {
-            new CCColor4B(255, 229, 170),
-            new CCColor4B(212, 179, 106),
-            new CCColor4B(170, 135, 57),
-            new CCColor4B(128, 95, 21),
-            new CCColor4B(85, 59, 0)
-        };
+            ColorCollectionFile = colorCollectionFile;
+        }
 
-        protected virtual CCColor4B[] RedColorPalette { get; } =
+        public void ChangeColorCollectionFile(ColorCollectionFile colorCollectionFile)
         {
-            new CCColor4B(151, 151, 151),
-            new CCColor4B(212, 142, 106),
-            new CCColor4B(170, 95, 57),
-            new CCColor4B(128, 57, 21),
-            new CCColor4B(85, 29, 0)
-        };
-
-        protected virtual CCColor4B[] GrayColorPalette { get; } =
-        {
-            new CCColor4B(151, 151, 151),
-            new CCColor4B(117, 117, 117),
-            new CCColor4B(88, 88, 88),
-            new CCColor4B(61, 61, 61),
-            new CCColor4B(38, 38, 38)
-        };
-
+            ColorCollectionFile = colorCollectionFile;
+        }
+        public CCColor4B FromKey(string colorKey) => ColorCollectionFile[colorKey];
     }
 
-    public class DarkerColors : ColorCollection
+    /*public class DarkerColors : ColorCollection
     {
         protected override CCColor4B[] GreenColorPalette { get; } =
         {
@@ -124,5 +160,5 @@ namespace HexMex.Game.Settings
             new CCColor4B(145,  4,  0),
             new CCColor4B(107,  3,  0),
         };
-    }
+    }*/
 }

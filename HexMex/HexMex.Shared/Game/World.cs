@@ -42,9 +42,9 @@ namespace HexMex.Game
             HexagonManager.RevealHexagonAt(p2);
             HexagonManager.RevealHexagonAt(p3);
 
-            StructureManager.CreateStrucuture(new DiamondExtractor(new HexagonNode(p1, p2, p3), this));
-            StructureManager.CreateStrucuture(new Habor(new HexagonNode(new HexagonPosition(1, 1, -2), p2, p3), this));
-            StructureManager.CreateStrucuture(new SolarPowerplant(new HexagonNode(new HexagonPosition(1, 1, -2), new HexagonPosition(2, 0, -2), p3), this));
+            StructureManager.CreateStrucuture(new Building(new HexagonNode(p1, p2, p3), this,GameSettings.BuildingDescriptionDatabase.ByNameKey("diamondName")));
+            StructureManager.CreateStrucuture(new Building(new HexagonNode(new HexagonPosition(1, 1, -2), p2, p3), this,GameSettings.BuildingDescriptionDatabase.ByNameKey("haborName")));
+            StructureManager.CreateStrucuture(new Building(new HexagonNode(new HexagonPosition(1, 1, -2), new HexagonPosition(2, 0, -2), p3), this,GameSettings.BuildingDescriptionDatabase.ByNameKey("solarPowerplantName")));
 
             IsInitialized = true;
         }

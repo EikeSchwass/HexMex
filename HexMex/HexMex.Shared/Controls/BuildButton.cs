@@ -54,8 +54,8 @@ namespace HexMex.Controls
         public BuildButton(GameSettings settings, HexagonNode position)
         {
             GameSettings = settings;
-            BorderColor = GameSettings.VisualSettings.ColorCollection.White;
-            BackgroundColor = GameSettings.VisualSettings.ColorCollection.GrayVeryDark;
+            BorderColor = GameSettings.VisualSettings.ColorCollection.BuildButtonBorder;
+            BackgroundColor = GameSettings.VisualSettings.ColorCollection.BuildButtonFill;
             HexagonNode = position;
             var x = (float)(Sin(PI / 3) * (GameSettings.LayoutSettings.HexagonMargin - GameSettings.VisualSettings.HexagonOuterBorderThickness));
             var y = (float)(Cos(PI / 3) * (GameSettings.LayoutSettings.HexagonMargin - GameSettings.VisualSettings.HexagonOuterBorderThickness));

@@ -15,76 +15,6 @@ namespace HexMex.Helper
         {
             return (actualType & requestedType) == requestedType;
         }
-
-        public static CCColor4B GetColor(this ResourceType type, ColorCollection colorCollection)
-        {
-            switch (type)
-            {
-                case None: return CCColor4B.Lerp(colorCollection.GrayNormal, CCColor4B.Transparent, 0.5f);
-                case PureWater: return colorCollection.BlueLight;
-                case Tree: return colorCollection.GreenDark;
-                case Stone: return colorCollection.GrayNormal;
-                case CoalOre: return CCColor4B.Lerp(Coal.GetColor(colorCollection), colorCollection.GrayNormal, 0.5f);
-                case CopperOre: return CCColor4B.Lerp(Copper.GetColor(colorCollection), colorCollection.GrayNormal, 0.5f);
-                case IronOre: return CCColor4B.Lerp(Iron.GetColor(colorCollection), colorCollection.GrayNormal, 0.5f);
-                case GoldOre: return CCColor4B.Lerp(Gold.GetColor(colorCollection), colorCollection.GrayNormal, 0.5f);
-                case DiamondOre: return CCColor4B.Lerp(Diamond.GetColor(colorCollection), colorCollection.GrayNormal, 0.5f);
-                case Gold: return colorCollection.YellowNormal;
-                case Copper: return colorCollection.RedDark;
-                case Iron: return colorCollection.BlueVeryLight;
-                case Wood: return colorCollection.RedVeryDark;
-                case Coal: return colorCollection.GrayVeryDark;
-                case Sand: return CCColor4B.Lerp(colorCollection.YellowNormal, colorCollection.RedNormal, 0.5f);
-                case Brick: return colorCollection.RedNormal;
-                case Paper: return colorCollection.White;
-                case Circuit: return colorCollection.GreenNormal;
-                case Tools: return colorCollection.GrayLight;
-                case Barrel: return colorCollection.BlueVeryDark;
-                case Pottasche: return colorCollection.GrayDark;
-                case Glas: return CCColor4B.Lerp(colorCollection.GrayVeryLight, CCColor4B.Transparent, 0.5f);
-                case WaterBarrel: return colorCollection.BlueDark;
-                case Knowledge1: return colorCollection.GrayLight;
-                case Knowledge2: return colorCollection.GrayVeryLight;
-                case Knowledge3: return colorCollection.White;
-                case Energy: return colorCollection.YellowLight;
-                case Water: return colorCollection.BlueNormal;
-                case Degradeable: return colorCollection.GrayVeryLight;
-                case Diamond: return colorCollection.YellowVeryLight;
-                case Anything: return colorCollection.White;
-                default: throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
-        }
-
-        public static ResourceTypeSource FromNetwork(this ResourceType resourceType) => new ResourceTypeSource(resourceType, SourceType.Network);
-        public static ResourceTypeSource FromHexagon(this ResourceType resourceType) => new ResourceTypeSource(resourceType, SourceType.Hexagon);
-
-        public static CCColor4F ToColor4F(this CCColor4B color) => new CCColor4F(color);
-
-        public static string GetText(this ResourceCollection source)
-        {
-            string result = "";
-            var groups = source.ResourceTypes.GroupBy(e => e);
-            foreach (var group in groups)
-            {
-                var count = group.Count();
-                result += $"{group.Key} {(count > 1 ? "x" + count : "")}, ";
-            }
-            if (result.Length < 3)
-                return result;
-            return result.Substring(0, result.Length - 2);
-        }
-
-        public static bool HasBorder(this ResourceType type)
-        {
-            return true; // type != ResourceType.Water;
-        }
-
-        public static bool IsPassable(this ResourceType type)
-        {
-            if (type == PureWater)
-                return false;
-            return true;
-        }
         public static void DrawCircle(this CCDrawNode node, CCPoint position, float radius, CCColor4B fillColor, float borderThickness, CCColor4B borderColor)
         {
             node.DrawSolidCircle(position, radius, borderColor);
@@ -133,7 +63,48 @@ namespace HexMex.Helper
                     node.DrawSegment(p1, p2, thickness / 2, color);
                 }
             }
+        }
+        public static ResourceTypeSource FromHexagon(this ResourceType resourceType) => new ResourceTypeSource(resourceType, SourceType.Hexagon);
 
+        public static ResourceTypeSource FromNetwork(this ResourceType resourceType) => new ResourceTypeSource(resourceType, SourceType.Network);
+
+        public static CCColor4B GetColor(this ResourceType type, ColorCollection colorCollection)
+        {
+            switch (type)
+            {
+                case None: return colorCollection.ResourceNone;
+                case PureWater: return colorCollection.ResourcePureWater;
+                case Tree: return colorCollection.ResourceTree;
+                case Stone: return colorCollection.ResourceStone;
+                case CoalOre: return colorCollection.ResourceCoalOre;
+                case CopperOre: return colorCollection.ResourceCopperOre;
+                case IronOre: return colorCollection.ResourceIronOre;
+                case GoldOre: return colorCollection.ResourceGoldOre;
+                case DiamondOre: return colorCollection.ResourceDiamondOre;
+                case Gold: return colorCollection.ResourceGold;
+                case Copper: return colorCollection.ResourceCopper;
+                case Iron: return colorCollection.ResourceIron;
+                case Wood: return colorCollection.ResourceWood;
+                case Coal: return colorCollection.ResourceCoal;
+                case Sand: return colorCollection.ResourceSand;
+                case Brick: return colorCollection.ResourceBrick;
+                case Paper: return colorCollection.ResourcePaper;
+                case Circuit: return colorCollection.ResourceCircuit;
+                case Tools: return colorCollection.ResourceTools;
+                case Barrel: return colorCollection.ResourceBarrel;
+                case Pottasche: return colorCollection.ResourcePottasche;
+                case Glas: return colorCollection.ResourceGlas;
+                case WaterBarrel: return colorCollection.ResourceWaterBarrel;
+                case Knowledge1: return colorCollection.ResourceKnowledge1;
+                case Knowledge2: return colorCollection.ResourceKnowledge2;
+                case Knowledge3: return colorCollection.ResourceKnowledge3;
+                case Energy: return colorCollection.ResourceEnergy;
+                case Water: return colorCollection.ResourceWater;
+                case Degradeable: return colorCollection.ResourceDegradeable;
+                case Diamond: return colorCollection.ResourceDiamond;
+                case Anything: return colorCollection.ResourceAnything;
+                default: throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
         }
 
         public static CCPoint GetGlobalPosition(this CCNode node)
@@ -144,6 +115,43 @@ namespace HexMex.Helper
                 position += node.Position;
             }
             return position;
+        }
+
+        public static string GetText(this ResourceCollection source)
+        {
+            string result = "";
+            var groups = source.ResourceTypes.GroupBy(e => e);
+            foreach (var group in groups)
+            {
+                var count = group.Count();
+                result += $"{group.Key} {(count > 1 ? "x" + count : "")}, ";
+            }
+            if (result.Length < 3)
+                return result;
+            return result.Substring(0, result.Length - 2);
+        }
+
+        public static bool HasBorder(this ResourceType type)
+        {
+            return true; // type != ResourceType.Water;
+        }
+
+        public static int IndexOf<T>(this IEnumerable<T> source, T element)
+        {
+            var s = source.ToArray();
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (Equals(s[i], element))
+                    return i;
+            }
+            return -1;
+        }
+
+        public static bool IsPassable(this ResourceType type)
+        {
+            if (type == PureWater)
+                return false;
+            return true;
         }
         public static CCPoint RotateAround(this CCPoint point, CCPoint centerOfRotation, float angleInDegrees)
         {
@@ -169,17 +177,7 @@ namespace HexMex.Helper
             return result;
         }
 
-
-        public static int IndexOf<T>(this IEnumerable<T> source, T element)
-        {
-            var s = source.ToArray();
-            for (int i = 0; i < s.Length; i++)
-            {
-                if (Equals(s[i], element))
-                    return i;
-            }
-            return -1;
-        }
+        public static CCColor4F ToColor4F(this CCColor4B color) => new CCColor4F(color);
 
         public static IEnumerable<TKey> Unique<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> selector)
         {

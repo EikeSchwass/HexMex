@@ -6,7 +6,7 @@ namespace HexMex.Game.Buildings
 {
     public class WaterPowerplant : Building
     {
-        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<WaterPowerplant>();
+        public static BuildingDescription StructureDescription { get; } = BuildingDescriptionDatabase.Get<WaterPowerplant>();
 
         public WaterPowerplant(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 

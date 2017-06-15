@@ -10,17 +10,28 @@ namespace HexMex.Scenes.MainMenu
 {
     public class MainMenuLayer : CCLayer
     {
-        private HexButton HelpButton { get; } = new HexButton("Help", 150);
-        private HexButton OptionsButton { get; } = new HexButton("Options", 150);
-        private HexButton StartGameButton { get; } = new HexButton("Start", 150);
+        public BuildingDescriptionDatabase BuildingDescriptionDatabase { get; }
+        public ColorCollectionFile ColorCollectionFile { get; }
+        public LanguageSettings LanguageSettings { get; }
+        private HexButton HelpButton { get; }
+        private HexButton OptionsButton { get; }
+        private HexButton StartGameButton { get; }
 
-        public MainMenuLayer()
+        public MainMenuLayer(BuildingDescriptionDatabase buildingDescriptionDatabase, ColorCollectionFile colorCollectionFile, LanguageSettings languageSettings)
         {
+            var colorCollection = new ColorCollection(colorCollectionFile);
+            HelpButton = new HexButton("Help", 150, colorCollection);
+            OptionsButton = new HexButton("Options", 150, colorCollection);
+            StartGameButton = new HexButton("Start", 150, colorCollection);
+
+            BuildingDescriptionDatabase = buildingDescriptionDatabase;
+            ColorCollectionFile = colorCollectionFile;
+            LanguageSettings = languageSettings;
             StartGameButton.Touched += StartGameButton_Clicked;
             HelpButton.Touched += HelpButton_Clicked;
             OptionsButton.Touched += OptionsButton_Clicked;
 
-            AddEventListener(new CCEventListenerTouchOneByOne { OnTouchBegan = TouchDown, OnTouchCancelled = OnTouchCancelled, OnTouchEnded = OnTouchUp, OnTouchMoved = OnTouchMoved });
+            AddEventListener(new CCEventListenerTouchOneByOne {OnTouchBegan = TouchDown, OnTouchCancelled = OnTouchCancelled, OnTouchEnded = OnTouchUp, OnTouchMoved = OnTouchMoved});
         }
 
         protected override void AddedToScene()
@@ -84,7 +95,7 @@ namespace HexMex.Scenes.MainMenu
 
         private void StartGameButton_Clicked(Button sender)
         {
-            World world = new World(new GameSettings());
+            World world = new World(new GameSettings(BuildingDescriptionDatabase, ColorCollectionFile, LanguageSettings));
             Window.DefaultDirector.PushScene(new GameScene(Window, world));
             world.Initialize();
         }

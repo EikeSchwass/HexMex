@@ -45,8 +45,8 @@ namespace HexMex.Scenes.Game
             var layoutSettings = World.GameSettings.LayoutSettings;
             var worldPosition = hexagon.Position.GetWorldPosition(layoutSettings.HexagonRadius, layoutSettings.HexagonMargin);
             var corners = Corners.Select(c => c * layoutSettings.HexagonRadius + worldPosition).ToArray();
-            var innerColor = CCColor4B.Lerp(hexagon.ResourceType.GetColor(colorCollection), colorCollection.Black, 0.05f);
-            var outerColor = CCColor4B.Lerp(hexagon.ResourceType.GetColor(colorCollection), colorCollection.Black, 0.75f);
+            var innerColor = colorCollection.GetInnerHexagonColor(hexagon.ResourceType);
+            var outerColor = colorCollection.GetOuterHexagonColor(hexagon.ResourceType);
             var center = new CCV3F_C4B(worldPosition, innerColor);
             var adjacentHexagonPositions = hexagon.Position.GetAdjacentHexagonPositions();
             for (int i = 0; i < corners.Length; i++)
@@ -55,7 +55,7 @@ namespace HexMex.Scenes.Game
                 var p2 = new CCV3F_C4B(corners[(i + 1) % corners.Length], outerColor);
                 DrawNode.DrawTriangle(p1, center, p2);
                 if (World.HexagonManager[adjacentHexagonPositions[(6 - i + 2) % 6]]?.ResourceType != hexagon.ResourceType)
-                    DrawNode.DrawLine(corners[i], corners[(i + 1) % corners.Length], visualSettings.HexagonOuterBorderThickness, CCColor4B.Lerp(colorCollection.White, CCColor4B.Transparent, 0.5f));
+                    DrawNode.DrawLine(corners[i], corners[(i + 1) % corners.Length], visualSettings.HexagonOuterBorderThickness, colorCollection.HexagonBorder);
             }
             DrawNode.DrawText(worldPosition, hexagon.ResourceType.ToString(), Font.ArialFonts[30], new CCSize(layoutSettings.HexagonRadius * 2, layoutSettings.HexagonRadius * 2));
         }

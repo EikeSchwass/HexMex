@@ -1,6 +1,6 @@
 <xml>
 	<Buildings>
-		<Building NameID="coalName" DescriptionID="coalDescription">
+		<Building NameKey="coalName" DescriptionKey="coalDescription">
 			<ConstructionInformation ConstructionTime="5">
 				<Wood />
 				<Iron />
@@ -14,22 +14,7 @@
 					<Coal />
 				</Products>
 			</ProductionInformation>
-		</Building>
-		<Building NameID="haborName" DescriptionID="haborDescription">
-			<UnlockCost Knowledge1="5" />
-			<ConstructionInformation ConstructionTime="5">
-				<Wood />
-				<Iron />
-				<Wood />
-			</ConstructionCost>
-			<ProductionInformation ProductionTime="2">
-				<Ingredients>
-					<Diamond />
-				</Ingredients>
-				<Products>
-					<Anything />
-				</Products>
-			</ProductionInformation>
+			<RenderInformation FillColorKey="coalFill" BorderColorKey="coalBorder" />
 		</Building>
 	</Buildings>
 </xml>

@@ -11,6 +11,7 @@ namespace HexMex.Scenes.Game
     public class BuildMenu : Menu
     {
         public UnlockManager UnlockManager { get; }
+        public LanguageSettings LanguageSettings { get; }
         private BuildMenuEntry selectedEntry;
         public event Action<BuildMenu, BuildingConstructionFactory> ConstructionRequested;
         private List<BuildMenuEntry> BuildMenuEntries { get; } = new List<BuildMenuEntry>();
@@ -33,9 +34,10 @@ namespace HexMex.Scenes.Game
 
         public HexagonNode TargetNode { get; set; }
 
-        public BuildMenu(UnlockManager unlockManager,VisualSettings visualSettings) : base(visualSettings)
+        public BuildMenu(UnlockManager unlockManager, VisualSettings visualSettings, LanguageSettings languageSettings) : base(visualSettings)
         {
             UnlockManager = unlockManager;
+            LanguageSettings = languageSettings;
         }
 
         public override void TouchCancel(CCPoint position, TouchCancelReason reason)
@@ -91,7 +93,7 @@ namespace HexMex.Scenes.Game
             DrawNode.Clear();
             base.OnAddedToScene();
             BuildMenuEntries.Clear();
-            var factories = BuildingConstructionFactory.Factories.Values.Where(k=>UnlockManager[k.StructureDescription]).OrderBy(k => k.StructureDescription.VerbalStructureDescription.Name).ToArray();
+            var factories = BuildingConstructionFactory.Factories.Values.Where(k => UnlockManager[k.StructureDescription]).OrderBy(k => k.StructureDescription.VerbalStructureDescription.NameID).ToArray();
             var buttonsPerRow = VisualSettings.BuildMenuButtonsPerRow;
             var fontSize = VisualSettings.BuildMenuButtonFontSize;
             var margin = VisualSettings.BuildMenuButtonMargin;
@@ -117,7 +119,7 @@ namespace HexMex.Scenes.Game
                 return;
             var colorCollection = VisualSettings.ColorCollection;
             DrawNode.Clear();
-            DrawNode.DrawRect(ClientArea.Size.Center.InvertY, ClientArea.Size, CCColor4B.Lerp(colorCollection.GrayVeryDark, colorCollection.Transparent, 0.5f), VisualSettings.BuildMenuBorderThickness, colorCollection.White);
+            DrawNode.DrawRect(ClientArea.Size.Center.InvertY, ClientArea.Size, colorCollection.BuildMenuBackground, VisualSettings.BuildMenuBorderThickness, colorCollection.BuildMenuBorder);
             RenderMenuEntries();
             if (SelectedEntry != null)
                 RenderSelectedEntryArea();
@@ -134,7 +136,7 @@ namespace HexMex.Scenes.Game
         private void RenderSelectedEntryArea()
         {
             var colorCollection = VisualSettings.ColorCollection;
-            DrawNode.DrawRect(new CCPoint(ClientArea.Size.Width / 2, -ClientArea.Size.Height + ClientArea.Size.Height / 4), new CCSize(ClientArea.Size.Width, ClientArea.Size.Height / 2), colorCollection.GrayVeryDark, 1, colorCollection.White);
+            DrawNode.DrawRect(new CCPoint(ClientArea.Size.Width / 2, -ClientArea.Size.Height + ClientArea.Size.Height / 4), new CCSize(ClientArea.Size.Width, ClientArea.Size.Height / 2), colorCollection.BuildMenuSelectedBackground, 1, colorCollection.BuildMenuSelectedBorder);
 
             var y = -ClientArea.Size.Height / 2;
             var structureDescription = SelectedEntry.Factory.StructureDescription;
@@ -159,7 +161,7 @@ namespace HexMex.Scenes.Game
 
             // --- Description ---
             DrawNode.DrawText(columnWidth * 0.5f, y - headerHeight / 2, "Description", headerFont, headerSize);
-            DrawNode.DrawText(columnWidth * 0.5f, y - headerHeight - contentHeight / 2, structureDescription.VerbalStructureDescription.Description, contentFont, contentSize);
+            DrawNode.DrawText(columnWidth * 0.5f, y - headerHeight - contentHeight / 2, structureDescription.VerbalStructureDescription.DescriptionID.Translate(LanguageSettings), contentFont, contentSize);
 
             // --- Construction ---
             DrawNode.DrawText(columnWidth * 1.5f, y - headerHeight / 2, "Construction", headerFont, headerSize);
@@ -171,12 +173,12 @@ namespace HexMex.Scenes.Game
                 DrawNode.DrawText(columnWidth * 2.5f, y - headerHeight - contentHeight / 2, $"- Ingredients -{newLine}{structureDescription.ProductionInformation.Ingredients.GetText()}{newLine}- Products -{newLine}{structureDescription.ProductionInformation.Products.GetText()}{newLine}- Duration -{newLine}{structureDescription.ProductionInformation.ProductionTime} s", contentFont, contentSize);
             }
 
-            DrawNode.DrawText(ClientArea.Size.Width / 2, y - headerHeight - contentHeight - footerHeight / 2, "Construct", Font.ArialFonts[30], footerSize, new CCColor3B(colorCollection.GreenLight));
+            DrawNode.DrawText(ClientArea.Size.Width / 2, y - headerHeight - contentHeight - footerHeight / 2, "Construct", Font.ArialFonts[30], footerSize, colorCollection.BuildMenuConstructButtonForeground);
 
-            DrawNode.DrawRect(new CCPoint(0, y) + new CCSize(ClientArea.Size.Width, -headerHeight).Center, new CCSize(ClientArea.Size.Width, headerHeight), colorCollection.GrayDark, 1, colorCollection.White);
-            DrawNode.DrawRect(new CCPoint(0, y) + new CCSize(columnWidth, -headerHeight - contentHeight).Center + new CCPoint(columnWidth, 0) * 0, new CCSize(columnWidth, headerHeight + contentHeight), colorCollection.Transparent, 1, colorCollection.White);
-            DrawNode.DrawRect(new CCPoint(0, y) + new CCSize(columnWidth, -headerHeight - contentHeight).Center + new CCPoint(columnWidth, 0) * 1, new CCSize(columnWidth, headerHeight + contentHeight), colorCollection.Transparent, 1, colorCollection.White);
-            DrawNode.DrawRect(new CCPoint(0, y) + new CCSize(columnWidth, -headerHeight - contentHeight).Center + new CCPoint(columnWidth, 0) * 2, new CCSize(columnWidth, headerHeight + contentHeight), colorCollection.Transparent, 1, colorCollection.White);
+            DrawNode.DrawRect(new CCPoint(0, y) + new CCSize(ClientArea.Size.Width, -headerHeight).Center, new CCSize(ClientArea.Size.Width, headerHeight), colorCollection.BuildMenuHeaderBackground, 1, colorCollection.BuildMenuHeaderBorder);
+            DrawNode.DrawRect(new CCPoint(0, y) + new CCSize(columnWidth, -headerHeight - contentHeight).Center + new CCPoint(columnWidth, 0) * 0, new CCSize(columnWidth, headerHeight + contentHeight), colorCollection.BuildMenuGridBackground, 1, colorCollection.BuildMenuGridBorder);
+            DrawNode.DrawRect(new CCPoint(0, y) + new CCSize(columnWidth, -headerHeight - contentHeight).Center + new CCPoint(columnWidth, 0) * 1, new CCSize(columnWidth, headerHeight + contentHeight), colorCollection.BuildMenuGridBackground, 1, colorCollection.BuildMenuGridBorder);
+            DrawNode.DrawRect(new CCPoint(0, y) + new CCSize(columnWidth, -headerHeight - contentHeight).Center + new CCPoint(columnWidth, 0) * 2, new CCSize(columnWidth, headerHeight + contentHeight), colorCollection.BuildMenuGridBackground, 1, colorCollection.BuildMenuGridBorder);
 
         }
 
@@ -199,11 +201,11 @@ namespace HexMex.Scenes.Game
             public void Render()
             {
                 var colorCollection = BuildMenu.VisualSettings.ColorCollection;
-                var backColor = IsPressed ? colorCollection.GrayVeryDark : colorCollection.GrayDark;
-                var borderColor = IsSelected ? colorCollection.YellowNormal : colorCollection.White;
+                var backColor = IsPressed ? colorCollection.BuildMenuEntryPressedBackground : colorCollection.BuildMenuEntryReleasedBackground;
+                var borderColor = IsSelected ? colorCollection.BuildMenuEntrySelectedBorder : colorCollection.BuildMenuEntryNotSelectedBorder;
                 var borderThickness = BuildMenu.VisualSettings.BuildMenuButtonBorderThickness;
                 BuildMenu.DrawNode?.DrawRect(Position, backColor, borderThickness, borderColor);
-                BuildMenu.DrawNode?.DrawText(Position.Center, Factory.StructureDescription.VerbalStructureDescription.Name, Font.ArialFonts[16], Position.Size);
+                BuildMenu.DrawNode?.DrawText(Position.Center, Factory.StructureDescription.VerbalStructureDescription.NameID.Translate(BuildMenu.LanguageSettings), Font.ArialFonts[16], Position.Size);
             }
         }
     }

@@ -18,7 +18,7 @@ namespace HexMex.UnitTests
                               where !type.IsAbstract
                               where type.IsSubclassOf(typeof(Building))
                               let property = type.GetProperty("StructureDescription", BindingFlags.Static | BindingFlags.Public)
-                              where property == null || property.PropertyType.IsSubclassOf(typeof(StructureDescription))
+                              where property == null || property.PropertyType.IsSubclassOf(typeof(BuildingDescription))
                               select new {type.Name, Type = type}).ToArray();
             var dirtyNames = string.Join(", ", dirtyTypes.Select(a => a.Name));
             if (dirtyTypes.Any())

@@ -6,7 +6,7 @@ namespace HexMex.Game.Buildings
 {
     public class GoldExtractor : Building
     {
-        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<GoldExtractor>();
+        public static BuildingDescription StructureDescription { get; } = BuildingDescriptionDatabase.Get<GoldExtractor>();
 
         public GoldExtractor(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 

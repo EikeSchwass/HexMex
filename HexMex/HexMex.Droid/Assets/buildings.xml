@@ -1,0 +1,37 @@
+<xml>
+	<Buildings>
+		<Building Name="CoalRefinery">
+			<ConstructionInformation ConstructionTime="5">
+				<EnvironmentResource />
+				<Wood />
+				<Iron />
+				<Wood />
+			</ConstructionInformation>
+			<ProductionInformation ProductionTime="2">
+				<Ingredients>
+					<CoalOre Source="Hexagon" />
+				</Ingredients>
+				<Products>
+					<Coal />
+				</Products>
+			</ProductionInformation>
+		</Building>
+			<UnlockCost Knowledge1="5" />
+		<Building NameID="haborName" DescriptionID="haborDescription">
+			<ConstructionInformation ConstructionTime="5">
+				<Wood />
+				<Iron />
+				<Wood />
+			</ConstructionInformation>
+			<ProductionInformation ProductionTime="2">
+				<Ingredients>
+					<Diamond />
+					<PureWater Source="Hexagon" />
+				</Ingredients>
+				<Products>
+					<Anything />
+				</Products>
+			</ProductionInformation>
+		</Building>
+	</Buildings>
+</xml>

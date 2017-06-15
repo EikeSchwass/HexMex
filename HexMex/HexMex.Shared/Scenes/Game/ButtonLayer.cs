@@ -77,9 +77,9 @@ namespace HexMex.Scenes.Game
             {
                 var position = button.Position;
                 var delta = GameSettings.VisualSettings.BuildButtonRadius * 0.5f;
-                DrawNode.DrawCircle(position, GameSettings.VisualSettings.BuildButtonRadius, GameSettings.VisualSettings.ColorCollection.GrayNormal, GameSettings.VisualSettings.StructureBorderThickness, GameSettings.VisualSettings.ColorCollection.White);
-                DrawNode.DrawSegment(position - CCPoint.AnchorUpperLeft * delta, position + CCPoint.AnchorUpperLeft * delta, GameSettings.VisualSettings.PlusCrossRadius, GameSettings.VisualSettings.ColorCollection.White.ToColor4F());
-                DrawNode.DrawSegment(position - CCPoint.AnchorLowerRight * delta, position + CCPoint.AnchorLowerRight * delta, GameSettings.VisualSettings.PlusCrossRadius, GameSettings.VisualSettings.ColorCollection.White.ToColor4F());
+                DrawNode.DrawCircle(position, GameSettings.VisualSettings.BuildButtonRadius, GameSettings.VisualSettings.ColorCollection.BuildButtonBackground, GameSettings.VisualSettings.StructureBorderThickness, GameSettings.VisualSettings.ColorCollection.BuildButtonBorder);
+                DrawNode.DrawSegment(position - CCPoint.AnchorUpperLeft * delta, position + CCPoint.AnchorUpperLeft * delta, GameSettings.VisualSettings.PlusCrossRadius, GameSettings.VisualSettings.ColorCollection.BuildButtonForeground);
+                DrawNode.DrawSegment(position - CCPoint.AnchorLowerRight * delta, position + CCPoint.AnchorLowerRight * delta, GameSettings.VisualSettings.PlusCrossRadius, GameSettings.VisualSettings.ColorCollection.BuildButtonForeground);
             }
         }
 

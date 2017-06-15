@@ -38,7 +38,7 @@ namespace HexMex.Scenes.Game
             {
                 var radius = World.GameSettings.VisualSettings.ResourcePackageRadius;
                 var posiition = package.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
-                DrawNode.DrawCircle(posiition, radius, package.ResourceType.GetColor(World.GameSettings.VisualSettings.ColorCollection), 3, World.GameSettings.VisualSettings.ColorCollection.White);
+                DrawNode.DrawCircle(posiition, radius, package.ResourceType.GetColor(World.GameSettings.VisualSettings.ColorCollection), 3, World.GameSettings.VisualSettings.ColorCollection.ResourcePackageBorder);
             }
         }
 

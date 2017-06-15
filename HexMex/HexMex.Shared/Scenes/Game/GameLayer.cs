@@ -43,7 +43,7 @@ namespace HexMex.Scenes.Game
 
             TouchLayers = new ReadOnlyCollection<TouchLayer>(layers.OfType<TouchLayer>().Reverse().ToList());
 
-            BuildMenu = new BuildMenu(World.UnlockManager, World.GameSettings.VisualSettings);
+            BuildMenu = new BuildMenu(World.UnlockManager, World.GameSettings.VisualSettings,World.GameSettings.LanguageSettings);
             BuildMenu.ConstructionRequested += ConstructBuilding;
             StructureMenu = new StructureMenu(World.GameSettings.VisualSettings, World);
 

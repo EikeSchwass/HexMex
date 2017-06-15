@@ -1,36 +1,35 @@
 ﻿using System;
-using HexMex.Game.Buildings;
-using HexMex.Helper;
-using static HexMex.Game.ResourceType;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Xml;
 
 namespace HexMex.Game
 {
-    public static class StructureDescriptionDatabase
+    public class BuildingDescriptionDatabase
     {
-        private static StructureDescription BarrelBlacksmith { get; }
-        private static StructureDescription BrickFactory { get; }
-        private static StructureDescription CircuitFactory { get; }
-        private static StructureDescription CoalPowerplant { get; }
-        private static StructureDescription CoalRefinery { get; }
-        private static StructureDescription CopperExtractor { get; }
-        private static StructureDescription DiamondExtractor { get; }
-        private static StructureDescription Forestry { get; }
-        private static StructureDescription GlasFactory { get; }
-        private static StructureDescription GoldExtractor { get; }
-        private static StructureDescription Habor { get; }
-        private static StructureDescription IronExtractor { get; }
-        private static StructureDescription Laboratory1 { get; }
-        private static StructureDescription Laboratory2 { get; }
-        private static StructureDescription Laboratory3 { get; }
-        private static StructureDescription PaperFactory { get; }
-        private static StructureDescription PotaschFactory { get; }
-        private static StructureDescription SandFactory { get; }
-        private static StructureDescription SolarPowerplant { get; }
-        private static StructureDescription ToolBlacksmith { get; }
-        private static StructureDescription WaterPowerplant { get; }
-        private static StructureDescription WaterPump { get; }
+        public ReadOnlyCollection<BuildingDescription> BuildingDescriptions { get; }
 
-        static StructureDescriptionDatabase()
+        private BuildingDescriptionDatabase(IList<BuildingDescription> buildingDescriptions)
+        {
+            BuildingDescriptions = new ReadOnlyCollection<BuildingDescription>(buildingDescriptions);
+        }
+
+        public static BuildingDescriptionDatabase CreateFromXml(string xml)
+        {
+            List<BuildingDescription> buildingDescriptions = new List<BuildingDescription>();
+            using (var xmlReader = XmlReader.Create(new StringReader(xml)))
+            {
+                var enumerableBuilding = ReadBuildingsFromXml(xmlReader);
+                buildingDescriptions.AddRange(enumerableBuilding);
+            }
+
+            return new BuildingDescriptionDatabase(buildingDescriptions);
+        }
+
+        /*static StructureDescriptionDatabase()
         {
             Habor = new StructureDescription(new VerbalStructureDescription("Habor", "Must be placed adjacent to water. Trades diamonds for needed resources."),
                                              new Knowledge(10, 0, 0),
@@ -166,57 +165,170 @@ namespace HexMex.Game
                                                        new ResourceCollection(Energy, Energy),
                                                        1f);
         }
+        */
 
-        public static StructureDescription Get<T>() where T : Building => Get(typeof(T));
+        public BuildingDescription ByNameKey(string nameKey) => BuildingDescriptions.FirstOrDefault(b => Equals(b.VerbalStructureDescription.NameID, new TranslationKey(nameKey)));
 
-        public static StructureDescription Get(Type buildingType)
+        private static BuildingDescription LoadBuilding(XmlReader reader)
         {
-            if (buildingType == typeof(BarrelBlacksmith))
-                return BarrelBlacksmith;
-            if (buildingType == typeof(BrickFactory))
-                return BrickFactory;
-            if (buildingType == typeof(CircuitFactory))
-                return CircuitFactory;
-            if (buildingType == typeof(CoalPowerplant))
-                return CoalPowerplant;
-            if (buildingType == typeof(CoalRefinery))
-                return CoalRefinery;
-            if (buildingType == typeof(CopperExtractor))
-                return CopperExtractor;
-            if (buildingType == typeof(DiamondExtractor))
-                return DiamondExtractor;
-            if (buildingType == typeof(Forestry))
-                return Forestry;
-            if (buildingType == typeof(GlasFactory))
-                return GlasFactory;
-            if (buildingType == typeof(GoldExtractor))
-                return GoldExtractor;
-            if (buildingType == typeof(Habor))
-                return Habor;
-            if (buildingType == typeof(IronExtractor))
-                return IronExtractor;
-            if (buildingType == typeof(Laboratory1))
-                return Laboratory1;
-            if (buildingType == typeof(Laboratory2))
-                return Laboratory2;
-            if (buildingType == typeof(Laboratory3))
-                return Laboratory3;
-            if (buildingType == typeof(PaperFactory))
-                return PaperFactory;
-            if (buildingType == typeof(PotaschFactory))
-                return PotaschFactory;
-            if (buildingType == typeof(SandFactory))
-                return SandFactory;
-            if (buildingType == typeof(SolarPowerplant))
-                return SolarPowerplant;
-            if (buildingType == typeof(ToolBlacksmith))
-                return ToolBlacksmith;
-            if (buildingType == typeof(WaterPowerplant))
-                return WaterPowerplant;
-            if (buildingType == typeof(WaterPump))
-                return WaterPump;
+            var name = reader.GetAttribute("Name") ?? "empty";
+            name = name[0].ToString().ToLower() + name.Substring(1);
+            var nameID = name + "Name";
+            var descriptionID = name + "Description";
+            var verbalStructureDescription = new VerbalStructureDescription(new TranslationKey(nameID), new TranslationKey(descriptionID));
+            ConstructionInformation constructionInformation = null;
+            ProductionInformation productionInformation = null;
+            RenderInformation renderInformation = new RenderInformation(name + "Fill", name + "Border");
+            Knowledge unlockCost = Knowledge.Zero;
 
-            throw new ArgumentException(nameof(buildingType));
+            do
+            {
+                reader.Read();
+                if (!reader.IsStartElement())
+                    continue;
+                switch (reader.Name)
+                {
+                    case "ConstructionInformation":
+                        constructionInformation = LoadConstructionInformation(reader);
+                        break;
+                    case "ProductionInformation":
+                        productionInformation = LoadProductionInformation(reader);
+                        break;
+                    case "UnlockCost":
+                        unlockCost = LoadUnlockCost(reader);
+                        break;
+                }
+            }
+            while (!(string.Equals(reader.Name, "Building") && !reader.IsStartElement()));
+            return new BuildingDescription(verbalStructureDescription, unlockCost, constructionInformation, productionInformation, renderInformation);
+        }
+
+        private static ConstructionInformation LoadConstructionInformation(XmlReader reader)
+        {
+            float constructionTime = Convert.ToSingle(reader["ConstructionTime"]);
+            List<ResourceTypeSource> resources = new List<ResourceTypeSource>();
+            EnvironmentResource environmentResource = new EnvironmentResource();
+            do
+            {
+                reader.Read();
+                reader.MoveToContent();
+                if (reader.Name == nameof(EnvironmentResource))
+                {
+                    int co2 = Convert.ToInt32(reader["CO2"] ?? "0");
+                    int o2 = Convert.ToInt32(reader["O2"] ?? "0");
+                    int energy = Convert.ToInt32(reader["Energy"] ?? "0");
+                    environmentResource = new EnvironmentResource(co2, o2, energy);
+                }
+                else if (reader.NodeType == XmlNodeType.Element)
+                {
+                    var resourceName = reader.Name;
+                    bool fromHexagon = Convert.ToBoolean(reader["FromHexagon"] ?? "False", CultureInfo.InvariantCulture);
+                    var resourceType = (ResourceType)Enum.Parse(typeof(ResourceType), resourceName);
+                    var resourceTypeSource = new ResourceTypeSource(resourceType, fromHexagon ? SourceType.Hexagon : SourceType.Network);
+                    resources.Add(resourceTypeSource);
+                }
+            }
+            while (reader.IsStartElement() || reader.Name != "ConstructionInformation");
+            var constructionInformation = new ConstructionInformation(constructionTime, environmentResource, resources.ToArray());
+            return constructionInformation;
+        }
+
+        private static ProductionInformation LoadProductionInformation(XmlReader reader)
+        {
+            float productionTime = Convert.ToSingle(reader[nameof(ProductionInformation.ProductionTime)]);
+            List<ResourceTypeSource> ingredients = new List<ResourceTypeSource>();
+            List<ResourceTypeSource> products = new List<ResourceTypeSource>();
+            EnvironmentResource ingredientEnvironmentResource = new EnvironmentResource();
+            EnvironmentResource productsEnvironmentResource = new EnvironmentResource();
+            do
+            {
+                reader.Read();
+
+                if (reader.IsStartElement(nameof(ProductionInformation.Ingredients)))
+                {
+                    reader.Read();
+                    reader.MoveToContent();
+                    do
+                    {
+                        if (reader.Name == nameof(EnvironmentResource))
+                        {
+                            int co2 = Convert.ToInt32(reader["CO2"] ?? "0");
+                            int o2 = Convert.ToInt32(reader["O2"] ?? "0");
+                            int energy = Convert.ToInt32(reader["Energy"] ?? "0");
+                            ingredientEnvironmentResource = new EnvironmentResource(co2, o2, energy);
+                        }
+                        else
+                        {
+                            var resourceName = reader.Name;
+                            bool fromHexagon = reader["Source"] == "Hexagon";
+                            var resourceType = (ResourceType)Enum.Parse(typeof(ResourceType), resourceName);
+                            var resourceTypeSource = new ResourceTypeSource(resourceType, fromHexagon ? SourceType.Hexagon : SourceType.Network);
+                            ingredients.Add(resourceTypeSource);
+                        }
+                        reader.Read();
+                        reader.MoveToContent();
+                    }
+                    while (reader.IsStartElement() || reader.Name != nameof(ProductionInformation.Ingredients));
+                }
+                else if (reader.IsStartElement(nameof(ProductionInformation.Products)))
+                {
+                    reader.Read();
+                    reader.MoveToContent();
+                    do
+                    {
+                        if (reader.Name == nameof(EnvironmentResource))
+                        {
+                            int co2 = Convert.ToInt32(reader["CO2"] ?? "0");
+                            int o2 = Convert.ToInt32(reader["O2"] ?? "0");
+                            int energy = Convert.ToInt32(reader["Energy"] ?? "0");
+                            productsEnvironmentResource = new EnvironmentResource(co2, o2, energy);
+                        }
+                        else
+                        {
+                            var resourceName = reader.Name;
+                            bool fromHexagon = Convert.ToBoolean(reader["FromHexagon"] ?? "False", CultureInfo.InvariantCulture);
+                            var resourceType = (ResourceType)Enum.Parse(typeof(ResourceType), resourceName);
+                            var resourceTypeSource = new ResourceTypeSource(resourceType, fromHexagon ? SourceType.Hexagon : SourceType.Network);
+                            products.Add(resourceTypeSource);
+                        }
+                        reader.Read();
+                        reader.MoveToContent();
+                    }
+                    while (reader.IsStartElement() || reader.Name != nameof(ProductionInformation.Products));
+                }
+            }
+            while (reader.IsStartElement() || reader.Name != nameof(ProductionInformation));
+            var productionInformation = new ProductionInformation(new IngredientsCollection(ingredientEnvironmentResource, ingredients.ToArray()), new ProductsCollection(productsEnvironmentResource, products.ToArray()), productionTime);
+            return productionInformation;
+        }
+
+        private static Knowledge LoadUnlockCost(XmlReader reader)
+        {
+            var k1 = Convert.ToInt32(reader["Knowledge1"] ?? "0");
+            var k2 = Convert.ToInt32(reader["Knowledge2"] ?? "0");
+            var k3 = Convert.ToInt32(reader["Knowledge3"] ?? "0");
+
+            return new Knowledge(k1, k2, k3);
+        }
+
+        private static IEnumerable<BuildingDescription> ReadBuildingsFromXml(XmlReader reader)
+        {
+            while (reader.Read())
+            {
+                if (reader.IsStartElement("xml"))
+                    continue;
+                if (!reader.IsStartElement())
+                    continue;
+                if (reader.IsStartElement("Buildings"))
+                    break;
+            }
+            while (reader.Read())
+            {
+                if (reader.IsStartElement("Building"))
+                {
+                    yield return LoadBuilding(reader);
+                }
+            }
         }
     }
 }

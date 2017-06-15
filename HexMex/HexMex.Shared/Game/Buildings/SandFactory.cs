@@ -6,7 +6,7 @@ namespace HexMex.Game.Buildings
 {
     public class SandFactory : Building
     {
-        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<SandFactory>();
+        public static BuildingDescription StructureDescription { get; } = BuildingDescriptionDatabase.Get<SandFactory>();
 
         public SandFactory(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 

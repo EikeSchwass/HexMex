@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace HexMex.Game.Buildings
 {
-    public abstract class Building : Structure, IHasProgress
+    public class Building : Structure, IHasProgress
     {
         public event Action<Building> ProductionCompleted;
         public event Action<Building> ProductionStarted;
@@ -17,12 +17,13 @@ namespace HexMex.Game.Buildings
         private bool NotifiedAddedToWorld { get; set; }
         private bool Enqueued { get; set; }
 
-        protected Building(HexagonNode position, World world, StructureDescription structureDescription) : base(position, world, structureDescription)
+        public Building(HexagonNode position, World world, BuildingDescription buildingDescription) : base(position, world, buildingDescription)
         {
-            ProductionTime = structureDescription.ProductionInformation.ProductionTime;
+            ProductionTime = buildingDescription.ProductionInformation.ProductionTime;
             ResourceDirector.AllIngredientsArrived += ResourceDirector_AllIngredientsArrived;
             ResourceDirector.AllProvisionsLeft += ResourceDirector_AllProvisionsLeft;
         }
+        
 
         public void Resume()
         {
@@ -33,7 +34,6 @@ namespace HexMex.Game.Buildings
         {
             IsSuspended = true;
         }
-
         public override void Update(float dt)
         {
             base.Update(dt);
@@ -47,27 +47,6 @@ namespace HexMex.Game.Buildings
             CurrentProductionTime += dt;
             if (CurrentProductionTime >= ProductionTime && !ResourceDirector.PendingProvisions.Any())
                 CompleteProduction();
-        }
-
-        protected virtual void OnAddedToWorld()
-        {
-            RequestIngredients();
-        }
-
-        protected virtual void OnProductionCompleted()
-        {
-            ResourceDirector.ProvideResources(Description.ProductionInformation.Products.ResourceTypes.ToArray());
-            World.GlobalResourceManager.EnvironmentResource += Description.ProductionInformation.Products.EnvironmentResource;
-        }
-
-        protected virtual void OnProductionStarted()
-        {
-            RequestIngredients();
-        }
-
-        protected virtual void RequestIngredients()
-        {
-            ResourceDirector.RequestIngredients(Description.ProductionInformation.Ingredients.ResourceTypes.ToArray());
         }
 
         protected void CheckAndStartProduction()
@@ -96,6 +75,27 @@ namespace HexMex.Game.Buildings
                     ProductionStarted?.Invoke(this);
                 }
             }
+        }
+
+        protected virtual void OnAddedToWorld()
+        {
+            RequestIngredients();
+        }
+
+        protected virtual void OnProductionCompleted()
+        {
+            ResourceDirector.ProvideResources(Description.ProductionInformation.Products.ResourceTypes.ToArray());
+            World.GlobalResourceManager.EnvironmentResource += Description.ProductionInformation.Products.EnvironmentResource;
+        }
+
+        protected virtual void OnProductionStarted()
+        {
+            RequestIngredients();
+        }
+
+        protected virtual void RequestIngredients()
+        {
+            ResourceDirector.RequestIngredients(Description.ProductionInformation.Ingredients.ResourceTypes.ToArray());
         }
 
         private void CompleteProduction()

@@ -4,7 +4,7 @@ using HexMex.Controls;
 namespace HexMex.Game.Buildings {
     public class BrickFactory : Building
     {
-        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<BrickFactory>();
+        public static BuildingDescription StructureDescription { get; } = BuildingDescriptionDatabase.Get<BrickFactory>();
 
         public BrickFactory(HexagonNode position, World world) : base(position, world, StructureDescription) { }
 

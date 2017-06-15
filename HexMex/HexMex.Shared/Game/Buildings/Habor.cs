@@ -5,7 +5,7 @@ namespace HexMex.Game.Buildings
 {
     public class Habor : Building
     {
-        public static StructureDescription StructureDescription { get; } = StructureDescriptionDatabase.Get<Habor>();
+        public static BuildingDescription StructureDescription { get; } = BuildingDescriptionDatabase.Get<Habor>();
 
         public Habor(HexagonNode position, World world) : base(position, world, StructureDescription)
         {

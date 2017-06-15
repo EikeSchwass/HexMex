@@ -119,14 +119,14 @@ namespace HexMex.Scenes.Game
                     pendingRequests.Remove(resourceType.ResourceType);
                 float x = i * ingredientSpacing + ingredientSpacing / 2 + topLeft.X;
                 var resourceColor = resourceType.ResourceType.GetColor(colorCollection);
-                DrawNode.DrawCircle(new CCPoint(x, ingredientY), resourceRadius, resourceColor, 2, arrived ? colorCollection.White : colorCollection.GrayNormal);
+                DrawNode.DrawCircle(new CCPoint(x, ingredientY), resourceRadius, resourceColor, 2, arrived ? colorCollection.StructureMenuResourceArrivedBorder : colorCollection.StructureMenuResourceNotArrivedBorder);
             }
 
             var structurePosition = new CCPoint(topLeft.X + size.Width / 2, structureY);
             Structure.Render(DrawNode, structurePosition, structureRadius);
             if (Structure is IHasProgress progressStructure)
             {
-                var arcColor = CCColor4B.Lerp(World.GameSettings.VisualSettings.ColorCollection.Black, World.GameSettings.VisualSettings.ColorCollection.Transparent, 0.25f);
+                var arcColor = colorCollection.StructureMenuProgressCircleFill;
                 DrawNode.DrawSolidArc(structurePosition, structureRadius * World.GameSettings.VisualSettings.ProgressRadiusFactor, (float)(progressStructure.Progress * PI * 2), arcColor);
             }
 
@@ -141,7 +141,7 @@ namespace HexMex.Scenes.Game
                         pendingProvisions.Remove(resourceType);
                     float x = i * productsSpacing + productsSpacing / 2 + topLeft.X;
                     var resourceColor = resourceType.GetColor(colorCollection);
-                    DrawNode.DrawCircle(new CCPoint(x, productsY), resourceRadius, resourceColor, 2, provided ? colorCollection.White : colorCollection.GrayNormal);
+                    DrawNode.DrawCircle(new CCPoint(x, productsY), resourceRadius, resourceColor, 2, provided ? colorCollection.StructureMenuResourceArrivedBorder : colorCollection.StructureMenuResourceNotArrivedBorder);
                 }
             }
         }
@@ -164,13 +164,14 @@ namespace HexMex.Scenes.Game
             float footerHeight = ClientArea.Size.Height / 8;
             float descriptionHeight = ClientArea.Size.Height / 8;
             float contentHeight = ClientArea.Size.Height - headerHeight - descriptionHeight - footerHeight;
-            DrawNode.DrawRect(ClientArea.Size.Center.InvertY, ClientArea.Size, CCColor4B.Lerp(colorCollection.GrayVeryDark, colorCollection.Transparent, 0.25f), VisualSettings.BuildMenuBorderThickness, colorCollection.White);
-            DrawNode.DrawRect(new CCPoint(ClientArea.Size.Width / 2, -headerHeight / 2), ClientArea.Size.Width, headerHeight, colorCollection.Transparent, 1, colorCollection.White);
-            DrawNode.DrawRect(new CCPoint(ClientArea.Size.Width / 2, -headerHeight - descriptionHeight / 2), ClientArea.Size.Width, descriptionHeight, colorCollection.Transparent, 1, colorCollection.White);
-            DrawNode.DrawRect(new CCPoint(ClientArea.Size.Width / 2, -headerHeight - descriptionHeight - contentHeight / 2), ClientArea.Size.Width, contentHeight, colorCollection.Transparent, 1, colorCollection.White);
-            DrawNode.DrawRect(new CCPoint(ClientArea.Size.Width / 2, -headerHeight - descriptionHeight - contentHeight - footerHeight / 2), ClientArea.Size.Width, footerHeight, colorCollection.Transparent, 1, colorCollection.White);
-            DrawNode.DrawText(ClientArea.Size.Center.X, -headerHeight / 2, Structure.Description.VerbalStructureDescription.Name, Font.ArialFonts[VisualSettings.StructureMenuHeaderFontSize], new CCSize(ClientArea.Size.Width, headerHeight));
-            DrawNode.DrawText(ClientArea.Size.Center.X, -headerHeight - descriptionHeight / 2, Structure.Description.VerbalStructureDescription.Description, Font.ArialFonts[VisualSettings.StructureMenuDescriptionFontSize], new CCSize(ClientArea.Size.Width, descriptionHeight));
+            DrawNode.DrawRect(ClientArea.Size.Center.InvertY, ClientArea.Size, colorCollection.StructureMenuBackground, VisualSettings.BuildMenuBorderThickness, colorCollection.StructureMenuBorder);
+            DrawNode.DrawRect(new CCPoint(ClientArea.Size.Width / 2, -headerHeight / 2), ClientArea.Size.Width, headerHeight, colorCollection.StructureMenuGridBackground, 1, colorCollection.StructureMenuGridBorder);
+            DrawNode.DrawRect(new CCPoint(ClientArea.Size.Width / 2, -headerHeight - descriptionHeight / 2), ClientArea.Size.Width, descriptionHeight, colorCollection.StructureMenuGridBackground, 1, colorCollection.StructureMenuGridBorder);
+            DrawNode.DrawRect(new CCPoint(ClientArea.Size.Width / 2, -headerHeight - descriptionHeight - contentHeight / 2), ClientArea.Size.Width, contentHeight, colorCollection.StructureMenuGridBackground, 1, colorCollection.StructureMenuGridBorder);
+            DrawNode.DrawRect(new CCPoint(ClientArea.Size.Width / 2, -headerHeight - descriptionHeight - contentHeight - footerHeight / 2), ClientArea.Size.Width, footerHeight, colorCollection.StructureMenuGridBackground, 1, colorCollection.StructureMenuGridBorder);
+            var languageSettings = World.GameSettings.LanguageSettings;
+            DrawNode.DrawText(ClientArea.Size.Center.X, -headerHeight / 2, Structure.Description.VerbalStructureDescription.NameID.Translate(languageSettings), Font.ArialFonts[VisualSettings.StructureMenuHeaderFontSize], new CCSize(ClientArea.Size.Width, headerHeight));
+            DrawNode.DrawText(ClientArea.Size.Center.X, -headerHeight - descriptionHeight / 2, Structure.Description.VerbalStructureDescription.DescriptionID.Translate(languageSettings), Font.ArialFonts[VisualSettings.StructureMenuDescriptionFontSize], new CCSize(ClientArea.Size.Width, descriptionHeight));
             if (Structure is Building building)
             {
                 if (SuspendEntry == null)
@@ -183,8 +184,8 @@ namespace HexMex.Scenes.Game
                     var area = new CCRect(ClientArea.MinX + ClientArea.Size.Width / 2, -headerHeight - contentHeight - descriptionHeight - footerHeight, ClientArea.Size.Width / 2, footerHeight);
                     DeconstructEntry = new StructureMenuEntry(this, area);
                 }
-                DrawNode.DrawText(ClientArea.Size.Center.X - ClientArea.Size.Width / 4, -headerHeight - contentHeight - descriptionHeight - footerHeight / 2, building.IsSuspended ? "Resume" : "Suspend", Font.ArialFonts[VisualSettings.StructureMenuFooterFontSize], new CCSize(ClientArea.Size.Width, footerHeight), new CCColor3B(SuspendEntry.IsPressed ? colorCollection.GreenVeryLight : colorCollection.White));
-                DrawNode.DrawText(ClientArea.Size.Center.X + ClientArea.Size.Width / 4, -headerHeight - contentHeight - descriptionHeight - footerHeight / 2, "Deconstruct", Font.ArialFonts[VisualSettings.StructureMenuFooterFontSize], new CCSize(ClientArea.Size.Width, footerHeight), new CCColor3B(DeconstructEntry.IsPressed ? colorCollection.GreenVeryLight : colorCollection.White));
+                DrawNode.DrawText(ClientArea.Size.Center.X - ClientArea.Size.Width / 4, -headerHeight - contentHeight - descriptionHeight - footerHeight / 2, building.IsSuspended ? "Resume" : "Suspend", Font.ArialFonts[VisualSettings.StructureMenuFooterFontSize], new CCSize(ClientArea.Size.Width, footerHeight), new CCColor3B(SuspendEntry.IsPressed ? colorCollection.StructureMenuSuspendButtonPressed : colorCollection.StructureMenuSuspendButtonReleased));
+                DrawNode.DrawText(ClientArea.Size.Center.X + ClientArea.Size.Width / 4, -headerHeight - contentHeight - descriptionHeight - footerHeight / 2, "Deconstruct", Font.ArialFonts[VisualSettings.StructureMenuFooterFontSize], new CCSize(ClientArea.Size.Width, footerHeight), new CCColor3B(DeconstructEntry.IsPressed ? colorCollection.StructureMenuDeconstructButtonPressed : colorCollection.StructureMenuDeconstructButtonReleased));
             }
             else
             {
@@ -193,7 +194,7 @@ namespace HexMex.Scenes.Game
                     var area = new CCRect(ClientArea.MinX, -headerHeight - contentHeight - descriptionHeight - footerHeight, ClientArea.Size.Width, footerHeight);
                     DeconstructEntry = new StructureMenuEntry(this, area);
                 }
-                DrawNode.DrawText(ClientArea.Size.Center.X, -headerHeight - contentHeight - descriptionHeight - footerHeight / 2, "Cancel", Font.ArialFonts[VisualSettings.StructureMenuFooterFontSize], new CCSize(ClientArea.Size.Width, footerHeight), new CCColor3B(DeconstructEntry.IsPressed ? colorCollection.GreenVeryLight : colorCollection.White));
+                DrawNode.DrawText(ClientArea.Size.Center.X, -headerHeight - contentHeight - descriptionHeight - footerHeight / 2, "Cancel", Font.ArialFonts[VisualSettings.StructureMenuFooterFontSize], new CCSize(ClientArea.Size.Width, footerHeight), new CCColor3B(DeconstructEntry.IsPressed ? colorCollection.StructureMenuCancelButtonPressed : colorCollection.StructureMenuCancelButtonReleased));
             }
             RenderContent(new CCPoint(0, -headerHeight - descriptionHeight), new CCSize(ClientArea.Size.Width, contentHeight));
         }

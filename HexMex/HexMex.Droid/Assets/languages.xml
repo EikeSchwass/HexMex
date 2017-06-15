@@ -1,0 +1,14 @@
+<xml>
+	<Languages>
+		<Language Name="English">
+			<Translation Key="habor">
+				Habor
+			</Translation>
+		</Language>
+		<Language Name="Deutsch">
+			<Translation Key="habor">
+				Hafen
+			</Translation>
+		</Language>
+	</Languages>
+</xml>

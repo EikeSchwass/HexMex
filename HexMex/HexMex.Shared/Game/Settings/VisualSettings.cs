@@ -5,7 +5,7 @@
         public float HexagonOuterBorderThickness { get; } = 2;
         public float HexagonInnerBorderThickness { get; } = 2;
         public float StructureBorderThickness { get; } = 2;
-        public ColorCollection ColorCollection { get; } = new DarkerColors();
+        public ColorCollection ColorCollection { get; }
         public float PlusCrossRadius { get; } = 4;
         public float DiceAnimationTime { get; } = 1f;
         public float DiceAnimationSize { get; } = 171;
@@ -25,5 +25,10 @@
         public int StructureMenuFooterFontSize { get; } = 24;
         public float StatisticsMargin { get; } = 20;
         public int StatisticsFontSize { get; } = 14;
+
+        public VisualSettings(ColorCollectionFile colorCollectionFile)
+        {
+            ColorCollection = new ColorCollection(colorCollectionFile);
+        }
     }
 }

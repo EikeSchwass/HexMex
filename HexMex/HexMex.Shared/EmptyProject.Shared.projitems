@@ -14,26 +14,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CircleBorderPosition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ExtendedDrawNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\StructureButton.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\BarrelBlacksmith.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\BrickFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\CircuitFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\CoalPowerplant.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\CopperExtractor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Forestry.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\GlasFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\GoldExtractor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Habor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\IronExtractor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Laboratory1.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Laboratory2.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Laboratory3.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\PaperFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\PotaschFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\SandFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\SolarPowerplant.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\ToolBlacksmith.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\WaterPowerplant.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\WaterPump.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ConstructionInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\EnvironmentResource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\GlobalResourceManager.cs" />
@@ -41,11 +21,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Game\Knowledge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ProducerInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ProductsCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\RenderInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceDirector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceTypeSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Settings\ColorCollectionFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Settings\ColorEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\Settings\LanguageSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\SourceType.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\StructureDescription.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\BuildingDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\DiceThrowResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Edge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Settings\GameplaySettings.cs" />
@@ -53,7 +37,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourcePackagePriorityQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceSpawnInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Settings\VisualSettings.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\StructureDescriptionDatabase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\BuildingDescriptionDatabase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game\TranslationKey.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\UnlockManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\VerbalStructureDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\StatisticLayer.cs" />
@@ -76,7 +61,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Game\EdgeManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\IHasProgress.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\IHasResourceStorage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\DiamondExtractor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\PathFinder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\RequestPriority.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceStorage.cs" />
@@ -101,7 +85,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Game\Hexagon.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ResourceType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Structure.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\CoalRefinery.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\StructureManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\World.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\Settings\GameSettings.cs" />
@@ -138,7 +121,6 @@
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controls\Buildings\" />
     <Folder Include="$(MSBuildThisFileDirectory)Controls\Dialogs\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Game\Settings\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)ResourceDiagram.dgml" />

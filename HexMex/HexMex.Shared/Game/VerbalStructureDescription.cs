@@ -2,18 +2,18 @@
 {
     public struct VerbalStructureDescription
     {
-        public string Name { get; }
-        public string Description { get; }
+        public TranslationKey NameID { get; }
+        public TranslationKey DescriptionID { get; }
 
-        public VerbalStructureDescription(string name, string descritpion)
+        public VerbalStructureDescription(TranslationKey name, TranslationKey description)
         {
-            Description = descritpion;
-            Name = name;
+            DescriptionID = description;
+            NameID = name;
         }
 
         public bool Equals(VerbalStructureDescription other)
         {
-            return string.Equals(Name, other.Name) && string.Equals(Description, other.Description);
+            return string.Equals(NameID, other.NameID) && string.Equals(DescriptionID, other.DescriptionID);
         }
         public override bool Equals(object obj)
         {
@@ -25,7 +25,7 @@
         {
             unchecked
             {
-                return ((Name != null ? Name.GetHashCode() : 0) * 397) ^ (Description != null ? Description.GetHashCode() : 0);
+                return (NameID.GetHashCode() * 397) ^ DescriptionID.GetHashCode();
             }
         }
         public static bool operator ==(VerbalStructureDescription left, VerbalStructureDescription right)

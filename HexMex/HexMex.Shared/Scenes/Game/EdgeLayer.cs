@@ -3,7 +3,6 @@ using System.Linq;
 using CocosSharp;
 using HexMex.Game;
 using HexMex.Game.Buildings;
-using HexMex.Helper;
 
 namespace HexMex.Scenes.Game
 {
@@ -41,7 +40,7 @@ namespace HexMex.Scenes.Game
                 {
                     var p1 = structure.Position.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
                     var p2 = accessibleNode.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
-                    var color = CCColor4B.Lerp(World.GameSettings.VisualSettings.ColorCollection.White, CCColor4B.Transparent, 0.1f).ToColor4F();
+                    var color = World.GameSettings.VisualSettings.ColorCollection.EdgeBackground;
                     DrawNode.DrawSegment(p1, p2, World.GameSettings.VisualSettings.EdgeThickness, color);
                 }
             }

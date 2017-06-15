@@ -1,5 +1,7 @@
 ﻿using System;
 using CocosSharp;
+using HexMex.Game;
+using HexMex.Game.Settings;
 using HexMex.Helper;
 using HexMex.Scenes.MainMenu;
 
@@ -8,15 +10,21 @@ namespace HexMex.Shared
     public class AppDelegate : CCApplicationDelegate
     {
         public ICanSuspendApp AppSuspender { get; }
+        public ColorCollectionFile ColorCollectionFile { get; }
+        public LanguageSettings LanguageSettings { get; }
+        private BuildingDescriptionDatabase BuildingDescriptionDatabase { get; }
 
         private DataLoader DataLoader { get; }
 
-        public AppDelegate(DataLoader dataLoader, ICanSuspendApp appSuspender)
+        public AppDelegate(DataLoader dataLoader, ICanSuspendApp appSuspender, BuildingDescriptionDatabase buildingDescriptionDatabase, ColorCollectionFile colorCollectionFile, LanguageSettings languageSettings)
         {
             if (DataLoader != null)
                 throw new InvalidOperationException("Only one AppDelegate can be instantiated");
             DataLoader = dataLoader;
             AppSuspender = appSuspender;
+            BuildingDescriptionDatabase = buildingDescriptionDatabase;
+            ColorCollectionFile = colorCollectionFile;
+            LanguageSettings = languageSettings;
         }
 
         public override void ApplicationDidEnterBackground(CCApplication application)
@@ -50,7 +58,7 @@ namespace HexMex.Shared
                 application.ContentSearchPaths.Add("ld");
                 CCSprite.DefaultTexelToContentSizeRatio = 1.0f;
             }
-            var scene = new MainMenuScene(mainWindow);
+            var scene = new MainMenuScene(mainWindow, BuildingDescriptionDatabase, ColorCollectionFile, LanguageSettings);
             mainWindow.RunWithScene(scene);
             mainWindow.DisplayStats = true;
             mainWindow.StatsScale = 5;
