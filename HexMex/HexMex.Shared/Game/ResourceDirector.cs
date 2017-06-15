@@ -63,7 +63,7 @@ namespace HexMex.Game
         {
             if (RequestedNetworkResourceList.Any() || RequestedHexagonResourceList.Any())
                 throw new InvalidOperationException("Can't request new Resources until all current requests are completed");
-            if (HasAdjacentWater && Structure.CanExtractWaterFromAdjacentHexagons && resourceTypes.Any(r => r.SourceType == SourceType.Network && r.ResourceType == ResourceType.Water))
+            if (HasAdjacentWater && Structure.Description.CanExtractWater && resourceTypes.Any(r => r.SourceType == SourceType.Network && r.ResourceType == ResourceType.Water))
             {
                 var waterCount = resourceTypes.Count(r => r.SourceType == SourceType.Network && (r.ResourceType == ResourceType.PureWater || r.ResourceType == ResourceType.Water));
                 resourceTypes = resourceTypes.Where(r => r.SourceType == SourceType.Network && r.ResourceType != ResourceType.Water && r.ResourceType != ResourceType.PureWater).ToArray();

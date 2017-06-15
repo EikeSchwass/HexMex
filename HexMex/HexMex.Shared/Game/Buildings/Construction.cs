@@ -15,7 +15,7 @@ namespace HexMex.Game.Buildings
 
         private bool ResourcesRequested { get; set; }
 
-        public Construction(HexagonNode position, BuildingDescription buildingDescription, World world) : base(position, world, new BuildingDescription(new VerbalStructureDescription(new TranslationKey("constructionName"), new TranslationKey("constructionDescription")), Knowledge.Zero, buildingDescription.ConstructionInformation, new RenderInformation("constructionFill", "constructionBorder")))
+        public Construction(HexagonNode position, BuildingDescription buildingDescription, World world) : base(position, world, new BuildingDescription(new VerbalStructureDescription(new TranslationKey("constructionName"), new TranslationKey("constructionDescription")), Knowledge.Zero, buildingDescription.ConstructionInformation, new RenderInformation("constructionFill", "constructionBorder"), false))
         {
             BuildingDescription = buildingDescription;
             ResourceDirector.AllIngredientsArrived += StartConstructing;

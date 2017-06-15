@@ -16,7 +16,7 @@
         </Products>
       </ProductionInformation>
     </Building>
-    <Building Name="Habor">
+    <Building Name="Habor" CanExtractWater="true">
       <UnlockCost Knowledge1="10" Knowledge2="4" />
       <ConstructionInformation ConstructionTime="5">
         <Wood />
@@ -69,6 +69,38 @@
         </Ingredients>
         <Products>
           <EnvironmentResource Energy="20" CO2="20" />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="WaterPowerPlant">
+      <UnlockCost Knowledge1="10" Knowledge2="10" />
+      <ConstructionInformation ConstructionTime="12">
+        <Coal />
+        <Copper />
+        <Iron />
+        <Wood />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="2">
+        <Ingredients>
+          <Water />
+        </Ingredients>
+        <Products>
+          <EnvironmentResource Energy="5" />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="CopperExtractor">
+      <ConstructionInformation ConstructionTime="8">
+        <Iron />
+        <Iron />
+        <Wood />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="2">
+        <Ingredients>
+          <Water />
+        </Ingredients>
+        <Products>
+          <EnvironmentResource Energy="5" />
         </Products>
       </ProductionInformation>
     </Building>

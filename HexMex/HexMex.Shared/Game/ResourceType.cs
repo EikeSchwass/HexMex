@@ -43,6 +43,6 @@ namespace HexMex.Game
         // Groups
         Water = PureWater | WaterBarrel,
         Degradeable = CoalOre | Stone | IronOre | CopperOre | GoldOre,
-        Anything = (1 << 27) - 1 - Energy - Knowledge1 - Knowledge2 - Knowledge3
+        Anything = (1 << 27) - 1 - Energy - Knowledge1 - Knowledge2 - Knowledge3 - Diamond
     }
 }

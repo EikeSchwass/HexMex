@@ -30,6 +30,18 @@
 			</Translation>
 			<Translation Key="constructionDescription">
 				Constructs a building.
+			</Translation>	
+			<Translation Key="copperExtractorName">
+				Copper Extractor.
+			</Translation>
+			<Translation Key="waterPowerPlantName">
+				Water Power Plant
+			</Translation>
+			<Translation Key="waterPowerPlantDescription">
+				Generates a small amount of power by using the water current in one of its adjacent hexagons. 
+			</Translation>
+			<Translation Key="copperExtractorDescription">
+				Extracts Copper from adjacent hexagons.
 			</Translation>			
 		</Language>
 	</Languages>

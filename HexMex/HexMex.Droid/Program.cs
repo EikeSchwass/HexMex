@@ -24,6 +24,8 @@ namespace HexMex.Droid
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+            CCLog.Logger = (e, a) => { };
+            System.Diagnostics.Debug.WriteLine("");
 
 #if DEBUG
             Tests.RunTests();
@@ -60,36 +62,10 @@ namespace HexMex.Droid
             var buildingDescriptionDatabase = BuildingDescriptionDatabase.CreateFromXml(buildingXml);
             var colorCollectionFile = ColorCollectionFile.CreateFromXml(colorXml);
             var languageSettings = LoadLanguagesFromXml(languageXml);
-            CCApplication application = new CCApplication { ApplicationDelegate = new AppDelegate(new AndroidDataLoader(), this, buildingDescriptionDatabase, colorCollectionFile, languageSettings) };
+            CCApplication application = new CCApplication {ApplicationDelegate = new AppDelegate(new AndroidDataLoader(), this, buildingDescriptionDatabase, colorCollectionFile, languageSettings)};
 
             SetContentView(application.AndroidContentView);
             application.StartGame();
-        }
-
-        private LanguageSettings LoadLanguagesFromXml(string languageXml)
-        {
-            using (var reader = XmlReader.Create(new StringReader(languageXml)))
-            {
-                List<LanguageDefintion> languageDefintions = new List<LanguageDefintion>();
-                while (reader.Read())
-                {
-                    bool breakOut = false;
-                    while (!reader.IsStartElement("Language"))
-                    {
-                        if (!reader.Read())
-                        {
-                            breakOut = true;
-                            break;
-                        }
-                    }
-                    if(breakOut)
-                        break;
-                    var languageDefinition = LoadLanguageDefinition(reader);
-                    languageDefintions.Add(languageDefinition);
-                }
-                var languageSettings = new LanguageSettings(languageDefintions);
-                return languageSettings;
-            }
         }
         private LanguageDefintion LoadLanguageDefinition(XmlReader reader)
         {
@@ -109,6 +85,32 @@ namespace HexMex.Droid
             }
             while (reader.IsStartElement() || reader.Name != "Language");
             return new LanguageDefintion(name, translations);
+        }
+
+        private LanguageSettings LoadLanguagesFromXml(string languageXml)
+        {
+            using (var reader = XmlReader.Create(new StringReader(languageXml)))
+            {
+                List<LanguageDefintion> languageDefintions = new List<LanguageDefintion>();
+                while (reader.Read())
+                {
+                    bool breakOut = false;
+                    while (!reader.IsStartElement("Language"))
+                    {
+                        if (!reader.Read())
+                        {
+                            breakOut = true;
+                            break;
+                        }
+                    }
+                    if (breakOut)
+                        break;
+                    var languageDefinition = LoadLanguageDefinition(reader);
+                    languageDefintions.Add(languageDefinition);
+                }
+                var languageSettings = new LanguageSettings(languageDefintions);
+                return languageSettings;
+            }
         }
     }
 }

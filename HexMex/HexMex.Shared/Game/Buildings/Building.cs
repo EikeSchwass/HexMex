@@ -23,7 +23,6 @@ namespace HexMex.Game.Buildings
             ResourceDirector.AllIngredientsArrived += ResourceDirector_AllIngredientsArrived;
             ResourceDirector.AllProvisionsLeft += ResourceDirector_AllProvisionsLeft;
         }
-        
 
         public void Resume()
         {
@@ -42,20 +41,24 @@ namespace HexMex.Game.Buildings
                 OnAddedToWorld();
                 NotifiedAddedToWorld = true;
             }
-            if (!IsProducing || IsSuspended)
+            if (IsSuspended)
                 return;
-            CurrentProductionTime += dt;
-            if (CurrentProductionTime >= ProductionTime && !ResourceDirector.PendingProvisions.Any())
-                CompleteProduction();
+            if (IsProducing)
+            {
+                CurrentProductionTime += dt;
+                if (CurrentProductionTime >= ProductionTime && !ResourceDirector.PendingProvisions.Any())
+                    CompleteProduction();
+            }
         }
 
         protected void CheckAndStartProduction()
         {
-            if (ResourceDirector.ReadyForProduction && !IsProducing && !Enqueued)
+            if (!IsProducing && ResourceDirector.ReadyForProduction && !Enqueued)
             {
                 var energy = Description.ProductionInformation.Ingredients.EnvironmentResource.Energy;
                 if (energy > 0)
                 {
+                    Enqueued = true;
                     World.GlobalResourceManager.Enqueue(new EnergyPackage(energy,
                                                                           e =>
                                                                           {
@@ -65,7 +68,6 @@ namespace HexMex.Game.Buildings
                                                                               ProductionStarted?.Invoke(this);
                                                                               Enqueued = false;
                                                                           }));
-                    Enqueued = true;
                 }
                 else
                 {
@@ -84,8 +86,12 @@ namespace HexMex.Game.Buildings
 
         protected virtual void OnProductionCompleted()
         {
-            ResourceDirector.ProvideResources(Description.ProductionInformation.Products.ResourceTypes.ToArray());
             World.GlobalResourceManager.EnvironmentResource += Description.ProductionInformation.Products.EnvironmentResource;
+            var resourceTypeSources = Description.ProductionInformation.Products.ResourceTypes.ToArray();
+            if (resourceTypeSources.Any())
+                ResourceDirector.ProvideResources(resourceTypeSources);
+            else
+                ResourceDirector_AllProvisionsLeft(ResourceDirector);
         }
 
         protected virtual void OnProductionStarted()

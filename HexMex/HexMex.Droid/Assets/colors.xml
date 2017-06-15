@@ -32,7 +32,7 @@
         <Color ColorKey="structureMenuResourceNotArrivedBorder" Value="222222" />
         <Color ColorKey="structureMenuProgressCircleFill" Value="78787878" />
         <Color ColorKey="resourceDiamond" Value="c4d0df" />
-        <Color ColorKey="structureMenuResourceArrivedBorder" Value="eeeeee" />
+        <Color ColorKey="structureMenuResourceArrivedBorder" Value="dddddd" />
         <Color ColorKey="resourcePackageBorder" Value="ffffff" />
 		
 		<Color ColorKey="resourceTree" Value="16832a" />
@@ -60,5 +60,15 @@
 		<Color ColorKey="resourceCopper" Value="e08a66" />
 		<Color ColorKey="resourceIron" Value="cfdfe5" />
 		<Color ColorKey="resourceWood" Value="654831" />
+		
+		<Color ColorKey="structureMenuSuspendButtonPressed" Value="dddddd" />
+		
+		<Color ColorKey="coalRefineryFill" Value="211f24" />
+		<Color ColorKey="coalRefineryBorder" Value="ffffff" />
+		<Color ColorKey="copperExtractorFill" Value="e08a66" />
+		<Color ColorKey="copperExtractorBorder" Value="ffffff" />
+		<Color ColorKey="resourceWater" Value="4555ff" />
+		<Color ColorKey="waterPowerPlantFill" Value="4555ff" />
+		<Color ColorKey="waterPowerPlantBorder" Value="ffffff" />
 	</ColorCollection>
 </xml>

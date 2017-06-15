@@ -172,6 +172,7 @@ namespace HexMex.Game
         private static BuildingDescription LoadBuilding(XmlReader reader)
         {
             var name = reader.GetAttribute("Name") ?? "empty";
+            var canExtractWater = Convert.ToBoolean(reader["CanExtractWater"] ?? "False");
             name = name[0].ToString().ToLower() + name.Substring(1);
             var nameID = name + "Name";
             var descriptionID = name + "Description";
@@ -200,7 +201,7 @@ namespace HexMex.Game
                 }
             }
             while (!(string.Equals(reader.Name, "Building") && !reader.IsStartElement()));
-            return new BuildingDescription(verbalStructureDescription, unlockCost, constructionInformation, productionInformation, renderInformation);
+            return new BuildingDescription(verbalStructureDescription, unlockCost, constructionInformation, productionInformation, renderInformation, canExtractWater);
         }
 
         private static ConstructionInformation LoadConstructionInformation(XmlReader reader)
