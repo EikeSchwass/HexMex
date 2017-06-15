@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ResourceType">
+    <xs:attribute name="Source" default="Network" use="optional" type="ResourceSource" />
+  </xs:complexType>
+  <xs:complexType name="EnvironmentType" />
+  <xs:simpleType name="ResourceSource">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Hexagon" />
+      <xs:enumeration value="Network" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:group name="ResourceTypes">
+    <xs:choice>
+      <xs:element name="PureWater" type="ResourceType" />
+      <xs:element name="Tree" type="ResourceType" />
+      <xs:element name="Stone" type="ResourceType" />
+      <xs:element name="CoalOre" type="ResourceType" />
+      <xs:element name="IronOre" type="ResourceType" />
+      <xs:element name="GoldOre" type="ResourceType" />
+      <xs:element name="DiamondOre" type="ResourceType" />
+      <xs:element name="Gold" type="ResourceType" />
+      <xs:element name="Copper" type="ResourceType" />
+      <xs:element name="Iron" type="ResourceType" />
+      <xs:element name="Wood" type="ResourceType" />
+      <xs:element name="Coal" type="ResourceType" />
+      <xs:element name="Sand" type="ResourceType" />
+      <xs:element name="Brick" type="ResourceType" />
+      <xs:element name="Paper" type="ResourceType" />
+      <xs:element name="Circuit" type="ResourceType" />
+      <xs:element name="Tools" type="ResourceType" />
+      <xs:element name="Barrel" type="ResourceType" />
+      <xs:element name="Pottasche" type="ResourceType" />
+      <xs:element name="Glas" type="ResourceType" />
+      <xs:element name="WaterBarrel" type="ResourceType" />
+      <xs:element name="Diamond" type="ResourceType" />
+      <xs:element name="Water" type="ResourceType" />
+      <xs:element name="Degradeable" type="ResourceType" />
+      <xs:element name="Anything" type="ResourceType" />
+    </xs:choice>
+  </xs:group>
+  <xs:element name="xml">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="Buildings" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Building" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:all>
+                    <xs:element name="UnlockCost" minOccurs="0">
+                      <xs:complexType>
+                        <xs:attribute name="Knowledge1" default="0" type="xs:integer" use="optional" />
+                        <xs:attribute name="Knowledge2" default="0" type="xs:integer" use="optional" />
+                        <xs:attribute name="Knowledge3" default="0" type="xs:integer" use="optional" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="ConstructionInformation">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="EnvironmentResource" minOccurs="0">
+                            <xs:complexType>
+                              <xs:attribute name="CO2" default="0" type="xs:integer" use="optional" />
+                              <xs:attribute name="O2" default="0" type="xs:integer" use="optional" />
+                              <xs:attribute name="Energy" default="0" type="xs:integer" use="optional" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:group ref="ResourceTypes" maxOccurs="unbounded" minOccurs="1" />
+                        </xs:sequence>
+                        <xs:attribute name="ConstructionTime" use="required" type="xs:float" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="ProductionInformation" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Ingredients">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="EnvironmentResource" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:attribute name="CO2" default="0" type="xs:integer" use="optional" />
+                                    <xs:attribute name="O2" default="0" type="xs:integer" use="optional" />
+                                    <xs:attribute name="Energy" default="0" type="xs:integer" use="optional" />
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:group ref="ResourceTypes" maxOccurs="unbounded" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Products">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="EnvironmentResource" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:attribute name="CO2" default="0" type="xs:integer" use="optional" />
+                                    <xs:attribute name="O2" default="0" type="xs:integer" use="optional" />
+                                    <xs:attribute name="Energy" default="0" type="xs:integer" use="optional" />
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:group ref="ResourceTypes" maxOccurs="unbounded" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="ProductionTime" use="required" type="xs:float" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:all>
+                  <xs:attribute name="Name" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

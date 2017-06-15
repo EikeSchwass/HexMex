@@ -1,14 +1,36 @@
 <xml>
 	<Languages>
 		<Language Name="English">
-			<Translation Key="habor">
+			<Translation Key="diamondExtractorName">
+				Diamond Extractor
+			</Translation>
+			<Translation Key="diamondExtractorDescription">
+				Extracts Diamonds from adjacent hexagons.
+			</Translation>
+			<Translation Key="haborName">
 				Habor
 			</Translation>
-		</Language>
-		<Language Name="Deutsch">
-			<Translation Key="habor">
-				Hafen
+			<Translation Key="haborDescription">
+				Sells Diamonds for currently required resources.
 			</Translation>
+			<Translation Key="coalPowerPlantName">
+				Coal Power Plant
+			</Translation>
+			<Translation Key="coalPowerPlantDescription">
+				Burns coal from adjacent hexagons and produces power. Very high CO2 production.
+			</Translation>
+			<Translation Key="coalRefineryName">
+				Coal Mine
+			</Translation>
+			<Translation Key="coalRefineryDescription">
+				Extracts Coal from adjacent hexagons.
+			</Translation>	
+			<Translation Key="constructionName">
+				Construction
+			</Translation>
+			<Translation Key="constructionDescription">
+				Constructs a building.
+			</Translation>			
 		</Language>
 	</Languages>
 </xml>

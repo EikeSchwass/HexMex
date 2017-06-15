@@ -12,8 +12,9 @@ namespace HexMex.Scenes.Game
     {
         public UnlockManager UnlockManager { get; }
         public LanguageSettings LanguageSettings { get; }
+        public BuildingDescriptionDatabase BuildingDescriptionDatabase { get; }
         private BuildMenuEntry selectedEntry;
-        public event Action<BuildMenu, BuildingConstructionFactory> ConstructionRequested;
+        public event Action<BuildMenu, BuildingDescription> ConstructionRequested;
         private List<BuildMenuEntry> BuildMenuEntries { get; } = new List<BuildMenuEntry>();
         private CCRect ConstructButtonRect { get; set; }
         private bool ConstructButtonIsPressed { get; set; }
@@ -34,10 +35,11 @@ namespace HexMex.Scenes.Game
 
         public HexagonNode TargetNode { get; set; }
 
-        public BuildMenu(UnlockManager unlockManager, VisualSettings visualSettings, LanguageSettings languageSettings) : base(visualSettings)
+        public BuildMenu(UnlockManager unlockManager, VisualSettings visualSettings, LanguageSettings languageSettings, BuildingDescriptionDatabase buildingDescriptionDatabase) : base(visualSettings)
         {
             UnlockManager = unlockManager;
             LanguageSettings = languageSettings;
+            BuildingDescriptionDatabase = buildingDescriptionDatabase;
         }
 
         public override void TouchCancel(CCPoint position, TouchCancelReason reason)
@@ -85,7 +87,7 @@ namespace HexMex.Scenes.Game
         private void Construct()
         {
             Host.Close();
-            ConstructionRequested?.Invoke(this, SelectedEntry.Factory);
+            ConstructionRequested?.Invoke(this, SelectedEntry.BuildingDescription);
         }
 
         protected override void OnAddedToScene()
@@ -93,23 +95,23 @@ namespace HexMex.Scenes.Game
             DrawNode.Clear();
             base.OnAddedToScene();
             BuildMenuEntries.Clear();
-            var factories = BuildingConstructionFactory.Factories.Values.Where(k => UnlockManager[k.StructureDescription]).OrderBy(k => k.StructureDescription.VerbalStructureDescription.NameID).ToArray();
+            var buildingDescription = BuildingDescriptionDatabase.BuildingDescriptions.Where(k => UnlockManager[k]).OrderBy(k => k.VerbalStructureDescription.NameID).ToArray();
             var buttonsPerRow = VisualSettings.BuildMenuButtonsPerRow;
             var fontSize = VisualSettings.BuildMenuButtonFontSize;
             var margin = VisualSettings.BuildMenuButtonMargin;
             var buttonWidth = ClientArea.Size.Width / buttonsPerRow;
             var buttonHeight = fontSize * 2.5f;
             var buttonSize = new CCSize(buttonWidth - margin * 2, buttonHeight - margin * 2);
-            for (int i = 0; i < factories.Length; i++)
+            for (int i = 0; i < buildingDescription.Length; i++)
             {
-                var factory = factories[i];
+                var factory = buildingDescription[i];
                 float centerX = i % buttonsPerRow * buttonWidth + buttonWidth / 2;
                 // ReSharper disable once PossibleLossOfFraction
                 float centerY = -i / buttonsPerRow * buttonHeight - buttonHeight / 2;
                 var rect = new CCRect(centerX - buttonSize.Width / 2, centerY - buttonSize.Height / 2, buttonWidth - margin * 2, buttonHeight - margin * 2);
                 BuildMenuEntries.Add(new BuildMenuEntry(factory, rect, this));
             }
-            SelectedEntry = BuildMenuEntries.FirstOrDefault(bme => bme.Factory == SelectedEntry?.Factory) ?? BuildMenuEntries.FirstOrDefault();
+            SelectedEntry = BuildMenuEntries.FirstOrDefault(bme => bme == SelectedEntry) ?? BuildMenuEntries.FirstOrDefault();
             Render();
         }
 
@@ -139,7 +141,7 @@ namespace HexMex.Scenes.Game
             DrawNode.DrawRect(new CCPoint(ClientArea.Size.Width / 2, -ClientArea.Size.Height + ClientArea.Size.Height / 4), new CCSize(ClientArea.Size.Width, ClientArea.Size.Height / 2), colorCollection.BuildMenuSelectedBackground, 1, colorCollection.BuildMenuSelectedBorder);
 
             var y = -ClientArea.Size.Height / 2;
-            var structureDescription = SelectedEntry.Factory.StructureDescription;
+            var structureDescription = SelectedEntry.BuildingDescription;
             var newLine = Environment.NewLine;
 
             float totalHeight = ClientArea.Size.Height / 2;
@@ -184,16 +186,16 @@ namespace HexMex.Scenes.Game
 
         private class BuildMenuEntry
         {
-            public BuildingConstructionFactory Factory { get; }
+            public BuildingDescription BuildingDescription { get; }
             public CCRect Position { get; }
             public BuildMenu BuildMenu { get; }
 
             public bool IsSelected { get; set; }
             public bool IsPressed { get; set; }
 
-            public BuildMenuEntry(BuildingConstructionFactory factory, CCRect position, BuildMenu buildMenu)
+            public BuildMenuEntry(BuildingDescription buildingDescription, CCRect position, BuildMenu buildMenu)
             {
-                Factory = factory;
+                BuildingDescription = buildingDescription;
                 Position = position;
                 BuildMenu = buildMenu;
             }
@@ -205,7 +207,7 @@ namespace HexMex.Scenes.Game
                 var borderColor = IsSelected ? colorCollection.BuildMenuEntrySelectedBorder : colorCollection.BuildMenuEntryNotSelectedBorder;
                 var borderThickness = BuildMenu.VisualSettings.BuildMenuButtonBorderThickness;
                 BuildMenu.DrawNode?.DrawRect(Position, backColor, borderThickness, borderColor);
-                BuildMenu.DrawNode?.DrawText(Position.Center, Factory.StructureDescription.VerbalStructureDescription.NameID.Translate(BuildMenu.LanguageSettings), Font.ArialFonts[16], Position.Size);
+                BuildMenu.DrawNode?.DrawText(Position.Center, BuildingDescription.VerbalStructureDescription.NameID.Translate(BuildMenu.LanguageSettings), Font.ArialFonts[16], Position.Size);
             }
         }
     }

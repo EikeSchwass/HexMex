@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Xml;
@@ -9,10 +10,14 @@ namespace HexMex.Game.Settings
 {
     public class ColorCollectionFile
     {
+        private static List<string> MissingKeys { get; } = new List<string>();
+
+        private static string MissingString => string.Join(Environment.NewLine, MissingKeys);
+
         public string NameKey { get; }
         public string DescriptionKey { get; }
 
-        public CCColor4B this[string colorKey] => ColorEntries[colorKey];
+        public CCColor4B this[string colorKey] => GetByKey(colorKey);
         public float InnerHexagonBlendIntensity { get; }
         public float OuterHexagonBlendIntensity { get; }
         private Dictionary<string, CCColor4B> ColorEntries { get; } = new Dictionary<string, CCColor4B>();
@@ -64,7 +69,7 @@ namespace HexMex.Game.Settings
         }
         private static CCColor4B ParseColor(string colorString)
         {
-            int alpha = 255;
+            byte alpha = 255;
             int index = -2;
             if (colorString.Length == 8)
             {
@@ -75,12 +80,25 @@ namespace HexMex.Game.Settings
             var g = Parse(colorString.Substring(index += 2, 2));
             var b = Parse(colorString.Substring(index += 2, 2));
 
-            int Parse(string hexNumber)
+            byte Parse(string hexNumber)
             {
-                return Convert.ToInt32(hexNumber, 16);
+                return Convert.ToByte(hexNumber, 16);
             }
 
             return new CCColor4B(r, g, b, alpha);
+        }
+
+        private CCColor4B GetByKey(string colorKey)
+        {
+            if (ColorEntries.ContainsKey(colorKey))
+                return ColorEntries[colorKey];
+            var message = $"<Color ColorKey=\"{colorKey}\" Value=\"ff000000\" />";
+            if (!MissingKeys.Contains(message))
+            {
+                MissingKeys.Add(message);
+                Debug.WriteLine(MissingString);
+            }
+            return CCColor4B.Transparent;
         }
     }
 }

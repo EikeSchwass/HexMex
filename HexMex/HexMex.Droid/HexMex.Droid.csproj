@@ -164,6 +164,11 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\languages.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\buildings_schema.xsd">
+      <SubType>Designer</SubType>
+    </AndroidAsset>
+  </ItemGroup>
   <Import Project="..\HexMex.Shared\EmptyProject.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

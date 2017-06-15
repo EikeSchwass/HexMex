@@ -43,7 +43,7 @@ namespace HexMex.Scenes.Game
 
             TouchLayers = new ReadOnlyCollection<TouchLayer>(layers.OfType<TouchLayer>().Reverse().ToList());
 
-            BuildMenu = new BuildMenu(World.UnlockManager, World.GameSettings.VisualSettings,World.GameSettings.LanguageSettings);
+            BuildMenu = new BuildMenu(World.UnlockManager, World.GameSettings.VisualSettings,World.GameSettings.LanguageSettings,world.GameSettings.BuildingDescriptionDatabase);
             BuildMenu.ConstructionRequested += ConstructBuilding;
             StructureMenu = new StructureMenu(World.GameSettings.VisualSettings, World);
 
@@ -68,11 +68,11 @@ namespace HexMex.Scenes.Game
             World.Update(dt);
         }
 
-        private void ConstructBuilding(BuildMenu buildMenu, BuildingConstructionFactory selectedFactory)
+        private void ConstructBuilding(BuildMenu buildMenu, BuildingDescription buildingDescription)
         {
             if (World.StructureManager[buildMenu.TargetNode] != null)
                 throw new InvalidOperationException("Spot has to be empty");
-            var construction = new Construction(buildMenu.TargetNode, selectedFactory, World);
+            var construction = new Construction(buildMenu.TargetNode, buildingDescription, World);
             World.StructureManager.CreateStrucuture(construction);
         }
     }

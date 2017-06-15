@@ -1,8 +1,9 @@
+using System;
 using HexMex.Game.Settings;
 
 namespace HexMex.Game
 {
-    public struct TranslationKey
+    public struct TranslationKey : IComparable<TranslationKey>
     {
         private string Key { get; }
         public TranslationKey(string key)
@@ -27,7 +28,7 @@ namespace HexMex.Game
         }
         public override int GetHashCode()
         {
-            return (Key != null ? Key.GetHashCode() : 0);
+            return Key != null ? Key.GetHashCode() : 0;
         }
         public static bool operator ==(TranslationKey left, TranslationKey right)
         {
@@ -37,5 +38,11 @@ namespace HexMex.Game
         {
             return !left.Equals(right);
         }
+        public int CompareTo(TranslationKey other)
+        {
+            return string.Compare(Key, other.Key, StringComparison.Ordinal);
+        }
+
+        public override string ToString() => Key;
     }
 }

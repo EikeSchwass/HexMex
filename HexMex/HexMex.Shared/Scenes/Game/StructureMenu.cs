@@ -101,7 +101,7 @@ namespace HexMex.Scenes.Game
             var colorCollection = VisualSettings.ColorCollection;
             float resourceRadius = 16;
             float structureRadius = 64;
-            var ingredients = Structure.Description.ProductionInformation?.Ingredients.ResourceTypes.OrderBy(i => i).ToList() ?? Structure.Description.ConstructionInformation.ResourceTypes.OrderBy(i => i).ToList();
+            var ingredients = Structure.Description.ProductionInformation?.Ingredients.ResourceTypes.OrderBy(i => i.ResourceType).ToList() ?? Structure.Description.ConstructionInformation.ResourceTypes.OrderBy(i => i.ResourceType).ToList();
             var products = Structure.Description.ProductionInformation?.Products.ResourceTypes;
             float ingredientSpacing = size.Width / (ingredients.Count == 0 ? 1 : ingredients.Count);
             float productsSpacing = size.Width / (products?.Count == 0 ? 1 : products?.Count) ?? 1;

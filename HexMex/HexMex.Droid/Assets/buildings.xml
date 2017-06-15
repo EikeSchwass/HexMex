@@ -1,37 +1,76 @@
 <xml>
-	<Buildings>
-		<Building Name="CoalRefinery">
-			<ConstructionInformation ConstructionTime="5">
-				<EnvironmentResource />
-				<Wood />
-				<Iron />
-				<Wood />
-			</ConstructionInformation>
-			<ProductionInformation ProductionTime="2">
-				<Ingredients>
-					<CoalOre Source="Hexagon" />
-				</Ingredients>
-				<Products>
-					<Coal />
-				</Products>
-			</ProductionInformation>
-		</Building>
-			<UnlockCost Knowledge1="5" />
-		<Building NameID="haborName" DescriptionID="haborDescription">
-			<ConstructionInformation ConstructionTime="5">
-				<Wood />
-				<Iron />
-				<Wood />
-			</ConstructionInformation>
-			<ProductionInformation ProductionTime="2">
-				<Ingredients>
-					<Diamond />
-					<PureWater Source="Hexagon" />
-				</Ingredients>
-				<Products>
-					<Anything />
-				</Products>
-			</ProductionInformation>
-		</Building>
-	</Buildings>
+  <Buildings>
+    <Building Name="CoalRefinery">
+      <ConstructionInformation ConstructionTime="5">
+        <EnvironmentResource />
+        <Wood />
+        <Iron />
+        <Wood />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="2">
+        <Ingredients>
+          <CoalOre Source="Hexagon" />
+        </Ingredients>
+        <Products>
+          <Coal />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="Habor">
+      <UnlockCost Knowledge1="10" Knowledge2="4" />
+      <ConstructionInformation ConstructionTime="5">
+        <Wood />
+        <Iron />
+        <Wood />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="2">
+        <Ingredients>
+          <Diamond />
+          <PureWater Source="Hexagon" />
+        </Ingredients>
+        <Products>
+          <Anything />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="DiamondExtractor">
+      <UnlockCost Knowledge1="30" Knowledge2="20" Knowledge3="15" />
+      <ConstructionInformation ConstructionTime="15">
+        <EnvironmentResource CO2="15" Energy="50" />
+        <Iron />
+        <Iron />
+        <Iron />
+        <Copper />
+        <Circuit />
+        <Copper />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="5">
+        <Ingredients>
+          <EnvironmentResource Energy="10" />
+          <DiamondOre Source="Hexagon" />
+        </Ingredients>
+        <Products>
+          <EnvironmentResource CO2="5" />
+          <Diamond />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="CoalPowerPlant">
+      <ConstructionInformation ConstructionTime="10">
+        <Coal />
+        <Copper />
+        <Iron />
+        <Wood />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="1">
+        <Ingredients>
+          <CoalOre Source="Hexagon" />
+          <CoalOre Source="Hexagon" />
+        </Ingredients>
+        <Products>
+          <EnvironmentResource Energy="20" CO2="20" />
+        </Products>
+      </ProductionInformation>
+    </Building>
+  </Buildings>
 </xml>

@@ -9,12 +9,12 @@ namespace HexMex.Game
 
         public event Action<UnlockManager, BuildingDescription> NewStructureUnlocked;
 
-        public UnlockManager(GlobalResourceManager globalResourceManager)
+        public UnlockManager(GlobalResourceManager globalResourceManager,BuildingDescriptionDatabase buildingDescriptionDatabase)
         {
             GlobalResourceManager = globalResourceManager;
-            foreach (var buildingConstructionFactory in BuildingConstructionFactory.Factories.Values)
+            foreach (var buildingDescription in buildingDescriptionDatabase.BuildingDescriptions)
             {
-                UnlockedStructures.Add(buildingConstructionFactory.StructureDescription, false);
+                UnlockedStructures.Add(buildingDescription, buildingDescription.UnlockCost == Knowledge.Zero);
             }
         }
 
@@ -26,6 +26,7 @@ namespace HexMex.Game
             UnlockedStructures[structureDescription] = true;
             NewStructureUnlocked?.Invoke(this, structureDescription);
         }
+
         public bool this[BuildingDescription structureDescription] => UnlockedStructures[structureDescription];
     }
 }

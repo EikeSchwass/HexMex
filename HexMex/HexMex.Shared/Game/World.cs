@@ -23,9 +23,9 @@ namespace HexMex.Game
             GameSettings = gameSettings;
             StructureManager = new StructureManager();
             GlobalResourceManager = new GlobalResourceManager(GameSettings.GameplaySettings);
-            UnlockManager = new UnlockManager(GlobalResourceManager);
             HexagonManager = new HexagonManager(GameSettings.GameplaySettings);
             ButtonManager = new ButtonManager(GameSettings.LayoutSettings);
+            UnlockManager = new UnlockManager(GlobalResourceManager, gameSettings.BuildingDescriptionDatabase);
             PathFinder = new CachedPathFinder(HexagonManager, StructureManager, GameSettings.GameplaySettings);
             ResourceManager = new ResourceManager(this);
             StructureManager.StructureAdded += StructureAdded;
@@ -42,9 +42,9 @@ namespace HexMex.Game
             HexagonManager.RevealHexagonAt(p2);
             HexagonManager.RevealHexagonAt(p3);
 
-            StructureManager.CreateStrucuture(new Building(new HexagonNode(p1, p2, p3), this,GameSettings.BuildingDescriptionDatabase.ByNameKey("diamondName")));
-            StructureManager.CreateStrucuture(new Building(new HexagonNode(new HexagonPosition(1, 1, -2), p2, p3), this,GameSettings.BuildingDescriptionDatabase.ByNameKey("haborName")));
-            StructureManager.CreateStrucuture(new Building(new HexagonNode(new HexagonPosition(1, 1, -2), new HexagonPosition(2, 0, -2), p3), this,GameSettings.BuildingDescriptionDatabase.ByNameKey("solarPowerplantName")));
+            StructureManager.CreateStrucuture(new Building(new HexagonNode(p1, p2, p3), this, GameSettings.BuildingDescriptionDatabase.ByNameKey("diamondExtractorName")));
+            StructureManager.CreateStrucuture(new Building(new HexagonNode(new HexagonPosition(1, 1, -2), p2, p3), this, GameSettings.BuildingDescriptionDatabase.ByNameKey("haborName")));
+            StructureManager.CreateStrucuture(new Building(new HexagonNode(new HexagonPosition(1, 1, -2), new HexagonPosition(2, 0, -2), p3), this, GameSettings.BuildingDescriptionDatabase.ByNameKey("coalPowerPlantName")));
 
             IsInitialized = true;
         }

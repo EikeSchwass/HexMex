@@ -9,6 +9,7 @@ namespace HexMex.Game
             ResourceType = resourceType;
             SourceType = sourceType;
         }
-        
+
+        public override string ToString() => ResourceType.ToString();
     }
 }

@@ -5,20 +5,19 @@ namespace HexMex.Game.Buildings
 {
     public class Construction : Structure, IHasProgress
     {
-        public BuildingConstructionFactory ConstructionFactory { get; }
+        public event Action<Construction> ConstructionCompleted;
+        public BuildingDescription BuildingDescription { get; }
 
         public bool IsConstructing { get; private set; }
         public float PassedConstructionTime { get; private set; }
 
-        private bool ResourcesRequested { get; set; }
-
-        public event Action<Construction> ConstructionCompleted;
-
         public float Progress { get; private set; }
 
-        public Construction(HexagonNode position, BuildingConstructionFactory buildingConstructionFactory, World world) : base(position, world, new BuildingDescription(new VerbalStructureDescription(new TranslationKey("constructionName"), new TranslationKey("constructionDescription")), Knowledge.Zero, buildingConstructionFactory.StructureDescription.ConstructionInformation, new RenderInformation("constructionFill", "constructionBorder")))
+        private bool ResourcesRequested { get; set; }
+
+        public Construction(HexagonNode position, BuildingDescription buildingDescription, World world) : base(position, world, new BuildingDescription(new VerbalStructureDescription(new TranslationKey("constructionName"), new TranslationKey("constructionDescription")), Knowledge.Zero, buildingDescription.ConstructionInformation, new RenderInformation("constructionFill", "constructionBorder")))
         {
-            ConstructionFactory = buildingConstructionFactory;
+            BuildingDescription = buildingDescription;
             ResourceDirector.AllIngredientsArrived += StartConstructing;
         }
 
@@ -28,20 +27,20 @@ namespace HexMex.Game.Buildings
             if (!ResourcesRequested)
             {
                 ResourcesRequested = true;
-                ResourceDirector.RequestIngredients(ConstructionFactory.StructureDescription.ConstructionInformation.ResourceTypes.ToArray());
+                ResourceDirector.RequestIngredients(BuildingDescription.ConstructionInformation.ResourceTypes.ToArray());
             }
             if (!IsConstructing)
                 return;
             PassedConstructionTime += dt;
-            Progress = PassedConstructionTime / ConstructionFactory.StructureDescription.ConstructionInformation.ConstructionTime;
-            if (PassedConstructionTime >= ConstructionFactory.StructureDescription.ConstructionInformation.ConstructionTime)
+            Progress = PassedConstructionTime / BuildingDescription.ConstructionInformation.ConstructionTime;
+            if (PassedConstructionTime >= BuildingDescription.ConstructionInformation.ConstructionTime)
             {
                 PassedConstructionTime = 0;
                 IsConstructing = false;
 
-                var structure = ConstructionFactory.CreateFunction(Position, World);
+                var building = new Building(Position, World, BuildingDescription);
                 World.StructureManager.RemoveStructure(this);
-                World.StructureManager.CreateStrucuture(structure);
+                World.StructureManager.CreateStrucuture(building);
                 ConstructionCompleted?.Invoke(this);
             }
             OnRequiresRedraw();
@@ -49,7 +48,7 @@ namespace HexMex.Game.Buildings
 
         private void StartConstructing(ResourceDirector arg1, ResourceType[] arg2)
         {
-            World.GlobalResourceManager.Enqueue(new EnergyPackage(ConstructionFactory.StructureDescription.ConstructionInformation.EnvironmentResource.Energy, e => IsConstructing = true));
+            World.GlobalResourceManager.Enqueue(new EnergyPackage(BuildingDescription.ConstructionInformation.EnvironmentResource.Energy, e => IsConstructing = true));
         }
     }
 }
