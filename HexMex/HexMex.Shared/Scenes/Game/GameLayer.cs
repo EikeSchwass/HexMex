@@ -30,11 +30,12 @@ namespace HexMex.Scenes.Game
             var structureLayer = new StructureLayer(World, HexMexCamera);
             var controlLayer = new ButtonLayer(World, HexMexCamera);
             var statisticLayer = new StatisticLayer(World);
+            var researchButtonLayer = new ReseachLayer(World);
             var menuLayer = new MenuLayer(World, HexMexCamera);
             controlLayer.ConstructionRequested += (buttonLayer, buildButton) => ConstructionMenuRequested(buildButton, menuLayer);
             controlLayer.DisplayStructureRequested += (buttonLayer, structureButton) => DisplayStructureMenu(structureButton, menuLayer);
 
-            var layers = new CCLayer[] { hexagonLayer, edgeLayer, resourcePackageLayer, structureLayer, controlLayer, statisticLayer, menuLayer };
+            var layers = new CCLayer[] { hexagonLayer, edgeLayer, resourcePackageLayer, structureLayer, controlLayer, statisticLayer,researchButtonLayer, menuLayer };
 
             foreach (var layer in layers)
             {

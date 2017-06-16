@@ -169,6 +169,12 @@
       <SubType>Designer</SubType>
     </AndroidAsset>
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\research.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\bolt.png" />
+  </ItemGroup>
   <Import Project="..\HexMex.Shared\EmptyProject.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -31,16 +31,22 @@ namespace HexMex.Scenes.MainMenu
             HelpButton.Touched += HelpButton_Clicked;
             OptionsButton.Touched += OptionsButton_Clicked;
 
-            AddEventListener(new CCEventListenerTouchOneByOne {OnTouchBegan = TouchDown, OnTouchCancelled = OnTouchCancelled, OnTouchEnded = OnTouchUp, OnTouchMoved = OnTouchMoved});
+            AddEventListener(new CCEventListenerTouchOneByOne { OnTouchBegan = TouchDown, OnTouchCancelled = OnTouchCancelled, OnTouchEnded = OnTouchUp, OnTouchMoved = OnTouchMoved });
         }
 
         protected override void AddedToScene()
         {
             base.AddedToScene();
+            var actualSize = Scene.Window.WindowSizeInPixels;
             var hexMexCamera = new HexMexCamera(VisibleBoundsWorldspace.Size);
             Camera = hexMexCamera;
 
-            var d = Math.Sin(Math.PI / 3) * HelpButton.Radius * 2;
+            var radius = actualSize.Width / 4 * 1f;
+            StartGameButton.Radius = radius;
+            HelpButton.Radius = radius;
+            OptionsButton.Radius = radius;
+
+            var d = Math.Sin(Math.PI / 3) * radius * 2;
             var deltaX = Math.Sin(Math.PI / 6) * d;
             var deltaY = Math.Cos(Math.PI / 6) * d;
 

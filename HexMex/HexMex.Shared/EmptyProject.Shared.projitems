@@ -41,6 +41,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Game\TranslationKey.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\UnlockManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\VerbalStructureDescription.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\ReseachLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\StatisticLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\StructureMenu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\BuildMenu.cs" />

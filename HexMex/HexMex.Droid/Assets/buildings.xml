@@ -62,7 +62,7 @@
         <Iron />
         <Wood />
       </ConstructionInformation>
-      <ProductionInformation ProductionTime="1">
+      <ProductionInformation ProductionTime="5">
         <Ingredients>
           <CoalOre Source="Hexagon" />
           <CoalOre Source="Hexagon" />

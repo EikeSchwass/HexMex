@@ -70,5 +70,13 @@
 		<Color ColorKey="resourceWater" Value="4555ff" />
 		<Color ColorKey="waterPowerPlantFill" Value="4555ff" />
 		<Color ColorKey="waterPowerPlantBorder" Value="ffffff" />
+		
+		<Color ColorKey="researchButtonBackground" Value="ffffff" />
+		<Color ColorKey="researchButtonBorder" Value="42bf00" />
+		<Color ColorKey="researchButtonLiquidColor" Value="42bf00" />
+		<Color ColorKey="knowledge1" Value="42bf00" />
+		<Color ColorKey="knowledge2" Value="bf4200" />
+		<Color ColorKey="knowledge3" Value="4200bf" />
+		<Color ColorKey="energy" Value="d8dc04" />
 	</ColorCollection>
 </xml>

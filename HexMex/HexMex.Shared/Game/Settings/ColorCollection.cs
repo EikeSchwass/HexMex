@@ -91,6 +91,13 @@ namespace HexMex.Game.Settings
         public CCColor4B HexagonBlendColor => ColorCollectionFile["hexagonBlendColor"];
         public float InnerHexagonBlendIntensity => ColorCollectionFile.InnerHexagonBlendIntensity;
         public float OuterHexagonBlendIntensity => ColorCollectionFile.OuterHexagonBlendIntensity;
+        public CCColor4B ResearchButtonBackground => ColorCollectionFile["researchButtonBackground"];
+        public CCColor4B ResearchButtonBorder => ColorCollectionFile["researchButtonBorder"];
+        public CCColor3B ResearchButtonLiquidColor => new CCColor3B(ColorCollectionFile["researchButtonLiquidColor"]);
+        public CCColor3B Knowledge1 => new CCColor3B(ColorCollectionFile["knowledge1"]);
+        public CCColor3B Knowledge2 => new CCColor3B(ColorCollectionFile["knowledge2"]);
+        public CCColor3B Knowledge3 => new CCColor3B(ColorCollectionFile["knowledge3"]);
+        public CCColor3B Energy => new CCColor3B(ColorCollectionFile["energy"]);
 
         public CCColor4B GetInnerHexagonColor(ResourceType resourceType)
         {

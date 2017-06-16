@@ -50,13 +50,6 @@ namespace HexMex.Scenes.Game
             }
         }
 
-        private bool IsPointInBounds(Button button, CCTouch eTouch)
-        {
-            var screenToWorldspace = ScreenToWorldspace(eTouch.LocationOnScreen);
-            var globalPosition = button.GetGlobalPosition();
-            return (screenToWorldspace - globalPosition).Length <= GameSettings.VisualSettings.BuildButtonRadius * 2;
-        }
-
         public override void OnTouchUp(TouchEventArgs e)
         {
             base.OnTouchUp(e);
@@ -86,11 +79,6 @@ namespace HexMex.Scenes.Game
         private void BuildButtonTouched(Button button)
         {
             ConstructionRequested?.Invoke(this, (BuildButton)button);
-        }
-
-        private void StructureButtonTouched(Button button)
-        {
-            DisplayStructureRequested?.Invoke(this, (StructureButton)button);
         }
 
         private void ButtonAdded(ButtonManager buttonManager, Button button)
@@ -128,6 +116,18 @@ namespace HexMex.Scenes.Game
             {
                 throw new NotSupportedException($"This type of button is not yet supported ({button.GetType()})");
             }
+        }
+
+        private bool IsPointInBounds(Button button, CCTouch eTouch)
+        {
+            var screenToWorldspace = ScreenToWorldspace(eTouch.LocationOnScreen);
+            var globalPosition = button.GetGlobalPosition();
+            return (screenToWorldspace - globalPosition).Length <= GameSettings.VisualSettings.BuildButtonRadius * 2;
+        }
+
+        private void StructureButtonTouched(Button button)
+        {
+            DisplayStructureRequested?.Invoke(this, (StructureButton)button);
         }
     }
 }
