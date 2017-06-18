@@ -82,8 +82,8 @@ namespace HexMex.Scenes.Game
         protected override void AddedToScene()
         {
             base.AddedToScene();
-            float width = VisibleBoundsWorldspace.Size.Width * 0.7f;
-            var height = VisibleBoundsWorldspace.Size.Height * 0.9f;
+            float width = VisibleBoundsWorldspace.Size.Width * 0.8f;
+            var height = VisibleBoundsWorldspace.Size.Height * 0.6f;
             ClientRectangle = new CCRect((VisibleBoundsWorldspace.Size.Width - width) / 2, (VisibleBoundsWorldspace.Size.Height - height) / 2, width, height);
 
             DrawNode.Position = new CCPoint(ClientRectangle.MinX, ClientRectangle.MaxY);

@@ -62,7 +62,7 @@ namespace HexMex.Droid
             var buildingDescriptionDatabase = BuildingDescriptionDatabase.CreateFromXml(buildingXml);
             var colorCollectionFile = ColorCollectionFile.CreateFromXml(colorXml);
             var languageSettings = LoadLanguagesFromXml(languageXml);
-            CCApplication application = new CCApplication {ApplicationDelegate = new AppDelegate(new AndroidDataLoader(), this, buildingDescriptionDatabase, colorCollectionFile, languageSettings)};
+            CCApplication application = new CCApplication { ApplicationDelegate = new AppDelegate(new AndroidDataLoader(), this, buildingDescriptionDatabase, colorCollectionFile, languageSettings) };
 
             SetContentView(application.AndroidContentView);
             application.StartGame();
@@ -79,7 +79,7 @@ namespace HexMex.Droid
                     var translationKey = new TranslationKey(reader.GetAttribute("Key"));
                     reader.Read();
                     reader.MoveToContent();
-                    var translation = new Translation(translationKey, reader.Value.Trim());
+                    var translation = new Translation(translationKey, reader.Value.Trim().Replace("\n", (char)10 + ""));
                     translations.Add(translation);
                 }
             }

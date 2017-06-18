@@ -8,7 +8,7 @@ namespace HexMex.Game.Buildings
         public event Action<Building> ProductionCompleted;
         public event Action<Building> ProductionStarted;
         public float ProductionTime { get; }
-        public float CurrentProductionTime { get; private set; }
+        public float CurrentProductionTime { get; protected set; }
         public bool IsProducing { get; private set; }
         public float Progress => IsProducing ? CurrentProductionTime / ProductionTime : 0;
 
@@ -86,6 +86,7 @@ namespace HexMex.Game.Buildings
 
         protected virtual void OnProductionCompleted()
         {
+            World.GlobalResourceManager.Knowledge += Description.ProductionInformation.Products.Knowledge;
             World.GlobalResourceManager.EnvironmentResource += Description.ProductionInformation.Products.EnvironmentResource;
             var resourceTypeSources = Description.ProductionInformation.Products.ResourceTypes.ToArray();
             if (resourceTypeSources.Any())

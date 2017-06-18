@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="HexMex.Droid" android:versionCode="1" android:versionName="1.0" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="HexMex.Droid" android:versionCode="1" android:versionName="0.0.1" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="25" />
-	<application android:label="HexMex" android:icon="@drawable/icon"></application>
+	<application android:label="Hexaplant" android:icon="@drawable/icon"></application>
 </manifest>

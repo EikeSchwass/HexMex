@@ -20,7 +20,7 @@ namespace HexMex.Game
 
         public void Unlock(BuildingDescription structureDescription)
         {
-            if (GlobalResourceManager.Knowledge < structureDescription.UnlockCost)
+            if (!GlobalResourceManager.EnoughKnowledgeFor(structureDescription.UnlockCost))
                 throw new InvalidOperationException("Not enough knowledge aquired");
             GlobalResourceManager.Knowledge -= structureDescription.UnlockCost;
             UnlockedStructures[structureDescription] = true;

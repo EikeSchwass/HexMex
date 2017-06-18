@@ -15,7 +15,7 @@ namespace HexMex.Game.Buildings
 
         private bool ResourcesRequested { get; set; }
 
-        public Construction(HexagonNode position, BuildingDescription buildingDescription, World world) : base(position, world, new BuildingDescription(new VerbalStructureDescription(new TranslationKey("constructionName"), new TranslationKey("constructionDescription")), Knowledge.Zero, buildingDescription.ConstructionInformation, new RenderInformation("constructionFill", "constructionBorder"), false))
+        public Construction(HexagonNode position, BuildingDescription buildingDescription, World world) : base(position, world, new BuildingDescription(new VerbalStructureDescription("Construction", new TranslationKey("constructionName"), new TranslationKey("constructionDescription")), Knowledge.Zero, buildingDescription.ConstructionInformation, new RenderInformation("constructionFill", "constructionBorder"), false))
         {
             BuildingDescription = buildingDescription;
             ResourceDirector.AllIngredientsArrived += StartConstructing;
@@ -38,7 +38,11 @@ namespace HexMex.Game.Buildings
                 PassedConstructionTime = 0;
                 IsConstructing = false;
 
-                var building = new Building(Position, World, BuildingDescription);
+                Building building;
+                if (BuildingDescription.VerbalStructureDescription.InternalName == nameof(Palace))
+                    building = new Palace(Position, World, BuildingDescription);
+                else
+                    building = new Building(Position, World, BuildingDescription);
                 World.StructureManager.RemoveStructure(this);
                 World.StructureManager.CreateStrucuture(building);
                 ConstructionCompleted?.Invoke(this);

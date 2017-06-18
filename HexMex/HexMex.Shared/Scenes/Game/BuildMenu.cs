@@ -207,7 +207,7 @@ namespace HexMex.Scenes.Game
                 var borderColor = IsSelected ? colorCollection.BuildMenuEntrySelectedBorder : colorCollection.BuildMenuEntryNotSelectedBorder;
                 var borderThickness = BuildMenu.VisualSettings.BuildMenuButtonBorderThickness;
                 BuildMenu.DrawNode?.DrawRect(Position, backColor, borderThickness, borderColor);
-                BuildMenu.DrawNode?.DrawText(Position.Center, BuildingDescription.VerbalStructureDescription.NameID.Translate(BuildMenu.LanguageSettings), Font.ArialFonts[16], Position.Size);
+                BuildMenu.DrawNode?.DrawText(Position.Center, BuildingDescription.VerbalStructureDescription.NameID.Translate(BuildMenu.LanguageSettings), Font.ArialFonts[BuildMenu.VisualSettings.BuildMenuButtonFontSize], Position.Size);
             }
         }
     }

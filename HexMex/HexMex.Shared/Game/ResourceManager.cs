@@ -27,7 +27,7 @@ namespace HexMex.Game
 
         public ResourcePackage ProvideResource(Structure providingStructure, ResourceType resourceType, RequestPriority priority)
         {
-            var requestPackage = Requests.Dequeue(resourceType);
+            var requestPackage = Requests.Dequeue(resourceType, rp => HasPathFilter(providingStructure, rp.DestinationStructure));
             if (requestPackage != null)
             {
                 requestPackage.StartStructure = providingStructure;
@@ -35,7 +35,7 @@ namespace HexMex.Game
                 requestPackage.Move();
                 return requestPackage;
             }
-            var resourcePackage = new ResourcePackage(resourceType, World.PathFinder,World.GameSettings.GameplaySettings) { StartStructure = providingStructure };
+            var resourcePackage = new ResourcePackage(resourceType, World.PathFinder, World.GameSettings.GameplaySettings) {StartStructure = providingStructure};
             AddPackage(resourcePackage);
             Provisions.Enqueue(resourcePackage, priority);
             return resourcePackage;
@@ -43,7 +43,7 @@ namespace HexMex.Game
 
         public ResourcePackage RequestResource(Structure requestingStructure, ResourceType resourceType, RequestPriority priority)
         {
-            var providedPackage = Provisions.Dequeue(resourceType);
+            var providedPackage = Provisions.Dequeue(resourceType, rp => HasPathFilter(rp.StartStructure, requestingStructure));
             if (providedPackage != null)
             {
                 providedPackage.DestinationStructure = requestingStructure;
@@ -51,7 +51,7 @@ namespace HexMex.Game
                 providedPackage.Move();
                 return providedPackage;
             }
-            var resourcePackage = new ResourcePackage(resourceType, World.PathFinder,World.GameSettings.GameplaySettings) { DestinationStructure = requestingStructure };
+            var resourcePackage = new ResourcePackage(resourceType, World.PathFinder, World.GameSettings.GameplaySettings) {DestinationStructure = requestingStructure};
             AddPackage(resourcePackage);
             Requests.Enqueue(resourcePackage, priority);
             return resourcePackage;
@@ -97,6 +97,10 @@ namespace HexMex.Game
             AllPackageList.Add(resourcePackage);
             resourcePackage.StartedMoving += ResourcePackage_StartedMoving;
             resourcePackage.ArrivedAtDestination += ResourcePackage_ArrivedAtDestination;
+        }
+        private bool HasPathFilter(Structure startStructure, Structure destinationStructure)
+        {
+            return World.PathFinder.GetPath(startStructure.Position, destinationStructure.Position) != null;
         }
 
         private void ResourcePackage_ArrivedAtDestination(ResourcePackage resourcePackage)

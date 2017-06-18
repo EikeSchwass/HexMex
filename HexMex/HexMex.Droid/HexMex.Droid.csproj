@@ -112,6 +112,31 @@
     <AndroidAsset Include="Assets\Content\fonts\arial-37.xnb" />
     <AndroidAsset Include="Assets\Content\fonts\arial-38.xnb" />
     <AndroidAsset Include="Assets\Content\fonts\arial-39.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-40.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-41.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-42.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-43.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-44.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-45.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-46.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-47.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-48.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-49.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-50.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-51.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-52.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-53.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-54.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-55.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-56.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-57.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-58.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-59.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-60.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-61.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-62.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-63.xnb" />
+    <AndroidAsset Include="Assets\Content\fonts\arial-64.xnb" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
@@ -174,6 +199,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Content\bolt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\fastforeward.png" />
   </ItemGroup>
   <Import Project="..\HexMex.Shared\EmptyProject.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

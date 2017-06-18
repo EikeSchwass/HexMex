@@ -33,16 +33,11 @@ namespace HexMex.Game
         Glas = 1 << 20,
         WaterBarrel = 1 << 21,
         Diamond = 1 << 22,
-
-        // Other
-        Knowledge1 = 1 << 23,
-        Knowledge2 = 1 << 24,
-        Knowledge3 = 1 << 25,
-        Energy = 1 << 26,
+        
 
         // Groups
         Water = PureWater | WaterBarrel,
         Degradeable = CoalOre | Stone | IronOre | CopperOre | GoldOre,
-        Anything = (1 << 27) - 1 - Energy - Knowledge1 - Knowledge2 - Knowledge3 - Diamond
+        Anything = (1 << 23) - 1 - Diamond
     }
 }

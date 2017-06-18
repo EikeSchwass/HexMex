@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using CocosSharp;
 using HexMex.Controls;
 using HexMex.Game.Buildings;
@@ -8,6 +9,7 @@ namespace HexMex.Game
 {
     public class World : ICCUpdatable
     {
+        public GameSpeed GameSpeed { get; set; } = GameSpeed.Normal;
         public ButtonManager ButtonManager { get; }
         public HexagonManager HexagonManager { get; }
         public bool IsInitialized { get; private set; }
@@ -17,6 +19,8 @@ namespace HexMex.Game
         public GameSettings GameSettings { get; }
         public GlobalResourceManager GlobalResourceManager { get; }
         public UnlockManager UnlockManager { get; }
+
+        public event Action<World> Victory;
 
         public World(GameSettings gameSettings)
         {
@@ -53,6 +57,8 @@ namespace HexMex.Game
         {
             if (!IsInitialized)
                 return;
+            var gameSpeed = (float)GameSpeed / 10;
+            dt *= gameSpeed;
             HexagonManager.Update(dt);
             ResourceManager.Update(dt);
             StructureManager.Update(dt);
@@ -96,6 +102,10 @@ namespace HexMex.Game
             var hexagonNodes = structure.Position.GetAccessibleAdjacentHexagonNodes(HexagonManager).Where(s => StructureManager[s] is Building).ToArray();
             if (hexagonNodes.Any())
                 ButtonManager.AddButton(new BuildButton(GameSettings, structure.Position), structure.Position);
+        }
+        public void OnVictory()
+        {
+            Victory?.Invoke(this);
         }
     }
 }

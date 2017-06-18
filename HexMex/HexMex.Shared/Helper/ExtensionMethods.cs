@@ -11,6 +11,8 @@ namespace HexMex.Helper
 {
     public static class ExtensionMethods
     {
+        public static CCColor4B ToColor4B(this CCColor3B color) => new CCColor4B(color.R, color.G, color.B);
+
         public static bool CanBeUsedFor(this ResourceType actualType, ResourceType requestedType)
         {
             return (actualType & requestedType) == requestedType;
@@ -21,49 +23,23 @@ namespace HexMex.Helper
             node.DrawSolidCircle(position, radius - borderThickness, fillColor);
         }
 
-        public static void DrawNumber(this CCDrawNode node, int number, CCPoint position, float height, float thickness, CCColor4F color)
+        public static GameSpeed Next(this GameSpeed gameSpeed)
         {
-            int[] blops = new int[(number - 1) / 5 + 1];
-            for (int i = 0; i < blops.Length; i++)
+            switch (gameSpeed)
             {
-                blops[i] = 5;
-            }
-            blops[blops.Length - 1] = (number - 1) % 5 + 1;
-
-            float margin = height / 10;
-            float blopMargin = margin * 4;
-            float blopWidth = thickness * 4 + margin * 3;
-            float totalWidth = (blops.Length - 1) * (blopWidth + blopMargin) + blops.Last() * thickness + (blops.Last() - 1) * margin;
-
-            for (int i = 0; i < blops.Length; i++)
-            {
-                for (int j = 0; j < Min(blops[i], 4); j++)
-                {
-                    float x = i * (blopWidth + blopMargin);
-                    x += j * (thickness + margin);
-                    x += thickness / 2;
-                    x += position.X;
-                    x -= totalWidth / 2;
-                    float y1 = position.Y + height / 2 + thickness / 2;
-                    float y2 = position.Y - height / 2 + thickness / 2;
-                    var from = new CCPoint(x, y1);
-                    var to = new CCPoint(x, y2);
-                    node.DrawSegment(from, to, thickness / 2, color);
-                }
-                if (blops[i] == 5)
-                {
-                    float x1 = i * (blopWidth + blopMargin);
-                    x1 += position.X;
-                    x1 -= totalWidth / 2;
-                    float x2 = x1 + blopWidth;
-                    float y1 = position.Y - height / 2;
-                    float y2 = position.Y + height / 2;
-                    var p1 = new CCPoint(x1, y1);
-                    var p2 = new CCPoint(x2, y2);
-                    node.DrawSegment(p1, p2, thickness / 2, color);
-                }
+                case GameSpeed.Slow:
+                    return GameSpeed.Normal;
+                case GameSpeed.Normal:
+                    return GameSpeed.Faster;
+                case GameSpeed.Faster:
+                    return GameSpeed.Maximal;
+                case GameSpeed.Maximal:
+                    return GameSpeed.Slow;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(gameSpeed), gameSpeed, null);
             }
         }
+
         public static ResourceTypeSource FromHexagon(this ResourceType resourceType) => new ResourceTypeSource(resourceType, SourceType.Hexagon);
 
         public static ResourceTypeSource FromNetwork(this ResourceType resourceType) => new ResourceTypeSource(resourceType, SourceType.Network);
@@ -95,15 +71,28 @@ namespace HexMex.Helper
                 case Pottasche: return colorCollection.ResourcePottasche;
                 case Glas: return colorCollection.ResourceGlas;
                 case WaterBarrel: return colorCollection.ResourceWaterBarrel;
-                case Knowledge1: return colorCollection.ResourceKnowledge1;
-                case Knowledge2: return colorCollection.ResourceKnowledge2;
-                case Knowledge3: return colorCollection.ResourceKnowledge3;
-                case Energy: return colorCollection.ResourceEnergy;
                 case Water: return colorCollection.ResourceWater;
                 case Degradeable: return colorCollection.ResourceDegradeable;
                 case Diamond: return colorCollection.ResourceDiamond;
                 case Anything: return colorCollection.ResourceAnything;
                 default: throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
+        public static CCColor4B GetColor(this GameSpeed gameSpeed, ColorCollection colorCollection)
+        {
+            switch (gameSpeed)
+            {
+                case GameSpeed.Slow:
+                    return colorCollection.SlowGameSpeedFill;
+                case GameSpeed.Normal:
+                    return colorCollection.NormalGameSpeedFill;
+                case GameSpeed.Faster:
+                    return colorCollection.FasterGameSpeedFill;
+                case GameSpeed.Maximal:
+                    return colorCollection.MaximalGameSpeedFill;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(gameSpeed), gameSpeed, null);
             }
         }
 

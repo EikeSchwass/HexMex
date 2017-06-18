@@ -6,7 +6,7 @@ namespace HexMex.Game.Settings
 {
     public class GameplaySettings
     {
-        public float DefaultResourceTimeBetweenNodes { get; set; } = 1.33f;
+        public float DefaultResourceTimeBetweenNodes { get; set; } = 1.66f;
         public float MapSize { get; set; } = 4;
         public float MapSizeStrictness { get; set; } = 1;
         public float PayoutBoostTime { get; set; } = 300;
@@ -14,6 +14,7 @@ namespace HexMex.Game.Settings
         public int StartCO2 { get; set; } = 0;
         public int StartO2 { get; set; } = 1000;
         public int StartEnergy { get; set; } = 0;
+        public float PalastWinTime { get; set; } = 30;
 
         public ReadOnlyDictionary<ResourceType, ResourceSpawnInfo> SpawnInformation { get; }
 
@@ -24,9 +25,9 @@ namespace HexMex.Game.Settings
                 {ResourceType.CoalOre, new ResourceSpawnInfo(1, 2.5f)},
                 {ResourceType.CopperOre, new ResourceSpawnInfo(0.8, 3.5f)},
                 {ResourceType.DiamondOre, new ResourceSpawnInfo(0.05, 15)},
-                {ResourceType.GoldOre, new ResourceSpawnInfo(0.25, 10)},
+                {ResourceType.GoldOre, new ResourceSpawnInfo(0.2, 10)},
                 {ResourceType.IronOre, new ResourceSpawnInfo(1.1, 3)},
-                {ResourceType.PureWater, new ResourceSpawnInfo(0.5,1)},
+                {ResourceType.PureWater, new ResourceSpawnInfo(0.15, 0.1f)},
                 {ResourceType.Stone, new ResourceSpawnInfo(1, 3.25f)},
                 {ResourceType.Tree, new ResourceSpawnInfo(1.25, 1.5f)}
             };

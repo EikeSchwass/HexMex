@@ -10,6 +10,7 @@ namespace HexMex.Controls
     {
         private CCDrawNode DrawNode { get; }
         private Dictionary<CCLabel, int> Labels { get; } = new Dictionary<CCLabel, int>();
+        private List<CCSprite> Sprites { get; } = new List<CCSprite>();
         private int UsageIndex { get; set; }
 
         public ExtendedDrawNode()
@@ -20,6 +21,12 @@ namespace HexMex.Controls
         public void Clear()
         {
             DrawNode.Clear();
+            foreach (var sprite in Sprites)
+            {
+                RemoveChild(sprite, false);
+            }
+            Cleanup();
+            Sprites.Clear();
             foreach (var label in Labels.Keys)
             {
                 label.Visible = false;
@@ -86,7 +93,7 @@ namespace HexMex.Controls
                 {
                     HorizontalAlignment = CCTextAlignment.Left,
                     VerticalAlignment = CCVerticalTextAlignment.Center,
-                    LineBreak = CCLabelLineBreak.Word
+                    LineBreak = CCLabelLineBreak.Word,
                 };
                 Labels.Add(label, font.FontSize);
                 AddChild(label);
@@ -142,5 +149,16 @@ namespace HexMex.Controls
         }, fillColor, borderThickness, borderColor);
 
         public void DrawTriangle(CCPoint p1, CCPoint p2, CCPoint p3, CCColor4B fillColor) => DrawTriangle(p1, p2, p3, fillColor, 0, CCColor4B.Transparent);
+
+        public void DrawTexture(string texturePath, CCPoint position, CCSize size, CCColor3B color)
+        {
+            CCSprite sprite = new CCSprite(texturePath) { Position = position, Color = color, ContentSize = size };
+            Sprites.Add(sprite);
+            AddChild(sprite);
+        }
+
+        public void DrawTexture(string texturePath, CCPoint position, CCSize size) => DrawTexture(texturePath, position, size, CCColor3B.White);
+        public void DrawTexture(string texturePath, float x, float y, float width, float height, CCColor3B color) => DrawTexture(texturePath, new CCPoint(x, y), new CCSize(width, height), color);
+        public void DrawTexture(string texturePath, float x, float y, float width, float height) => DrawTexture(texturePath, new CCPoint(x, y), new CCSize(width, height), CCColor3B.White);
     }
 }

@@ -1,82 +1,141 @@
 <xml>
-	<ColorCollection NameKey="defaultColorCollectionName" DescriptionKey="defaultColorCollectionDescription" InnerHexagonBlendIntensity="0.05" OuterHexagonBlendIntensity="0.95">
-		<Color ColorKey="hexButtonForeground" Value="ffffff" />
-		<Color ColorKey="hexButtonFill" Value="222222" />
-		<Color ColorKey="hexButtonBorder" Value="ffffff" />
-		
-		<Color ColorKey="resourceDiamondOre" Value="c4d0df" />
-        <Color ColorKey="hexagonBlendColor" Value="000000" />
-        <Color ColorKey="hexagonBorder" Value="87ffffff" />
-        <Color ColorKey="resourcePureWater" Value="598eff" />
-        <Color ColorKey="resourceCoalOre" Value="1a1a24" />
-        <Color ColorKey="resourceIronOre" Value="cfdfe5" />
-        <Color ColorKey="buildButtonBorder" Value="ffffff" />
-        <Color ColorKey="buildButtonFill" Value="ffffff" />
-        <Color ColorKey="resourceStone" Value="bfbfc9" />
-        <Color ColorKey="diamondExtractorFill" Value="c4d0df" />
-        <Color ColorKey="diamondExtractorBorder" Value="ffffff" />
-        <Color ColorKey="resourceCopperOre" Value="e08a66" />
-        <Color ColorKey="haborFill" Value="598eff" />
-        <Color ColorKey="haborBorder" Value="ffffff" />
-        <Color ColorKey="coalPowerPlantFill" Value="1a1a24" />
-        <Color ColorKey="coalPowerPlantBorder" Value="ffffff" />
-        <Color ColorKey="edgeBackground" Value="ffffff" />
-        <Color ColorKey="buildButtonBackground" Value="222222" />
-        <Color ColorKey="buildButtonForeground" Value="ffffff" />
-        <Color ColorKey="structureMenuBackground" Value="78222222" />
-        <Color ColorKey="structureMenuBorder" Value="ffffff" />
-        <Color ColorKey="structureMenuGridBackground" Value="78222222" />
-        <Color ColorKey="structureMenuGridBorder" Value="ffffff" />
-        <Color ColorKey="structureMenuSuspendButtonReleased" Value="ffffff" />
-        <Color ColorKey="buildMenu" Value="78222222" />
-        <Color ColorKey="structureMenuResourceNotArrivedBorder" Value="222222" />
-        <Color ColorKey="structureMenuProgressCircleFill" Value="78787878" />
-        <Color ColorKey="resourceDiamond" Value="c4d0df" />
-        <Color ColorKey="structureMenuResourceArrivedBorder" Value="dddddd" />
-        <Color ColorKey="resourcePackageBorder" Value="ffffff" />
-		
-		<Color ColorKey="resourceTree" Value="16832a" />
-		<Color ColorKey="resourceAnything" Value="cbffffff" />
-		<Color ColorKey="buildMenuBackground" Value="78222222" />
-		<Color ColorKey="buildMenuBorder" Value="ffffff" />
-		<Color ColorKey="resourceGoldOre" Value="cab201" />
-		<Color ColorKey="buildMenuEntryReleasedBackground" Value="222222" />
-		<Color ColorKey="buildMenuEntrySelectedBorder" Value="ffff00" />
-		<Color ColorKey="buildMenuEntryNotSelectedBorder" Value="78787878" />
-        <Color ColorKey="buildMenuSelectedBackground" Value="78222222" />
-        <Color ColorKey="buildMenuSelectedBorder" Value="ffffff" />
-        <Color ColorKey="buildMenuConstructButtonForeground" Value="ffffff" />
-        <Color ColorKey="buildMenuHeaderBackground" Value="78222222" />
-        <Color ColorKey="buildMenuHeaderBorder" Value="ffffff" />
-        <Color ColorKey="buildMenuGridBackground" Value="78222222" />
-        <Color ColorKey="buildMenuGridBorder" Value="ffffff" />
-        <Color ColorKey="buildMenuEntryPressedBackground" Value="111111" />
-		
-        <Color ColorKey="constructionFill" Value="78787878" />
-        <Color ColorKey="constructionBorder" Value="ffffff" />
-        <Color ColorKey="resourceCoal" Value="1a1a24" />
-		
-		<Color ColorKey="structureMenuCancelButtonReleased" Value="ffffff" />
-		<Color ColorKey="resourceCopper" Value="e08a66" />
-		<Color ColorKey="resourceIron" Value="cfdfe5" />
-		<Color ColorKey="resourceWood" Value="654831" />
-		
-		<Color ColorKey="structureMenuSuspendButtonPressed" Value="dddddd" />
-		
-		<Color ColorKey="coalRefineryFill" Value="211f24" />
-		<Color ColorKey="coalRefineryBorder" Value="ffffff" />
-		<Color ColorKey="copperExtractorFill" Value="e08a66" />
-		<Color ColorKey="copperExtractorBorder" Value="ffffff" />
-		<Color ColorKey="resourceWater" Value="4555ff" />
-		<Color ColorKey="waterPowerPlantFill" Value="4555ff" />
-		<Color ColorKey="waterPowerPlantBorder" Value="ffffff" />
-		
-		<Color ColorKey="researchButtonBackground" Value="ffffff" />
-		<Color ColorKey="researchButtonBorder" Value="42bf00" />
-		<Color ColorKey="researchButtonLiquidColor" Value="42bf00" />
-		<Color ColorKey="knowledge1" Value="42bf00" />
-		<Color ColorKey="knowledge2" Value="bf4200" />
-		<Color ColorKey="knowledge3" Value="4200bf" />
-		<Color ColorKey="energy" Value="d8dc04" />
-	</ColorCollection>
+  <ColorCollection NameKey="defaultColorCollectionName" DescriptionKey="defaultColorCollectionDescription" InnerHexagonBlendIntensity="0.05" OuterHexagonBlendIntensity="0.95">
+    <!-- Main Menu -->
+    <Color ColorKey="hexButtonForeground" Value="ffffff" />
+    <Color ColorKey="hexButtonFill" Value="222222" />
+    <Color ColorKey="hexButtonBorder" Value="ffffff" />
+    <Color ColorKey="hexagonBlendColor" Value="000000" />
+    <Color ColorKey="hexagonBorder" Value="87ffffff" />
+
+    <!-- Edge Background -->
+    <Color ColorKey="edgeBackground" Value="ffffff" />
+
+    <!-- Game Speed -->
+    <Color ColorKey="fastForewardBackground" Value="222222" />
+    <Color ColorKey="fastForewardBorder" Value="ffffff" />
+    <Color ColorKey="slowGameSpeedFill" Value="0186c4" />
+    <Color ColorKey="normalGameSpeedFill" Value="00a000" />
+    <Color ColorKey="fasterGameSpeedFill" Value="c4b900" />
+    <Color ColorKey="maximalGameSpeedFill" Value="c43500" />
+
+    <!-- Global Resources -->
+    <Color ColorKey="energy" Value="d8dc04" />
+    <Color ColorKey="knowledge1" Value="42bf00" />
+    <Color ColorKey="knowledge2" Value="bf4200" />
+    <Color ColorKey="knowledge3" Value="4200bf" />
+
+    <!-- Resources Hexagon -->
+    <Color ColorKey="resourceAnything" Value="cbffffff" />
+    <Color ColorKey="resourceDiamondOre" Value="c4d0df" />
+    <Color ColorKey="resourceCoalOre" Value="1a1a24" />
+    <Color ColorKey="resourceCopperOre" Value="e08a66" />
+    <Color ColorKey="resourceIronOre" Value="cfdfe5" />
+    <Color ColorKey="resourcePureWater" Value="598eff" />
+    <Color ColorKey="resourceStone" Value="bfbfc9" />
+    <Color ColorKey="resourceTree" Value="16832a" />
+    <Color ColorKey="resourceGoldOre" Value="cab201" />
+
+    <!-- Resources Network -->
+    <Color ColorKey="resourceWater" Value="4555ff" />
+    <Color ColorKey="resourceDiamond" Value="c4d0df" />
+    <Color ColorKey="resourceCoal" Value="1a1a24" />
+    <Color ColorKey="resourceCopper" Value="e08a66" />
+    <Color ColorKey="resourceIron" Value="cfdfe5" />
+    <Color ColorKey="resourceWood" Value="654831" />
+    <Color ColorKey="resourceTools" Value="d1d5dc" />
+    <Color ColorKey="resourcePaper" Value="f2f0ee" />
+    <Color ColorKey="resourceGold" Value="ff000000" />
+    <Color ColorKey="resourceCircuit" Value="ff000000" />
+    <Color ColorKey="resourceBrick" Value="a42b13" />
+
+    <!-- Resource Package -->
+    <Color ColorKey="resourcePackageBorder" Value="ffffff" />
+
+    <!-- Build Button -->
+    <Color ColorKey="buildButtonBorder" Value="ffffff" />
+    <Color ColorKey="buildButtonFill" Value="ffffff" />
+    <Color ColorKey="buildButtonBackground" Value="222222" />
+    <Color ColorKey="buildButtonForeground" Value="ffffff" />
+
+    <!-- Buildings -->
+    <Color ColorKey="constructionFill" Value="78787878" />
+    <Color ColorKey="constructionBorder" Value="ffffff" />
+    <Color ColorKey="diamondExtractorFill" Value="c4d0df" />
+    <Color ColorKey="diamondExtractorBorder" Value="ffffff" />
+    <Color ColorKey="haborFill" Value="598eff" />
+    <Color ColorKey="haborBorder" Value="ffffff" />
+    <Color ColorKey="coalPowerPlantFill" Value="1a1a24" />
+    <Color ColorKey="coalPowerPlantBorder" Value="ffffff" />
+    <Color ColorKey="coalRefineryFill" Value="211f24" />
+    <Color ColorKey="coalRefineryBorder" Value="ffffff" />
+    <Color ColorKey="copperExtractorFill" Value="e08a66" />
+    <Color ColorKey="copperExtractorBorder" Value="ffffff" />
+    <Color ColorKey="waterPowerPlantFill" Value="4555ff" />
+    <Color ColorKey="waterPowerPlantBorder" Value="ffffff" />
+    <Color ColorKey="forestryFill" Value="16832a" />
+    <Color ColorKey="forestryBorder" Value="ffffff" />
+    <Color ColorKey="laboratory1Fill" Value="42bf00" />
+    <Color ColorKey="laboratory1Border" Value="ffffff" />
+    <Color ColorKey="laboratory2Fill" Value="bf4200" />
+    <Color ColorKey="laboratory2Border" Value="ffffff" />
+    <Color ColorKey="laboratory3Fill" Value="4200bf" />
+    <Color ColorKey="laboratory3Border" Value="ffffff" />
+    <Color ColorKey="ironExtractorFill" Value="cfdfe5" />
+    <Color ColorKey="ironExtractorBorder" Value="ffffff" />
+    <Color ColorKey="paperFactoryFill" Value="f2f0ee" />
+    <Color ColorKey="paperFactoryBorder" Value="ffffff" />
+    <Color ColorKey="sandFactoryFill" Value="edcd5a" />
+    <Color ColorKey="sandFactoryBorder" Value="ffffff" />
+    <Color ColorKey="toolBlacksmithFill" Value="d1d5dc" />
+    <Color ColorKey="toolBlacksmithBorder" Value="ffffff" />
+    <Color ColorKey="barrelBlacksmithFill" Value="77590e" />
+    <Color ColorKey="barrelBlacksmithBorder" Value="ff000000" />
+
+    <!-- Structure Menu -->
+    <Color ColorKey="structureMenuBackground" Value="78222222" />
+    <Color ColorKey="structureMenuBorder" Value="ffffff" />
+    <Color ColorKey="structureMenuGridBackground" Value="78222222" />
+    <Color ColorKey="structureMenuGridBorder" Value="ffffff" />
+    <Color ColorKey="structureMenuSuspendButtonReleased" Value="ffffff" />
+    <Color ColorKey="structureMenuResourceNotArrivedBorder" Value="222222" />
+    <Color ColorKey="structureMenuProgressCircleFill" Value="78000000" />
+    <Color ColorKey="structureMenuResourceArrivedBorder" Value="dddddd" />
+    <Color ColorKey="structureMenuCancelButtonReleased" Value="ffffff" />
+    <Color ColorKey="structureMenuSuspendButtonPressed" Value="dddddd" />
+
+    <!-- Build Menu-->
+    <Color ColorKey="buildMenu" Value="78222222" />
+    <Color ColorKey="buildMenuBackground" Value="78222222" />
+    <Color ColorKey="buildMenuBorder" Value="ffffff" />
+    <Color ColorKey="buildMenuEntryReleasedBackground" Value="222222" />
+    <Color ColorKey="buildMenuEntrySelectedBorder" Value="ffff00" />
+    <Color ColorKey="buildMenuEntryNotSelectedBorder" Value="78787878" />
+    <Color ColorKey="buildMenuSelectedBackground" Value="78222222" />
+    <Color ColorKey="buildMenuSelectedBorder" Value="ffffff" />
+    <Color ColorKey="buildMenuConstructButtonForeground" Value="ffffff" />
+    <Color ColorKey="buildMenuHeaderBackground" Value="78222222" />
+    <Color ColorKey="buildMenuHeaderBorder" Value="ffffff" />
+    <Color ColorKey="buildMenuGridBackground" Value="78222222" />
+    <Color ColorKey="buildMenuGridBorder" Value="ffffff" />
+    <Color ColorKey="buildMenuEntryPressedBackground" Value="111111" />
+
+    <!-- Research Menu -->
+    <Color ColorKey="researchMenuBackground" Value="bb222222" />
+    <Color ColorKey="researchMenuBorder" Value="ffffff" />
+    <Color ColorKey="researchFooterBackground" Value="78222222" />
+    <Color ColorKey="researchFooterBorder" Value="ffffff" />
+    <Color ColorKey="researchMenuEntryPressedBackground" Value="000000" />
+    <Color ColorKey="researchMenuEntryReleasedBackground" Value="78222222" />
+    <Color ColorKey="researchUnlockButtonIsPressedForeground" Value="00a100" />
+    <Color ColorKey="researchUnlockButtonIsReleasedForeground" Value="ffffff" />
+    <Color ColorKey="researchMenuEntrySelectedBorder" Value="ffff00" />
+    <Color ColorKey="researchMenuEntryNotSelectedBorder" Value="78787878" />
+    <Color ColorKey="researchUnlockCostBackground" Value="ffffff" />
+    <Color ColorKey="researchUnlockCostRectBackground" Value="78222222" />
+    <Color ColorKey="researchUnlockCostRectBorder" Value="ffffff" />
+    <Color ColorKey="researchButtonDisabledForeground" Value="dddddd" />
+    <Color ColorKey="researchButtonBackground" Value="78222222" />
+    <Color ColorKey="researchButtonBorder" Value="ffffff" />
+    <Color ColorKey="researchButtonLiquidColor" Value="42bf00" />
+  </ColorCollection>
 </xml>

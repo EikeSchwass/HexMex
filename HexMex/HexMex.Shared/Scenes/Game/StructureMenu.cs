@@ -82,7 +82,7 @@ namespace HexMex.Scenes.Game
         protected override void OnAddedToScene()
         {
             base.OnAddedToScene();
-            DrawNode.Schedule(Update, 0.1f);
+            Host.Schedule(Update, 0.1f);
             Update(0);
         }
         private void Deconstruct()

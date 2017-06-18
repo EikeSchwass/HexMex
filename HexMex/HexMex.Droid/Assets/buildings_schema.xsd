@@ -90,11 +90,18 @@
                           <xs:element name="Products">
                             <xs:complexType>
                               <xs:sequence>
-                                <xs:element name="EnvironmentResource" minOccurs="0">
+                                <xs:element name="EnvironmentResource" minOccurs="0" maxOccurs="1">
                                   <xs:complexType>
                                     <xs:attribute name="CO2" default="0" type="xs:integer" use="optional" />
                                     <xs:attribute name="O2" default="0" type="xs:integer" use="optional" />
                                     <xs:attribute name="Energy" default="0" type="xs:integer" use="optional" />
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="Knowledge" minOccurs="0" maxOccurs="1">
+                                  <xs:complexType>
+                                    <xs:attribute name="Knowledge1" default="0" type="xs:integer" use="optional" />
+                                    <xs:attribute name="Knowledge2" default="0" type="xs:integer" use="optional" />
+                                    <xs:attribute name="Knowledge3" default="0" type="xs:integer" use="optional" />
                                   </xs:complexType>
                                 </xs:element>
                                 <xs:group ref="ResourceTypes" maxOccurs="unbounded" minOccurs="0" />

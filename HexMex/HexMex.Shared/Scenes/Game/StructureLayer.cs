@@ -18,8 +18,15 @@ namespace HexMex.Scenes.Game
             World = world;
             world.StructureManager.StructureAdded += StructureAdded;
             world.StructureManager.StructureRemoved += StructureRemoved;
+            world.StructureManager.StructureReplaced += StructureReplaced;
             Schedule(Update, 0.05f);
             AddChild(DrawNode);
+        }
+
+        private void StructureReplaced(StructureManager structureManager, Structure oldStructure, Structure newStructure)
+        {
+            StructureRemoved(structureManager, oldStructure);
+            StructureAdded(structureManager, newStructure);
         }
 
         public override void Update(float dt)

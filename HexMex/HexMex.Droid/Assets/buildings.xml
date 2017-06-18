@@ -23,7 +23,7 @@
         <Iron />
         <Wood />
       </ConstructionInformation>
-      <ProductionInformation ProductionTime="2">
+      <ProductionInformation ProductionTime="10">
         <Ingredients>
           <Diamond />
           <PureWater Source="Hexagon" />
@@ -35,7 +35,7 @@
     </Building>
     <Building Name="DiamondExtractor">
       <UnlockCost Knowledge1="30" Knowledge2="20" Knowledge3="15" />
-      <ConstructionInformation ConstructionTime="15">
+      <ConstructionInformation ConstructionTime="30">
         <EnvironmentResource CO2="15" Energy="50" />
         <Iron />
         <Iron />
@@ -46,7 +46,7 @@
       </ConstructionInformation>
       <ProductionInformation ProductionTime="5">
         <Ingredients>
-          <EnvironmentResource Energy="10" />
+          <EnvironmentResource Energy="15" />
           <DiamondOre Source="Hexagon" />
         </Ingredients>
         <Products>
@@ -92,15 +92,431 @@
     <Building Name="CopperExtractor">
       <ConstructionInformation ConstructionTime="8">
         <Iron />
+        <Wood />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="5">
+        <Ingredients>
+          <EnvironmentResource Energy="6" />
+          <CoalOre Source="Hexagon" />
+        </Ingredients>
+        <Products>
+          <EnvironmentResource CO2="5" />
+          <Copper />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="IronExtractor">
+      <ConstructionInformation ConstructionTime="5">
+        <Wood />
+        <Iron />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="4">
+        <Ingredients>
+          <EnvironmentResource Energy="5" />
+          <IronOre Source="Hexagon" />
+        </Ingredients>
+        <Products>
+          <EnvironmentResource CO2="2" />
+          <Iron />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="Forestry">
+      <ConstructionInformation ConstructionTime="4">
+        <Wood />
+        <Wood />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="4.5">
+        <Ingredients>
+          <Tree Source="Hexagon" />
+        </Ingredients>
+        <Products>
+          <EnvironmentResource O2="-2" />
+          <Wood />
+          <Wood />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="Deforestry">
+      <ConstructionInformation ConstructionTime="8">
+        <Tools />
+        <Brick />
+        <Wood />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="6">
+        <Ingredients>
+          <EnvironmentResource Energy="4" />
+          <Water />
+          <Water />
+          <Tree Source="Hexagon" />
+          <Wood />
+          <Wood />
+        </Ingredients>
+        <Products>
+          <EnvironmentResource CO2="-4" O2="6" />
+          <Wood />
+        </Products>
+      </ProductionInformation>
+      <UnlockCost Knowledge1="10" Knowledge2="12" />
+    </Building>
+    <Building Name="PaperFactory">
+      <UnlockCost Knowledge1="5"/>
+      <ConstructionInformation ConstructionTime="7">
+        <Brick />
+        <Wood />
+        <Iron />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="8">
+        <Ingredients>
+          <EnvironmentResource Energy="9" />
+          <Wood />
+          <Wood />
+          <Wood />
+        </Ingredients>
+        <Products>
+          <EnvironmentResource O2="-3" CO2="4" />
+          <Paper />
+          <Paper />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="BrickFactory">
+      <UnlockCost Knowledge1="5"/>
+      <ConstructionInformation ConstructionTime="7">
+        <Iron />
         <Iron />
         <Wood />
       </ConstructionInformation>
-      <ProductionInformation ProductionTime="2">
+      <ProductionInformation ProductionTime="8">
         <Ingredients>
+          <EnvironmentResource Energy="6" />
+          <Stone Source="Hexagon" />
+          <Stone Source="Hexagon" />
+          <Stone Source="Hexagon" />
+        </Ingredients>
+        <Products>
+          <EnvironmentResource CO2="3" />
+          <Brick />
+          <Brick />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="SandFactory">
+      <UnlockCost Knowledge1="5" />
+      <ConstructionInformation ConstructionTime="8">
+        <Iron />
+        <Wood />
+        <Wood />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="5">
+        <Ingredients>
+          <EnvironmentResource Energy="10" />
+          <Stone Source="Hexagon"/>
+        </Ingredients>
+        <Products>
+          <EnvironmentResource CO2="2" />
+          <Sand />
+          <Sand />
+          <Sand />
+        </Products>
+      </ProductionInformation>
+
+    </Building>
+    <Building Name="PotashFactory" CanExtractWater="true">
+      <UnlockCost Knowledge1="12" Knowledge2="15" />
+      <ConstructionInformation ConstructionTime="12">
+        <Iron />
+        <Iron />
+        <Brick />
+        <Wood />
+        <Wood />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="13">
+        <Ingredients>
+          <Coal />
+          <Coal />
+          <Coal />
+          <Wood />
+          <Wood />
+          <Water />
           <Water />
         </Ingredients>
         <Products>
+          <EnvironmentResource CO2="8" Energy="3" />
+          <Pottasche />
+          <Pottasche />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="GlasFactory">
+      <UnlockCost Knowledge1="20" Knowledge2="15" Knowledge3="5" />
+      <ConstructionInformation ConstructionTime="15">
+        <Brick />
+        <Brick />
+        <Copper />
+        <Gold />
+        <Wood />
+        <Wood />
+        <Coal />
+        <Iron />
+        <Tools />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="18">
+        <Ingredients>
+          <EnvironmentResource Energy="12" />
+          <Pottasche />
+          <Pottasche />
+          <Sand />
+          <Sand />
+          <Sand />
+          <Coal />
+        </Ingredients>
+        <Products>
+          <EnvironmentResource CO2="12" />
+          <Glas />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="WaterPump" CanExtractWater="true">
+      <UnlockCost Knowledge1="8" Knowledge2="5" />
+      <ConstructionInformation ConstructionTime="7">
+        <EnvironmentResource Energy="10" />
+        <Copper />
+        <Iron />
+        <Wood />
+        <Tools />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="2">
+        <Ingredients>
+          <EnvironmentResource Energy="8" />
+          <Barrel />
+          <PureWater Source="Hexagon" />
+          <PureWater Source="Hexagon" />
+        </Ingredients>
+        <Products>
+          <WaterBarrel />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="BarrelBlacksmith">
+      <UnlockCost Knowledge1="10" />
+      <ConstructionInformation ConstructionTime="7">
+        <Iron />
+        <Wood />
+        <Wood />
+        <Brick />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="5">
+        <Ingredients>
           <EnvironmentResource Energy="5" />
+          <Wood />
+          <Wood />
+          <Coal />
+          <Iron />
+        </Ingredients>
+        <Products>
+          <EnvironmentResource CO2="3" />
+          <Barrel />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="ToolBlacksmith">
+      <UnlockCost Knowledge1="5" />
+      <ConstructionInformation ConstructionTime="10">
+        <EnvironmentResource Energy="15" />
+        <Iron />
+        <Iron />
+        <Brick />
+        <Wood />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="8">
+        <Ingredients>
+          <EnvironmentResource Energy="7" />
+          <Iron />
+          <Iron />
+          <Iron />
+          <Iron />
+          <Iron />
+        </Ingredients>
+        <Products>
+          <EnvironmentResource CO2="5" />
+          <Tools />
+          <Tools />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="GoldExtractor">
+      <UnlockCost Knowledge1="20" Knowledge2="8" />
+      <ConstructionInformation ConstructionTime="20">
+        <EnvironmentResource Energy="25" />
+        <Brick />
+        <Iron />
+        <Tools />
+        <Tools />
+        <Wood />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="20">
+        <Ingredients>
+          <EnvironmentResource Energy="20" />
+          <GoldOre Source="Hexagon" />
+        </Ingredients>
+        <Products>
+          <EnvironmentResource CO2="10" />
+          <Gold />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="CircuitFactory">
+      <UnlockCost Knowledge1="20" Knowledge2="25" />
+      <ConstructionInformation ConstructionTime="20">
+        <EnvironmentResource Energy="15" CO2="8" />
+        <Tools />
+        <Tools />
+        <Tools />
+        <Gold />
+        <Iron />
+        <Copper />
+        <Brick />
+        <Brick />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="20">
+        <Ingredients>
+          <EnvironmentResource Energy="30" />
+          <Gold />
+          <Copper />
+          <Copper />
+          <Tools />
+        </Ingredients>
+        <Products>
+          <EnvironmentResource CO2="21" />
+          <Circuit />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="Laboratory1">
+      <ConstructionInformation ConstructionTime="18">
+        <EnvironmentResource Energy="25" />
+        <Iron />
+        <Iron />
+        <Copper />
+        <Wood />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="5">
+        <Ingredients>
+          <EnvironmentResource Energy="5" />
+          <Wood />
+          <Wood />
+          <Coal />
+          <Water />
+        </Ingredients>
+        <Products>
+          <Knowledge Knowledge1="2" />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="Laboratory2">
+      <UnlockCost Knowledge1="25" />
+      <ConstructionInformation ConstructionTime="25">
+        <EnvironmentResource Energy="30" />
+        <Iron />
+        <Tools />
+        <Tools />
+        <Brick />
+        <Brick />
+        <Wood />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="8">
+        <Ingredients>
+          <EnvironmentResource Energy="15" />
+          <Tools />
+          <Tools />
+          <Water />
+          <Water />
+          <Water />
+          <Paper />
+        </Ingredients>
+        <Products>
+          <Knowledge Knowledge1="1" Knowledge2="2" />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="Laboratory3">
+      <UnlockCost Knowledge1="30" Knowledge2="20" />
+      <ConstructionInformation ConstructionTime="30">
+        <EnvironmentResource Energy="50" />
+        <Gold />
+        <Gold />
+        <Circuit />
+        <Tools />
+        <Tools />
+        <Brick />
+        <Brick />
+        <Brick />
+        <Copper />
+        <Copper />
+        <Wood />
+        <Wood />
+        <Diamond />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="10">
+        <Ingredients>
+          <EnvironmentResource Energy="25" />
+          <Tools />
+          <Tools />
+          <Tools />
+          <Circuit />
+          <Water />
+          <Water />
+          <Water />
+          <Water />
+          <Paper />
+          <Paper />
+        </Ingredients>
+        <Products>
+          <Knowledge Knowledge1="3" Knowledge2="3" Knowledge3="1" />
+        </Products>
+      </ProductionInformation>
+    </Building>
+    <Building Name="Palast">
+      <UnlockCost Knowledge1="20" Knowledge2="20" Knowledge3="20" />
+      <ConstructionInformation ConstructionTime="60">
+        <Brick />
+        <Brick />
+        <Brick />
+        <Brick />
+        <Brick />
+        <Copper />
+        <Copper />
+        <Diamond />
+        <Glas />
+        <Glas />
+        <Gold />
+        <Gold />
+        <Gold />
+        <Iron />
+        <Iron />
+        <Tools />
+        <Wood />
+        <Wood />
+        <Wood />
+        <Wood />
+        <Wood />
+      </ConstructionInformation>
+      <ProductionInformation ProductionTime="1">
+        <Ingredients>
+          <EnvironmentResource Energy="5" />
+          <Glas />
+          <Coal />
+          <Paper />
+          <Paper />
+          <Water />
+          <Water />
+          <Water />
+          <Tools />
+          <Wood />
+        </Ingredients>
+        <Products>
+          <EnvironmentResource CO2="4" O2="-2" />
         </Products>
       </ProductionInformation>
     </Building>

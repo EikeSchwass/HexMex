@@ -14,7 +14,7 @@ namespace AutoSpriteFont
 
 
             const string path = @"G:\Dokumente\Visual Studio\Projects\HexMex\Data\MonoGamePipeline\test";
-            for (int i = 5; i < 40; i++)
+            for (int i = 5; i < 65; i++)
             {
                 using (var fileStream = File.Create(Path.Combine(path, $"arial-{i}.spritefont")))
                 {

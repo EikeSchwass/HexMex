@@ -6,6 +6,7 @@ namespace HexMex.Scenes.Game
 {
     public class Font
     {
+        private readonly int fontSize;
         public static IReadOnlyDictionary<int, Font> ArialFonts { get; } = new ReadOnlyDictionary<int, Font>(new Dictionary<int, Font>
         {
             {5, new Font("fonts/arial", 5, CCLabelFormat.SpriteFont)},
@@ -43,16 +44,43 @@ namespace HexMex.Scenes.Game
             {37, new Font("fonts/arial", 37, CCLabelFormat.SpriteFont)},
             {38, new Font("fonts/arial", 38, CCLabelFormat.SpriteFont)},
             {39, new Font("fonts/arial", 39, CCLabelFormat.SpriteFont)},
+            {40, new Font("fonts/arial", 40, CCLabelFormat.SpriteFont)},
+            {41, new Font("fonts/arial", 41, CCLabelFormat.SpriteFont)},
+            {42, new Font("fonts/arial", 42, CCLabelFormat.SpriteFont)},
+            {43, new Font("fonts/arial", 43, CCLabelFormat.SpriteFont)},
+            {44, new Font("fonts/arial", 44, CCLabelFormat.SpriteFont)},
+            {45, new Font("fonts/arial", 45, CCLabelFormat.SpriteFont)},
+            {46, new Font("fonts/arial", 46, CCLabelFormat.SpriteFont)},
+            {47, new Font("fonts/arial", 47, CCLabelFormat.SpriteFont)},
+            {48, new Font("fonts/arial", 48, CCLabelFormat.SpriteFont)},
+            {49, new Font("fonts/arial", 49, CCLabelFormat.SpriteFont)},
+            {50, new Font("fonts/arial", 50, CCLabelFormat.SpriteFont)},
+            {51, new Font("fonts/arial", 51, CCLabelFormat.SpriteFont)},
+            {52, new Font("fonts/arial", 52, CCLabelFormat.SpriteFont)},
+            {53, new Font("fonts/arial", 53, CCLabelFormat.SpriteFont)},
+            {54, new Font("fonts/arial", 54, CCLabelFormat.SpriteFont)},
+            {55, new Font("fonts/arial", 55, CCLabelFormat.SpriteFont)},
+            {56, new Font("fonts/arial", 56, CCLabelFormat.SpriteFont)},
+            {57, new Font("fonts/arial", 57, CCLabelFormat.SpriteFont)},
+            {58, new Font("fonts/arial", 58, CCLabelFormat.SpriteFont)},
+            {59, new Font("fonts/arial", 59, CCLabelFormat.SpriteFont)},
+            {60, new Font("fonts/arial", 60, CCLabelFormat.SpriteFont)},
+            {61, new Font("fonts/arial", 61, CCLabelFormat.SpriteFont)},
+            {62, new Font("fonts/arial", 62, CCLabelFormat.SpriteFont)},
+            {63, new Font("fonts/arial", 63, CCLabelFormat.SpriteFont)},
+            {64, new Font("fonts/arial", 64, CCLabelFormat.SpriteFont)}
         });
 
+        public static float FontScaleFactor { get; set; } = 1;
+
         public string FontPath { get; }
-        public int FontSize { get; }
+        public int FontSize => (int)(fontSize * FontScaleFactor);
         public CCLabelFormat FontType { get; }
 
         private Font(string fontPath, int fontSize, CCLabelFormat labelFormat)
         {
             FontPath = fontPath;
-            FontSize = fontSize;
+            this.fontSize = fontSize;
             FontType = labelFormat;
         }
     }

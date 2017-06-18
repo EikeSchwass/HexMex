@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,21 +34,7 @@ namespace HexMex.Game
             Packages.Insert(insertIndex, resourcePackage);
         }
 
-        public TItem Dequeue(TFilter resourceType)
-        {
-            TItem resourcePackage = null;
-            foreach (TItem package in Packages)
-            {
-                if (Filter(package, resourceType))
-                {
-                    resourcePackage = package;
-                    break;
-                }
-            }
-            if (resourcePackage != null)
-                Packages.Remove(resourcePackage);
-            return resourcePackage;
-        }
+        public TItem Dequeue(TFilter resourceType) => Dequeue(resourceType, rb => true);
 
         public delegate bool DequeueFilter(TItem item, TFilter passedFilterItem);
 
@@ -67,6 +54,21 @@ namespace HexMex.Game
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+        public TItem Dequeue(TFilter resourceType, Func<TItem, bool> filter)
+        {
+            TItem resourcePackage = null;
+            foreach (TItem package in Packages)
+            {
+                if (Filter(package, resourceType) && filter(package))
+                {
+                    resourcePackage = package;
+                    break;
+                }
+            }
+            if (resourcePackage != null)
+                Packages.Remove(resourcePackage);
+            return resourcePackage;
         }
     }
 }

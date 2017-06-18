@@ -58,6 +58,16 @@ namespace HexMex.Game
             EnergyQueue.Enqueue(energyPackage);
             CheckForEnergyChange(this);
         }
+        public bool EnoughKnowledgeFor(Knowledge other)
+        {
+            if (Knowledge.Knowledge3 < other.Knowledge3)
+                return false;
+            if (Knowledge.Knowledge2 < other.Knowledge2)
+                return false;
+            if (Knowledge.Knowledge1 < other.Knowledge1)
+                return false;
+            return true;
+        }
     }
 
     public class EnergyPackage

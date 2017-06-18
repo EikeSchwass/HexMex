@@ -1,8 +1,25 @@
 <xml>
 	<Languages>
 		<Language Name="English">
+      <Translation Key="helpText">
+        Hexaplant is a resource management game. Your goal is it to build a palace for the king, supply him with resources fast enough and don't pollute the air to badly.
+        
+        The world consists of randomly selected hexagons, each of a different resource type. The start location always has a diamond hexagon, a water hexagon and a coal hexagon.
+        
+        You start with 3 buildings
+        
+        Diamond Mine
+        
+        Extracts diamonds from the adjacent hexagon. These diamonds can be exchanged for required resources at the habor. A diamond mine is very expensive and it takes quite a long time to extract diamonds.
+        
+        Habor
+        The diamonds from the diamond mine are worthless without a habor. At the habor the diamonds can be exchanged for almost all other resources.
+      </Translation>
+			<Translation Key="unlock">
+				Unlock
+			</Translation>
 			<Translation Key="diamondExtractorName">
-				Diamond Extractor
+				Diamond Mine
 			</Translation>
 			<Translation Key="diamondExtractorDescription">
 				Extracts Diamonds from adjacent hexagons.
@@ -32,7 +49,7 @@
 				Constructs a building.
 			</Translation>	
 			<Translation Key="copperExtractorName">
-				Copper Extractor.
+				Copper Mine.
 			</Translation>
 			<Translation Key="waterPowerPlantName">
 				Water Power Plant
@@ -42,7 +59,109 @@
 			</Translation>
 			<Translation Key="copperExtractorDescription">
 				Extracts Copper from adjacent hexagons.
-			</Translation>			
+			</Translation>	
+			<Translation Key="forestryName">
+				Forestry
+			</Translation>
+			<Translation Key="ironExtractorName">
+				Iron Mine
+			</Translation>
+			<Translation Key="laboratory1Name">
+				Laboratory Level 1
+			</Translation>
+			<Translation Key="laboratory1Description">
+				Laboratory of the lowest level. Generates simple knowledge.
+			</Translation>
+			<Translation Key="ironExtractorDescription">
+				Extracts Iron from adjacent hexagons.				
+			</Translation>
+			<Translation Key="forestryDescription">
+				Cuts down tress from adjacent hexagons and turns them into wood. As there are now less trees there is less oxygen in the air.			
+			</Translation>
+			<Translation Key="deforestryName">
+				Deforestry
+			</Translation>
+			<Translation Key="paperFactoryName">
+				Paper Factory
+			</Translation>
+			<Translation Key="brickFactoryName">
+				Brick Factory
+			</Translation>
+			<Translation Key="sandFactoryName">
+				Sand Factory
+			</Translation>
+			<Translation Key="potashFactoryName">
+				Potash Factory
+			</Translation>
+			<Translation Key="glasFactoryName">
+				Glas Factory
+			</Translation>
+			<Translation Key="waterPumpName">
+				Water Pump
+			</Translation>
+			<Translation Key="barrelBlacksmithName">
+				Barrel Factory
+			</Translation>
+			<Translation Key="toolBlacksmithName">
+				Tool Blacksmith
+			</Translation>
+			<Translation Key="goldExtractorName">
+				Gold Mine
+			</Translation>
+			<Translation Key="circuitFactoryName">
+				Circuit Factory
+			</Translation>
+			<Translation Key="laboratory2Name">
+				Laboratory Level 2
+			</Translation>
+			<Translation Key="laboratory3Name">
+				Laboratory Level 3			
+			</Translation>
+			<Translation Key="palastName">
+				Palace
+			</Translation>
+			<Translation Key="brickFactoryDescription">
+				Produces bricks out of the stone of adjacent hexagons.
+			</Translation>
+			<Translation Key="barrelBlacksmithDescription">
+				Produces barrels which can be filled at a water pump. Allows transportation of water.
+			</Translation>
+			<Translation Key="waterPumpDescription">
+				Pumps water from adjacent hexagons and fills it into barrels. Allows transportation of water.
+			</Translation>
+			<Translation Key="deforestryDescription">
+				Instead of cutting down trees, the deforestry plants them. Has no impact on production, but will turn carbon dioxide into oxygen.
+			</Translation>
+			<Translation Key="glasFactoryDescription">
+				Produces glas. Expensive to research and build.
+			</Translation>
+			<Translation Key="potashFactoryDescription">
+				Produces potasch.
+			</Translation>
+			<Translation Key="goldExtractorDescription">
+				Extracts gold from adjacent hexagons
+			</Translation>
+			<Translation Key="paperFactoryDescription">
+				Produces paper.
+			</Translation>
+			<Translation Key="sandFactoryDescription">
+				Produces sand out of the stone of adjacent hexagons.
+			</Translation>
+			<Translation Key="laboratory2Description">
+				Laboratory of average level. Generates intermediate knowledge.				
+			</Translation>
+			<Translation Key="toolBlacksmithDescription">
+				Produces tools.
+			</Translation>
+			<Translation Key="laboratory3Description">
+				Laboratory of the highest level. Generates advanced knowledge.
+			</Translation>
+			<Translation Key="circuitFactoryDescription">
+				Produces circuits.
+			</Translation>
+			<Translation Key="palastDescription">
+				The palace of the king. To win the game, construct a palace and keep it running (the king wants to be able to breathe fresh air!).
+			</Translation>
 		</Language>
 	</Languages>
 </xml>

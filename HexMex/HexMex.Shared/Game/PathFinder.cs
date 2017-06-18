@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Linq;
 using HexMex.Game.Settings;
 using HexMex.Helper;
@@ -124,7 +122,7 @@ namespace HexMex.Game
                 return PathCollection[start][destination];
             if (PathCollection.ContainsKey(destination) && PathCollection[destination].ContainsKey(start))
                 return PathCollection[destination][start].Reverse();
-            throw new NoPathFoundException<HexagonNode>("No path found", start, destination);
+            return null;
         }
 
         private float CalculateHeuristik(HexagonNode node, HexagonNode destination)
@@ -155,132 +153,32 @@ namespace HexMex.Game
             return min * GameplaySettings.DefaultResourceTimeBetweenNodes;
         }
 
+        private void RecalculateAllPaths()
+        {
+            PathCollection.Clear();
+            foreach (var start in StructureManager)
+            {
+                PathCollection.Add(start.Position, new Dictionary<HexagonNode, Path>());
+                foreach (var destination in StructureManager)
+                {
+                    try
+                    {
+                        Path path = new Path(PathFinding.AStar(start.Position, destination.Position).ToArray());
+                        PathCollection[start.Position].Add(destination.Position, path);
+                    }
+                    catch (NoPathFoundException<HexagonNode>) { }
+                }
+            }
+        }
+
         private void StructureAdded(StructureManager structureManager, Structure structure)
         {
-            var from = structure.Position;
-            PathCollection.Add(from, new Dictionary<HexagonNode, Path>());
-            foreach (var other in structureManager)
-            {
-                var to = other.Position;
-                var nodes = PathFinding.AStar(from, to).ToArray();
-                PathCollection[from].Add(to, new Path(nodes));
-            }
+            RecalculateAllPaths();
         }
 
         private void StructureRemoved(StructureManager structureManager, Structure structure)
         {
-            var innerKeysToRemove = new List<KeyValuePair<HexagonNode, HexagonNode>>();
-            var invalidPaths = new List<Path>();
-            foreach (var outerKvp in PathCollection)
-            {
-                foreach (var innerKvp in outerKvp.Value)
-                {
-                    var path = innerKvp.Value;
-                    if (!path.HasNodeInPath(structure.Position))
-                        continue;
-                    innerKeysToRemove.Add(new KeyValuePair<HexagonNode, HexagonNode>(outerKvp.Key, innerKvp.Key));
-                    invalidPaths.Add(path);
-                }
-            }
-            foreach (var keyValuePair in innerKeysToRemove)
-            {
-                PathCollection[keyValuePair.Key].Remove(keyValuePair.Value);
-            }
-            foreach (var key in PathCollection.Keys.ToArray())
-            {
-                if (PathCollection[key].Count == 0)
-                    PathCollection.Remove(key);
-            }
-            foreach (var invalidPath in invalidPaths)
-            {
-                var newPath = (Path)null;
-                try
-                {
-                    newPath = new Path(PathFinding.AStar(invalidPath.Start, invalidPath.Destination).ToArray());
-                    var d = PathCollection.ContainsKey(newPath.Start) ? PathCollection[newPath.Start] : new Dictionary<HexagonNode, Path>();
-                    if (d.ContainsKey(newPath.Destination))
-                        throw new InvalidOperationException("Invalid paths should have been removed");
-                    d.Add(newPath.Destination, newPath);
-                }
-                catch (NoPathFoundException<HexagonNode>)
-                {
-
-                }
-                invalidPath.OnPathInvalidate(newPath);
-            }
-        }
-    }
-
-    public class Path
-    {
-        public event Action<Path, Path> Invalidated;
-        public HexagonNode Start { get; }
-        public HexagonNode Destination { get; }
-        public ReadOnlyCollection<HexagonNode> AllHops { get; }
-        public ReadOnlyCollection<HexagonNode> HopsInBetween { get; }
-
-        private Path Reversed { get; set; }
-
-        public Path(params HexagonNode[] nodes)
-        {
-            AllHops = new ReadOnlyCollection<HexagonNode>(nodes);
-            Start = AllHops.First();
-            Destination = AllHops.Last();
-            if (nodes.Length < 2)
-                HopsInBetween = new ReadOnlyCollection<HexagonNode>(new HexagonNode[0]);
-            else
-            {
-                var hib = new HexagonNode[nodes.Length - 2];
-                for (int i = 1; i < nodes.Length - 1; i++)
-                {
-                    hib[i - 1] = nodes[i];
-                }
-                HopsInBetween = new ReadOnlyCollection<HexagonNode>(hib);
-            }
-            Reversed = new Path(this, nodes.Reverse().ToArray());
-        }
-
-        private Path(Path reversed, params HexagonNode[] nodes)
-        {
-            AllHops = new ReadOnlyCollection<HexagonNode>(nodes);
-            Start = AllHops.First();
-            Destination = AllHops.Last();
-            if (nodes.Length < 2)
-                HopsInBetween = new ReadOnlyCollection<HexagonNode>(new HexagonNode[0]);
-            else
-            {
-                var hib = new HexagonNode[nodes.Length - 2];
-                for (int i = 1; i < nodes.Length - 1; i++)
-                {
-                    hib[i - 1] = nodes[i];
-                }
-                HopsInBetween = new ReadOnlyCollection<HexagonNode>(hib);
-            }
-            Reversed = reversed;
-        }
-
-        public HexagonNode GetElementAfter(HexagonNode nextNode)
-        {
-            for (int i = 0; i < AllHops.Count - 1; i++)
-            {
-                if (Equals(AllHops[i], nextNode))
-                    return AllHops[i + 1];
-            }
-            throw new ArgumentException("No element found/element is last entry", nameof(nextNode));
-        }
-
-        public bool HasNodeInPath(HexagonNode node)
-        {
-            return AllHops.Contains(node);
-        }
-
-        public void OnPathInvalidate(Path newPath)
-        {
-            Invalidated?.Invoke(this, newPath);
-        }
-        public Path Reverse()
-        {
-            return Reversed;
+            RecalculateAllPaths();
         }
     }
 }

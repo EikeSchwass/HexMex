@@ -10,6 +10,7 @@ namespace HexMex.Game
     {
         public event Action<StructureManager, Structure> StructureAdded;
         public event Action<StructureManager, Structure> StructureRemoved;
+        public event Action<StructureManager, Structure, Structure> StructureReplaced;
 
         public Structure this[HexagonNode hexagonNode] => GetStructureAtPosition(hexagonNode);
 
@@ -32,6 +33,13 @@ namespace HexMex.Game
         {
             Structures.Remove(structure.Position);
             StructureRemoved?.Invoke(this, structure);
+        }
+
+        public void ReplaceStructure(Structure oldStructure, Structure newStructure)
+        {
+            Structures.Remove(oldStructure.Position);
+            Structures.Add(newStructure.Position, newStructure);
+            StructureReplaced?.Invoke(this, oldStructure, newStructure);
         }
 
         public void Update(float dt)

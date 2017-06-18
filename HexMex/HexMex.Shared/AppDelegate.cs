@@ -3,6 +3,7 @@ using CocosSharp;
 using HexMex.Game;
 using HexMex.Game.Settings;
 using HexMex.Helper;
+using HexMex.Scenes.Game;
 using HexMex.Scenes.MainMenu;
 
 namespace HexMex.Shared
@@ -36,15 +37,24 @@ namespace HexMex.Shared
         {
             application.ContentRootDirectory = "Content";
             application.ContentSearchPaths.Add("config");
-            
+
             // This will set the world bounds to be (0,0, w, h)
             // CCSceneResolutionPolicy.ShowAll will ensure that the aspect ratio is preserved
-            CCScene.SetDefaultDesignResolution(application.MainWindow.WindowSizeInPixels.Width, application.MainWindow.WindowSizeInPixels.Height, CCSceneResolutionPolicy.ShowAll);
+            var width = application.MainWindow.WindowSizeInPixels.Width;
+            var height = application.MainWindow.WindowSizeInPixels.Height;
+
+            var defaultWidth = 1080;
+            var defaultHeight = 1920;
+
+            var scaleFactor = width * height / (defaultWidth * defaultHeight);
+            Font.FontScaleFactor = scaleFactor;
+
+            CCScene.SetDefaultDesignResolution(width, height, CCSceneResolutionPolicy.ShowAll);
 
             // Determine whether to use the high or low def versions of our images
             // Make sure the default texel to content size ratio is set correctly
             // Of course you're free to have a finer set of image resolutions e.g (ld, hd, super-hd)
-            
+
             var scene = new MainMenuScene(mainWindow, BuildingDescriptionDatabase, ColorCollectionFile, LanguageSettings);
             mainWindow.RunWithScene(scene);
             mainWindow.DisplayStats = true;

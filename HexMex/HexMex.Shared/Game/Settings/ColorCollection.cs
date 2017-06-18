@@ -98,6 +98,26 @@ namespace HexMex.Game.Settings
         public CCColor3B Knowledge2 => new CCColor3B(ColorCollectionFile["knowledge2"]);
         public CCColor3B Knowledge3 => new CCColor3B(ColorCollectionFile["knowledge3"]);
         public CCColor3B Energy => new CCColor3B(ColorCollectionFile["energy"]);
+        public CCColor4B ResearchMenuBackground => ColorCollectionFile["researchMenuBackground"];
+        public CCColor4B ResearchMenuBorder => ColorCollectionFile["researchMenuBorder"];
+        public CCColor4B ResearchMenuEntryPressedBackground => ColorCollectionFile["researchMenuEntryPressedBackground"];
+        public CCColor4B ResearchMenuEntryReleasedBackground => ColorCollectionFile["researchMenuEntryReleasedBackground"];
+        public CCColor3B ResearchUnlockButtonIsPressedForeground => new CCColor3B(ColorCollectionFile["researchUnlockButtonIsPressedForeground"]);
+        public CCColor3B ResearchUnlockButtonIsReleasedForeground => new CCColor3B(ColorCollectionFile["researchUnlockButtonIsReleasedForeground"]);
+        public CCColor4B ResearchMenuEntrySelectedBorder => ColorCollectionFile["researchMenuEntrySelectedBorder"];
+        public CCColor4B ResearchMenuEntryNotSelectedBorder => ColorCollectionFile["researchMenuEntryNotSelectedBorder"];
+        public CCColor4B ResearchFooterBackground => ColorCollectionFile["researchFooterBackground"];
+        public CCColor4B ResearchFooterBorder => ColorCollectionFile["researchFooterBorder"];
+        public CCColor4B ResearchUnlockCostBackground => ColorCollectionFile["researchUnlockCostBackground"];
+        public CCColor4B ResearchUnlockCostRectBackground => ColorCollectionFile["researchUnlockCostRectBackground"];
+        public CCColor4B ResearchUnlockCostRectBorder => ColorCollectionFile["researchUnlockCostRectBorder"];
+        public CCColor3B ResearchButtonDisabledForeground => new CCColor3B(ColorCollectionFile["researchButtonDisabledForeground"]);
+        public CCColor4B SlowGameSpeedFill => ColorCollectionFile["slowGameSpeedFill"];
+        public CCColor4B NormalGameSpeedFill => ColorCollectionFile["normalGameSpeedFill"];
+        public CCColor4B FasterGameSpeedFill => ColorCollectionFile["fasterGameSpeedFill"];
+        public CCColor4B MaximalGameSpeedFill => ColorCollectionFile["maximalGameSpeedFill"];
+        public CCColor4B FastForewardBackground => ColorCollectionFile["fastForewardBackground"];
+        public CCColor4B FastForewardBorder => ColorCollectionFile["fastForewardBorder"];
 
         public CCColor4B GetInnerHexagonColor(ResourceType resourceType)
         {

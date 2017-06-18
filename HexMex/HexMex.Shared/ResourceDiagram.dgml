@@ -1,150 +1,147 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DirectedGraph GraphDirection="BottomToTop" Layout="Sugiyama" ZoomLevel="-1" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
   <Nodes>
-    <Node Id="BlackScmith" Category="Category6" Bounds="873.316666666667,634.7875,114.296666666667,25.96" Label="Blacksmith (Tools)">
+    <Node Id="BlackScmith" Category="Category6" Bounds="767.316666666667,404.1975,114.296666666667,25.96" Label="Blacksmith (Tools)">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="Blacksmith(Barrels)" Category="Category6" Bounds="629.1,634.7875,122.73,25.96" Label="Blacksmith (Barrels)">
+    <Node Id="Blacksmith(Barrels)" Category="Category6" Bounds="577.1,519.4925,122.73,25.96" Label="Blacksmith (Barrels)">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="Brick" Category="Category4" Bounds="18.4650000000001,230.59,50,25.96" Label="Brick" />
-    <Node Id="BrickFactory" Category="Category6" Bounds="-2.8421709430404E-14,288.2375,86.9300000000003,25.96" Label="Brick Factory">
+    <Node Id="Brick" Category="Category4" Bounds="18.4650000000001,115.295,50,25.9600000000001" Label="Brick" />
+    <Node Id="BrickFactory" Category="Category6" Bounds="0,172.9425,86.9300000000003,25.96" Label="Brick Factory">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="Circuit" Category="Category4" Bounds="937.556666666667,115.295,53.8166666666666,25.96" Label="Circuit" />
-    <Node Id="Coal" Category="Category4" Bounds="407.465,403.865,50,25.96" Label="Coal" />
-    <Node Id="CoalOre" Category="Category2" Bounds="399.336666666667,577.14,66.2566666666667,25.96" Label="Coal Ore" />
-    <Node Id="CoalPowerplant" Category="Category5" Bounds="379.408333333334,288.2375,106.113333333333,25.96" Label="Coal Powerplant" />
-    <Node Id="CoalRefinery" Category="Category6" Bounds="387.678333333334,519.4925,89.5733333333333,25.96" Label="Coal Refinery">
+    <Node Id="Circuit" Category="Category4" Bounds="911.556666666667,288.57,53.8166666666666,25.9599999999999" Label="Circuit" />
+    <Node Id="Coal" Category="Category4" Bounds="381.465,288.57,50,25.96" Label="Coal" />
+    <Node Id="CoalOre" Category="Category2" Bounds="373.336666666667,461.845,66.2566666666667,25.96" Label="Coal Ore" />
+    <Node Id="CoalPowerplant" Category="Category5" Bounds="353.408333333334,172.9425,106.113333333333,25.96" Label="Coal Powerplant" />
+    <Node Id="CoalRefinery" Category="Category6" Bounds="361.678333333334,404.1975,89.5733333333333,25.96" Label="Coal Refinery">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="CopperCable" Category="Category6" Bounds="988.825,172.9425,95.2799999999999,25.96" Label="Circuit Factory">
+    <Node Id="CopperCable" Category="Category6" Bounds="911.825,404.1975,95.2799999999997,25.96" Label="Circuit Factory">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="CopperOre" Category="Category2" Bounds="917.565,403.865,81.8,25.96" Label="Copper Ore" />
-    <Node Id="CopperRefinery" Category="Category6" Bounds="905.906666666667,288.2375,105.116666666667,25.96" Label="Copper Refinery">
+    <Node Id="CopperOre" Category="Category2" Bounds="1021.565,577.14,81.8,25.96" Label="Copper Ore" />
+    <Node Id="CopperRefinery" Category="Category6" Bounds="1009.90666666667,519.4925,105.116666666667,25.96" Label="Copper Refinery">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="DiamondExtractor" Category="Category6" Bounds="1195.465,57.6475,115.386666666667,25.96">
+    <Node Id="DiamondExtractor" Category="Category6" Bounds="1145.02333333333,57.6475,115.386666666667,25.96">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="Diamonds" Category="Category4" Bounds="1216.28666666667,0,73.7433333333333,25.96" Label="Diamonds" />
-    <Node Id="Energy" Category="Category1" Bounds="404.373333333333,230.59,56.1833333333334,25.96" Label="Energy" />
-    <Node Id="Forestry" Category="Category6" Bounds="672.225,750.0825,62.48,25.96">
+    <Node Id="Diamonds" Category="Category4" Bounds="1165.845,0,73.7433333333333,25.96" Label="Diamonds" />
+    <Node Id="Energy" Category="Category1" Bounds="424.373333333333,115.295,56.1833333333334,25.9600000000001" Label="Energy" />
+    <Node Id="Forestry" Category="Category6" Bounds="566.225,634.7875,62.48,25.96">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="Glas" Category="Category4" Bounds="267.465,115.295,50,25.96" Label="Glas" />
-    <Node Id="GlasFactory" Category="Category5" Bounds="250.563333333334,172.9425,83.8033333333333,25.96" Label="Glas Factory" />
-    <Node Id="Gold" Category="Category4" Bounds="1043.465,230.59,50,25.96" Label="Gold" />
-    <Node Id="GoldOre" Category="Category2" Bounds="1053.455,403.865,68.02,25.96" Label="Gold Ore" />
-    <Node Id="GoldRefinery" Category="Category6" Bounds="1041.79666666667,288.2375,91.3366666666666,25.96" Label="Gold Refinery">
+    <Node Id="Glas" Category="Category4" Bounds="154.465,5.6843418860808E-14,50,25.96" Label="Glas" />
+    <Node Id="GlasFactory" Category="Category5" Bounds="137.563333333334,57.6475,83.8033333333333,25.96" Label="Glas Factory" />
+    <Node Id="Gold" Category="Category4" Bounds="908.465,461.845,50,25.96" Label="Gold" />
+    <Node Id="GoldOre" Category="Category2" Bounds="899.455,577.14,68.02,25.96" Label="Gold Ore" />
+    <Node Id="GoldRefinery" Category="Category6" Bounds="887.796666666667,519.4925,91.3366666666666,25.96" Label="Gold Refinery">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="Iron" Category="Category4" Bounds="905.465,692.435,50,25.96" Label="Iron" />
-    <Node Id="IronOre" Category="Category2" Bounds="898.48,807.73,63.97,25.96" Label="Iron Ore" />
-    <Node Id="IronRefinery" Category="Category6" Bounds="886.821666666667,750.0825,87.2866666666666,25.96" Label="Iron Refinery">
+    <Node Id="Iron" Category="Category4" Bounds="799.465,577.14,50,25.96" Label="Iron" />
+    <Node Id="IronOre" Category="Category2" Bounds="792.48,692.435,63.97,25.96" Label="Iron Ore" />
+    <Node Id="IronRefinery" Category="Category6" Bounds="780.821666666667,634.7875,87.2866666666666,25.96" Label="Iron Refinery">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="Knowledge" Category="Category1" Bounds="659.063333333334,230.59,88.8033333333333,25.96" Label="Knowledge 1" />
-    <Node Id="Knowledge2" Category="Category1" Bounds="755.063333333334,115.295,88.8033333333333,25.96" Label="Knowledge 2" />
-    <Node Id="Knowledge3" Category="Category1" Bounds="830.063333333334,0,88.8033333333333,25.96" Label="Knowledge 3" />
-    <Node Id="Laboratory" Category="Category6" Bounds="515.988333333333,288.2375,86.9533333333334,25.96" Label="Laboratory 1">
+    <Node Id="Knowledge" Category="Category1" Bounds="235.063333333334,115.295,88.8033333333333,25.9600000000001" Label="Knowledge 1" />
+    <Node Id="Knowledge2" Category="Category1" Bounds="775.063333333334,115.295,88.8033333333333,25.96" Label="Knowledge 2" />
+    <Node Id="Knowledge3" Category="Category1" Bounds="894.063333333334,115.295,88.8033333333333,25.96" Label="Knowledge 3" />
+    <Node Id="Laboratory" Category="Category6" Bounds="235.988333333333,172.9425,86.9533333333334,25.96" Label="Laboratory 1">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="Laboratory1" Category="Category6" Bounds="830.988333333333,57.6475,86.9533333333334,25.96" Label="Laboratory 3">
+    <Node Id="Laboratory1" Category="Category6" Bounds="894.988333333333,172.9425,86.9533333333334,25.96" Label="Laboratory 3">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="Laboratory2" Category="Category6" Bounds="755.988333333333,172.9425,86.9533333333334,25.96" Label="Laboratory 2">
+    <Node Id="Laboratory2" Category="Category6" Bounds="777.988333333333,172.9425,86.9533333333334,25.96" Label="Laboratory 2">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="Paper" Category="Category4" Bounds="817.465,692.435,50,25.96" Label="Paper" />
-    <Node Id="PaperFactory" Category="Category6" Bounds="764.773333333333,750.0825,91.3833333333334,25.96" Label="Paper Factory">
+    <Node Id="Paper" Category="Category4" Bounds="730.465,519.4925,50,25.96" Label="Paper" />
+    <Node Id="PaperFactory" Category="Category6" Bounds="658.773333333333,634.7875,91.3833333333334,25.96" Label="Paper Factory">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="Pottasche" Category="Category4" Bounds="256.84,230.59,71.25,25.96" Label="Pottasche" />
-    <Node Id="Pottasche1" Category="Category6" Bounds="236.108333333334,288.2375,112.713333333333,25.96" Label="Pottasche Factory">
+    <Node Id="Pottasche" Category="Category4" Bounds="510.84,115.295,71.25,25.9600000000001" Label="Pottasche" />
+    <Node Id="Pottasche1" Category="Category6" Bounds="490.108333333334,172.9425,112.713333333333,25.96" Label="Pottasche Factory">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="Sand" Category="Category4" Bounds="176.465,230.59,50,25.96" Label="Sand" />
-    <Node Id="SandFactory" Category="Category6" Bounds="117.565,288.2375,87.8000000000002,25.96" Label="Sand Factory">
+    <Node Id="Sand" Category="Category4" Bounds="154.465,115.295,50,25.9600000000001" Label="Sand" />
+    <Node Id="SandFactory" Category="Category6" Bounds="117.565,172.9425,87.8000000000002,25.96" Label="Sand Factory">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="Stone" Category="Category2" Bounds="136.39,403.865,50.1500000000001,25.96" Label="Stone" />
-    <Node Id="Tools" Category="Category4" Bounds="873.465,230.59,50,25.96" Label="Tools" />
-    <Node Id="Tree" Category="Category2" Bounds="785.465,807.73,50,25.96" Label="Tree" />
-    <Node Id="Water" Category="Category2" Bounds="647.881666666667,385.885,51.3633333333332,25.96" Label="Water" />
-    <Node Id="WaterBarrel" Category="Category4" Bounds="647.881666666667,441.845,85.1666666666665,25.96" Label="Water Barrel" />
-    <Node Id="WaterGroup" Bounds="627.881666666667,345.885,125.166666666667,141.92" Group="Expanded" Label="Water Group" />
-    <Node Id="WaterPowerplant" Category="Category6" Bounds="633.463333333334,288.2375,114.003333333333,25.96" Label="Water Powerplant">
+    <Node Id="Stone" Category="Category2" Bounds="136.39,288.57,50.1500000000001,25.96" Label="Stone" />
+    <Node Id="Tools" Category="Category4" Bounds="799.465,288.57,50,25.96" Label="Tools" />
+    <Node Id="Tree" Category="Category2" Bounds="679.465,692.435,50,25.96" Label="Tree" />
+    <Node Id="Water" Category="Category2" Bounds="597.881666666667,270.59,51.3633333333332,25.96" Label="Water" />
+    <Node Id="WaterBarrel" Category="Category4" Bounds="597.881666666667,326.55,85.1666666666665,25.96" Label="Water Barrel" />
+    <Node Id="WaterGroup" Bounds="577.881666666667,230.59,125.166666666667,141.92" Group="Expanded" Label="Water Group" />
+    <Node Id="WaterPowerplant" Category="Category6" Bounds="633.463333333334,172.9425,114.003333333333,25.96" Label="Water Powerplant">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="WaterPump" Category="Category6" Bounds="647.69,519.4925,85.55,25.96" Label="Water Pump">
+    <Node Id="WaterPump" Category="Category6" Bounds="597.69,404.1975,85.55,25.96" Label="Water Pump">
       <Category Ref="Category5" />
     </Node>
-    <Node Id="Waterbarrel" Category="Category4" Bounds="665.206666666667,577.14,50.5166666666667,25.96" Label="Barrel" />
-    <Node Id="Wood" Category="Category4" Bounds="664.531666666667,692.435,51.8666666666666,25.96" Label="Wood" />
-    <Node Id="d1e85db6-2570-4744-8ab4-ce87c59fbe211" Category="Category4" Bounds="953.956666666667,230.59,59.0166666666669,25.96" Label="Copper" />
+    <Node Id="Waterbarrel" Category="Category4" Bounds="613.206666666667,461.845,50.5166666666667,25.96" Label="Barrel" />
+    <Node Id="Wood" Category="Category4" Bounds="552.531666666667,577.14,51.8666666666666,25.96" Label="Wood" />
+    <Node Id="d1e85db6-2570-4744-8ab4-ce87c59fbe211" Category="Category4" Bounds="988.956666666667,461.845,59.0166666666669,25.96" Label="Copper" />
   </Nodes>
   <Links>
-    <Link Source="BlackScmith" Target="Tools" Bounds="874.465026855469,264.538024902344,30.7818603515625,370.249450683594" />
-    <Link Source="Blacksmith(Barrels)" Target="Waterbarrel" Bounds="690.465026855469,612.099975585938,0,22.6875" />
-    <Link Source="BrickFactory" Target="Brick" Bounds="43.4650001525879,265.549987792969,0,22.6875" />
-    <Link Source="Circuit" Target="Laboratory1" Bounds="911.471130371094,87.3489303588867,41.2854614257813,27.9460678100586" />
-    <Link Source="Coal" Target="CoalPowerplant" Bounds="432.464996337891,323.197509765625,0,80.66748046875" />
-    <Link Source="Coal" Target="Laboratory" Bounds="437.250061035156,316.542449951172,71.8255310058594,87.3225402832031" />
-    <Link Source="Coal" Target="Pottasche1" Bounds="344.299163818359,316.840576171875,81.5863952636719,87.0244140625" />
-    <Link Source="CoalOre" Target="CoalRefinery" Bounds="432.464996337891,554.452514648438,0,22.6875" />
-    <Link Source="CoalPowerplant" Target="Energy" Bounds="432.464996337891,265.549987792969,0,22.6875" />
-    <Link Source="CoalRefinery" Target="Coal" Bounds="432.464996337891,438.825012207031,0,80.66748046875" />
-    <Link Source="CopperCable" Target="Circuit" Bounds="987.702209472656,146.880081176758,32.5511474609375,26.0624237060547" />
-    <Link Source="CopperOre" Target="CopperRefinery" Bounds="958.465026855469,323.197509765625,0,80.66748046875" />
-    <Link Source="CopperRefinery" Target="d1e85db6-2570-4744-8ab4-ce87c59fbe211" Bounds="964.094055175781,264.806976318359,10.1610717773438,23.4305114746094" />
-    <Link Source="DiamondExtractor" Target="Diamonds" Bounds="1223.90832519531,31.7206478118896,11.6873779296875,25.926851272583" />
-    <Link Source="Diamonds" Target="DiamondExtractor" Bounds="1270.72094726563,25.9599990844727,11.6873779296875,25.9268531799316" />
-    <Link Source="Forestry" Target="Wood" Bounds="695.371948242188,727.174560546875,5.16595458984375,22.907958984375" />
-    <Link Source="GlasFactory" Target="Glas" Bounds="292.464996337891,150.255004882813,0,22.6875" />
-    <Link Source="Gold" Target="CopperCable" Bounds="1048.03820800781,206.771438598633,13.2216796875,23.8185577392578" />
-    <Link Source="GoldOre" Target="GoldRefinery" Bounds="1087.46496582031,323.197509765625,0,80.66748046875" />
-    <Link Source="GoldRefinery" Target="Gold" Bounds="1075.56030273438,265.097686767578,7.6265869140625,23.1398010253906" />
-    <Link Source="Iron" Target="BlackScmith" Bounds="930.465026855469,669.747497558594,0,22.6875" />
-    <Link Source="Iron" Target="Blacksmith(Barrels)" Bounds="753.2548828125,662.849487304688,152.210144042969,36.560546875" />
-    <Link Source="Iron" Target="CopperCable" Bounds="955.465026855469,198.607330322266,208.999938964844,503.728179931641" />
-    <Link Source="IronOre" Target="IronRefinery" Bounds="930.465026855469,785.04248046875,0,22.6875" />
-    <Link Source="IronRefinery" Target="Iron" Bounds="930.465026855469,727.39501953125,0,22.6875" />
-    <Link Source="Knowledge" Target="Laboratory1" Bounds="704.703369140625,86.658203125,125.268615722656,143.931793212891" />
-    <Link Source="Knowledge" Target="Laboratory2" Bounds="722.828918457031,203.223419189453,44.8740234375,27.3665771484375" />
-    <Link Source="Knowledge2" Target="Laboratory1" Bounds="816.352111816406,89.0922164916992,34.090087890625,26.2027816772461" />
-    <Link Source="Laboratory" Target="Knowledge" Bounds="591.888244628906,259.894897460938,70.7981567382813,28.3425903320313" />
-    <Link Source="Laboratory1" Target="Knowledge3" Bounds="874.465026855469,34.9599990844727,0,22.6875" />
-    <Link Source="Laboratory2" Target="Knowledge2" Bounds="799.465026855469,150.255004882813,0,22.6875" />
-    <Link Source="Paper" Target="Laboratory2" Bounds="801.388244628906,207.868133544922,41.0767822265625,484.566864013672" />
-    <Link Source="PaperFactory" Target="Paper" Bounds="817.670166015625,726.263916015625,13.2216186523438,23.818603515625" />
-    <Link Source="Pottasche" Target="GlasFactory" Bounds="292.464996337891,207.902496337891,0,22.6875" />
-    <Link Source="Pottasche1" Target="Energy" Bounds="323.987609863281,258.413208007813,72.4298706054688,29.8242797851563" />
-    <Link Source="Pottasche1" Target="Pottasche" Bounds="292.464996337891,265.549987792969,0,22.6875" />
-    <Link Source="Sand" Target="GlasFactory" Bounds="221.954696655273,203.718811035156,42.4177703857422,26.8711853027344" />
-    <Link Source="SandFactory" Target="Sand" Bounds="170.471466064453,263.944305419922,16.8563690185547,24.2931823730469" />
-    <Link Source="Stone" Target="BrickFactory" Bounds="63.1395874023438,320.496520996094,85.0790863037109,83.3684692382813" />
-    <Link Source="Stone" Target="SandFactory" Bounds="161.464996337891,323.197509765625,0,80.66748046875" />
-    <Link Source="Tools" Target="Laboratory1" Bounds="894.885803222656,90.3063125610352,11.5792236328125,140.283683776855" />
-    <Link Source="Tools" Target="Laboratory2" Bounds="826.334899902344,203.868408203125,48.2300415039063,27.3999938964844" />
-    <Link Source="Tree" Target="Forestry" Bounds="735.480529785156,780.311218261719,51.5599365234375,27.778564453125" />
-    <Link Source="Tree" Target="PaperFactory" Bounds="810.465026855469,785.04248046875,0,22.6875" />
+    <Link Source="BlackScmith" Target="Tools" Bounds="824.465026855469,323.529998779297,0,80.6675109863281" />
+    <Link Source="Blacksmith(Barrels)" Target="Waterbarrel" Bounds="638.465026855469,496.804992675781,0,22.6875" />
+    <Link Source="BrickFactory" Target="Brick" Bounds="43.4650001525879,150.255004882813,0,22.6875" />
+    <Link Source="Circuit" Target="Laboratory1" Bounds="938.465026855469,207.902496337891,0,80.6675109863281" />
+    <Link Source="Coal" Target="CoalPowerplant" Bounds="406.464996337891,207.902496337891,0,80.6675109863281" />
+    <Link Source="Coal" Target="Laboratory" Bounds="325.312103271484,201.944595336914,74.5734558105469,86.6254119873047" />
+    <Link Source="Coal" Target="Pottasche1" Bounds="422.180999755859,204.633712768555,101.628753662109,83.9362945556641" />
+    <Link Source="CoalOre" Target="CoalRefinery" Bounds="406.464996337891,439.157501220703,0,22.6875" />
+    <Link Source="CoalPowerplant" Target="Energy" Bounds="416.822418212891,148.289840698242,19.6716918945313,24.6526641845703" />
+    <Link Source="CoalRefinery" Target="Coal" Bounds="406.464996337891,323.529998779297,0,80.6675109863281" />
+    <Link Source="CopperCable" Target="Circuit" Bounds="942.4306640625,323.385131835938,14.6769409179688,80.8123779296875" />
+    <Link Source="CopperOre" Target="CopperRefinery" Bounds="1062.46496582031,554.452514648438,0,22.6875" />
+    <Link Source="CopperRefinery" Target="d1e85db6-2570-4744-8ab4-ce87c59fbe211" Bounds="1033.83264160156,494.959197998047,18.7252197265625,24.5332946777344" />
+    <Link Source="DiamondExtractor" Target="Diamonds" Bounds="1173.46667480469,31.7206478118896,11.6873779296875,25.926851272583" />
+    <Link Source="Diamonds" Target="DiamondExtractor" Bounds="1220.279296875,25.9599990844727,11.6873779296875,25.9268531799316" />
+    <Link Source="Forestry" Target="Wood" Bounds="585.560302734375,611.647705078125,7.62664794921875,23.1397705078125" />
+    <Link Source="GlasFactory" Target="Glas" Bounds="179.464996337891,34.9599990844727,0,22.6875" />
+    <Link Source="Gold" Target="CopperCable" Bounds="939.319213867188,438.361663818359,10.5913696289063,23.4833374023438" />
+    <Link Source="GoldOre" Target="GoldRefinery" Bounds="933.465026855469,554.452514648438,0,22.6875" />
+    <Link Source="GoldRefinery" Target="Gold" Bounds="933.465026855469,496.804992675781,0,22.6875" />
+    <Link Source="Iron" Target="BlackScmith" Bounds="824.465026855469,439.157501220703,0,137.982513427734" />
+    <Link Source="Iron" Target="Blacksmith(Barrels)" Bounds="685.267822265625,548.336608886719,114.197204589844,34.6488037109375" />
+    <Link Source="Iron" Target="CopperCable" Bounds="828.067565917969,434.553039550781,100.352172851563,142.586975097656" />
+    <Link Source="IronOre" Target="IronRefinery" Bounds="824.465026855469,669.747497558594,0,22.6875" />
+    <Link Source="IronRefinery" Target="Iron" Bounds="824.465026855469,612.099975585938,0,22.6875" />
+    <Link Source="Laboratory" Target="Knowledge" Bounds="279.464996337891,150.255004882813,0,22.6875" />
+    <Link Source="Laboratory1" Target="Knowledge3" Bounds="938.465026855469,150.255004882813,0,22.6875" />
+    <Link Source="Laboratory2" Target="Knowledge2" Bounds="820.920288085938,150.237884521484,0.54473876953125,22.7046203613281" />
+    <Link Source="Paper" Target="Laboratory2" Bounds="736.465026855469,202.120712280273,38.3175659179688,317.371780395508" />
+    <Link Source="PaperFactory" Target="Paper" Bounds="727.431457519531,554.452514648438,28.0335693359375,80.3349609375" />
+    <Link Source="Pottasche" Target="GlasFactory" Bounds="230.288543701172,77.3682708740234,280.551452636719,41.3012237548828" />
+    <Link Source="Pottasche1" Target="Energy" Bounds="472.667541503906,147.272109985352,44.976806640625,25.6703948974609" />
+    <Link Source="Pottasche1" Target="Pottasche" Bounds="546.465026855469,150.255004882813,0,22.6875" />
+    <Link Source="Sand" Target="GlasFactory" Bounds="179.464996337891,92.6074981689453,0,22.6875" />
+    <Link Source="SandFactory" Target="Sand" Bounds="165.517913818359,149.845947265625,7.21171569824219,23.0965576171875" />
+    <Link Source="Stone" Target="BrickFactory" Bounds="63.1395874023438,205.201507568359,85.0790863037109,83.3684997558594" />
+    <Link Source="Stone" Target="SandFactory" Bounds="161.464996337891,207.902496337891,0,80.6675109863281" />
+    <Link Source="Tools" Target="Laboratory1" Bounds="836.876220703125,205.084213256836,81.087646484375,83.4857940673828" />
+    <Link Source="Tools" Target="Laboratory2" Bounds="821.534790039063,207.902221679688,2.48162841796875,80.6677856445313" />
+    <Link Source="Tree" Target="Forestry" Bounds="629.480529785156,665.016235351563,51.5599365234375,27.778564453125" />
+    <Link Source="Tree" Target="PaperFactory" Bounds="704.465026855469,669.747497558594,0,22.6875" />
     <Link Source="Water" Target="Pottasche1" Bounds="351.841680748652,316.431372855005,296.039976559291,75.8532573760976" />
     <Link Source="Water" Target="WaterPowerplant" Bounds="462.771215933645,319.294658134123,96.9033808028191,66.5902930865801" />
     <Link Source="Water" Target="WaterPump" Bounds="580.205324769225,411.844951220703,12.4881513161644,98.718712326685" />
     <Link Source="WaterBarrel" Target="Laboratory" Bounds="609.999177532215,320.192425121828,136.218899112973,121.652626098875" />
-    <Link Source="WaterBarrel" Target="Laboratory1" Bounds="603.843601599974,91.1690012809695,226.36180256639,350.676049939734" />
-    <Link Source="WaterBarrel" Target="Laboratory2" Bounds="607.436023003779,205.518401349374,217.956288711069,236.326649871329" />
+    <Link Source="WaterBarrel" Target="Laboratory1" Bounds="694.32578991866,92.1259307565403,119.24387459391,349.719120464163" />
+    <Link Source="WaterBarrel" Target="Laboratory2" Bounds="696.223399889252,206.993454526904,114.411555773853,234.851596693799" />
     <Link Source="WaterGroup" Target="Water" Category="Contains" />
     <Link Source="WaterGroup" Target="WaterBarrel" Category="Contains" />
-    <Link Source="WaterPowerplant" Target="Energy" Bounds="469.340087890625,251.809371948242,165.416809082031,36.9607086181641" />
+    <Link Source="WaterPowerplant" Target="Energy" Bounds="487.451873779297,144.442108154297,146.011444091797,32.1451568603516" />
     <Link Source="WaterPump" Target="WaterBarrel" Bounds="595.464996337891,476.805051220703,0,42.6874524414062" />
-    <Link Source="Waterbarrel" Target="WaterPump" Bounds="690.465026855469,554.452514648438,0,22.6875" />
-    <Link Source="Wood" Target="Blacksmith(Barrels)" Bounds="690.465026855469,669.747497558594,0,22.6875" />
-    <Link Source="Wood" Target="Laboratory" Bounds="559.465026855469,323.197509765625,105.066650390625,376.511413574219" />
-    <Link Source="Wood" Target="Pottasche1" Bounds="296.190704345703,323.069488525391,368.340972900391,380.107513427734" />
-    <Link Source="d1e85db6-2570-4744-8ab4-ce87c59fbe211" Target="CopperCable" Bounds="995.398559570313,205.527923583984,23.0415649414063,25.0620727539063" />
+    <Link Source="Waterbarrel" Target="WaterPump" Bounds="639.365661621094,439.1572265625,1.0303955078125,22.6877746582031" />
+    <Link Source="Wood" Target="Blacksmith(Barrels)" Bounds="591.974670410156,551.68798828125,26.49072265625,25.4520263671875" />
+    <Link Source="Wood" Target="Laboratory" Bounds="282.440185546875,207.820571899414,270.091491699219,379.28532409668" />
+    <Link Source="Wood" Target="Pottasche1" Bounds="546.465026855469,207.902496337891,17.5896606445313,369.237518310547" />
+    <Link Source="d1e85db6-2570-4744-8ab4-ce87c59fbe211" Target="CopperCable" Bounds="979.186828613281,436.447235107422,25.99365234375,25.3977661132813" />
   </Links>
   <Categories>
     <Category Id="Category1" Label="Kategorie 1" Background="#FFE51400" IsTag="True" />

@@ -18,6 +18,7 @@ namespace HexMex.Scenes.Game
 
         private BuildMenu BuildMenu { get; }
         public StructureMenu StructureMenu { get; }
+        public ResearchMenu ResearchMenu { get; }
 
         public GameLayer(World world, HexMexCamera camera, CCColor4B color) : base(color)
         {
@@ -34,8 +35,9 @@ namespace HexMex.Scenes.Game
             var menuLayer = new MenuLayer(World, HexMexCamera);
             controlLayer.ConstructionRequested += (buttonLayer, buildButton) => ConstructionMenuRequested(buildButton, menuLayer);
             controlLayer.DisplayStructureRequested += (buttonLayer, structureButton) => DisplayStructureMenu(structureButton, menuLayer);
+            researchButtonLayer.ResearchButtonTouched += (rbl) => DisplayResearchMenu(menuLayer);
 
-            var layers = new CCLayer[] { hexagonLayer, edgeLayer, resourcePackageLayer, structureLayer, controlLayer, statisticLayer,researchButtonLayer, menuLayer };
+            var layers = new CCLayer[] { hexagonLayer, edgeLayer, resourcePackageLayer, structureLayer, controlLayer, statisticLayer, researchButtonLayer, menuLayer };
 
             foreach (var layer in layers)
             {
@@ -44,11 +46,16 @@ namespace HexMex.Scenes.Game
 
             TouchLayers = new ReadOnlyCollection<TouchLayer>(layers.OfType<TouchLayer>().Reverse().ToList());
 
-            BuildMenu = new BuildMenu(World.UnlockManager, World.GameSettings.VisualSettings,World.GameSettings.LanguageSettings,world.GameSettings.BuildingDescriptionDatabase);
+            BuildMenu = new BuildMenu(World.UnlockManager, World.GameSettings.VisualSettings, World.GameSettings.LanguageSettings, world.GameSettings.BuildingDescriptionDatabase);
             BuildMenu.ConstructionRequested += ConstructBuilding;
             StructureMenu = new StructureMenu(World.GameSettings.VisualSettings, World);
+            ResearchMenu = new ResearchMenu(World.GameSettings.BuildingDescriptionDatabase, World.UnlockManager, World.GameSettings.VisualSettings, World.GameSettings.LanguageSettings);
 
             Schedule();
+        }
+        private void DisplayResearchMenu(MenuLayer menuLayer)
+        {
+            menuLayer.DisplayMenu(ResearchMenu);
         }
         private void DisplayStructureMenu(StructureButton structureButton, MenuLayer menuLayer)
         {

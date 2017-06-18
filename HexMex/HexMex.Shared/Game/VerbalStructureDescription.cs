@@ -4,16 +4,18 @@
     {
         public TranslationKey NameID { get; }
         public TranslationKey DescriptionID { get; }
+        public string InternalName { get; }
 
-        public VerbalStructureDescription(TranslationKey name, TranslationKey description)
+        public VerbalStructureDescription(string internalName, TranslationKey name, TranslationKey description)
         {
+            InternalName = internalName;
             DescriptionID = description;
             NameID = name;
         }
 
         public bool Equals(VerbalStructureDescription other)
         {
-            return string.Equals(NameID, other.NameID) && string.Equals(DescriptionID, other.DescriptionID);
+            return Equals(InternalName, other.InternalName);
         }
         public override bool Equals(object obj)
         {
@@ -25,7 +27,7 @@
         {
             unchecked
             {
-                return (NameID.GetHashCode() * 397) ^ DescriptionID.GetHashCode();
+                return (InternalName.GetHashCode() * 397) ^ InternalName.GetHashCode();
             }
         }
         public static bool operator ==(VerbalStructureDescription left, VerbalStructureDescription right)

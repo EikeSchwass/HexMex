@@ -5,6 +5,7 @@ using HexMex.Controls;
 using HexMex.Game;
 using HexMex.Game.Settings;
 using HexMex.Scenes.Game;
+using HexMex.Scenes.Help;
 
 namespace HexMex.Scenes.MainMenu
 {
@@ -13,6 +14,7 @@ namespace HexMex.Scenes.MainMenu
         public BuildingDescriptionDatabase BuildingDescriptionDatabase { get; }
         public ColorCollectionFile ColorCollectionFile { get; }
         public LanguageSettings LanguageSettings { get; }
+        public VisualSettings VisualSettings { get; }
         private HexButton HelpButton { get; }
         private HexButton OptionsButton { get; }
         private HexButton StartGameButton { get; }
@@ -27,6 +29,7 @@ namespace HexMex.Scenes.MainMenu
             BuildingDescriptionDatabase = buildingDescriptionDatabase;
             ColorCollectionFile = colorCollectionFile;
             LanguageSettings = languageSettings;
+            VisualSettings = new VisualSettings(colorCollectionFile);
             StartGameButton.Touched += StartGameButton_Clicked;
             HelpButton.Touched += HelpButton_Clicked;
             OptionsButton.Touched += OptionsButton_Clicked;
@@ -64,7 +67,7 @@ namespace HexMex.Scenes.MainMenu
 
         private void HelpButton_Clicked(Button sender)
         {
-            Debug.WriteLine("Help Button Clicked");
+            Window.DefaultDirector.PushScene(new HelpScene(Window, VisualSettings, LanguageSettings));
         }
 
         private void OnTouchCancelled(CCTouch arg1, CCEvent arg2)

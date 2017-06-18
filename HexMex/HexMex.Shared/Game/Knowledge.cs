@@ -1,6 +1,8 @@
-﻿namespace HexMex.Game
+﻿using System;
+
+namespace HexMex.Game
 {
-    public struct Knowledge
+    public struct Knowledge : IComparable<Knowledge>
     {
         public static Knowledge Zero { get; } = new Knowledge();
         public static Knowledge Knowledge1One { get; } = new Knowledge(1, 0, 0);
@@ -20,14 +22,27 @@
 
         public static Knowledge operator +(Knowledge k1, Knowledge k2) => new Knowledge(k1.Knowledge1 + k2.Knowledge1, k1.Knowledge2 + k2.Knowledge2, k1.Knowledge3 + k2.Knowledge3);
         public static Knowledge operator -(Knowledge k1, Knowledge k2) => new Knowledge(k1.Knowledge1 - k2.Knowledge1, k1.Knowledge2 - k2.Knowledge2, k1.Knowledge3 - k2.Knowledge3);
-        public static bool operator >(Knowledge k1, Knowledge k2) => k1.Knowledge1 > k2.Knowledge1 && k1.Knowledge2 > k2.Knowledge2 && k1.Knowledge3 > k2.Knowledge3;
-        public static bool operator >=(Knowledge k1, Knowledge k2) => k1.Knowledge1 >= k2.Knowledge1 && k1.Knowledge2 >= k2.Knowledge2 && k1.Knowledge3 >= k2.Knowledge3;
-        public static bool operator <(Knowledge k1, Knowledge k2) => k1.Knowledge1 < k2.Knowledge1 && k1.Knowledge2 < k2.Knowledge2 && k1.Knowledge3 < k2.Knowledge3;
-        public static bool operator <=(Knowledge k1, Knowledge k2) => k1.Knowledge1 <= k2.Knowledge1 && k1.Knowledge2 <= k2.Knowledge2 && k1.Knowledge3 <= k2.Knowledge3;
 
         public bool Equals(Knowledge other)
         {
             return Knowledge1 == other.Knowledge1 && Knowledge2 == other.Knowledge2 && Knowledge3 == other.Knowledge3;
+        }
+
+        public int CompareTo(Knowledge other)
+        {
+            if (other.Knowledge3 > Knowledge3)
+                return -1;
+            if (other.Knowledge3 < Knowledge3)
+                return 1;
+            if (other.Knowledge2 > Knowledge2)
+                return -1;
+            if (other.Knowledge2 < Knowledge2)
+                return 1;
+            if (other.Knowledge1 > Knowledge1)
+                return -1;
+            if (other.Knowledge1 < Knowledge1)
+                return 1;
+            return 0;
         }
         public override bool Equals(object obj)
         {

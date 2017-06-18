@@ -1,3 +1,4 @@
+using System;
 using CocosSharp;
 using HexMex.Controls;
 using HexMex.Game;
@@ -21,6 +22,8 @@ namespace HexMex.Scenes.Game
                 RenderResearchButton();
             }
         }
+
+        public event Action<ReseachLayer> ResearchButtonTouched;
 
         public float Radius
         {
@@ -76,11 +79,12 @@ namespace HexMex.Scenes.Game
         public override void OnTouchUp(TouchEventArgs e)
         {
             base.OnTouchUp(e);
-            IsResearchButtonPressed = false;
-            if ((e.Touch.LocationOnScreen - ResearchButtonPosition).LengthSquared <= Radius * Radius)
+            var pos = e.Touch.LocationOnScreen.InvertY + new CCPoint(0, Window.WindowSizeInPixels.Height);
+            if (IsResearchButtonPressed && (pos - ResearchButtonPosition).LengthSquared <= Radius * Radius)
             {
-                // TODO TouchUp
+                ResearchButtonTouched?.Invoke(this);
             }
+            IsResearchButtonPressed = false;
         }
 
         private void RenderResearchButton()
