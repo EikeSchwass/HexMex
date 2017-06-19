@@ -72,7 +72,7 @@
         </Products>
       </ProductionInformation>
     </Building>
-    <Building Name="WaterPowerPlant">
+    <Building Name="WaterPowerPlant" CanExtractWater="true">
       <UnlockCost Knowledge1="10" Knowledge2="10" />
       <ConstructionInformation ConstructionTime="12">
         <Coal />
@@ -82,7 +82,7 @@
       </ConstructionInformation>
       <ProductionInformation ProductionTime="2">
         <Ingredients>
-          <Water />
+          <PureWater Source="Hexagon" />
         </Ingredients>
         <Products>
           <EnvironmentResource Energy="5" />
@@ -97,7 +97,7 @@
       <ProductionInformation ProductionTime="5">
         <Ingredients>
           <EnvironmentResource Energy="6" />
-          <CoalOre Source="Hexagon" />
+          <CopperOre Source="Hexagon" />
         </Ingredients>
         <Products>
           <EnvironmentResource CO2="5" />

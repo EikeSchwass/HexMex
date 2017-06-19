@@ -158,17 +158,37 @@ namespace HexMex.Game
             PathCollection.Clear();
             foreach (var start in StructureManager)
             {
-                PathCollection.Add(start.Position, new Dictionary<HexagonNode, Path>());
+                if (!PathCollection.ContainsKey(start.Position))
+                    PathCollection.Add(start.Position, new Dictionary<HexagonNode, Path>());
                 foreach (var destination in StructureManager)
                 {
                     try
                     {
-                        Path path = new Path(PathFinding.AStar(start.Position, destination.Position).ToArray());
-                        PathCollection[start.Position].Add(destination.Position, path);
+                        if (!PathCollection[start.Position].ContainsKey(destination.Position))
+                        {
+                            Path path = new Path(PathFinding.AStar(start.Position, destination.Position).ToArray());
+                            AddPath(path);
+                            if (path.AllHops.Count > 2)
+                            {
+                                var containedPaths = path.GetContainedPaths();
+                                foreach (var containedPath in containedPaths)
+                                {
+                                    AddPath(containedPath);
+                                }
+                            }
+                        }
                     }
                     catch (NoPathFoundException<HexagonNode>) { }
                 }
             }
+        }
+        private void AddPath(Path path)
+        {
+            if (!PathCollection.ContainsKey(path.Start))
+                PathCollection.Add(path.Start, new Dictionary<HexagonNode, Path>());
+            if (!PathCollection[path.Start].ContainsKey(path.Destination))
+                PathCollection[path.Start].Add(path.Destination, path);
+            
         }
 
         private void StructureAdded(StructureManager structureManager, Structure structure)

@@ -21,6 +21,7 @@
       <xs:element name="DiamondOre" type="ResourceType" />
       <xs:element name="Gold" type="ResourceType" />
       <xs:element name="Copper" type="ResourceType" />
+      <xs:element name="CopperOre" type="ResourceType" />
       <xs:element name="Iron" type="ResourceType" />
       <xs:element name="Wood" type="ResourceType" />
       <xs:element name="Coal" type="ResourceType" />

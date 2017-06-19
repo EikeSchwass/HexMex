@@ -18,7 +18,7 @@
         public float ConstructionRadius { get; } = 32;
         public int BuildButtonRadius { get; } = 48;
         public float EdgeThickness { get; } = 6;
-        public float ResourcePackageRadius { get; } = 24;
+        public float ResourcePackageRadius { get; } = 40;
         public float ProgressRadiusFactor { get; } = 0.75f;
         public int StructureMenuHeaderFontSize { get; } = 24;
         public int StructureMenuDescriptionFontSize { get; } = 18;

@@ -15,8 +15,70 @@ namespace HexMex.Helper
 
         public static bool CanBeUsedFor(this ResourceType actualType, ResourceType requestedType)
         {
-            return (actualType & requestedType) == requestedType;
+            if (requestedType == Water && actualType == WaterBarrel)
+            {
+
+            }
+            return (actualType & requestedType) == requestedType || (actualType | requestedType) == requestedType;
         }
+
+        public static CCSpriteFrame GetSpriteFrame(this ResourceType resourceType)
+        {
+            var rect = new CCRect(0, 0, 32, 32);
+            switch (resourceType)
+            {
+                case Barrel:
+                    rect = rect.Add(new CCPoint(32 * 0, 32 * 0));
+                    break;
+                case Copper:
+                    rect = rect.Add(new CCPoint(32 * 1, 32 * 0));
+                    break;
+                case Diamond:
+                    rect = rect.Add(new CCPoint(32 * 2, 32 * 0));
+                    break;
+                case PureWater:
+                    rect = rect.Add(new CCPoint(32 * 3, 32 * 0));
+                    break;
+                case Water:
+                    rect = rect.Add(new CCPoint(32 * 3, 32 * 0));
+                    break;
+                case Brick:
+                    rect = rect.Add(new CCPoint(32 * 0, 32 * 1));
+                    break;
+                case Gold:
+                    rect = rect.Add(new CCPoint(32 * 1, 32 * 1));
+                    break;
+                case Tools:
+                    rect = rect.Add(new CCPoint(32 * 2, 32 * 1));
+                    break;
+                case WaterBarrel:
+                    rect = rect.Add(new CCPoint(32 * 3, 32 * 1));
+                    break;
+                case Circuit:
+                    rect = rect.Add(new CCPoint(32 * 0, 32 * 2));
+                    break;
+                case Iron:
+                    rect = rect.Add(new CCPoint(32 * 1, 32 * 2));
+                    break;
+                case Wood:
+                    rect = rect.Add(new CCPoint(32 * 2, 32 * 2));
+                    break;
+                case Coal:
+                    rect = rect.Add(new CCPoint(32 * 0, 32 * 3));
+                    break;
+                case Paper:
+                    rect = rect.Add(new CCPoint(32 * 1, 32 * 3));
+                    break;
+            }
+            var ccSpriteFrame = new CCSpriteFrame(new CCTexture2D("resourceSS"), rect);
+            return ccSpriteFrame;
+        }
+
+        private static CCRect Add(this CCRect rect, CCPoint point)
+        {
+            return new CCRect(rect.MinX + point.X, rect.MinY + point.Y, rect.Size.Width, rect.Size.Height);
+        }
+
         public static void DrawCircle(this CCDrawNode node, CCPoint position, float radius, CCColor4B fillColor, float borderThickness, CCColor4B borderColor)
         {
             node.DrawSolidCircle(position, radius, borderColor);

@@ -41,7 +41,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
-    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+    <AndroidLinkMode>Full</AndroidLinkMode>
+    <EnableProguard>false</EnableProguard>
+    <AndroidSupportedAbis>armeabi-v7a;arm64-v8a</AndroidSupportedAbis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="box2d, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -145,6 +147,7 @@
     <AndroidResource Include="Resources\Values\Strings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\Content\buildings\" />
     <Folder Include="Assets\Content\config\" />
     <Folder Include="Assets\Content\hd\animations\" />
     <Folder Include="Assets\Content\hd\fonts\" />
@@ -181,10 +184,14 @@
     <AndroidEnvironment Include="environment.txt" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\buildings.xml" />
+    <AndroidAsset Include="Assets\buildings.xml">
+      <SubType>Designer</SubType>
+    </AndroidAsset>
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\colors.xml" />
+    <AndroidAsset Include="Assets\colors.xml">
+      <SubType>Designer</SubType>
+    </AndroidAsset>
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\languages.xml" />
@@ -202,6 +209,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Content\fastforeward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\resources\resourceSS.png" />
   </ItemGroup>
   <Import Project="..\HexMex.Shared\EmptyProject.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

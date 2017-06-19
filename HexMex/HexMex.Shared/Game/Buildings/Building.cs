@@ -86,6 +86,10 @@ namespace HexMex.Game.Buildings
 
         protected virtual void OnProductionCompleted()
         {
+            if (Description.VerbalStructureDescription.InternalName.IndexOf("Barrel", StringComparison.OrdinalIgnoreCase) != -1)
+            {
+                Console.WriteLine("Barrel produces");
+            }
             World.GlobalResourceManager.Knowledge += Description.ProductionInformation.Products.Knowledge;
             World.GlobalResourceManager.EnvironmentResource += Description.ProductionInformation.Products.EnvironmentResource;
             var resourceTypeSources = Description.ProductionInformation.Products.ResourceTypes.ToArray();
@@ -121,6 +125,10 @@ namespace HexMex.Game.Buildings
         private void ResourceDirector_AllProvisionsLeft(ResourceDirector obj)
         {
             CheckAndStartProduction();
+            if (Description.VerbalStructureDescription.InternalName.IndexOf("Barrel", StringComparison.OrdinalIgnoreCase) != -1)
+            {
+                Console.WriteLine("Barrel on its way");
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -74,6 +75,22 @@ namespace HexMex.Game
         public Path Reverse()
         {
             return Reversed;
+        }
+        public IEnumerable<Path> GetContainedPaths()
+        {
+            for (int i = 0; i < AllHops.Count; i++)
+            {
+                for (int j = i; j < AllHops.Count; j++)
+                {
+                    var newPath = new List<HexagonNode> { AllHops[j] };
+                    for (int k = i; k < j; k++)
+                    {
+                        newPath.Add(AllHops[k]);
+                    }
+                    newPath.Add(AllHops[j]);
+                    yield return new Path(newPath.ToArray());
+                }
+            }
         }
     }
 }

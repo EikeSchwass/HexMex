@@ -9,7 +9,7 @@ namespace HexMex.Scenes.Game
     {
         public World World { get; }
         private CCDrawNode DrawNode { get; } = new CCDrawNode();
-        private List<ResourcePackage> Packages { get; } = new List<ResourcePackage>();
+        private Dictionary<ResourcePackage, CCSprite> Packages { get; } = new Dictionary<ResourcePackage, CCSprite>();
 
         private bool RedrawRequested { get; set; }
 
@@ -34,23 +34,30 @@ namespace HexMex.Scenes.Game
         private void Render()
         {
             DrawNode.Clear();
-            foreach (var package in Packages)
+            foreach (var kvp in Packages)
             {
+                var package = kvp.Key;
                 var radius = World.GameSettings.VisualSettings.ResourcePackageRadius;
-                var posiition = package.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
-                DrawNode.DrawCircle(posiition, radius, package.ResourceType.GetColor(World.GameSettings.VisualSettings.ColorCollection), 3, World.GameSettings.VisualSettings.ColorCollection.ResourcePackageBorder);
+                var position = package.GetWorldPosition(World.GameSettings.LayoutSettings.HexagonRadius, World.GameSettings.LayoutSettings.HexagonMargin);
+                //DrawNode.DrawCircle(position, radius, World.GameSettings.VisualSettings.ColorCollection.ResourcePackageBackground, 3, World.GameSettings.VisualSettings.ColorCollection.ResourcePackageBorder);
+                kvp.Value.Position = position;
+                kvp.Value.ContentSize = new CCSize(radius * 2, radius * 2) * 1f;
             }
         }
 
         private void ResourceManager_PackageStarted(ResourceManager packageManager, ResourcePackage package)
         {
-            Packages.Add(package);
+            var spriteFrame = package.ResourceType.GetSpriteFrame();
+            CCSprite sprite = new CCSprite(spriteFrame) { BlendFunc = CCBlendFunc.NonPremultiplied };
+            Packages.Add(package, sprite);
             package.RequiresRedraw += r => RedrawRequested = true;
             RedrawRequested = true;
+            AddChild(sprite);
         }
 
         private void ResourceManager_PackageArrived(ResourceManager packageManager, ResourcePackage package)
         {
+            RemoveChild(Packages[package]);
             Packages.Remove(package);
             RedrawRequested = true;
         }

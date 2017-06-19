@@ -8,7 +8,7 @@ namespace HexMex.Game
     public class GlobalResourceManager
     {
         public GameplaySettings GameplaySettings { get; }
-        private Knowledge knowledge;
+        private Knowledge knowledge = new Knowledge(100, 100, 100);
         private EnvironmentResource environmentResource;
         public event Action<GlobalResourceManager> ValueChanged;
 

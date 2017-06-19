@@ -118,6 +118,7 @@ namespace HexMex.Game.Settings
         public CCColor4B MaximalGameSpeedFill => ColorCollectionFile["maximalGameSpeedFill"];
         public CCColor4B FastForewardBackground => ColorCollectionFile["fastForewardBackground"];
         public CCColor4B FastForewardBorder => ColorCollectionFile["fastForewardBorder"];
+        public CCColor4B ResourcePackageBackground => ColorCollectionFile["resourcePackageBackground"];
 
         public CCColor4B GetInnerHexagonColor(ResourceType resourceType)
         {

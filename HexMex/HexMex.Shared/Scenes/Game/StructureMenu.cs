@@ -99,7 +99,7 @@ namespace HexMex.Scenes.Game
         private void RenderContent(CCPoint topLeft, CCSize size)
         {
             var colorCollection = VisualSettings.ColorCollection;
-            float resourceRadius = 16;
+            float resourceRadius = 32;
             float structureRadius = 64;
             var ingredients = Structure.Description.ProductionInformation?.Ingredients.ResourceTypes.OrderBy(i => i.ResourceType).ToList() ?? Structure.Description.ConstructionInformation.ResourceTypes.OrderBy(i => i.ResourceType).ToList();
             var products = Structure.Description.ProductionInformation?.Products.ResourceTypes;
@@ -114,12 +114,12 @@ namespace HexMex.Scenes.Game
             for (int i = 0; i < ingredients.Count; i++)
             {
                 var resourceType = ingredients[i];
-                bool arrived = !pendingRequests.Contains(resourceType.ResourceType);
+                bool arrived = !pendingRequests.Any(r => resourceType.ResourceType.CanBeUsedFor(r));
                 if (!arrived)
                     pendingRequests.Remove(resourceType.ResourceType);
                 float x = i * ingredientSpacing + ingredientSpacing / 2 + topLeft.X;
                 var resourceColor = resourceType.ResourceType.GetColor(colorCollection);
-                DrawNode.DrawCircle(new CCPoint(x, ingredientY), resourceRadius, resourceColor, 2, arrived ? colorCollection.StructureMenuResourceArrivedBorder : colorCollection.StructureMenuResourceNotArrivedBorder);
+                DrawNode.DrawCircle(new CCPoint(x, ingredientY), resourceRadius, resourceColor, 4, arrived ? colorCollection.StructureMenuResourceArrivedBorder : colorCollection.StructureMenuResourceNotArrivedBorder);
             }
 
             var structurePosition = new CCPoint(topLeft.X + size.Width / 2, structureY);

@@ -47,6 +47,8 @@
     <Color ColorKey="resourceGold" Value="ff000000" />
     <Color ColorKey="resourceCircuit" Value="ff000000" />
     <Color ColorKey="resourceBrick" Value="a42b13" />
+    <Color ColorKey="resourceBarrel" Value="fe918f" />
+    <Color ColorKey="resourceWaterBarrel" Value="dd91fe" />
 
     <!-- Resource Package -->
     <Color ColorKey="resourcePackageBorder" Value="ffffff" />
@@ -137,5 +139,11 @@
     <Color ColorKey="researchButtonBackground" Value="78222222" />
     <Color ColorKey="researchButtonBorder" Value="ffffff" />
     <Color ColorKey="researchButtonLiquidColor" Value="42bf00" />
+
+    <Color ColorKey="brickFactoryFill" Value="a42b13" />
+    <Color ColorKey="brickFactoryBorder" Value="ffffff" />
+    <Color ColorKey="waterPumpFill" Value="6666ff" />
+    <Color ColorKey="waterPumpBorder" Value="ffffff" />
+    <Color ColorKey="resourcePackageBackground" Value="87878787" />
   </ColorCollection>
 </xml>

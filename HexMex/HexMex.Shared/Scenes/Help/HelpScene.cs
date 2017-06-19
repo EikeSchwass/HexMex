@@ -1,5 +1,4 @@
-﻿using System;
-using CocosSharp;
+﻿using CocosSharp;
 using HexMex.Controls;
 using HexMex.Game;
 using HexMex.Game.Settings;
