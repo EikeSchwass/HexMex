@@ -94,6 +94,22 @@ namespace HexMex.Scenes.Game
                 FastForewardSprite.Position = position + new CCPoint(2, 0);
                 FastForewardSprite.ContentSize = new CCSize(radius * 2, radius * 2) * 0.8f;
             }
+            RenderEnvironmentValues();
+        }
+
+        private void RenderEnvironmentValues()
+        {
+            var environmentResource = World.GlobalResourceManager.EnvironmentResource;
+            var visualSettings = World.GameSettings.VisualSettings;
+            float margin = visualSettings.StatisticsMargin;
+            float totalBarWidth = VisibleBoundsWorldspace.MaxX / 2;
+            float barHeight = VisibleBoundsWorldspace.Size.Height / 100;
+
+            float o2Width = Max(0, Min(1, environmentResource.O2 / World.GameSettings.GameplaySettings.StartO2)) * totalBarWidth;
+            var y = VisibleBoundsWorldspace.MaxY - margin - barHeight / 2;
+
+            CCColor4B o2Color = new CCColor4B(0, 162, 255);
+            DrawNode.DrawRoundedLine(new CCPoint(VisibleBoundsWorldspace.MidX - o2Width / 2, y), new CCPoint(VisibleBoundsWorldspace.MidX + o2Width / 2, y), barHeight / 2, o2Color.ToColor4F(), 1, CCColor4B.White.ToColor4F());
         }
 
         public override void OnTouchDown(TouchEventArgs e)

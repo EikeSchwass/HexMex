@@ -28,13 +28,12 @@ namespace HexMex.Scenes.Game
                 {
                     c2.ConstructionCompleted += ConstructionCompleted;
                 }
+                ReloadResources();
             }
         }
-        private void ConstructionCompleted(Construction construction)
-        {
-            Structure = null;
-            Host?.Close();
-        }
+
+        private StructureMenuResource[] Ingredients { get; set; } = new StructureMenuResource[0];
+        private StructureMenuResource[] Products { get; set; } = new StructureMenuResource[0];
 
         private StructureMenuEntry DeconstructEntry { get; set; }
         private StructureMenuEntry SuspendEntry { get; set; }
@@ -85,6 +84,11 @@ namespace HexMex.Scenes.Game
             Host.Schedule(Update, 0.1f);
             Update(0);
         }
+        private void ConstructionCompleted(Construction construction)
+        {
+            Structure = null;
+            Host?.Close();
+        }
         private void Deconstruct()
         {
             World.StructureManager.RemoveStructure(Structure);
@@ -96,30 +100,65 @@ namespace HexMex.Scenes.Game
             return area.ContainsPoint(position);
         }
 
+        private void ReloadResources()
+        {
+            Products = new StructureMenuResource[0];
+            Ingredients = new StructureMenuResource[0];
+            if (Structure == null)
+                return;
+            if (Structure?.Description?.ProductionInformation != null)
+            {
+                var productionInfo = Structure.Description.ProductionInformation;
+                var ingredients = productionInfo.Ingredients.ResourceTypes.OrderBy(i => i.ResourceType).ToArray();
+                Ingredients = new StructureMenuResource[ingredients.Length];
+                for (var i = 0; i < ingredients.Length; i++)
+                {
+                    var structureMenuResource = new StructureMenuResource(ingredients[i], null);
+                    Ingredients[i] = structureMenuResource;
+                }
+                var products = productionInfo.Products.ResourceTypes.OrderBy(i => i.ResourceType).ToArray();
+                Products = new StructureMenuResource[products.Length];
+                for (var i = 0; i < products.Length; i++)
+                {
+                    var structureMenuResource = new StructureMenuResource(products[i], null);
+                    Products[i] = structureMenuResource;
+                }
+            }
+            else if (Structure is Construction construction && construction.BuildingDescription?.ConstructionInformation?.ResourceTypes != null)
+            {
+                var ingredients = construction.Description.ConstructionInformation.ResourceTypes.OrderBy(i => i.ResourceType).ToArray();
+                Ingredients = new StructureMenuResource[ingredients.Length];
+                for (var i = 0; i < ingredients.Length; i++)
+                {
+                    var structureMenuResource = new StructureMenuResource(ingredients[i], null);
+                    Ingredients[i] = structureMenuResource;
+                }
+            }
+        }
+
         private void RenderContent(CCPoint topLeft, CCSize size)
         {
             var colorCollection = VisualSettings.ColorCollection;
-            float resourceRadius = 32;
-            float structureRadius = 64;
-            var ingredients = Structure.Description.ProductionInformation?.Ingredients.ResourceTypes.OrderBy(i => i.ResourceType).ToList() ?? Structure.Description.ConstructionInformation.ResourceTypes.OrderBy(i => i.ResourceType).ToList();
-            var products = Structure.Description.ProductionInformation?.Products.ResourceTypes;
-            float ingredientSpacing = size.Width / (ingredients.Count == 0 ? 1 : ingredients.Count);
-            float productsSpacing = size.Width / (products?.Count == 0 ? 1 : products?.Count) ?? 1;
+            float resourceRadius = 64;
+            float structureRadius = 96;
+            float ingredientSpacing = size.Width / (Ingredients.Length == 0 ? 1 : Ingredients.Length);
+            float productsSpacing = size.Width / (Products.Length == 0 ? 1 : Products.Length);
             float rowHeight = size.Height / (Structure is Construction ? 2 : 3);
             float ingredientY = topLeft.Y - rowHeight * 0 - rowHeight / 2;
             float structureY = topLeft.Y - rowHeight * 1 - rowHeight / 2;
             float productsY = topLeft.Y - rowHeight * 2 - rowHeight / 2;
 
             var pendingRequests = Structure.ResourceDirector.PendingRequests.ToList();
-            for (int i = 0; i < ingredients.Count; i++)
+            for (int i = 0; i < Ingredients.Length; i++)
             {
-                var resourceType = ingredients[i];
-                bool arrived = !pendingRequests.Any(r => resourceType.ResourceType.CanBeUsedFor(r));
+                var structureMenuResource = Ingredients[i];
+                bool arrived = !pendingRequests.Any(r => structureMenuResource.ResourceTypeSource.ResourceType.CanBeUsedFor(r));
                 if (!arrived)
-                    pendingRequests.Remove(resourceType.ResourceType);
+                    pendingRequests.Remove(structureMenuResource.ResourceTypeSource.ResourceType);
                 float x = i * ingredientSpacing + ingredientSpacing / 2 + topLeft.X;
-                var resourceColor = resourceType.ResourceType.GetColor(colorCollection);
-                DrawNode.DrawCircle(new CCPoint(x, ingredientY), resourceRadius, resourceColor, 4, arrived ? colorCollection.StructureMenuResourceArrivedBorder : colorCollection.StructureMenuResourceNotArrivedBorder);
+                var position = new CCPoint(x, ingredientY);
+                //DrawNode.DrawCircle(position, resourceRadius, resourceColor, 4, arrived ? colorCollection.StructureMenuResourceArrivedBorder : colorCollection.StructureMenuResourceNotArrivedBorder);
+                DrawNode.DrawTexture(structureMenuResource.ResourceTypeSource.ResourceType.GetSpriteFrame(), position, new CCSize(resourceRadius * 2, resourceRadius * 2), arrived ? 1 : 0.33f);
             }
 
             var structurePosition = new CCPoint(topLeft.X + size.Width / 2, structureY);
@@ -133,16 +172,26 @@ namespace HexMex.Scenes.Game
             if (!(Structure is Construction) || Structure.Description.IsProducer)
             {
                 var pendingProvisions = Structure.ResourceDirector.PendingProvisions.ToList();
-                for (int i = 0; i < (products?.Count ?? 0); i++)
+                for (int i = 0; i < (Products.Length); i++)
                 {
-                    var resourceType = products?[i].ResourceType ?? ResourceType.Anything;
+                    var resourceType = Products[i].ResourceTypeSource.ResourceType;
                     bool provided = pendingProvisions.Contains(resourceType);
                     if (provided)
                         pendingProvisions.Remove(resourceType);
                     float x = i * productsSpacing + productsSpacing / 2 + topLeft.X;
-                    var resourceColor = resourceType.GetColor(colorCollection);
-                    DrawNode.DrawCircle(new CCPoint(x, productsY), resourceRadius, resourceColor, 2, provided ? colorCollection.StructureMenuResourceArrivedBorder : colorCollection.StructureMenuResourceNotArrivedBorder);
+                    var position = new CCPoint(x, productsY);
+                    //DrawNode.DrawCircle(position, resourceRadius, resourceColor, 2, provided ? colorCollection.StructureMenuResourceArrivedBorder : colorCollection.StructureMenuResourceNotArrivedBorder);
+                    DrawNode.DrawTexture(Products[i].ResourceTypeSource.ResourceType.GetSpriteFrame(), position, new CCSize(resourceRadius * 2, resourceRadius * 2), provided ? 1 : 0.33f);
                 }
+            }
+            if (Structure.Description.VerbalStructureDescription.InternalName.ToUpper() == "PALACE")
+            {
+                var winStep = World.GlobalResourceManager.EnvironmentResource.WinStep;
+                var totalWinStep = World.GameSettings.GameplaySettings.PalastWinSteps;
+                var x = productsSpacing / 2 + topLeft.X;
+                var y = productsY;
+                string text = $"{winStep}/{totalWinStep}";
+                DrawNode.DrawText(x, y, text, Font.ArialFonts[40], CCSize.Zero);
             }
         }
         private void Suspend()

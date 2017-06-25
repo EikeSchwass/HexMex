@@ -59,8 +59,10 @@ namespace HexMex.Shared
 
             var scene = new MainMenuScene(mainWindow, BuildingDescriptionDatabase, ColorCollectionFile, LanguageSettings);
             mainWindow.RunWithScene(scene);
+#if DEBUG
             mainWindow.DisplayStats = true;
             mainWindow.StatsScale = 5;
+#endif
         }
 
         public override void ApplicationWillEnterForeground(CCApplication application)

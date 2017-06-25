@@ -12,9 +12,9 @@ namespace HexMex.Game.Settings
         public float PayoutBoostTime { get; set; } = 300;
         public float MaxPayoutBoost { get; set; } = 3;
         public int StartCO2 { get; set; } = 0;
-        public int StartO2 { get; set; } = 1000;
+        public int StartO2 { get; set; } = 10000;
         public int StartEnergy { get; set; } = 0;
-        public float PalastWinTime { get; set; } = 30;
+        public int PalastWinSteps { get; set; } = 10;
 
         public ReadOnlyDictionary<ResourceType, ResourceSpawnInfo> SpawnInformation { get; }
 
@@ -25,7 +25,7 @@ namespace HexMex.Game.Settings
                 {ResourceType.CoalOre, new ResourceSpawnInfo(1, 2.5f)},
                 {ResourceType.CopperOre, new ResourceSpawnInfo(0.8, 3.5f)},
                 {ResourceType.DiamondOre, new ResourceSpawnInfo(0.05, 15)},
-                {ResourceType.GoldOre, new ResourceSpawnInfo(0.2, 10)},
+                {ResourceType.GoldOre, new ResourceSpawnInfo(0.333, 10)},
                 {ResourceType.IronOre, new ResourceSpawnInfo(1.1, 3)},
                 {ResourceType.PureWater, new ResourceSpawnInfo(0.15, 0.1f)},
                 {ResourceType.Stone, new ResourceSpawnInfo(1, 3.25f)},

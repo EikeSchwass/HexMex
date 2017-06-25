@@ -63,15 +63,42 @@ namespace HexMex.Helper
                 case Wood:
                     rect = rect.Add(new CCPoint(32 * 2, 32 * 2));
                     break;
+                case Glas:
+                    rect = rect.Add(new CCPoint(32 * 3, 32 * 2));
+                    break;
                 case Coal:
                     rect = rect.Add(new CCPoint(32 * 0, 32 * 3));
                     break;
                 case Paper:
                     rect = rect.Add(new CCPoint(32 * 1, 32 * 3));
                     break;
+                case Pottasche:
+                    rect = rect.Add(new CCPoint(32 * 2, 32 * 3));
+                    break;
+                case Sand:
+                    rect = rect.Add(new CCPoint(32 * 0, 32 * 4));
+                    break;
+                default:
+                    rect = rect.Add(new CCPoint(32 * 3, 32 * 3));
+                    break;
             }
             var ccSpriteFrame = new CCSpriteFrame(new CCTexture2D("resourceSS"), rect);
             return ccSpriteFrame;
+        }
+
+        public static string GetText(this ResourceType resourceType)
+        {
+            switch (resourceType)
+            {
+                case CoalOre: return "Coal Ore";
+                case CopperOre: return "Copper Ore";
+                case DiamondOre: return "Diamond Ore";
+                case GoldOre: return "Gold Ore";
+                case IronOre: return "Iron Ore";
+                case PureWater: return "Water";
+                case Tree: return "Forest";
+                default: return resourceType.ToString();
+            }
         }
 
         private static CCRect Add(this CCRect rect, CCPoint point)

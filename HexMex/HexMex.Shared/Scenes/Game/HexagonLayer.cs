@@ -57,7 +57,7 @@ namespace HexMex.Scenes.Game
                 if (World.HexagonManager[adjacentHexagonPositions[(6 - i + 2) % 6]]?.ResourceType != hexagon.ResourceType)
                     DrawNode.DrawLine(corners[i], corners[(i + 1) % corners.Length], visualSettings.HexagonOuterBorderThickness, colorCollection.HexagonBorder);
             }
-            DrawNode.DrawText(worldPosition, hexagon.ResourceType.ToString(), Font.ArialFonts[30], new CCSize(layoutSettings.HexagonRadius * 2, layoutSettings.HexagonRadius * 2));
+            DrawNode.DrawText(worldPosition, hexagon.ResourceType.GetText(), Font.ArialFonts[32], new CCSize(layoutSettings.HexagonRadius * 2, layoutSettings.HexagonRadius * 2));
         }
 
         private static double GetEffectWidth(double t)

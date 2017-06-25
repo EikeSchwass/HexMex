@@ -2,18 +2,7 @@
 	<Languages>
 		<Language Name="English">
       <Translation Key="helpText">
-        Hexaplant is a resource management game. Your goal is it to build a palace for the king, supply him with resources fast enough and don't pollute the air to badly.
-        
-        The world consists of randomly selected hexagons, each of a different resource type. The start location always has a diamond hexagon, a water hexagon and a coal hexagon.
-        
-        You start with 3 buildings
-        
-        Diamond Mine
-        
-        Extracts diamonds from the adjacent hexagon. These diamonds can be exchanged for required resources at the habor. A diamond mine is very expensive and it takes quite a long time to extract diamonds.
-        
-        Habor
-        The diamonds from the diamond mine are worthless without a habor. At the habor the diamonds can be exchanged for almost all other resources.
+		This game is a solo project I programmed during my free time. I hope you have as much fun playing as I had programming it :)$Hexaplant is a resource management game. Your goal is it to build a palace for the king, supply him with resources and don't pollute the air too badly.The world consists of randomly selected hexagons, each of a different resource type. The start location always consists of at least one diamond hexagon, one water hexagon and one coal hexagon.You start with 3 buildings. The diamond mine extracts diamonds from adjacent hexagons and sends them to a habor. Their the diamonds will be exchanged for currently required goods and resources.$This allows you to start building more specialized buildings and it's main purpose is to help you get started. The process of extracting diamonds and selling them uses quite a bit of oxygen. So make sure you suspend the habor and/or the diamond mine as soon as you don't need them anymore.$At the top left corner of your screen the amount of knowledge you have researched and the amount of energy you have produced is displayed. Knowledge is aquired through laboratories. They come in three different levels. To research more advanced buildings touch the button in the lower right corner. This opens the research menu. With increasing levels of the laboratories the amount and complexity of the required resources rises as well.$Once you have done enough research you can unlock the palace. The palace is the most expensive building and takes quite a bit of time to build. Once you build a palace the king will move in and you have to provide him with resources. But you don't have unlimited time. Burning coal and producing all the goods pollutes the air. If all breathable air is gone you lose. If you can provide enough resources for the king before that happens you win.$It's really not as complicated as it may seem. Just give it a try!
       </Translation>
 			<Translation Key="unlock">
 				Unlock
@@ -117,7 +106,7 @@
 			<Translation Key="laboratory3Name">
 				Laboratory Level 3			
 			</Translation>
-			<Translation Key="palastName">
+			<Translation Key="palaceName">
 				Palace
 			</Translation>
 			<Translation Key="brickFactoryDescription">
@@ -159,7 +148,7 @@
 			<Translation Key="circuitFactoryDescription">
 				Produces circuits.
 			</Translation>
-			<Translation Key="palastDescription">
+			<Translation Key="palaceDescription">
 				The palace of the king. To win the game, construct a palace and keep it running (the king wants to be able to breathe fresh air!).
 			</Translation>
 		</Language>

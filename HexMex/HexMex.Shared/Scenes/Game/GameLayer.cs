@@ -15,10 +15,10 @@ namespace HexMex.Scenes.Game
 
         public ReadOnlyCollection<TouchLayer> TouchLayers { get; }
         public World World { get; }
-
-        private BuildMenu BuildMenu { get; }
         public StructureMenu StructureMenu { get; }
         public ResearchMenu ResearchMenu { get; }
+
+        private BuildMenu BuildMenu { get; }
 
         public GameLayer(World world, HexMexCamera camera, CCColor4B color) : base(color)
         {
@@ -35,7 +35,7 @@ namespace HexMex.Scenes.Game
             var menuLayer = new MenuLayer(World, HexMexCamera);
             controlLayer.ConstructionRequested += (buttonLayer, buildButton) => ConstructionMenuRequested(buildButton, menuLayer);
             controlLayer.DisplayStructureRequested += (buttonLayer, structureButton) => DisplayStructureMenu(structureButton, menuLayer);
-            researchButtonLayer.ResearchButtonTouched += (rbl) => DisplayResearchMenu(menuLayer);
+            researchButtonLayer.ResearchButtonTouched += rbl => DisplayResearchMenu(menuLayer);
 
             var layers = new CCLayer[] { hexagonLayer, edgeLayer, resourcePackageLayer, structureLayer, controlLayer, statisticLayer, researchButtonLayer, menuLayer };
 
@@ -53,22 +53,6 @@ namespace HexMex.Scenes.Game
 
             Schedule();
         }
-        private void DisplayResearchMenu(MenuLayer menuLayer)
-        {
-            menuLayer.DisplayMenu(ResearchMenu);
-        }
-        private void DisplayStructureMenu(StructureButton structureButton, MenuLayer menuLayer)
-        {
-            BuildMenu.TargetNode = structureButton.Structure.Position;
-            StructureMenu.Structure = structureButton.Structure;
-            menuLayer.DisplayMenu(StructureMenu);
-        }
-
-        private void ConstructionMenuRequested(BuildButton buildButton, MenuLayer menuLayer)
-        {
-            BuildMenu.TargetNode = buildButton.HexagonNode;
-            menuLayer.DisplayMenu(BuildMenu);
-        }
 
         public override void Update(float dt)
         {
@@ -82,6 +66,22 @@ namespace HexMex.Scenes.Game
                 throw new InvalidOperationException("Spot has to be empty");
             var construction = new Construction(buildMenu.TargetNode, buildingDescription, World);
             World.StructureManager.CreateStrucuture(construction);
+        }
+
+        private void ConstructionMenuRequested(BuildButton buildButton, MenuLayer menuLayer)
+        {
+            BuildMenu.TargetNode = buildButton.HexagonNode;
+            menuLayer.DisplayMenu(BuildMenu);
+        }
+        private void DisplayResearchMenu(MenuLayer menuLayer)
+        {
+            menuLayer.DisplayMenu(ResearchMenu);
+        }
+        private void DisplayStructureMenu(StructureButton structureButton, MenuLayer menuLayer)
+        {
+            BuildMenu.TargetNode = structureButton.Structure.Position;
+            StructureMenu.Structure = structureButton.Structure;
+            menuLayer.DisplayMenu(StructureMenu);
         }
     }
 }

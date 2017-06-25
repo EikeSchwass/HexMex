@@ -14,7 +14,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CircleBorderPosition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ExtendedDrawNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\StructureButton.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game\Buildings\Palace.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\ConstructionInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\EnvironmentResource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game\GameSpeed.cs" />
@@ -109,6 +108,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\MenuLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\ResourcePackageLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\StructureLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\StructureMenuResource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Game\WinDefeatLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\Help\HelpLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\Help\HelpScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\HexMexCamera.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\TouchLayer.cs" />

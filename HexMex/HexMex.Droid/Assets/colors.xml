@@ -36,7 +36,7 @@
     <Color ColorKey="resourceGoldOre" Value="cab201" />
 
     <!-- Resources Network -->
-    <Color ColorKey="resourceWater" Value="4555ff" />
+    <!--<Color ColorKey="resourceWater" Value="4555ff" />
     <Color ColorKey="resourceDiamond" Value="c4d0df" />
     <Color ColorKey="resourceCoal" Value="1a1a24" />
     <Color ColorKey="resourceCopper" Value="e08a66" />
@@ -45,10 +45,13 @@
     <Color ColorKey="resourceTools" Value="d1d5dc" />
     <Color ColorKey="resourcePaper" Value="f2f0ee" />
     <Color ColorKey="resourceGold" Value="ff000000" />
-    <Color ColorKey="resourceCircuit" Value="ff000000" />
+    <Color ColorKey="resourceCircuit" Value="32922a" />
     <Color ColorKey="resourceBrick" Value="a42b13" />
     <Color ColorKey="resourceBarrel" Value="fe918f" />
     <Color ColorKey="resourceWaterBarrel" Value="dd91fe" />
+    <Color ColorKey="resourceGlas" Value="ff000000" />
+    <Color ColorKey="resourcePottasche" Value="ff000000" />
+    <Color ColorKey="resourceSand" Value="ff000000" />-->
 
     <!-- Resource Package -->
     <Color ColorKey="resourcePackageBorder" Value="ffffff" />
@@ -91,7 +94,24 @@
     <Color ColorKey="toolBlacksmithFill" Value="d1d5dc" />
     <Color ColorKey="toolBlacksmithBorder" Value="ffffff" />
     <Color ColorKey="barrelBlacksmithFill" Value="77590e" />
-    <Color ColorKey="barrelBlacksmithBorder" Value="ff000000" />
+    <Color ColorKey="barrelBlacksmithBorder" Value="ffffff" />
+    <Color ColorKey="brickFactoryFill" Value="a42b13" />
+    <Color ColorKey="brickFactoryBorder" Value="ffffff" />
+    <Color ColorKey="waterPumpFill" Value="6666ff" />
+    <Color ColorKey="waterPumpBorder" Value="ffffff" />
+    <Color ColorKey="deforestryFill" Value="26933a" />
+    <Color ColorKey="deforestryBorder" Value="ffffff" />
+    <Color ColorKey="goldExtractorFill" Value="cab201" />
+    <Color ColorKey="goldExtractorBorder" Value="ffffff" />
+    <Color ColorKey="circuitFactoryFill" Value="32922a" />
+    <Color ColorKey="circuitFactoryBorder" Value="ffffff" />
+    <Color ColorKey="potashFactoryFill" Value="0a0a0a" />
+    <Color ColorKey="potashFactoryBorder" Value="ffffff" />
+    <Color ColorKey="palaceFill" Value="938c00" />
+    <Color ColorKey="palaceBorder" Value="feff00" />
+    <Color ColorKey="glasFactoryFill" Value="2a94ca" />
+    <Color ColorKey="glasFactoryBorder" Value="ffffff" />
+
 
     <!-- Structure Menu -->
     <Color ColorKey="structureMenuBackground" Value="78222222" />
@@ -140,10 +160,7 @@
     <Color ColorKey="researchButtonBorder" Value="ffffff" />
     <Color ColorKey="researchButtonLiquidColor" Value="42bf00" />
 
-    <Color ColorKey="brickFactoryFill" Value="a42b13" />
-    <Color ColorKey="brickFactoryBorder" Value="ffffff" />
-    <Color ColorKey="waterPumpFill" Value="6666ff" />
-    <Color ColorKey="waterPumpBorder" Value="ffffff" />
     <Color ColorKey="resourcePackageBackground" Value="87878787" />
+
   </ColorCollection>
 </xml>

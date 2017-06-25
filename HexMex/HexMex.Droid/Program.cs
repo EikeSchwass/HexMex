@@ -8,7 +8,9 @@ using CocosSharp;
 using HexMex.Game;
 using HexMex.Game.Settings;
 using HexMex.Shared;
+#if DEBUG
 using HexMex.UnitTests;
+#endif
 using Microsoft.Xna.Framework;
 
 namespace HexMex.Droid

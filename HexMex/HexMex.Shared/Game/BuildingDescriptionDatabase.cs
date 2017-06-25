@@ -78,10 +78,10 @@ namespace HexMex.Game
                 reader.MoveToContent();
                 if (reader.Name == nameof(EnvironmentResource))
                 {
-                    int co2 = Convert.ToInt32(reader["CO2"] ?? "0", CultureInfo.InvariantCulture);
+                    int winStep = Convert.ToInt32(reader["WinStep"] ?? "0", CultureInfo.InvariantCulture);
                     int o2 = Convert.ToInt32(reader["O2"] ?? "0", CultureInfo.InvariantCulture);
                     int energy = Convert.ToInt32(reader["Energy"] ?? "0", CultureInfo.InvariantCulture);
-                    environmentResource = new EnvironmentResource(co2, o2, energy);
+                    environmentResource = new EnvironmentResource(winStep, o2, energy);
                 }
                 else if (reader.NodeType == XmlNodeType.Element)
                 {
@@ -117,10 +117,10 @@ namespace HexMex.Game
                     {
                         if (reader.Name == nameof(EnvironmentResource))
                         {
-                            int co2 = Convert.ToInt32(reader["CO2"] ?? "0", CultureInfo.InvariantCulture);
+                            int winStep = Convert.ToInt32(reader["WinStep"] ?? "0", CultureInfo.InvariantCulture);
                             int o2 = Convert.ToInt32(reader["O2"] ?? "0", CultureInfo.InvariantCulture);
                             int energy = Convert.ToInt32(reader["Energy"] ?? "0", CultureInfo.InvariantCulture);
-                            ingredientEnvironmentResource = new EnvironmentResource(co2, o2, energy);
+                            ingredientEnvironmentResource = new EnvironmentResource(winStep, o2, energy);
                         }
                         else
                         {
@@ -143,10 +143,10 @@ namespace HexMex.Game
                     {
                         if (reader.Name == nameof(EnvironmentResource))
                         {
-                            int co2 = Convert.ToInt32(reader["CO2"] ?? "0", CultureInfo.InvariantCulture);
+                            int winStep = Convert.ToInt32(reader["WinStep"] ?? "0", CultureInfo.InvariantCulture);
                             int o2 = Convert.ToInt32(reader["O2"] ?? "0", CultureInfo.InvariantCulture);
                             int energy = Convert.ToInt32(reader["Energy"] ?? "0", CultureInfo.InvariantCulture);
-                            productsEnvironmentResource = new EnvironmentResource(co2, o2, energy);
+                            productsEnvironmentResource = new EnvironmentResource(winStep, o2, energy);
                         }
                         else if (reader.Name == nameof(Knowledge))
                         {

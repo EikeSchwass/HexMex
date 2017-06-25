@@ -9,6 +9,9 @@ namespace HexMex.Game
 {
     public class World : ICCUpdatable
     {
+        public event Action<World> Defeat;
+
+        public event Action<World> Victory;
         public GameSpeed GameSpeed { get; set; } = GameSpeed.Normal;
         public ButtonManager ButtonManager { get; }
         public HexagonManager HexagonManager { get; }
@@ -19,8 +22,7 @@ namespace HexMex.Game
         public GameSettings GameSettings { get; }
         public GlobalResourceManager GlobalResourceManager { get; }
         public UnlockManager UnlockManager { get; }
-
-        public event Action<World> Victory;
+        public bool IsStopped { get; private set; }
 
         public World(GameSettings gameSettings)
         {
@@ -34,6 +36,8 @@ namespace HexMex.Game
             ResourceManager = new ResourceManager(this);
             StructureManager.StructureAdded += StructureAdded;
             StructureManager.StructureRemoved += StructureRemoved;
+            GlobalResourceManager.OutOfOxygen += grm => OnDefeat();
+            GlobalResourceManager.ValueChanged += CheckWinCondition;
         }
 
         public void Initialize()
@@ -53,15 +57,37 @@ namespace HexMex.Game
             IsInitialized = true;
         }
 
+        public void OnVictory()
+        {
+            Victory?.Invoke(this);
+        }
+        public void Stop()
+        {
+            IsStopped = true;
+        }
+
         public void Update(float dt)
         {
-            if (!IsInitialized)
+            if (!IsInitialized || IsStopped)
                 return;
             var gameSpeed = (float)GameSpeed / 10;
             dt *= gameSpeed;
             HexagonManager.Update(dt);
             ResourceManager.Update(dt);
             StructureManager.Update(dt);
+        }
+
+        private void CheckWinCondition(GlobalResourceManager globalResourceManager)
+        {
+            if (globalResourceManager.EnvironmentResource.WinStep >= GameSettings.GameplaySettings.PalastWinSteps)
+            {
+                OnVictory();
+            }
+        }
+
+        private void OnDefeat()
+        {
+            Defeat?.Invoke(this);
         }
 
         private void StructureAdded(StructureManager manager, Structure structure)
@@ -102,10 +128,6 @@ namespace HexMex.Game
             var hexagonNodes = structure.Position.GetAccessibleAdjacentHexagonNodes(HexagonManager).Where(s => StructureManager[s] is Building).ToArray();
             if (hexagonNodes.Any())
                 ButtonManager.AddButton(new BuildButton(GameSettings, structure.Position), structure.Position);
-        }
-        public void OnVictory()
-        {
-            Victory?.Invoke(this);
         }
     }
 }

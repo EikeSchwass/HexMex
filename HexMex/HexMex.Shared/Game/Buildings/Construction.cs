@@ -38,11 +38,7 @@ namespace HexMex.Game.Buildings
                 PassedConstructionTime = 0;
                 IsConstructing = false;
 
-                Building building;
-                if (BuildingDescription.VerbalStructureDescription.InternalName == nameof(Palace))
-                    building = new Palace(Position, World, BuildingDescription);
-                else
-                    building = new Building(Position, World, BuildingDescription);
+                Building building = new Building(Position, World, BuildingDescription);
                 World.StructureManager.RemoveStructure(this);
                 World.StructureManager.CreateStrucuture(building);
                 ConstructionCompleted?.Invoke(this);

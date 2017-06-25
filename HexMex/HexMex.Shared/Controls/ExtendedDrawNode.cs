@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CocosSharp;
+using HexMex.Helper;
 using HexMex.Scenes.Game;
 using static System.Math;
 
@@ -71,6 +72,14 @@ namespace HexMex.Controls
         public void DrawRect(CCPoint position, float width, float height, CCColor4B fillColor) => DrawRect(position, width, height, fillColor, 0, CCColor4B.Transparent);
         public void DrawRect(CCRect position, CCColor4B fillColor, float borderThickness, CCColor4B borderColor) => DrawRect(position.Center, position.Size.Width, position.Size.Height, fillColor, borderThickness, borderColor);
         public void DrawRect(CCRect position, CCColor4B fillColor) => DrawRect(position.Center, position.Size.Width, position.Size.Height, fillColor, 0, CCColor4B.Transparent);
+
+        public void DrawRoundedLine(CCPoint from, CCPoint to, float radius, CCColor4F fill, float borderThickness, CCColor4F borderColor)
+        {
+            DrawNode.DrawSegment(from, to, radius + borderThickness, borderColor);
+            DrawNode.DrawSegment(from, to, radius, fill);
+        }
+
+        public void DrawRoundedLine(CCPoint from, CCPoint to, float radius, CCColor4F fill) => DrawRoundedLine(from, to, radius, fill, 0, CCColor4B.Transparent.ToColor4F());
 
         public void DrawSolidArc(CCPoint position, float radius, float startAngle, float sweepAngle, CCColor4B fillColor, float borderThickness, CCColor4B borderColor)
         {
@@ -150,15 +159,25 @@ namespace HexMex.Controls
 
         public void DrawTriangle(CCPoint p1, CCPoint p2, CCPoint p3, CCColor4B fillColor) => DrawTriangle(p1, p2, p3, fillColor, 0, CCColor4B.Transparent);
 
-        public void DrawTexture(string texturePath, CCPoint position, CCSize size, CCColor3B color)
+        public void DrawTexture(string texturePath, CCPoint position, CCSize size, CCColor3B color, float opacity)
         {
             CCSprite sprite = new CCSprite(texturePath) { Position = position, Color = color, ContentSize = size };
             Sprites.Add(sprite);
             AddChild(sprite);
         }
 
-        public void DrawTexture(string texturePath, CCPoint position, CCSize size) => DrawTexture(texturePath, position, size, CCColor3B.White);
-        public void DrawTexture(string texturePath, float x, float y, float width, float height, CCColor3B color) => DrawTexture(texturePath, new CCPoint(x, y), new CCSize(width, height), color);
-        public void DrawTexture(string texturePath, float x, float y, float width, float height) => DrawTexture(texturePath, new CCPoint(x, y), new CCSize(width, height), CCColor3B.White);
+        public void DrawTexture(CCSpriteFrame spriteFrame, CCPoint position, CCSize size, CCColor3B color, float opacity)
+        {
+            CCSprite sprite = new CCSprite(spriteFrame) { Position = position, Color = color, ContentSize = size, Opacity = (byte)(opacity * 255) };
+            Sprites.Add(sprite);
+            AddChild(sprite);
+        }
+
+        public void DrawTexture(CCSpriteFrame spriteFrame, CCPoint position, CCSize size, float opacity) => DrawTexture(spriteFrame, position, size, CCColor3B.White, opacity);
+
+        public void DrawTexture(string texturePath, CCPoint position, CCSize size) => DrawTexture(texturePath, position, size, CCColor3B.White, 1);
+        public void DrawTexture(string texturePath, CCPoint position, CCSize size, float opacity) => DrawTexture(texturePath, position, size, CCColor3B.White, opacity);
+        public void DrawTexture(string texturePath, float x, float y, float width, float height, CCColor3B color) => DrawTexture(texturePath, new CCPoint(x, y), new CCSize(width, height), color, 1);
+        public void DrawTexture(string texturePath, float x, float y, float width, float height, float opacity) => DrawTexture(texturePath, new CCPoint(x, y), new CCSize(width, height), CCColor3B.White, opacity);
     }
 }

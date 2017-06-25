@@ -7,10 +7,11 @@ namespace HexMex.Game
 {
     public class GlobalResourceManager
     {
-        public GameplaySettings GameplaySettings { get; }
-        private Knowledge knowledge = new Knowledge(100, 100, 100);
         private EnvironmentResource environmentResource;
+        private Knowledge knowledge = new Knowledge(0, 0, 0);
         public event Action<GlobalResourceManager> ValueChanged;
+        public event Action<GlobalResourceManager> OutOfOxygen;
+        public GameplaySettings GameplaySettings { get; }
 
         public Knowledge Knowledge
         {
@@ -29,14 +30,35 @@ namespace HexMex.Game
             {
                 environmentResource = value;
                 ValueChanged?.Invoke(this);
+                if (EnvironmentResource.O2 <= 0)
+                    OutOfOxygen?.Invoke(this);
             }
         }
+
+        private Queue<EnergyPackage> EnergyQueue { get; } = new Queue<EnergyPackage>();
 
         public GlobalResourceManager(GameplaySettings gameplaySettings)
         {
             GameplaySettings = gameplaySettings;
-            EnvironmentResource = new EnvironmentResource(GameplaySettings.StartCO2, GameplaySettings.StartO2, GameplaySettings.StartEnergy);
+            EnvironmentResource = new EnvironmentResource(0, GameplaySettings.StartO2, GameplaySettings.StartEnergy);
             ValueChanged += CheckForEnergyChange;
+        }
+
+        public bool EnoughKnowledgeFor(Knowledge other)
+        {
+            if (Knowledge.Knowledge3 < other.Knowledge3)
+                return false;
+            if (Knowledge.Knowledge2 < other.Knowledge2)
+                return false;
+            if (Knowledge.Knowledge1 < other.Knowledge1)
+                return false;
+            return true;
+        }
+
+        public void Enqueue(EnergyPackage energyPackage)
+        {
+            EnergyQueue.Enqueue(energyPackage);
+            CheckForEnergyChange(this);
         }
         private void CheckForEnergyChange(GlobalResourceManager obj)
         {
@@ -49,24 +71,6 @@ namespace HexMex.Game
                 EnergyQueue.Dequeue();
                 nextEnergyPackage.Callback(nextEnergyPackage);
             }
-        }
-
-        private Queue<EnergyPackage> EnergyQueue { get; } = new Queue<EnergyPackage>();
-
-        public void Enqueue(EnergyPackage energyPackage)
-        {
-            EnergyQueue.Enqueue(energyPackage);
-            CheckForEnergyChange(this);
-        }
-        public bool EnoughKnowledgeFor(Knowledge other)
-        {
-            if (Knowledge.Knowledge3 < other.Knowledge3)
-                return false;
-            if (Knowledge.Knowledge2 < other.Knowledge2)
-                return false;
-            if (Knowledge.Knowledge1 < other.Knowledge1)
-                return false;
-            return true;
         }
     }
 

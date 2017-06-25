@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using CocosSharp;
 using HexMex.Controls;
 using HexMex.Game;
@@ -16,14 +15,14 @@ namespace HexMex.Scenes.MainMenu
         public LanguageSettings LanguageSettings { get; }
         public VisualSettings VisualSettings { get; }
         private HexButton HelpButton { get; }
-        private HexButton OptionsButton { get; }
+        //private HexButton OptionsButton { get; }
         private HexButton StartGameButton { get; }
 
         public MainMenuLayer(BuildingDescriptionDatabase buildingDescriptionDatabase, ColorCollectionFile colorCollectionFile, LanguageSettings languageSettings)
         {
             var colorCollection = new ColorCollection(colorCollectionFile);
             HelpButton = new HexButton("Help", 150, colorCollection);
-            OptionsButton = new HexButton("Options", 150, colorCollection);
+            //OptionsButton = new HexButton("Options", 150, colorCollection);
             StartGameButton = new HexButton("Start", 150, colorCollection);
 
             BuildingDescriptionDatabase = buildingDescriptionDatabase;
@@ -32,7 +31,7 @@ namespace HexMex.Scenes.MainMenu
             VisualSettings = new VisualSettings(colorCollectionFile);
             StartGameButton.Touched += StartGameButton_Clicked;
             HelpButton.Touched += HelpButton_Clicked;
-            OptionsButton.Touched += OptionsButton_Clicked;
+            //OptionsButton.Touched += OptionsButton_Clicked;
 
             AddEventListener(new CCEventListenerTouchOneByOne { OnTouchBegan = TouchDown, OnTouchCancelled = OnTouchCancelled, OnTouchEnded = OnTouchUp, OnTouchMoved = OnTouchMoved });
         }
@@ -47,21 +46,21 @@ namespace HexMex.Scenes.MainMenu
             var radius = actualSize.Width / 4 * 1f;
             StartGameButton.Radius = radius;
             HelpButton.Radius = radius;
-            OptionsButton.Radius = radius;
+            //OptionsButton.Radius = radius;
 
             var d = Math.Sin(Math.PI / 3) * radius * 2;
             var deltaX = Math.Sin(Math.PI / 6) * d;
             var deltaY = Math.Cos(Math.PI / 6) * d;
 
-            StartGameButton.PositionX = 0;
+            StartGameButton.PositionX = (float)(deltaX / 2);
             StartGameButton.PositionY = 0 + StartGameButton.Radius;
             HelpButton.PositionX = (float)(StartGameButton.PositionX - deltaX);
             HelpButton.PositionY = (float)(StartGameButton.PositionY - deltaY);
-            OptionsButton.PositionX = (float)(StartGameButton.PositionX + deltaX);
-            OptionsButton.PositionY = (float)(StartGameButton.PositionY - deltaY);
+            //OptionsButton.PositionX = (float)(StartGameButton.PositionX + deltaX);
+            //OptionsButton.PositionY = (float)(StartGameButton.PositionY - deltaY);
             AddChild(StartGameButton);
             AddChild(HelpButton);
-            AddChild(OptionsButton);
+            //AddChild(OptionsButton);
             hexMexCamera.MoveToPosition(CCPoint.Zero);
         }
 
@@ -74,7 +73,7 @@ namespace HexMex.Scenes.MainMenu
         {
             StartGameButton.IsPressed = false;
             HelpButton.IsPressed = false;
-            OptionsButton.IsPressed = false;
+            //OptionsButton.IsPressed = false;
         }
 
         private void OnTouchMoved(CCTouch arg1, CCEvent arg2)
@@ -83,8 +82,8 @@ namespace HexMex.Scenes.MainMenu
                 StartGameButton.IsPressed = false;
             if (!HelpButton.IsPointInBounds(arg1) && HelpButton.IsPressed)
                 HelpButton.IsPressed = false;
-            if (!OptionsButton.IsPointInBounds(arg1) && OptionsButton.IsPressed)
-                OptionsButton.IsPressed = false;
+            /*if (!OptionsButton.IsPointInBounds(arg1) && OptionsButton.IsPressed)
+                OptionsButton.IsPressed = false;*/
         }
 
         private void OnTouchUp(CCTouch arg1, CCEvent arg2)
@@ -93,14 +92,10 @@ namespace HexMex.Scenes.MainMenu
                 StartGameButton.OnTouchUp();
             if (HelpButton.IsPointInBounds(arg1) && HelpButton.IsPressed)
                 HelpButton.OnTouchUp();
-            if (OptionsButton.IsPointInBounds(arg1) && OptionsButton.IsPressed)
-                OptionsButton.OnTouchUp();
+            /*if (OptionsButton.IsPointInBounds(arg1) && OptionsButton.IsPressed)
+                OptionsButton.OnTouchUp();*/
         }
-
-        private void OptionsButton_Clicked(Button sender)
-        {
-            Debug.WriteLine("Options Button Clicked");
-        }
+        
 
         private void StartGameButton_Clicked(Button sender)
         {
@@ -119,10 +114,10 @@ namespace HexMex.Scenes.MainMenu
             {
                 HelpButton.IsPressed = true;
             }
-            if (OptionsButton.IsPointInBounds(arg1))
+            /*if (OptionsButton.IsPointInBounds(arg1))
             {
                 OptionsButton.IsPressed = true;
-            }
+            }*/
             return true;
         }
     }

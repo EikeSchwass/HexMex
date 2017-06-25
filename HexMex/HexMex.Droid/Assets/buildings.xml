@@ -36,7 +36,7 @@
     <Building Name="DiamondExtractor">
       <UnlockCost Knowledge1="30" Knowledge2="20" Knowledge3="15" />
       <ConstructionInformation ConstructionTime="30">
-        <EnvironmentResource CO2="15" Energy="50" />
+        <EnvironmentResource O2="-50" Energy="50" />
         <Iron />
         <Iron />
         <Iron />
@@ -50,7 +50,7 @@
           <DiamondOre Source="Hexagon" />
         </Ingredients>
         <Products>
-          <EnvironmentResource CO2="5" />
+          <EnvironmentResource O2="-5" />
           <Diamond />
         </Products>
       </ProductionInformation>
@@ -68,7 +68,7 @@
           <CoalOre Source="Hexagon" />
         </Ingredients>
         <Products>
-          <EnvironmentResource Energy="20" CO2="20" />
+          <EnvironmentResource Energy="20" O2="-5" />
         </Products>
       </ProductionInformation>
     </Building>
@@ -100,7 +100,7 @@
           <CopperOre Source="Hexagon" />
         </Ingredients>
         <Products>
-          <EnvironmentResource CO2="5" />
+          <EnvironmentResource O2="-5" />
           <Copper />
         </Products>
       </ProductionInformation>
@@ -116,7 +116,7 @@
           <IronOre Source="Hexagon" />
         </Ingredients>
         <Products>
-          <EnvironmentResource CO2="2" />
+          <EnvironmentResource O2="-2" />
           <Iron />
         </Products>
       </ProductionInformation>
@@ -153,7 +153,7 @@
           <Wood />
         </Ingredients>
         <Products>
-          <EnvironmentResource CO2="-4" O2="6" />
+          <EnvironmentResource O2="4" />
           <Wood />
         </Products>
       </ProductionInformation>
@@ -174,7 +174,7 @@
           <Wood />
         </Ingredients>
         <Products>
-          <EnvironmentResource O2="-3" CO2="4" />
+          <EnvironmentResource O2="-4" />
           <Paper />
           <Paper />
         </Products>
@@ -195,7 +195,7 @@
           <Stone Source="Hexagon" />
         </Ingredients>
         <Products>
-          <EnvironmentResource CO2="3" />
+          <EnvironmentResource O2="-3" />
           <Brick />
           <Brick />
         </Products>
@@ -214,7 +214,7 @@
           <Stone Source="Hexagon"/>
         </Ingredients>
         <Products>
-          <EnvironmentResource CO2="2" />
+          <EnvironmentResource O2="-2" />
           <Sand />
           <Sand />
           <Sand />
@@ -242,7 +242,7 @@
           <Water />
         </Ingredients>
         <Products>
-          <EnvironmentResource CO2="8" Energy="3" />
+          <EnvironmentResource O2="-8" Energy="3" />
           <Pottasche />
           <Pottasche />
         </Products>
@@ -272,7 +272,7 @@
           <Coal />
         </Ingredients>
         <Products>
-          <EnvironmentResource CO2="12" />
+          <EnvironmentResource O2="-12" />
           <Glas />
         </Products>
       </ProductionInformation>
@@ -315,7 +315,7 @@
           <Iron />
         </Ingredients>
         <Products>
-          <EnvironmentResource CO2="3" />
+          <EnvironmentResource O2="-3" />
           <Barrel />
         </Products>
       </ProductionInformation>
@@ -339,7 +339,7 @@
           <Iron />
         </Ingredients>
         <Products>
-          <EnvironmentResource CO2="5" />
+          <EnvironmentResource O2="-5" />
           <Tools />
           <Tools />
         </Products>
@@ -361,7 +361,7 @@
           <GoldOre Source="Hexagon" />
         </Ingredients>
         <Products>
-          <EnvironmentResource CO2="10" />
+          <EnvironmentResource O2="-10" />
           <Gold />
         </Products>
       </ProductionInformation>
@@ -369,7 +369,7 @@
     <Building Name="CircuitFactory">
       <UnlockCost Knowledge1="20" Knowledge2="25" />
       <ConstructionInformation ConstructionTime="20">
-        <EnvironmentResource Energy="15" CO2="8" />
+        <EnvironmentResource Energy="15" O2="-8" />
         <Tools />
         <Tools />
         <Tools />
@@ -388,7 +388,7 @@
           <Tools />
         </Ingredients>
         <Products>
-          <EnvironmentResource CO2="21" />
+          <EnvironmentResource O2="-21" />
           <Circuit />
         </Products>
       </ProductionInformation>
@@ -477,7 +477,7 @@
         </Products>
       </ProductionInformation>
     </Building>
-    <Building Name="Palast">
+    <Building Name="Palace">
       <UnlockCost Knowledge1="20" Knowledge2="20" Knowledge3="20" />
       <ConstructionInformation ConstructionTime="60">
         <Brick />
@@ -516,7 +516,7 @@
           <Wood />
         </Ingredients>
         <Products>
-          <EnvironmentResource CO2="4" O2="-2" />
+          <EnvironmentResource O2="-4" WinStep="1" />
         </Products>
       </ProductionInformation>
     </Building>

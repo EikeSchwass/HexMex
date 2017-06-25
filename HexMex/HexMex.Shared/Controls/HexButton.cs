@@ -14,7 +14,7 @@ namespace HexMex.Controls
         private CCColor3B foregroundColor;
         private float radius;
         private string text;
-        private float fontSize = 30;
+        private int fontSize = 50;
 
         public CCColor4B BackgroundColor
         {
@@ -46,7 +46,7 @@ namespace HexMex.Controls
             }
         }
 
-        public float FontSize
+        public int FontSize
         {
             get => fontSize;
             set
@@ -133,7 +133,7 @@ namespace HexMex.Controls
             ContentSize = new CCSize(Radius * 2, Radius * 2);
             Corners = HexagonHelper.GenerateWorldCorners(CCPoint.Zero, Radius).ToArray();
             DrawNode.DrawPolygon(Corners, BackgroundColor, BorderThickness, BorderColor);
-            DrawNode.DrawText(CCPoint.Zero, Text, Font.ArialFonts[30], ContentSize, ForegroundColor);
+            DrawNode.DrawText(CCPoint.Zero, Text, Font.ArialFonts[FontSize], ContentSize, ForegroundColor);
             UpdateTransform();
         }
     }
